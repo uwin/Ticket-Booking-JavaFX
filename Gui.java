@@ -284,9 +284,7 @@ public class Gui extends Application {
         gridtwo.add(closebutt,9,6);
         window.show();
     }
-    public void deleteoption(){
-
-    }
+    public void deleteoption(){}
     public void findoption(){}
     public void saveoption(){}
     public void loadoption(){}
