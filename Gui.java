@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class Gui extends Application {
     Stage window;
     String tempuserSeat = "0";
@@ -21,57 +22,74 @@ public class Gui extends Application {
     }
     @Override
     public void start(Stage stage) {
-        welcome();
-    }
-    public void welcome() {
-        System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
-        options();
-    }
-    public void options() {
-        System.out.println("\n\n"+
-                "A Add a seat\n"+
-                "V View all seats\n"+
-                "E View empty seats\n"+
-                "D Delete seat\n"+
-                "F Find the seat\n"+
-                "S Save details\n"+
-                "L Load details\n"+
-                "O List seats\n");
-        optionstest();
-    }
-    public void optionstest(){
-        Scanner scanoption= new Scanner(System.in);
-        System.out.println(">> select a option");
-        String userOption= scanoption.next().toUpperCase();
-        switch (userOption) {
-            case "A":           //add
-                addoption();
-                break;
-            case "V":     //view
-                viewoption();
-                break;
-            case "E":     //empty
-                emptyoption();
-                break;
-            case "D":     //delete
-                break;
-            case "F":     //find
-                break;
-            case "S":     //save
-                break;
-            case "L":      //load
-                break;
-            case "O":      //view
-                break;
-            case "Q":
-                System.exit(0);
-            default:
-                System.out.println("invalid input");
-                break;
+        window = stage;
+        int number;
+//-----------------------------------------------------------------------------------//
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(5, 2, 5, 2));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        Scene sceneone = new Scene(grid, 400, 220);
+        window.setScene(sceneone);
+
+        //seat grid
+        number = 1;
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 10; c++) {
+                if (number != 43) {
+                    Button button = new Button(String.valueOf(number));
+                    button.setId(String.valueOf(number));
+                    button.setOnAction(event -> {
+                        if (tempuserSeat.equals("0")) {
+                            tempuserSeat = button.getId();
+                            button.setStyle("-fx-background-color: #ff0000; ");
+                            //getseat(tempuserSeat);
+                        } else {
+                            if (button.getId().equals(tempuserSeat)) {
+                                button.setStyle("");
+                                tempuserSeat = "0";
+                            }
+                        }
+                    });
+                    number++;
+                    grid.add(button, c, r);
+                }
+            }
         }
+        //username field
+        TextField username = new TextField();
+        username.setPromptText("enter name");
+        grid.add(username, 3, 3, 7, 4);
+
+        //booking confirm button
+        Button okbut = new Button("ok");
+        okbut.setOnAction(event -> {
+            if (username.getText().trim().isEmpty() || tempuserSeat.equals("0")) {
+                emptyfeildAlert();
+                //System.out.println("select seat or name");
+            } else {
+                String tempuserName = username.getText();
+                String tName = getname(tempuserName);
+                String tSeat = getseat(tempuserSeat);
+                confirmAlert(tName, tSeat, username);
+            }
+        });
+        grid.add(okbut, 7, 6);
+        //program close button
+        Button closebut = new Button("close");
+        closebut.setOnAction(event -> {
+            System.out.println("programe will close");
+            tempuserSeat = "0";
+            window.close();
+        });
+        grid.add(closebut, 9, 6);
+
+//------------------------------------------------------------------------/
+        welcome();
     }
     public String getname(String tempuserName) {
         return tempuserName;
+
     }
     public String getseat(String tempuserSeat) {
         return tempuserSeat;
@@ -86,6 +104,7 @@ public class Gui extends Application {
             options();
         }
     }
+
     public void confirmAlert(String title, String message, TextField username) {
         Stage window = new Stage();
 
@@ -150,68 +169,8 @@ public class Gui extends Application {
         window.show();
 
     }
+
     private void addoption(){
-        Stage window = new Stage();
-        int number;
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(5, 2, 5, 2));
-        grid.setHgap(10);
-        grid.setVgap(10);
-        Scene sceneone = new Scene(grid, 400, 220);
-        window.setScene(sceneone);
-
-        //seat grid
-        number = 1;
-        for (int r = 0; r < 5; r++) {
-            for (int c = 0; c < 10; c++) {
-                if (number != 43) {
-                    Button button = new Button(String.valueOf(number));
-                    button.setId(String.valueOf(number));
-                    button.setOnAction(event -> {
-                        if (tempuserSeat.equals("0")) {
-                            tempuserSeat = button.getId();
-                            button.setStyle("-fx-background-color: #ff0000; ");
-                            //getseat(tempuserSeat);
-                        } else {
-                            if (button.getId().equals(tempuserSeat)) {
-                                button.setStyle("");
-                                tempuserSeat = "0";
-                            }
-                        }
-                    });
-                    number++;
-                    grid.add(button, c, r);
-                }
-            }
-        }
-        //username field
-        TextField username = new TextField();
-        username.setPromptText("enter name");
-        grid.add(username, 3, 3, 7, 4);
-
-        //booking confirm button
-        Button okbut = new Button("ok");
-        okbut.setOnAction(event -> {
-            if (username.getText().trim().isEmpty() || tempuserSeat.equals("0")) {
-                emptyfeildAlert();
-                //System.out.println("select seat or name");
-            } else {
-                String tempuserName = username.getText();
-                String tName = getname(tempuserName);
-                String tSeat = getseat(tempuserSeat);
-                confirmAlert(tName, tSeat, username);
-            }
-        });
-        grid.add(okbut, 7, 6);
-        //program close button
-        Button closebut = new Button("close");
-        closebut.setOnAction(event -> {
-            System.out.println("programe will close");
-            tempuserSeat = "0";
-            window.close();
-            options();
-        });
-        grid.add(closebut, 9, 6);
         window.show();
     }
     public void viewoption(){
@@ -240,12 +199,12 @@ public class Gui extends Application {
             }
         }
 
-        Button closebutt = new Button("Close");
-        closebutt.setOnAction(event -> {
+        Button cancelBut = new Button("Close");
+        cancelBut.setOnAction(event -> {
             window.close();
             options();
         });
-        gridtwo.add(closebutt,9,6);
+        gridtwo.add(cancelBut,9,6);
         window.show();
     }
     public void emptyoption(){
@@ -276,17 +235,62 @@ public class Gui extends Application {
                 }
             }
         }
-        Button closebutt = new Button("Close");
-        closebutt.setOnAction(event -> {
+        Button cancelBut = new Button("Close");
+        cancelBut.setOnAction(event -> {
             window.close();
             options();
         });
-        gridtwo.add(closebutt,9,6);
+        gridtwo.add(cancelBut,9,6);
         window.show();
     }
-    public void deleteoption(){}
-    public void findoption(){}
-    public void saveoption(){}
-    public void loadoption(){}
-    public void oderoption(){}
+
+    public void welcome() {
+        System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
+        options();
+    }
+    public void options() {
+        System.out.println("\n\n"+
+                "A Add a seat\n"+
+                "V View all seats\n"+
+                "E View empty seats\n"+
+                "D Delete seat\n"+
+                "F Find the seat\n"+
+                "S Save details\n"+
+                "L Load details\n"+
+                "O List seats\n");
+        optionstest();
+    }
+    public void optionstest(){
+        Scanner scanoption= new Scanner(System.in);
+        System.out.println(">> select a option");
+        String userOption= scanoption.next().toUpperCase();
+
+        switch (userOption) {
+            case "A":           //add
+                addoption();
+                break;
+            case "V":     //view
+                viewoption();
+                break;
+            case "E":     //empty
+                emptyoption();
+                break;
+            case "D":     //delete
+                break;
+            case "F":     //find
+                break;
+            case "S":     //save
+                break;
+            case "L":      //load
+                break;
+            case "O":      //view
+                break;
+            case "Q":
+                System.exit(0);
+            default:
+                System.out.println("invalid input");
+                options();
+                break;
+        }
+    }
 }
