@@ -13,85 +13,83 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Gui extends Application {
-    //String tempUserSeat = "0";
     List<String> seatList = new ArrayList<>();
     List<String> nameList = new ArrayList<>();
     public static void main(String[] args) {
         launch();
     }
     @Override
-    public void start(Stage stage) {
-        welcome();
-    }
+    public void start(Stage stage) {welcome();}
     /*
-    public String getName(String tempUserName) {
-        return tempUserName;
-    }
-    public String getSeat(String tempUserSeat) {
-        return tempUserSeat;
-    }
-    public void booking(String tempUserSeat, String tempUserName) {
-        //System.out.println(getSeat(tempUserSeat) + getName(tempUserName));
-        //seatList.add(tempUserSeat);
-        //nameList.add((tempUserName));
-        //options();
-    }
-    public void confirmAlert(String title, String message, TextField username) {
+        public String getName(String confirmUserSeat) {
+            return confirmUserSeat;
+        }
+        public String getSeat(String confirmUserSeat) {
+            return confirmUserSeat;
+        }
 
-        confirmBut.setOnAction(e -> {
-            username.setText("");
-            tempUserSeat = "0";
-            window.close();
-            booking(message, title);
+        public void booking(String tempUserSeat, String tempUserName) {
+            System.out.println(getSeat(tempUserSeat) + getName(tempUserName));
+            seatList.add(tempUserSeat);
+            nameList.add((tempUserName));
+            options();
+        }
+        public void confirmAlert(String title, String message, TextField username) {
 
-        });
+            confirmBut.setOnAction(e -> {
+                username.setText("");
+                tempUserSeat = "0";
+                window.close();
+                booking(message, title);
 
-        Button cancelBut = new Button("Cancel");
-        cancelBut.setOnAction(event -> {
-            username.setText("");
-            window.close();
-            //window.show();;
-            booking("", "");
-        });
+            });
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, confirmBut, cancelBut);
-        layout.setAlignment(Pos.CENTER);
+            Button cancelBut = new Button("Cancel");
+            cancelBut.setOnAction(event -> {
+                username.setText("");
+                window.close();
+                //window.show();;
+                booking("", "");
+            });
 
-        //Display window and wait for it to be closed before returning
-        Scene viewConfi = new Scene(layout);
-        window.setScene(viewConfi);
-        window.showAndWait();
-    }
-    public void emptyFieldAlert() {
-        Stage window = new Stage();
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(label, confirmBut, cancelBut);
+            layout.setAlignment(Pos.CENTER);
 
-        //Block events to other windows
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Alert");
-        window.setMinWidth(300);
+            //Display window and wait for it to be closed before returning
+            Scene viewConfi = new Scene(layout);
+            window.setScene(viewConfi);
+            window.showAndWait();
+        }
+        public void emptyFieldAlert() {
+            Stage window = new Stage();
 
-        Label label = new Label();
-        label.setText("enter your name and select a seat");
+            //Block events to other windows
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("Alert");
+            window.setMinWidth(300);
 
-        Button okayBut = new Button("okay");
-        okayBut.setOnAction(event -> {
-            window.close();
-            booking("", "");
-            //window.show();
-        });
+            Label label = new Label();
+            label.setText("enter your name and select a seat");
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, okayBut);
-        layout.setAlignment(Pos.CENTER);
+            Button okayBut = new Button("okay");
+            okayBut.setOnAction(event -> {
+                window.close();
+                booking("", "");
+                //window.show();
+            });
 
-        //Display window and wait for it to be closed before returning
-        Scene emptyviewFeild = new Scene(layout);
-        window.setScene(emptyviewFeild);
-        window.show();
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(label, okayBut);
+            layout.setAlignment(Pos.CENTER);
 
-    }
- */
+            //Display window and wait for it to be closed before returning
+            Scene emptyviewFeild = new Scene(layout);
+            window.setScene(emptyviewFeild);
+            window.show();
+
+        }
+     */
     private void addOption(){
         Stage window = new Stage();
         int number;
@@ -109,15 +107,13 @@ public class Gui extends Application {
                 if (number != 43) {
                     Button button = new Button(String.valueOf(number));
                     button.setId(String.valueOf(number));
+                    if (seatList.contains(button.getId())) button.setStyle("-fx-background-color: #ff0000; ");
                     button.setOnAction(event -> {
-                        if (/*tempUserSeat.equals("0")*/) {
-                            userSeat = button.getId();
-                            button.setStyle("-fx-background-color: #ff0000; ");
+                        if (seatList.contains(button.getId())){
+                            button.setStyle("");
                         } else {
-                            if (/*button.getId().equals(tempUserSeat*/)) {
-                                button.setStyle("");
-                                /*tempUserSeat = "0";*/
-                            }
+                            seatList.add(button.getId());
+                            button.setStyle("-fx-background-color: #ff0000; ");
                         }
                     });
                     number++;
@@ -133,32 +129,23 @@ public class Gui extends Application {
         //booking confirm button
         Button okBut = new Button("ok");
         okBut.setOnAction(event -> {
-            if (username.getText().trim().isEmpty() ||userSeat.getText().trim().isEmpty() /*tempUserSeat.equals("0")*/) {
+            if (username.getText().trim().isEmpty()) {
+                //open a alert <<<<<<window.close();
                 window.close();
-                //booking("", "");
-                //emptyFieldAlert();
+                addOption();
             } else {
-                String tempUserName = username.getText();
-//                String tName = getName(tempUserName);
-//                String tSeat = getSeat(tempUserSeat);
-                username.setText("");
-                //tempUserSeat = "0";
+                nameList.add(username.getText());
                 window.close();
-                //seatList.add(tempUserSeat);
-                //nameList.add((tempUserName));
-                //booking(tSeat, tName);
-                //confirmAlert(tName, tSeat, username);
+                options();
             }
         });
         grid.add(okBut, 7, 6);
+
         //program close button
         Button closeBut = new Button("close");
-        closeBut.setOnAction(event -> {
-            System.out.println("programme will close");
-            tempUserSeat = "0";
-            window.close();
-        });
+        closeBut.setOnAction(event -> window.close());
         grid.add(closeBut, 9, 6);
+
         window.show();
     }
     public void viewOption(){
