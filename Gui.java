@@ -15,6 +15,7 @@ public class Gui extends Application {
         welcome();
     }
     static final int SEATING_CAPACITY = 42;
+    String temp="0";
     public static void main(String[] args) {
         launch();
     }
@@ -87,14 +88,17 @@ public class Gui extends Application {
                 if (number <=SEATING_CAPACITY) {
                     Button button = new Button(String.valueOf(number));
                     button.setId(String.valueOf(number));
-                    if (seatList.contains(button.getId())) button.setStyle("-fx-background-color: #ff0000; ");
+                    if (seatList.contains(button.getId())) button.setStyle("-fx-background-color: #C0C0C0; ");
                     button.setOnAction(event -> {
                         if (seatList.contains(button.getId())){
-                            button.setStyle("");
-                        } else {
-                            seatList.add(button.getId());
-                            button.setStyle("-fx-background-color: #ff0000; ");
-                        }
+                            //button.setStyle("-fx-background-color: #ff6347; ");
+                        }else if (temp.equals("0")){
+                            temp=button.getId();
+                            button.setStyle("-fx-background-color: #00ff00; ");
+                        }else if(button.getId().equals(temp)) {
+                                button.setStyle("");
+                                temp = "0";
+                            }
                     });
                     number++;
                     grid.add(button, c, r);
@@ -112,6 +116,9 @@ public class Gui extends Application {
                 addOption(nameList,seatList);
             } else {
                 nameList.add(username.getText());
+                seatList.add(temp);
+                temp="0";
+                System.out.println(nameList+"\n"+seatList);
                 window.close();
                 options(nameList, seatList);
             }
@@ -138,7 +145,7 @@ public class Gui extends Application {
                     Button button = new Button(String.valueOf(number));
                     button.setId(String.valueOf(number));
                     if (seatList.contains(String.valueOf(number))){
-                        button.setStyle("-fx-background-color: #ff0000; ");
+                        button.setStyle("-fx-background-color: #C0C0C0; ");
                     }
                     number++;
                     gridTwo.add(button, c, r);
