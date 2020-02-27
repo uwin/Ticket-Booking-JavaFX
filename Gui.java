@@ -1,3 +1,12 @@
+/*
+\
+\ add bubble sort to oder
+\ make temp a single array
+\
+\
+\
+\
+ */
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
