@@ -109,6 +109,7 @@ public class Gui extends Application {
         username.setPromptText("enter name");
         grid.add(username, 3, 3, 7, 4);
         Button okBut = new Button("ok");
+        okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
             if (username.getText().trim().isEmpty()) {
                 //open a alert <<<<<<window.close();
@@ -125,7 +126,11 @@ public class Gui extends Application {
         });
         grid.add(okBut, 7, 6);
         Button closeBut = new Button("close");
-        closeBut.setOnAction(event -> window.close());
+        closeBut.setStyle("-fx-background-color: #ab0000; ");
+        closeBut.setOnAction(event -> {
+            window.close();
+            options(nameList, seatList);
+        });
         grid.add(closeBut, 9, 6);
         window.show();
     }
@@ -152,12 +157,13 @@ public class Gui extends Application {
                 }
             }
         }
-        Button cancelBut = new Button("Close");
-        cancelBut.setOnAction(event -> {
+        Button closeBut = new Button("Close");
+        closeBut.setStyle("-fx-background-color: #ab0000; ");
+        closeBut.setOnAction(event -> {
             window.close();
             options(nameList, seatList);
         });
-        gridTwo.add(cancelBut,9,6);
+        gridTwo.add(closeBut,9,6);
         window.show();
     }
     public void emptyOption(List nameList, List seatList){
@@ -177,7 +183,7 @@ public class Gui extends Application {
                     button. setId(String.valueOf(number));
                     if (seatList.contains(String.valueOf(number))){
                         button.setText("X");
-                        button.setStyle("-fx-background-color: #C0C0C0; ");
+                        button.setStyle("-fx-background-color: #A9A9A9; ");
                     }else{
                         button.setStyle("");
                     }
@@ -186,12 +192,13 @@ public class Gui extends Application {
                 }
             }
         }
-        Button cancelBut = new Button("Close");
-        cancelBut.setOnAction(event -> {
+        Button closeBut = new Button("Close");
+        closeBut.setStyle("-fx-background-color: #ab0000; ");
+        closeBut.setOnAction(event -> {
             window.close();
             options(nameList, seatList);
         });
-        gridTwo.add(cancelBut,9,6);
+        gridTwo.add(closeBut,9,6);
         window.show();
     }
     public void deleteOption(List nameList, List seatList){
