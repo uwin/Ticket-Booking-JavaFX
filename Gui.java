@@ -1,96 +1,22 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Gui extends Application {
-    List<String> seatList = new ArrayList<>();
-    List<String> nameList = new ArrayList<>();
     public static void main(String[] args) {
         launch();
     }
     @Override
-    public void start(Stage stage) {welcome();}
-    /*
-        public String getName(String confirmUserSeat) {
-            return confirmUserSeat;
-        }
-        public String getSeat(String confirmUserSeat) {
-            return confirmUserSeat;
-        }
-
-        public void booking(String tempUserSeat, String tempUserName) {
-            System.out.println(getSeat(tempUserSeat) + getName(tempUserName));
-            seatList.add(tempUserSeat);
-            nameList.add((tempUserName));
-            options();
-        }
-        public void confirmAlert(String title, String message, TextField username) {
-
-            confirmBut.setOnAction(e -> {
-                username.setText("");
-                tempUserSeat = "0";
-                window.close();
-                booking(message, title);
-
-            });
-
-            Button cancelBut = new Button("Cancel");
-            cancelBut.setOnAction(event -> {
-                username.setText("");
-                window.close();
-                //window.show();;
-                booking("", "");
-            });
-
-            VBox layout = new VBox(10);
-            layout.getChildren().addAll(label, confirmBut, cancelBut);
-            layout.setAlignment(Pos.CENTER);
-
-            //Display window and wait for it to be closed before returning
-            Scene viewConfi = new Scene(layout);
-            window.setScene(viewConfi);
-            window.showAndWait();
-        }
-        public void emptyFieldAlert() {
-            Stage window = new Stage();
-
-            //Block events to other windows
-            window.initModality(Modality.APPLICATION_MODAL);
-            window.setTitle("Alert");
-            window.setMinWidth(300);
-
-            Label label = new Label();
-            label.setText("enter your name and select a seat");
-
-            Button okayBut = new Button("okay");
-            okayBut.setOnAction(event -> {
-                window.close();
-                booking("", "");
-                //window.show();
-            });
-
-            VBox layout = new VBox(10);
-            layout.getChildren().addAll(label, okayBut);
-            layout.setAlignment(Pos.CENTER);
-
-            //Display window and wait for it to be closed before returning
-            Scene emptyviewFeild = new Scene(layout);
-            window.setScene(emptyviewFeild);
-            window.show();
-
-        }
-     */
-    private void addOption(){
+    public void start(Stage stage) {
+        welcome();
+    }
+    public void addOption(List nameList, List seatList){
         Stage window = new Stage();
         int number;
         GridPane grid = new GridPane();
@@ -132,11 +58,11 @@ public class Gui extends Application {
             if (username.getText().trim().isEmpty()) {
                 //open a alert <<<<<<window.close();
                 window.close();
-                addOption();
+                addOption(nameList,seatList);
             } else {
                 nameList.add(username.getText());
                 window.close();
-                options();
+                options(nameList, seatList);
             }
         });
         grid.add(okBut, 7, 6);
@@ -148,7 +74,7 @@ public class Gui extends Application {
 
         window.show();
     }
-    public void viewOption(){
+    public void viewOption(List nameList, List seatList){
         Stage window= new Stage();
         int number;
         GridPane gridTwo = new GridPane();
@@ -176,12 +102,12 @@ public class Gui extends Application {
         Button cancelBut = new Button("Close");
         cancelBut.setOnAction(event -> {
             window.close();
-            options();
+            options(nameList, seatList);
         });
         gridTwo.add(cancelBut,9,6);
         window.show();
     }
-    public void emptyOption(){
+    public void emptyOption(List nameList, List seatList){
         Stage window= new Stage();
         int number;
         GridPane gridTwo = new GridPane();
@@ -211,13 +137,13 @@ public class Gui extends Application {
         Button cancelBut = new Button("Close");
         cancelBut.setOnAction(event -> {
             window.close();
-            options();
+            options(nameList, seatList);
         });
 
         gridTwo.add(cancelBut,9,6);
         window.show();
     }
-    public void deleteOption(){
+    public void deleteOption(List nameList, List seatList){
         System.out.println(seatList);
         System.out.println(nameList);
         Scanner scanSeat = new Scanner(System.in);
@@ -226,13 +152,15 @@ public class Gui extends Application {
         int delete= seatList.indexOf(deleteValues);
         seatList.remove(delete);
         nameList.remove(delete);
-        options();
+        options(nameList, seatList);
     }
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
-        options();
+        List<String> seatList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        options(nameList, seatList);
     }
-    public void options() {
+    public void options(List nameList, List seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -242,24 +170,24 @@ public class Gui extends Application {
                 "S Save details\n"+
                 "L Load details\n"+
                 "O List seats\n");
-        optionsTest();
+        optionsTest(nameList,seatList);
     }
-    public void optionsTest(){
+    public void optionsTest(List nameList, List seatList){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
             case "A":           //add
-                addOption();
+                addOption(nameList,seatList);
                 break;
             case "V":     //view
-                viewOption();
+                viewOption(nameList,seatList);
                 break;
             case "E":     //empty
-                emptyOption();
+                emptyOption(nameList,seatList);
                 break;
             case "D":     //delete
-                deleteOption();
+                deleteOption(nameList,seatList);
                 break;
             case "F":     //find
                 break;
@@ -273,7 +201,7 @@ public class Gui extends Application {
                 System.exit(0);
             default:
                 System.out.println("invalid input");
-                options();
+                options(nameList, seatList);
                 break;
         }
     }
