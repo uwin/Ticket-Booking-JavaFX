@@ -14,6 +14,7 @@ public class Gui extends Application {
     public void start(Stage stage) {
         welcome();
     }
+    static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
         launch();
     }
@@ -83,7 +84,7 @@ public class Gui extends Application {
         number = 1;
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
-                if (number != 43) {
+                if (number <=SEATING_CAPACITY) {
                     Button button = new Button(String.valueOf(number));
                     button.setId(String.valueOf(number));
                     if (seatList.contains(button.getId())) button.setStyle("-fx-background-color: #ff0000; ");
@@ -133,7 +134,7 @@ public class Gui extends Application {
         number = 1;
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
-                if (number != 43) {
+                if (number <=SEATING_CAPACITY) {
                     Button button = new Button(String.valueOf(number));
                     button.setId(String.valueOf(number));
                     if (seatList.contains(String.valueOf(number))){
@@ -164,7 +165,7 @@ public class Gui extends Application {
         number = 1;
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
-                if (number != 43) {
+                if (number <=SEATING_CAPACITY) {
                     Button button = new Button(String.valueOf(number));
                     button. setId(String.valueOf(number));
                     if (seatList.contains(String.valueOf(number))){
