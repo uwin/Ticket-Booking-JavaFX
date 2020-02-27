@@ -12,113 +12,35 @@ import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 public class Gui extends Application {
-    Stage window;
-    String tempuserSeat = "0";
-    List<String> seatlist = new ArrayList<>();
+    //String tempUserSeat = "0";
+    List<String> seatList = new ArrayList<>();
+    List<String> nameList = new ArrayList<>();
     public static void main(String[] args) {
         launch();
     }
     @Override
     public void start(Stage stage) {
-        window = stage;
-        int number;
-//-----------------------------------------------------------------------------------//
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(5, 2, 5, 2));
-        grid.setHgap(10);
-        grid.setVgap(10);
-        Scene sceneone = new Scene(grid, 400, 220);
-        window.setScene(sceneone);
-
-        //seat grid
-        number = 1;
-        for (int r = 0; r < 5; r++) {
-            for (int c = 0; c < 10; c++) {
-                if (number != 43) {
-                    Button button = new Button(String.valueOf(number));
-                    button.setId(String.valueOf(number));
-                    button.setOnAction(event -> {
-                        if (tempuserSeat.equals("0")) {
-                            tempuserSeat = button.getId();
-                            button.setStyle("-fx-background-color: #ff0000; ");
-                            //getseat(tempuserSeat);
-                        } else {
-                            if (button.getId().equals(tempuserSeat)) {
-                                button.setStyle("");
-                                tempuserSeat = "0";
-                            }
-                        }
-                    });
-                    number++;
-                    grid.add(button, c, r);
-                }
-            }
-        }
-        //username field
-        TextField username = new TextField();
-        username.setPromptText("enter name");
-        grid.add(username, 3, 3, 7, 4);
-
-        //booking confirm button
-        Button okbut = new Button("ok");
-        okbut.setOnAction(event -> {
-            if (username.getText().trim().isEmpty() || tempuserSeat.equals("0")) {
-                emptyfeildAlert();
-                //System.out.println("select seat or name");
-            } else {
-                String tempuserName = username.getText();
-                String tName = getname(tempuserName);
-                String tSeat = getseat(tempuserSeat);
-                confirmAlert(tName, tSeat, username);
-            }
-        });
-        grid.add(okbut, 7, 6);
-        //program close button
-        Button closebut = new Button("close");
-        closebut.setOnAction(event -> {
-            System.out.println("programe will close");
-            tempuserSeat = "0";
-            window.close();
-        });
-        grid.add(closebut, 9, 6);
-
-//------------------------------------------------------------------------/
         welcome();
     }
-    public String getname(String tempuserName) {
-        return tempuserName;
-
+    /*
+    public String getName(String tempUserName) {
+        return tempUserName;
     }
-    public String getseat(String tempuserSeat) {
-        return tempuserSeat;
+    public String getSeat(String tempUserSeat) {
+        return tempUserSeat;
     }
-    public void booking(String tempuserSeat, String tempuserName) {
-        if (tempuserName.equals("") && tempuserSeat.equals("")) {
-            window.show();
-        } else {
-            System.out.println(getseat(tempuserSeat) + getname(tempuserName));
-            seatlist.add(tempuserSeat);
-            window.close();
-            options();
-        }
+    public void booking(String tempUserSeat, String tempUserName) {
+        //System.out.println(getSeat(tempUserSeat) + getName(tempUserName));
+        //seatList.add(tempUserSeat);
+        //nameList.add((tempUserName));
+        //options();
     }
-
     public void confirmAlert(String title, String message, TextField username) {
-        Stage window = new Stage();
 
-        //Block events to other windows
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("confirm your seat");
-        window.setMinWidth(300);
-
-        Label label = new Label();
-        label.setText("seat no: " + message + "\n Username " + title);
-        Button closeBut = new Button("Confirm");
-        closeBut.setOnAction(e -> {
+        confirmBut.setOnAction(e -> {
             username.setText("");
-            tempuserSeat = "0";
+            tempUserSeat = "0";
             window.close();
             booking(message, title);
 
@@ -133,15 +55,15 @@ public class Gui extends Application {
         });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, closeBut, cancelBut);
+        layout.getChildren().addAll(label, confirmBut, cancelBut);
         layout.setAlignment(Pos.CENTER);
 
         //Display window and wait for it to be closed before returning
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
+        Scene viewConfi = new Scene(layout);
+        window.setScene(viewConfi);
         window.showAndWait();
     }
-    public void emptyfeildAlert() {
+    public void emptyFieldAlert() {
         Stage window = new Stage();
 
         //Block events to other windows
@@ -164,25 +86,90 @@ public class Gui extends Application {
         layout.setAlignment(Pos.CENTER);
 
         //Display window and wait for it to be closed before returning
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
+        Scene emptyviewFeild = new Scene(layout);
+        window.setScene(emptyviewFeild);
         window.show();
 
     }
-
-    private void addoption(){
-        window.show();
-    }
-    public void viewoption(){
-        Stage window= new Stage();
-        //window.initModality(Modality.NONE);
+ */
+    private void addOption(){
+        Stage window = new Stage();
         int number;
-        GridPane gridtwo = new GridPane();
-        gridtwo.setPadding(new Insets(5, 2, 5, 2));
-        gridtwo.setHgap(10);
-        gridtwo.setVgap(10);
-        Scene scenetwo = new Scene(gridtwo, 400, 220);
-        window.setScene(scenetwo);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(5, 2, 5, 2));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        Scene addView = new Scene(grid, 400, 220);
+        window.setScene(addView);
+
+        //seat grid
+        number = 1;
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 10; c++) {
+                if (number != 43) {
+                    Button button = new Button(String.valueOf(number));
+                    button.setId(String.valueOf(number));
+                    button.setOnAction(event -> {
+                        if (/*tempUserSeat.equals("0")*/) {
+                            userSeat = button.getId();
+                            button.setStyle("-fx-background-color: #ff0000; ");
+                        } else {
+                            if (/*button.getId().equals(tempUserSeat*/)) {
+                                button.setStyle("");
+                                /*tempUserSeat = "0";*/
+                            }
+                        }
+                    });
+                    number++;
+                    grid.add(button, c, r);
+                }
+            }
+        }
+        //username field
+        TextField username = new TextField();
+        username.setPromptText("enter name");
+        grid.add(username, 3, 3, 7, 4);
+
+        //booking confirm button
+        Button okBut = new Button("ok");
+        okBut.setOnAction(event -> {
+            if (username.getText().trim().isEmpty() ||userSeat.getText().trim().isEmpty() /*tempUserSeat.equals("0")*/) {
+                window.close();
+                //booking("", "");
+                //emptyFieldAlert();
+            } else {
+                String tempUserName = username.getText();
+//                String tName = getName(tempUserName);
+//                String tSeat = getSeat(tempUserSeat);
+                username.setText("");
+                //tempUserSeat = "0";
+                window.close();
+                //seatList.add(tempUserSeat);
+                //nameList.add((tempUserName));
+                //booking(tSeat, tName);
+                //confirmAlert(tName, tSeat, username);
+            }
+        });
+        grid.add(okBut, 7, 6);
+        //program close button
+        Button closeBut = new Button("close");
+        closeBut.setOnAction(event -> {
+            System.out.println("programme will close");
+            tempUserSeat = "0";
+            window.close();
+        });
+        grid.add(closeBut, 9, 6);
+        window.show();
+    }
+    public void viewOption(){
+        Stage window= new Stage();
+        int number;
+        GridPane gridTwo = new GridPane();
+        gridTwo.setPadding(new Insets(5, 2, 5, 2));
+        gridTwo.setHgap(10);
+        gridTwo.setVgap(10);
+        Scene viewSeat = new Scene(gridTwo, 400, 220);
+        window.setScene(viewSeat);
 
         number = 1;
         for (int r = 0; r < 5; r++) {
@@ -190,11 +177,11 @@ public class Gui extends Application {
                 if (number != 43) {
                     Button button = new Button(String.valueOf(number));
                     button.setId(String.valueOf(number));
-                    if (seatlist.contains(String.valueOf(number))){
+                    if (seatList.contains(String.valueOf(number))){
                         button.setStyle("-fx-background-color: #ff0000; ");
                     }
                     number++;
-                    gridtwo.add(button, c, r);
+                    gridTwo.add(button, c, r);
                 }
             }
         }
@@ -204,34 +191,33 @@ public class Gui extends Application {
             window.close();
             options();
         });
-        gridtwo.add(cancelBut,9,6);
+        gridTwo.add(cancelBut,9,6);
         window.show();
     }
-    public void emptyoption(){
+    public void emptyOption(){
         Stage window= new Stage();
-        //window.initModality(Modality.NONE);
         int number;
-        GridPane gridtwo = new GridPane();
-        gridtwo.setPadding(new Insets(5, 2, 5, 2));
-        gridtwo.setHgap(10);
-        gridtwo.setVgap(10);
-        Scene scenetwo = new Scene(gridtwo, 400, 220);
-        window.setScene(scenetwo);
+        GridPane gridTwo = new GridPane();
+        gridTwo.setPadding(new Insets(5, 2, 5, 2));
+        gridTwo.setHgap(10);
+        gridTwo.setVgap(10);
+        Scene viewEmpty = new Scene(gridTwo, 400, 220);
+        window.setScene(viewEmpty);
 
         number = 1;
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
                 if (number != 43) {
                     Button button = new Button(String.valueOf(number));
-                    button.setId(String.valueOf(number));
-                    if (seatlist.contains(String.valueOf(number))){
+                    button. setId(String.valueOf(number));
+                    if (seatList.contains(String.valueOf(number))){
                         button.setText("X");
                         button.setStyle("-fx-background-color: #C0C0C0; ");
                     }else{
                         button.setStyle("");
                     }
                     number++;
-                    gridtwo.add(button, c, r);
+                    gridTwo.add(button, c, r);
                 }
             }
         }
@@ -240,10 +226,21 @@ public class Gui extends Application {
             window.close();
             options();
         });
-        gridtwo.add(cancelBut,9,6);
+
+        gridTwo.add(cancelBut,9,6);
         window.show();
     }
-
+    public void deleteOption(){
+        System.out.println(seatList);
+        System.out.println(nameList);
+        Scanner scanSeat = new Scanner(System.in);
+        System.out.println("enter your seat number");
+        String deleteValues= scanSeat.next();
+        int delete= seatList.indexOf(deleteValues);
+        seatList.remove(delete);
+        nameList.remove(delete);
+        options();
+    }
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         options();
@@ -258,24 +255,24 @@ public class Gui extends Application {
                 "S Save details\n"+
                 "L Load details\n"+
                 "O List seats\n");
-        optionstest();
+        optionsTest();
     }
-    public void optionstest(){
-        Scanner scanoption= new Scanner(System.in);
+    public void optionsTest(){
+        Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
-        String userOption= scanoption.next().toUpperCase();
-
+        String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
             case "A":           //add
-                addoption();
+                addOption();
                 break;
             case "V":     //view
-                viewoption();
+                viewOption();
                 break;
             case "E":     //empty
-                emptyoption();
+                emptyOption();
                 break;
             case "D":     //delete
+                deleteOption();
                 break;
             case "F":     //find
                 break;
