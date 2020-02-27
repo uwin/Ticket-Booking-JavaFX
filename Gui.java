@@ -5,6 +5,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,8 +60,18 @@ public class Gui extends Application {
                 findOption(nameList,seatList);
                 break;
             case "S":     //save
+                try {
+                    saveOption(nameList, seatList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "L":      //load
+                try {
+                    loadOption(nameList,seatList);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "O":      //view
                 oderOption(nameList,seatList);
@@ -111,7 +123,7 @@ public class Gui extends Application {
         Button okBut = new Button("ok");
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
-            if (username.getText().trim().isEmpty()) {
+            if (username.getText().trim().isEmpty()|| temp.equals("0")) {
                 //open a alert <<<<<<window.close();
                 window.close();
                 addOption(nameList,seatList);
@@ -205,10 +217,14 @@ public class Gui extends Application {
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your seat number: ");
         String deleteValues= scanSeat.next();
-        int delete= seatList.indexOf(deleteValues);
-        seatList.remove(delete);
-        nameList.remove(delete);
-        options(nameList, seatList);
+        if (seatList.contains(deleteValues)){
+            int delete= seatList.indexOf(deleteValues);
+            seatList.remove(delete);
+            nameList.remove(delete);
+        }else{
+            System.out.println("your seat no is not booked");
+        }
+        consoleWait(nameList,seatList);
     }
     public void findOption(List nameList, List seatList){
         Scanner scanSeat = new Scanner(System.in);
@@ -216,16 +232,40 @@ public class Gui extends Application {
         String findName= scanSeat.next();
         int delete= nameList.indexOf(findName);
         System.out.println("your seat number is: "+seatList.get(delete));
-        Scanner scanContinue = new Scanner(System.in);
-        System.out.println("Press any key to continue");
-        String continueConsole=scanContinue.next();
-        if (continueConsole.isEmpty()){
-        }else {
-            options(nameList, seatList);
-        }
+        consoleWait(nameList,seatList);
     }
-    public void saveOption(){}
-    public void loadOption(){}
+    public void saveOption(List nameList,List seatList) throws IOException {
+        PrintWriter saveseats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
+        for( int x = 0; x < seatList.size(); x++)
+        {
+            saveseats.println(seatList.get(x));
+        }
+
+        saveseats.close();
+        PrintWriter savenames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
+        for( int x = 0; x < nameList.size(); x++)
+        {
+            savenames.println(nameList.get(x));
+        }
+
+        savenames.close();
+        consoleWait(nameList,seatList);
+    }
+    public void loadOption(List nameList,List seatList) throws FileNotFoundException {
+        Scanner scanseats = new Scanner(new File("seats.txt"));
+
+        while(scanseats.hasNext())
+        {
+            seatList.add(scanseats.next());
+        }
+        Scanner scannames = new Scanner(new File("names.txt"));
+
+        while(scannames.hasNext())
+        {
+            seatList.add(scannames.next());
+        }
+        consoleWait(nameList,seatList);
+    }
     public void oderOption(List nameList, List seatList){
         List<String> sortlist= new ArrayList<String>(nameList);
         Collections.sort(sortlist);
@@ -238,6 +278,9 @@ public class Gui extends Application {
                 System.out.println(" "+(seatList.get(sortedIndex))+": "+str);
             }
         }
+        consoleWait(nameList,seatList);
+    }
+    public void consoleWait(List nameList, List seatList){
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
