@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 public class Gui extends Application {
@@ -59,6 +60,7 @@ public class Gui extends Application {
             case "L":      //load
                 break;
             case "O":      //view
+                oderOption(nameList,seatList);
                 break;
             case "Q":
                 System.exit(0);
@@ -68,6 +70,7 @@ public class Gui extends Application {
                 break;
         }
     }
+
     public void addOption(List nameList, List seatList){
         Stage window = new Stage();
         int number;
@@ -198,6 +201,28 @@ public class Gui extends Application {
         String findName= scanSeat.next();
         int delete= nameList.indexOf(findName);
         System.out.println("your seat number is: "+seatList.get(delete));
+        Scanner scanContinue = new Scanner(System.in);
+        System.out.println("Press any key to continue");
+        String continueConsole=scanContinue.next();
+        if (continueConsole.isEmpty()){
+        }else {
+            options(nameList, seatList);
+        }
+    }
+    public void saveOption(){}
+    public void loadOption(){}
+    public void oderOption(List nameList, List seatList){
+        List<String> sortlist= new ArrayList<String>(nameList);
+        Collections.sort(sortlist);
+        for(Object str: sortlist) {
+            String i = (String) str;
+            if (i.equals("0")){
+                System.out.print("");
+            }else {
+                int sortedIndex = nameList.indexOf(str);
+                System.out.println(" "+(seatList.get(sortedIndex))+": "+str);
+            }
+        }
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
