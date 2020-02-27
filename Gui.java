@@ -17,7 +17,7 @@ public class Gui extends Application {
         welcome();
     }
     static final int SEATING_CAPACITY = 42;
-    String temp="0";
+    String temp="0"; //make this a single item list
     public static void main(String[] args) {
         launch();
     }
