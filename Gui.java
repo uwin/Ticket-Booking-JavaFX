@@ -107,11 +107,11 @@ public class Gui extends Application {
                     if (seatList.contains(button.getId())) button.setStyle("-fx-background-color: #C0C0C0; ");
                     button.setOnAction(event -> {
                         if (seatList.contains(button.getId())){
-                            //button.setStyle("-fx-background-color: #ff6347; ");
+                            button.setStyle("-fx-background-color: #ff6347; ");
                         }else if (temp.contains("0")){
                             temp.set(0,button.getId());
                             button.setStyle("-fx-background-color: #00ff00; ");
-                        }else if(button.getId().equals(temp)) {
+                        }else if(temp.contains(button.getId())){
                                 button.setStyle("");
                                 temp.set(0,"0");
                             }
