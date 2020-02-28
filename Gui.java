@@ -243,16 +243,14 @@ public class Gui extends Application {
     }
     public void saveOption(List <String> nameList,List <String> seatList) throws IOException {
         PrintWriter saveseats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
-        for( int x = 0; x < seatList.size(); x++)
-        {
-            saveseats.println(seatList.get(x));
+        for (String s : seatList) {
+            saveseats.println(s);
         }
 
         saveseats.close();
         PrintWriter savenames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
-        for( int x = 0; x < nameList.size(); x++)
-        {
-            savenames.println(nameList.get(x));
+        for (String s : nameList) {
+            savenames.println(s);
         }
 
         savenames.close();
@@ -290,9 +288,9 @@ public class Gui extends Application {
     }
     public void consoleWait(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
-        System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
         if (continueConsole.isEmpty()){
+            System.out.println("Press any key to continue");
         }else {
             options(nameList, seatList);
         }
