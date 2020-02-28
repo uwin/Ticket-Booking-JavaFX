@@ -72,7 +72,7 @@ public class Console{
         return scanUserName.next();
     }
     //A  gui needed
-    public static void getseat(String userName, List seatList){
+    public static void getseat(String userName, List <String> seatList){
         try {
             Scanner scanseat = new Scanner(System.in);
             System.out.println("Enter seat number");
@@ -86,7 +86,7 @@ public class Console{
         options(seatList);
     }
     //V  gui needed
-    public static void getVeiw(List seatList){
+    public static void getVeiw(List <String> seatList){
         int c=1;
         for (Object i : seatList) {
             System.out.print(c++ +": ");
@@ -95,7 +95,7 @@ public class Console{
         options(seatList);
     }
     //E  gui needed
-    public static void getempty(List seatList){
+    public static void getempty(List <String> seatList){
         int c=0;
         for (Object i : seatList) {
             c++;
@@ -107,14 +107,14 @@ public class Console{
         options(seatList);
     }
     //D console
-    public static void getdelete(List seatList, String userName){
+    public static void getdelete(List <String> seatList, String userName){
         int scandelete = seatList.indexOf(userName);
-        seatList.set(scandelete,0);
+        seatList.set(scandelete,"0");
 
         options(seatList);
     }
     //F console
-    public static void getfind(List seatList, String userName){
+    public static void getfind(List <String> seatList, String userName){
         int scanfind = seatList.indexOf(userName);
         System.out.println("seat no for" +userName+ "is" +scanfind);
         options(seatList);
@@ -128,7 +128,7 @@ public class Console{
         System.out.println("e");
     }
     //O console?
-    public static void getlist(List seatList){
+    public static void getlist(List <String> seatList){
         List<String> sortlist= new ArrayList<String>(seatList);
         Collections.sort(sortlist);
         for(Object str: sortlist) {
