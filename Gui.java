@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -242,32 +241,32 @@ public class Gui extends Application {
         consoleWait(nameList,seatList);
     }
     public void saveOption(List <String> nameList,List <String> seatList) throws IOException {
-        PrintWriter saveseats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
+        PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
         for (String s : seatList) {
-            saveseats.println(s);
+            saveSeats.println(s);
         }
 
-        saveseats.close();
-        PrintWriter savenames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
+        saveSeats.close();
+        PrintWriter saveNames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
         for (String s : nameList) {
-            savenames.println(s);
+            saveNames.println(s);
         }
 
-        savenames.close();
+        saveNames.close();
         consoleWait(nameList,seatList);
     }
     public void loadOption(List <String> nameList,List <String> seatList) throws FileNotFoundException {
-        Scanner scanseats = new Scanner(new File("seats.txt"));
+        Scanner scanSeats = new Scanner(new File("seats.txt"));
 
-        while(scanseats.hasNext())
+        while(scanSeats.hasNext())
         {
-            seatList.add(scanseats.next());
+            seatList.add(scanSeats.next());
         }
-        Scanner scannames = new Scanner(new File("names.txt"));
+        Scanner scanNames = new Scanner(new File("names.txt"));
 
-        while(scannames.hasNext())
+        while(scanNames.hasNext())
         {
-            nameList.add(scannames.next());
+            nameList.add(scanNames.next());
         }
         consoleWait(nameList,seatList);
     }
