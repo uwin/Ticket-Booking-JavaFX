@@ -26,10 +26,10 @@ public class Gui extends Application {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
-        optionsList(nameList, seatList);
+        listOption(nameList, seatList);
     }
 
-    public void  optionsList(List <String> nameList, List <String> seatList) {
+    public void   listOption(List <String> nameList, List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -39,9 +39,9 @@ public class Gui extends Application {
                 "S Save details\n"+
                 "L Load details\n"+
                 "O List seats\n");
-        optionsRun(nameList,seatList);
+        runOption(nameList,seatList);
     }
-    public void   optionsRun(List <String> nameList, List <String> seatList){
+    public void    runOption(List <String> nameList, List <String> seatList){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
@@ -82,7 +82,7 @@ public class Gui extends Application {
                 System.exit(0);
             default:
                 System.out.println("invalid input");
-                optionsList(nameList, seatList);
+                listOption(nameList, seatList);
                 break;
         }
     }
@@ -137,7 +137,7 @@ public class Gui extends Application {
                 temp.set(0,"0");
                 System.out.println(nameList+"\n"+seatList);
                 window.close();
-                optionsList(nameList, seatList);
+                listOption(nameList, seatList);
             }
         });
         grid.add(okBut, 7, 6);
@@ -145,7 +145,7 @@ public class Gui extends Application {
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
-            optionsList(nameList, seatList);
+            listOption(nameList, seatList);
         });
         grid.add(closeBut, 9, 6);
         window.show();
@@ -177,7 +177,7 @@ public class Gui extends Application {
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
-            optionsList(nameList, seatList);
+            listOption(nameList, seatList);
         });
         gridTwo.add(closeBut,9,6);
         window.show();
@@ -212,7 +212,7 @@ public class Gui extends Application {
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
-            optionsList(nameList, seatList);
+            listOption(nameList, seatList);
         });
         gridTwo.add(closeBut,9,6);
         window.show();
@@ -293,7 +293,7 @@ public class Gui extends Application {
         if (continueConsole.isEmpty()){
             System.out.println("Press any key to continue");
         }else {
-            optionsList(nameList, seatList);
+            listOption(nameList, seatList);
         }
     }
 }
