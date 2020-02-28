@@ -1,7 +1,6 @@
 /*
-\
-\ add bubble sort to oder
-\
+\ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
+\ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
  */
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -276,18 +275,19 @@ public class Gui extends Application {
         consoleWait(nameList,seatList);
     }
     public void oderOption(List nameList, List seatList){
-        List<String> sortlist= new ArrayList<String>(nameList);
-        Collections.sort(sortlist);
-        for(Object str: sortlist) {
-            String i = (String) str;
-            if (i.equals("0")){
-                System.out.print("");
-            }else {
-                int sortedIndex = nameList.indexOf(str);
-                System.out.println(" "+(seatList.get(sortedIndex))+": "+str);
+        String sortTemp;
+        System.out.println("Strings in sorted order:");
+        for (int j = 0; j < nameList.size(); j++) {
+            for (int i = j + 1; i < nameList.size(); i++) {
+                // comparing adjacent strings
+                if (String.valueOf(nameList.get(i)).compareTo(String.valueOf(nameList.get(j))) < 0) {
+                    sortTemp = String.valueOf(nameList.get(j));
+                    nameList.set(j, nameList.get(i));
+                    nameList.set(i, sortTemp);
+                }
             }
+            System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        consoleWait(nameList,seatList);
     }
     public void consoleWait(List nameList, List seatList){
         Scanner scanContinue = new Scanner(System.in);
