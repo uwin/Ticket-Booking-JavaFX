@@ -26,9 +26,9 @@ public class Gui extends Application {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
-        options(nameList, seatList);
+        optionsList(nameList, seatList);
     }
-    public void options(List <String> nameList, List <String> seatList) {
+    public void optionsList(List <String> nameList, List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -38,14 +38,14 @@ public class Gui extends Application {
                 "S Save details\n"+
                 "L Load details\n"+
                 "O List seats\n");
-        optionsTest(nameList,seatList);
+        optionsRun(nameList,seatList);
     }
-    public void optionsTest(List <String> nameList, List <String> seatList){
+    public void optionsRun(List <String> nameList, List <String> seatList){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
-            case "A":           //add
+            case "A":     //add
                 addOption(nameList,seatList);
                 break;
             case "V":     //view
@@ -77,11 +77,11 @@ public class Gui extends Application {
             case "O":      //view
                 oderOption(nameList,seatList);
                 break;
-            case "Q":
+            case "Q":      //quit
                 System.exit(0);
             default:
                 System.out.println("invalid input");
-                options(nameList, seatList);
+                optionsList(nameList, seatList);
                 break;
         }
     }
@@ -136,7 +136,7 @@ public class Gui extends Application {
                 temp.set(0,"0");
                 System.out.println(nameList+"\n"+seatList);
                 window.close();
-                options(nameList, seatList);
+                optionsList(nameList, seatList);
             }
         });
         grid.add(okBut, 7, 6);
@@ -144,7 +144,7 @@ public class Gui extends Application {
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
-            options(nameList, seatList);
+            optionsList(nameList, seatList);
         });
         grid.add(closeBut, 9, 6);
         window.show();
@@ -176,7 +176,7 @@ public class Gui extends Application {
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
-            options(nameList, seatList);
+            optionsList(nameList, seatList);
         });
         gridTwo.add(closeBut,9,6);
         window.show();
@@ -211,7 +211,7 @@ public class Gui extends Application {
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
-            options(nameList, seatList);
+            optionsList(nameList, seatList);
         });
         gridTwo.add(closeBut,9,6);
         window.show();
@@ -284,6 +284,7 @@ public class Gui extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
+        consoleWait(nameList,seatList);
     }
     public void consoleWait(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
@@ -291,7 +292,7 @@ public class Gui extends Application {
         if (continueConsole.isEmpty()){
             System.out.println("Press any key to continue");
         }else {
-            options(nameList, seatList);
+            optionsList(nameList, seatList);
         }
     }
 }
