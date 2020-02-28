@@ -20,10 +20,10 @@ public class Console{
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         startbooking(list());
     }
-    public static void startbooking(List  seatList){
+    public static void startbooking(List <String>  seatList){
         options(seatList);
     }
-    public static void options(List seatList) {
+    public static void options(List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -35,7 +35,7 @@ public class Console{
                 "O List seats\n");
         optionstest(seatList);
     }
-    public static void optionstest(List seatList){
+    public static void optionstest(List <String> seatList){
         Scanner scanoption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanoption.next().toUpperCase();
