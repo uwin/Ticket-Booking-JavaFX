@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 public class Gui extends Application {
@@ -30,7 +29,7 @@ public class Gui extends Application {
         List<String> nameList = new ArrayList<>();
         options(nameList, seatList);
     }
-    public void options(List nameList, List seatList) {
+    public void options(List <String> nameList, List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -42,7 +41,7 @@ public class Gui extends Application {
                 "O List seats\n");
         optionsTest(nameList,seatList);
     }
-    public void optionsTest(List nameList, List seatList){
+    public void optionsTest(List <String> nameList, List <String> seatList){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
@@ -88,7 +87,7 @@ public class Gui extends Application {
         }
     }
 
-    public void addOption(List nameList, List seatList){
+    public void addOption(List <String> nameList, List <String> seatList){
         Stage window = new Stage();
         int number;
         List<String> temp = new ArrayList<>();
@@ -151,7 +150,7 @@ public class Gui extends Application {
         grid.add(closeBut, 9, 6);
         window.show();
     }
-    public void viewOption(List nameList, List seatList){
+    public void viewOption(List <String> nameList, List <String> seatList){
         Stage window= new Stage();
         int number;
         GridPane gridTwo = new GridPane();
@@ -183,7 +182,7 @@ public class Gui extends Application {
         gridTwo.add(closeBut,9,6);
         window.show();
     }
-    public void emptyOption(List nameList, List seatList){
+    public void emptyOption(List <String> nameList, List <String> seatList){
         Stage window= new Stage();
         int number;
         GridPane gridTwo = new GridPane();
@@ -218,7 +217,7 @@ public class Gui extends Application {
         gridTwo.add(closeBut,9,6);
         window.show();
     }
-    public void deleteOption(List nameList, List seatList){
+    public void deleteOption(List <String> nameList, List <String> seatList){
         System.out.println(nameList+"\n"+seatList);
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your seat number: ");
@@ -234,7 +233,7 @@ public class Gui extends Application {
         }
         consoleWait(nameList,seatList);
     }
-    public void findOption(List nameList, List seatList){
+    public void findOption(List <String> nameList, List <String> seatList){
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your name: ");
         String findName= scanSeat.next();
@@ -242,7 +241,7 @@ public class Gui extends Application {
         System.out.println("your seat number is: "+seatList.get(delete));
         consoleWait(nameList,seatList);
     }
-    public void saveOption(List nameList,List seatList) throws IOException {
+    public void saveOption(List <String> nameList,List <String> seatList) throws IOException {
         PrintWriter saveseats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
         for( int x = 0; x < seatList.size(); x++)
         {
@@ -259,7 +258,7 @@ public class Gui extends Application {
         savenames.close();
         consoleWait(nameList,seatList);
     }
-    public void loadOption(List nameList,List seatList) throws FileNotFoundException {
+    public void loadOption(List <String> nameList,List <String> seatList) throws FileNotFoundException {
         Scanner scanseats = new Scanner(new File("seats.txt"));
 
         while(scanseats.hasNext())
@@ -274,7 +273,7 @@ public class Gui extends Application {
         }
         consoleWait(nameList,seatList);
     }
-    public void oderOption(List nameList, List seatList){
+    public void oderOption(List <String> nameList, List <String> seatList){
         String sortTemp;
         System.out.println("Strings in sorted order:");
         for (int j = 0; j < nameList.size(); j++) {
@@ -289,7 +288,7 @@ public class Gui extends Application {
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
     }
-    public void consoleWait(List nameList, List seatList){
+    public void consoleWait(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
