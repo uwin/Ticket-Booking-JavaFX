@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Gui extends Application {
-    @Override
-    public void start(Stage stage) {
-        welcome();
-    }
     static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
         launch();
+    }
+    @Override
+    public void start(Stage stage) {
+        welcome();
     }
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
@@ -28,7 +28,8 @@ public class Gui extends Application {
         List<String> nameList = new ArrayList<>();
         optionsList(nameList, seatList);
     }
-    public void optionsList(List <String> nameList, List <String> seatList) {
+
+    public void  optionsList(List <String> nameList, List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -40,7 +41,7 @@ public class Gui extends Application {
                 "O List seats\n");
         optionsRun(nameList,seatList);
     }
-    public void optionsRun(List <String> nameList, List <String> seatList){
+    public void   optionsRun(List <String> nameList, List <String> seatList){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
@@ -86,7 +87,7 @@ public class Gui extends Application {
         }
     }
 
-    public void addOption(List <String> nameList, List <String> seatList){
+    public void    addOption(List <String> nameList, List <String> seatList){
         Stage window = new Stage();
         int number;
         List<String> temp = new ArrayList<>();
@@ -149,7 +150,7 @@ public class Gui extends Application {
         grid.add(closeBut, 9, 6);
         window.show();
     }
-    public void viewOption(List <String> nameList, List <String> seatList){
+    public void   viewOption(List <String> nameList, List <String> seatList){
         Stage window= new Stage();
         int number;
         GridPane gridTwo = new GridPane();
@@ -181,7 +182,7 @@ public class Gui extends Application {
         gridTwo.add(closeBut,9,6);
         window.show();
     }
-    public void emptyOption(List <String> nameList, List <String> seatList){
+    public void  emptyOption(List <String> nameList, List <String> seatList){
         Stage window= new Stage();
         int number;
         GridPane gridTwo = new GridPane();
@@ -232,7 +233,7 @@ public class Gui extends Application {
         }
         consoleWait(nameList,seatList);
     }
-    public void findOption(List <String> nameList, List <String> seatList){
+    public void   findOption(List <String> nameList, List <String> seatList){
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your name: ");
         String findName= scanSeat.next();
@@ -240,7 +241,7 @@ public class Gui extends Application {
         System.out.println("your seat number is: "+seatList.get(delete));
         consoleWait(nameList,seatList);
     }
-    public void saveOption(List <String> nameList,List <String> seatList) throws IOException {
+    public void   saveOption(List <String> nameList, List <String> seatList) throws IOException {
         PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
         for (String s : seatList) {
             saveSeats.println(s);
@@ -255,7 +256,7 @@ public class Gui extends Application {
         saveNames.close();
         consoleWait(nameList,seatList);
     }
-    public void loadOption(List <String> nameList,List <String> seatList) throws FileNotFoundException {
+    public void   loadOption(List <String> nameList, List <String> seatList) throws FileNotFoundException {
         Scanner scanSeats = new Scanner(new File("seats.txt"));
 
         while(scanSeats.hasNext())
@@ -270,7 +271,7 @@ public class Gui extends Application {
         }
         consoleWait(nameList,seatList);
     }
-    public void oderOption(List <String> nameList, List <String> seatList){
+    public void   oderOption(List <String> nameList, List <String> seatList){
         String sortTemp;
         System.out.println("Strings in sorted order:");
         for (int j = 0; j < nameList.size(); j++) {
@@ -286,7 +287,7 @@ public class Gui extends Application {
         }
         consoleWait(nameList,seatList);
     }
-    public void consoleWait(List <String> nameList, List <String> seatList){
+    public void  consoleWait(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
         String continueConsole=scanContinue.next();
         if (continueConsole.isEmpty()){
