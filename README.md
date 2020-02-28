@@ -1,2 +1,2 @@
 # ticket-booking-system-javaFX
- creating a train ticketbooking system using javafx
+ creating a train ticketBooking system using javafx
