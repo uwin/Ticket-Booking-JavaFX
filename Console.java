@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-public class booking{
+public class Console{
     public static void main(String[] args) {
         welcome();
     }
@@ -71,7 +71,6 @@ public class booking{
         System.out.println("Enter your name");
         return scanUserName.next();
     }
-
     //A  gui needed
     public static void getseat(String userName, List seatList){
         try {
