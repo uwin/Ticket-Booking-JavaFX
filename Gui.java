@@ -1,10 +1,6 @@
 /*
 \
 \ add bubble sort to oder
-\ make temp a single array
-\
-\
-\
 \
  */
 import javafx.application.Application;
@@ -26,7 +22,6 @@ public class Gui extends Application {
         welcome();
     }
     static final int SEATING_CAPACITY = 42;
-    String temp="0"; //make this a single item list
     public static void main(String[] args) {
         launch();
     }
@@ -97,6 +92,8 @@ public class Gui extends Application {
     public void addOption(List nameList, List seatList){
         Stage window = new Stage();
         int number;
+        List<String> temp = new ArrayList<>();
+        temp.add("0");
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
@@ -113,12 +110,12 @@ public class Gui extends Application {
                     button.setOnAction(event -> {
                         if (seatList.contains(button.getId())){
                             //button.setStyle("-fx-background-color: #ff6347; ");
-                        }else if (temp.equals("0")){
-                            temp=button.getId();
+                        }else if (temp.contains("0")){
+                            temp.set(0,button.getId());
                             button.setStyle("-fx-background-color: #00ff00; ");
                         }else if(button.getId().equals(temp)) {
                                 button.setStyle("");
-                                temp = "0";
+                                temp.set(0,"0");
                             }
                     });
                     number++;
@@ -132,14 +129,14 @@ public class Gui extends Application {
         Button okBut = new Button("ok");
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
-            if (username.getText().trim().isEmpty()|| temp.equals("0")) {
+            if (username.getText().trim().isEmpty()|| temp.contains("0")) {
                 //open a alert <<<<<<window.close();
                 window.close();
                 addOption(nameList,seatList);
             } else {
                 nameList.add(username.getText());
-                seatList.add(temp);
-                temp="0";
+                seatList.add(temp.get(0));
+                temp.set(0,"0");
                 System.out.println(nameList+"\n"+seatList);
                 window.close();
                 options(nameList, seatList);
@@ -223,6 +220,7 @@ public class Gui extends Application {
         window.show();
     }
     public void deleteOption(List nameList, List seatList){
+        System.out.println(nameList+"\n"+seatList);
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your seat number: ");
         String deleteValues= scanSeat.next();
@@ -230,8 +228,10 @@ public class Gui extends Application {
             int delete= seatList.indexOf(deleteValues);
             seatList.remove(delete);
             nameList.remove(delete);
+            System.out.println(nameList+"\n"+seatList);
         }else{
             System.out.println("your seat no is not booked");
+            //deleteOption(nameList,seatList);
         }
         consoleWait(nameList,seatList);
     }
@@ -271,7 +271,7 @@ public class Gui extends Application {
 
         while(scannames.hasNext())
         {
-            seatList.add(scannames.next());
+            nameList.add(scannames.next());
         }
         consoleWait(nameList,seatList);
     }
