@@ -36,34 +36,47 @@ public class Console{
         optionstest(seatList);
     }
     public static void optionstest(List <String> seatList){
-        Scanner scanoption= new Scanner(System.in);
+        Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
-        String userOption= scanoption.next().toUpperCase();
+        String userOption= scanOption.next().toUpperCase();
 
-        if (userOption.equals("A" )){          //add
-            String userName= getname();
-            getseat(userName, seatList);
-        }else if (userOption.equals("V" )){    //veiw
-            getVeiw(seatList);
-        }else if (userOption.equals("E" )){    //empty
-            getempty(seatList);
-        }else if (userOption.equals("D" )){    //delete
-            String userName= getname();
-            getdelete(seatList,userName);
-        }else if (userOption.equals("F" )){    //find
-            String userName= getname();
-            getfind(seatList,userName);
-        }else if (userOption.equals("S" )){    //save
-            getsave();
-        }else if (userOption.equals("L" )){     //load
-            getload();
-        }else if (userOption.equals("O" )){     //veiw
-            getlist(seatList);
-        }else if (userOption.equals("Q" )){
-            System.exit(0);
-        }else {
-            System.out.println("invaid input");
-            options(seatList);
+        switch (userOption) {
+            case "A": {          //add
+                String userName = getname();
+                getseat(userName, seatList);
+                break;
+            }
+            case "V":     //veiw
+                getVeiw(seatList);
+                break;
+            case "E":     //empty
+                getempty(seatList);
+                break;
+            case "D": {    //delete
+                String userName = getname();
+                getdelete(seatList, userName);
+                break;
+            }
+            case "F": {    //find
+                String userName = getname();
+                getfind(seatList, userName);
+                break;
+            }
+            case "S":     //save
+                getsave();
+                break;
+            case "L":      //load
+                getload();
+                break;
+            case "O":      //veiw
+                getlist(seatList);
+                break;
+            case "Q":
+                System.exit(0);
+            default:
+                System.out.println("invaid input");
+                options(seatList);
+                break;
         }
     }
     private static String getname(){
