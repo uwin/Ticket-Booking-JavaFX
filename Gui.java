@@ -246,29 +246,19 @@ public class Gui extends Application {
         for (String s : seatList) {
             saveSeats.println(s);
         }
-
         saveSeats.close();
         PrintWriter saveNames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
         for (String s : nameList) {
             saveNames.println(s);
         }
-
         saveNames.close();
         consoleWait(nameList,seatList);
     }
     public void   loadOption(List <String> nameList, List <String> seatList) throws FileNotFoundException {
         Scanner scanSeats = new Scanner(new File("seats.txt"));
-
-        while(scanSeats.hasNext())
-        {
-            seatList.add(scanSeats.next());
-        }
+        while(scanSeats.hasNext()) seatList.add(scanSeats.next());
         Scanner scanNames = new Scanner(new File("names.txt"));
-
-        while(scanNames.hasNext())
-        {
-            nameList.add(scanNames.next());
-        }
+        while(scanNames.hasNext()) nameList.add(scanNames.next());
         consoleWait(nameList,seatList);
     }
     public void   oderOption(List <String> nameList, List <String> seatList){
@@ -289,11 +279,8 @@ public class Gui extends Application {
     }
     public void  consoleWait(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
+        System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
-        if (continueConsole.isEmpty()){
-            System.out.println("Press any key to continue");
-        }else {
-            listOption(nameList, seatList);
-        }
+        if (!continueConsole.isEmpty()) listOption(nameList, seatList);
     }
 }
