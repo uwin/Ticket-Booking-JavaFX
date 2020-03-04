@@ -1,4 +1,6 @@
 /*
+\open a alert <<<<<<window.close();
+\
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
  */
@@ -91,7 +93,7 @@ public class Gui extends Application {
         Stage window = new Stage();
         int number;
         List<String> temp = new ArrayList<>();
-        temp.add("0");
+//        temp.add("0");
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
@@ -108,12 +110,16 @@ public class Gui extends Application {
                     button.setOnAction(event -> {
                         if (seatList.contains(button.getId())){
                             button.setStyle("-fx-background-color: #ff6347; ");
-                        }else if (temp.contains("0")){
-                            temp.set(0,button.getId());
-                            button.setStyle("-fx-background-color: #00ff00; ");
-                        }else if(temp.contains(button.getId())){
-                                button.setStyle("");
-                                temp.set(0,"0");
+//                        }else if (temp.contains("0")){
+//                            temp.set(0,button.getId());
+//                            button.setStyle("-fx-background-color: #00ff00; ");
+                        }else if (temp.contains(button.getId())){
+                            temp.remove(button.getId());
+                            button.setStyle("");
+                        }else if(!temp.contains(button.getId())){
+                                button.setStyle("-fx-background-color: #00ff00; ");
+//                                temp.set(0,"0");
+                                temp.add(button.getId());
                             }
                     });
                     number++;
@@ -127,14 +133,19 @@ public class Gui extends Application {
         Button okBut = new Button("ok");
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
-            if (username.getText().trim().isEmpty()|| temp.contains("0")) {
+//            if (username.getText().trim().isEmpty()|| temp.contains("0")) {
+            if (username.getText().trim().isEmpty()|| temp.isEmpty()) {
                 //open a alert <<<<<<window.close();
                 window.close();
                 addOption(nameList,seatList);
             } else {
-                nameList.add(username.getText());
-                seatList.add(temp.get(0));
-                temp.set(0,"0");
+                for (String loop : temp) {
+                    nameList.add(username.getText());
+                }
+//                seatList.add(temp.get(0));
+                seatList.addAll(temp);
+//                temp.set(0,"0");
+                temp.clear();
                 System.out.println(nameList+"\n"+seatList);
                 window.close();
                 listOption(nameList, seatList);
@@ -220,7 +231,7 @@ public class Gui extends Application {
     public void deleteOption(List <String> nameList, List <String> seatList){
         System.out.println(nameList+"\n"+seatList);
         Scanner scanSeat = new Scanner(System.in);
-        System.out.println("enter your seat number: ");
+        System.out.println("enter your name: ");
         String deleteValues= scanSeat.next();
         if (seatList.contains(deleteValues)){
             int delete= seatList.indexOf(deleteValues);
@@ -228,8 +239,8 @@ public class Gui extends Application {
             nameList.remove(delete);
             System.out.println(nameList+"\n"+seatList);
         }else{
-            System.out.println("your seat no is not booked");
-            //deleteOption(nameList,seatList);
+            System.out.println("your have no seats booked");
+            deleteOption(nameList,seatList);
         }
         consoleWait(nameList,seatList);
     }
@@ -284,3 +295,6 @@ public class Gui extends Application {
         if (!continueConsole.isEmpty()) listOption(nameList, seatList);
     }
 }
+/*
+added multiple seat capability
+ */
