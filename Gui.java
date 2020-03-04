@@ -31,6 +31,7 @@ public class Gui extends Application {
         listOption(nameList, seatList);
     }
 
+
     public void   listOption(List <String> nameList, List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
@@ -295,6 +296,3 @@ public class Gui extends Application {
         if (!continueConsole.isEmpty()) listOption(nameList, seatList);
     }
 }
-/*
-added multiple seat capability
- */
