@@ -1,13 +1,21 @@
 /*
 \open a alert <<<<<<window.close();
+\need to flash when reClicked after booked
 \
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
- */
+/*
+change max size for all buttons in add option
+changed stage sizs
+added seatminit
+changed seat value to a png
+*/
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -15,7 +23,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-public class Gui extends Application {
+public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
         launch();
@@ -48,39 +56,39 @@ public class Gui extends Application {
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
-            case "A":     //add
+            case "A":
                 addOption(nameList,seatList);
                 break;
-            case "V":     //view
+            case "V":
                 viewOption(nameList,seatList);
                 break;
-            case "E":     //empty
+            case "E":
                 emptyOption(nameList,seatList);
                 break;
-            case "D":     //delete
+            case "D":
                 deleteOption(nameList,seatList);
                 break;
-            case "F":     //find
+            case "F":
                 findOption(nameList,seatList);
                 break;
-            case "S":     //save
+            case "S":
                 try {
                     saveOption(nameList, seatList);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
-            case "L":      //load
+            case "L":
                 try {
                     loadOption(nameList,seatList);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 break;
-            case "O":      //view
+            case "O":
                 oderOption(nameList,seatList);
                 break;
-            case "Q":      //quit
+            case "Q":
                 System.exit(0);
             default:
                 System.out.println("invalid input");
@@ -90,47 +98,60 @@ public class Gui extends Application {
     }
 
     public void    addOption(List <String> nameList, List <String> seatList){
+//      create the stage
         Stage window = new Stage();
-        int number;
-        List<String> temp = new ArrayList<>();
-//        temp.add("0");
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
         grid.setVgap(10);
-        Scene addView = new Scene(grid, 400, 220);
+        Scene addView = new Scene(grid, 770, 420);
         window.setScene(addView);
-        number = 1;
+        window.show();
+
+//      values needed for the loop
+        int number = 1;
+        List<String> temp = new ArrayList<>();
+        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+
+//      loop to create seat buttons
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    Button button = new Button(String.valueOf(number));
+                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
                     button.setId(String.valueOf(number));
-                    if (seatList.contains(button.getId())) button.setStyle("-fx-background-color: #C0C0C0; ");
+                    //button.setMaxSize(60, 60);
+//                    change seat colour to orange if it's already booked
+                    if (seatList.contains(button.getId())) {
+                        button.setStyle("-fx-background-color: #ff6347; ");
+                    }
                     button.setOnAction(event -> {
+//                      flash the seat colour if the user tries to click a already booked seat
                         if (seatList.contains(button.getId())){
-                            button.setStyle("-fx-background-color: #ff6347; ");
-//                        }else if (temp.contains("0")){
-//                            temp.set(0,button.getId());
-//                            button.setStyle("-fx-background-color: #00ff00; ");
+                            button.setStyle("-fx-background-color: #ff6347; "); //redundent need a flash
+//                      if the seat is not booked add the seat to the temporary seatlist,change colour to green
+                        }else if(!temp.contains(button.getId())){
+                            button.setStyle("-fx-background-color: #00ff00; ");
+                            temp.add(button.getId());
+//                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                         }else if (temp.contains(button.getId())){
                             temp.remove(button.getId());
                             button.setStyle("");
-                        }else if(!temp.contains(button.getId())){
-                                button.setStyle("-fx-background-color: #00ff00; ");
-//                                temp.set(0,"0");
-                                temp.add(button.getId());
-                            }
+                        }
                     });
                     number++;
                     grid.add(button, c, r);
                 }
             }
         }
+
+//      space for user name
         TextField username = new TextField();
         username.setPromptText("enter name");
         grid.add(username, 3, 3, 7, 4);
+
+//      Comfirm button
         Button okBut = new Button("ok");
+        //okBut.setMaxSize(60, 60);
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
 //            if (username.getText().trim().isEmpty()|| temp.contains("0")) {
@@ -139,7 +160,7 @@ public class Gui extends Application {
                 window.close();
                 addOption(nameList,seatList);
             } else {
-                for (String loop : temp) {
+                for (String ignored : temp) {
                     nameList.add(username.getText());
                 }
 //                seatList.add(temp.get(0));
@@ -152,30 +173,39 @@ public class Gui extends Application {
             }
         });
         grid.add(okBut, 7, 6);
+
+//      close buttton
         Button closeBut = new Button("close");
+        //closeBut.setMaxSize(60, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList);
         });
         grid.add(closeBut, 9, 6);
-        window.show();
     }
     public void   viewOption(List <String> nameList, List <String> seatList){
+//      create the stage
         Stage window= new Stage();
-        int number;
         GridPane gridTwo = new GridPane();
         gridTwo.setPadding(new Insets(5, 2, 5, 2));
         gridTwo.setHgap(10);
         gridTwo.setVgap(10);
-        Scene viewSeat = new Scene(gridTwo, 400, 220);
+        Scene viewSeat = new Scene(gridTwo, 770, 420);
         window.setScene(viewSeat);
-        number = 1;
+        window.show();
+
+//      values needed for the loop
+        int number = 1;
+        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+
+//      loop to create seat buttons
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    Button button = new Button(String.valueOf(number));
-                    button.setId(String.valueOf(number));
+                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
+                    //button.setMaxSize(60, 60);
+//                    if seat is booked the seat button is greyed out
                     if (seatList.contains(String.valueOf(number))){
                         button.setStyle("-fx-background-color: #C0C0C0; ");
                     }
@@ -184,59 +214,75 @@ public class Gui extends Application {
                 }
             }
         }
+
+//      close buttton
         Button closeBut = new Button("Close");
+        //closeBut.setMaxSize(60, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList);
         });
         gridTwo.add(closeBut,9,6);
-        window.show();
+
     }
     public void  emptyOption(List <String> nameList, List <String> seatList){
+//      create the stage
         Stage window= new Stage();
-        int number;
         GridPane gridTwo = new GridPane();
         gridTwo.setPadding(new Insets(5, 2, 5, 2));
         gridTwo.setHgap(10);
         gridTwo.setVgap(10);
-        Scene viewEmpty = new Scene(gridTwo, 400, 220);
+        Scene viewEmpty = new Scene(gridTwo, 770, 420);
         window.setScene(viewEmpty);
-        number = 1;
+        window.show();
+
+//      values needed for the loop
+        int number = 1;
+        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+
+//      loop to create seat buttons
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 10; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    Button button = new Button(String.valueOf(number));
-                    button. setId(String.valueOf(number));
-                    if (seatList.contains(String.valueOf(number))){
-                        button.setText("X");
-                        button.setStyle("-fx-background-color: #A9A9A9; ");
-                    }else{
-                        button.setStyle("");
-                        gridTwo.add(button, c, r);
-                    }
+                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
+//                  if the seat is booked nothing will be done
+//                    if the seat is not booked the seat will be done
+                    if (!seatList.contains(String.valueOf(number))) gridTwo.add(button, c, r);
                     number++;
                 }
             }
         }
+
+//      close buttton
         Button closeBut = new Button("Close");
+        //closeBut.setMaxSize(60, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList);
         });
         gridTwo.add(closeBut,9,6);
-        window.show();
     }
     public void deleteOption(List <String> nameList, List <String> seatList){
         System.out.println(nameList+"\n"+seatList);
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your name: ");
-        String deleteValues= scanSeat.next();
-        if (seatList.contains(deleteValues)){
-            int delete= seatList.indexOf(deleteValues);
-            seatList.remove(delete);
-            nameList.remove(delete);
+        String deleteValue= scanSeat.next();
+        if (nameList.contains(deleteValue)){
+            for (int i=0;i<nameList.size();i++){
+                if(nameList.get(i).equals(deleteValue)) {
+                    System.out.print(seatList.get(i)+"| ");
+                }
+            }
+            Scanner scanDelete = new Scanner(System.in);
+            System.out.println();
+            System.out.println("enter your seat number: ");
+            String deleteSeat= scanDelete.next();
+
+            int deleteFinal= seatList.indexOf(deleteSeat);
+            seatList.remove(deleteFinal);
+            nameList.remove(deleteFinal);
             System.out.println(nameList+"\n"+seatList);
         }else{
             System.out.println("your have no seats booked");
@@ -288,6 +334,7 @@ public class Gui extends Application {
         }
         consoleWait(nameList,seatList);
     }
+
     public void  consoleWait(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
