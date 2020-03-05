@@ -28,7 +28,6 @@ public class Guiiit extends Application {
     public static void main(String[] args) {
         launch();
     }
-    @Override
     public void start(Stage stage) {
         welcome();
     }
@@ -96,7 +95,6 @@ public class Guiiit extends Application {
                 break;
         }
     }
-
     public void    addOption(List <String> nameList, List <String> seatList){
 //      create the stage
         Stage window = new Stage();
@@ -288,7 +286,7 @@ public class Guiiit extends Application {
             System.out.println("your have no seats booked");
             deleteOption(nameList,seatList);
         }
-        consoleWait(nameList,seatList);
+        waitOption(nameList,seatList);
     }
     public void   findOption(List <String> nameList, List <String> seatList){
         Scanner scanSeat = new Scanner(System.in);
@@ -296,7 +294,7 @@ public class Guiiit extends Application {
         String findName= scanSeat.next();
         int delete= nameList.indexOf(findName);
         System.out.println("your seat number is: "+seatList.get(delete));
-        consoleWait(nameList,seatList);
+        waitOption(nameList,seatList);
     }
     public void   saveOption(List <String> nameList, List <String> seatList) throws IOException {
         PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
@@ -309,14 +307,14 @@ public class Guiiit extends Application {
             saveNames.println(s);
         }
         saveNames.close();
-        consoleWait(nameList,seatList);
+        waitOption(nameList,seatList);
     }
     public void   loadOption(List <String> nameList, List <String> seatList) throws FileNotFoundException {
         Scanner scanSeats = new Scanner(new File("seats.txt"));
         while(scanSeats.hasNext()) seatList.add(scanSeats.next());
         Scanner scanNames = new Scanner(new File("names.txt"));
         while(scanNames.hasNext()) nameList.add(scanNames.next());
-        consoleWait(nameList,seatList);
+        waitOption(nameList,seatList);
     }
     public void   oderOption(List <String> nameList, List <String> seatList){
         String sortTemp;
@@ -332,10 +330,9 @@ public class Guiiit extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        consoleWait(nameList,seatList);
+        waitOption(nameList,seatList);
     }
-
-    public void  consoleWait(List <String> nameList, List <String> seatList){
+    public void   waitOption(List <String> nameList, List <String> seatList){
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
