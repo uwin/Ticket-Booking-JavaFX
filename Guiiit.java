@@ -1,11 +1,8 @@
 /*
 \open a alert <<<<<<window.close();
 \need to flash when reClicked after booked
-\
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
-\
-/*
 change max size for all buttons in add option
 changed stage sizs
 added seatminit
@@ -22,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 public class Guiiit extends Application {
@@ -153,7 +151,7 @@ public class Guiiit extends Application {
         okBut.setMaxSize(60, 40);
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
-//            if (username.getText().trim().isEmpty()|| temp.contains("0")) {
+            //if (username.getText().trim().isEmpty()|| temp.contains("0")) {
             if (username.getText().trim().isEmpty()|| temp.isEmpty()) {
                 //open a alert <<<<<<window.close();
                 window.close();
@@ -162,9 +160,9 @@ public class Guiiit extends Application {
                 for (String ignored : temp) {
                     nameList.add(username.getText());
                 }
-//                seatList.add(temp.get(0));
+                //seatList.add(temp.get(0));
                 seatList.addAll(temp);
-//                temp.set(0,"0");
+                //temp.set(0,"0");
                 temp.clear();
                 System.out.println(nameList+"\n"+seatList);
                 window.close();
@@ -290,11 +288,16 @@ public class Guiiit extends Application {
         waitOption(nameList,seatList);
     }
     public void   findOption(List <String> nameList, List <String> seatList){
-        Scanner scanSeat = new Scanner(System.in);
+        Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name: ");
-        String findName= scanSeat.next();
-        int delete= nameList.indexOf(findName);
-        System.out.println("your seat number is: "+seatList.get(delete));
+        String findName= scanFind.next();
+        if (nameList.contains(findName)){
+            for (int i=0;i<nameList.size();i++){
+                if(nameList.get(i).equals(findName)) {
+                    System.out.print(seatList.get(i)+"| ");
+                }
+            }
+        }
         waitOption(nameList,seatList);
     }
     public void   saveOption(List <String> nameList, List <String> seatList) throws IOException {
