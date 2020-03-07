@@ -181,7 +181,6 @@ public class Guiiit extends Application {
                 }
                 seatList.addAll(temp);
                 temp.clear();
-                System.out.println(nameList+"\n"+seatList);
                 window.close();
                 listOption(nameList, seatList, temp);
             }
@@ -297,30 +296,38 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
-        Scanner scanSeat = new Scanner(System.in);
+        List<String> deleteList = new ArrayList<>();
+        System.out.println(nameList+"\n"+seatList);
+        Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name: ");
-        String deleteValue= scanSeat.next();
-        if (nameList.contains(deleteValue.toLowerCase())){
-            for (int i=0;i<nameList.size();i++){
-                if(nameList.get(i).equals(deleteValue)) {
-                    System.out.print(seatList.get(i)+"| ");
-                }
-            }
-            Scanner scanDelete = new Scanner(System.in);
-//            System.out.println(nameList+"\n"+seatList);
-            System.out.println();
-            System.out.println("enter your seat number: ");
-            String deleteSeat= scanDelete.next();
+        String deleteName= scanName.next();
 
-            int deleteFinal= seatList.indexOf(deleteSeat);
-            seatList.remove(deleteFinal);
-            nameList.remove(deleteFinal);
-//            System.out.println(nameList+"\n"+seatList);
+        if (nameList.contains(deleteName.toLowerCase())) {
+            while (true){
+                for (int i=0;i<nameList.size();i++){
+                    if(nameList.get(i).equals(deleteName.toLowerCase())) {
+                        System.out.print(seatList.get(i)+" | ");
+                        deleteList.add(seatList.get(i));
+                    }
+                }
+                System.out.println();
+                Scanner scanDelete = new Scanner(System.in);
+                System.out.println("enter your seat number: ");
+                String deleteSeat = scanDelete.next();
+                int deleteFinal = seatList.indexOf(deleteSeat);
+
+                if (deleteList.contains(String.valueOf(deleteSeat))){
+                    seatList.remove(deleteFinal);
+                    nameList.remove(deleteFinal);
+                    deleteList.clear();
+                    System.out.println(nameList+"\n"+seatList);
+                    waitOption(nameList,seatList, temp);
+                 }
+            }
         }else{
             System.out.println("your have no seats booked");
             deleteOption(nameList,seatList,temp);
         }
-        waitOption(nameList,seatList, temp);
     }
     public void   findOption(List <String> nameList, List <String> seatList, List<String> temp){
         Scanner scanFind = new Scanner(System.in);
