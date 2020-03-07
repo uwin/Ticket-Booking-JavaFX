@@ -332,16 +332,18 @@ public class Guiiit extends Application {
     }
     public void   findOption(List <String> nameList, List <String> seatList, List<String> temp){
         Scanner scanFind = new Scanner(System.in);
-        System.out.println("enter your name: ");
+        System.out.println("enter your name:o");
         String findName= scanFind.next();
         if (nameList.contains(findName.toLowerCase())){
             for (int i=0;i<nameList.size();i++){
-                if(nameList.get(i).equals(findName.toUpperCase())) {
+                if(nameList.get(i).equals(findName.toLowerCase())) {
                     System.out.print(seatList.get(i)+"| ");
                 }
             }
-        }
-        waitOption(nameList,seatList, temp);
+            System.out.println();
+            waitOption(nameList,seatList, temp);
+        }else {findOption(nameList,seatList, temp);}
+
     }
     public void   saveOption(List <String> nameList, List <String> seatList, List<String> temp) throws IOException {
         PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
