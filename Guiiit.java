@@ -115,7 +115,6 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
-                    //button.setMaxSize(60, 60);
 //                    change seat colour to orange if it's already booked
                     if (seatList.contains(button.getId())) {
                         button.setImage(seatRed);
@@ -124,8 +123,8 @@ public class Guiiit extends Application {
                     button.setOnMouseClicked(event -> {
 //                      flash the seat colour if the user tries to click a already booked seat
                         if (seatList.contains(button.getId())){
-                            button.setImage(seatGrey);
-//                      if the seat is not booked add the seat to the temporary seatlist,change colour to green
+                            button.setImage(seatRed);
+//                      if the seat is not booked add the seat to the temporary seatList,change colour to green
                         }else if(!temp.contains(button.getId())){
                             button.setImage(seatGreen);
                             temp.add(button.getId());
@@ -146,12 +145,11 @@ public class Guiiit extends Application {
         username.setPromptText("enter name");
         grid.add(username, 6, 3, 8, 4);
 
-//      Comfirm button
+//      Confirm button
         Button okBut = new Button("ok");
         okBut.setMaxSize(120, 60);
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
-            //if (username.getText().trim().isEmpty()|| temp.contains("0")) {
             if (username.getText().trim().isEmpty()||temp.isEmpty()) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
@@ -163,7 +161,6 @@ public class Guiiit extends Application {
                 });
             }else if (nameList.contains(username.getText())) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
-                //a.setAlertType(Alert.AlertType.CONFIRMATION);
                 a.setContentText("enter a unique name");
                 a.show();
                 a.setOnCloseRequest(event1 -> {
@@ -174,9 +171,7 @@ public class Guiiit extends Application {
                 for (Object i : temp) {
                     nameList.add(username.getText());
                 }
-                //seatList.add(temp.get(0));
                 seatList.addAll(temp);
-                //temp.set(0,"0");
                 temp.clear();
                 System.out.println(nameList+"\n"+seatList);
                 window.close();
@@ -185,7 +180,7 @@ public class Guiiit extends Application {
         });
         grid.add(okBut, 10, 7,10,7);
 
-//      close buttton
+//      close button
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
@@ -228,7 +223,7 @@ public class Guiiit extends Application {
             }
         }
 
-//      close buttton
+//      close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
@@ -262,14 +257,14 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
-//                    if the seat is not booked the seat will be done
+//                  if the seat is not booked the seat will be shown
                     if (!seatList.contains(String.valueOf(number))) gridTwo.add(button, c, r);
                     number++;
                 }
             }
         }
 
-//      close buttton
+//      close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
