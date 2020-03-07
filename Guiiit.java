@@ -167,7 +167,7 @@ public class Guiiit extends Application {
                     window.close();
                     addOption(nameList,seatList, temp);
                 });
-            }else if (nameList.contains(username.getText())) {
+            }else if (nameList.contains(username.getText().toLowerCase())) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setContentText("enter a unique name");
                 a.show();
@@ -177,7 +177,7 @@ public class Guiiit extends Application {
                 });
             }else {
                 for (Object ignored : temp) {
-                    nameList.add(username.getText());
+                    nameList.add(username.getText().toLowerCase());
                 }
                 seatList.addAll(temp);
                 temp.clear();
@@ -297,17 +297,17 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
-        System.out.println(nameList+"\n"+seatList);
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your name: ");
         String deleteValue= scanSeat.next();
-        if (nameList.contains(deleteValue)){
+        if (nameList.contains(deleteValue.toLowerCase())){
             for (int i=0;i<nameList.size();i++){
                 if(nameList.get(i).equals(deleteValue)) {
                     System.out.print(seatList.get(i)+"| ");
                 }
             }
             Scanner scanDelete = new Scanner(System.in);
+//            System.out.println(nameList+"\n"+seatList);
             System.out.println();
             System.out.println("enter your seat number: ");
             String deleteSeat= scanDelete.next();
@@ -315,7 +315,7 @@ public class Guiiit extends Application {
             int deleteFinal= seatList.indexOf(deleteSeat);
             seatList.remove(deleteFinal);
             nameList.remove(deleteFinal);
-            System.out.println(nameList+"\n"+seatList);
+//            System.out.println(nameList+"\n"+seatList);
         }else{
             System.out.println("your have no seats booked");
             deleteOption(nameList,seatList,temp);
