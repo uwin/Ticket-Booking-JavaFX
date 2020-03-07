@@ -328,7 +328,7 @@ public class Guiiit extends Application {
         String findName= scanFind.next();
         if (nameList.contains(findName.toLowerCase())){
             for (int i=0;i<nameList.size();i++){
-                if(nameList.get(i).equals(findName)) {
+                if(nameList.get(i).equals(findName.toUpperCase())) {
                     System.out.print(seatList.get(i)+"| ");
                 }
             }
