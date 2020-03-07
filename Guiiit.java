@@ -326,7 +326,7 @@ public class Guiiit extends Application {
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name: ");
         String findName= scanFind.next();
-        if (nameList.contains(findName)){
+        if (nameList.contains(findName.toLowerCase())){
             for (int i=0;i<nameList.size();i++){
                 if(nameList.get(i).equals(findName)) {
                     System.out.print(seatList.get(i)+"| ");
