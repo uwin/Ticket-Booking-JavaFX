@@ -297,7 +297,7 @@ public class Guiiit extends Application {
     }
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
         List<String> deleteList = new ArrayList<>();
-        System.out.println(nameList+"\n"+seatList);
+        //System.out.println(nameList+"\n"+seatList);
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name: ");
         String deleteName= scanName.next();
@@ -320,9 +320,10 @@ public class Guiiit extends Application {
                     seatList.remove(deleteFinal);
                     nameList.remove(deleteFinal);
                     deleteList.clear();
-                    System.out.println(nameList+"\n"+seatList);
+                    //System.out.println(nameList+"\n"+seatList);
                     waitOption(nameList,seatList, temp);
                  }
+                System.out.println("the seat no is not booked");
             }
         }else{
             System.out.println("your have no seats booked");
