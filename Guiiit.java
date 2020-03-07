@@ -1,12 +1,7 @@
 /*
-\open a alert <<<<<<window.close();
 \need to flash when reClicked after booked
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
-change max size for all buttons in add option
-changed stage sizs
-added seatminit
-changed seat value to a png
 */
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -38,7 +33,7 @@ public class Guiiit extends Application {
         listOption(nameList, seatList, temp);
     }
 
-    public void   listOption(List<String> nameList, List<String> seatList, List temp) {
+    public void   listOption(List <String> nameList, List <String> seatList, List<String> temp) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -50,7 +45,7 @@ public class Guiiit extends Application {
                 "O List seats\n");
         runOption(nameList,seatList, temp);
     }
-    public void    runOption(List<String> nameList, List<String> seatList, List temp){
+    public void    runOption(List <String> nameList, List <String> seatList, List<String> temp){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
@@ -95,7 +90,7 @@ public class Guiiit extends Application {
                 break;
         }
     }
-    public void    addOption(List<String> nameList, List<String> seatList, List temp){
+    public void    addOption(List <String> nameList, List <String> seatList, List<String> temp){
 //      create the stage
         Stage window = new Stage();
         GridPane grid = new GridPane();
@@ -201,7 +196,7 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 12, 7,12,7);
     }
-    public void   viewOption(List <String> nameList, List <String> seatList, List temp){
+    public void   viewOption(List <String> nameList, List <String> seatList, List<String> temp){
 //      create the stage
         Stage window= new Stage();
         GridPane gridTwo = new GridPane();
@@ -245,7 +240,7 @@ public class Guiiit extends Application {
         gridTwo.add(closeBut,12,6,12,6);
 
     }
-    public void  emptyOption(List <String> nameList, List <String> seatList, List temp){
+    public void  emptyOption(List <String> nameList, List <String> seatList, List<String> temp){
 //      create the stage
         Stage window= new Stage();
         GridPane gridTwo = new GridPane();
@@ -285,7 +280,7 @@ public class Guiiit extends Application {
         });
         gridTwo.add(closeBut,12,6,12,6);
     }
-    public void deleteOption(List <String> nameList, List <String> seatList, List temp){
+    public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
         System.out.println(nameList+"\n"+seatList);
         Scanner scanSeat = new Scanner(System.in);
         System.out.println("enter your name: ");
@@ -311,7 +306,7 @@ public class Guiiit extends Application {
         }
         waitOption(nameList,seatList, temp);
     }
-    public void   findOption(List <String> nameList, List <String> seatList, List temp){
+    public void   findOption(List <String> nameList, List <String> seatList, List<String> temp){
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name: ");
         String findName= scanFind.next();
@@ -324,7 +319,7 @@ public class Guiiit extends Application {
         }
         waitOption(nameList,seatList, temp);
     }
-    public void   saveOption(List <String> nameList, List <String> seatList, List temp) throws IOException {
+    public void   saveOption(List <String> nameList, List <String> seatList, List<String> temp) throws IOException {
         PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
         for (String s : seatList) {
             saveSeats.println(s);
@@ -337,14 +332,14 @@ public class Guiiit extends Application {
         saveNames.close();
         waitOption(nameList,seatList, temp);
     }
-    public void   loadOption(List <String> nameList, List <String> seatList, List temp) throws FileNotFoundException {
+    public void   loadOption(List <String> nameList, List <String> seatList, List<String> temp) throws FileNotFoundException {
         Scanner scanSeats = new Scanner(new File("seats.txt"));
         while(scanSeats.hasNext()) seatList.add(scanSeats.next());
         Scanner scanNames = new Scanner(new File("names.txt"));
         while(scanNames.hasNext()) nameList.add(scanNames.next());
         waitOption(nameList,seatList, temp);
     }
-    public void   oderOption(List <String> nameList, List <String> seatList, List temp){
+    public void   oderOption(List <String> nameList, List <String> seatList, List<String> temp){
         String sortTemp;
         System.out.println("Strings in sorted order:");
         for (int j = 0; j < nameList.size(); j++) {
@@ -360,7 +355,7 @@ public class Guiiit extends Application {
         }
         waitOption(nameList,seatList, temp);
     }
-    public void   waitOption(List<String> nameList, List<String> seatList, List temp){
+    public void   waitOption(List <String> nameList, List <String> seatList, List<String> temp){
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
