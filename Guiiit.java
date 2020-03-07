@@ -109,7 +109,6 @@ public class Guiiit extends Application {
         Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
-        Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
 
 //      loop to create seat buttons
         for (int r = 2; r < 5; r++) {
@@ -177,7 +176,7 @@ public class Guiiit extends Application {
                     addOption(nameList,seatList, temp);
                 });
             }else {
-                for (Object i : temp) {
+                for (Object ignored : temp) {
                     nameList.add(username.getText());
                 }
                 seatList.addAll(temp);
