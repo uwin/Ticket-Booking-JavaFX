@@ -101,38 +101,43 @@ public class Guiiit extends Application {
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
         grid.setVgap(10);
-        Scene addView = new Scene(grid, 770, 420);
+        Scene addView = new Scene(grid, 980, 320);
         window.setScene(addView);
         window.show();
 
 //      values needed for the loop
         int number = 1;
         List<String> temp = new ArrayList<>();
-        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
+        Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
+        Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
+        Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
 
 //      loop to create seat buttons
-        for (int r = 0; r < 5; r++) {
-            for (int c = 0; c < 10; c++) {
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 14; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
+                    ImageView button = new ImageView(seatBlack);
+                    button.setFitHeight(60);
+                    button.setFitWidth(60);
                     button.setId(String.valueOf(number));
                     //button.setMaxSize(60, 60);
 //                    change seat colour to orange if it's already booked
                     if (seatList.contains(button.getId())) {
-                        button.setStyle("-fx-background-color: #ff6347; ");
+                        button.setImage(seatRed);
                     }
-                    button.setOnAction(event -> {
+                    button.setOnMouseClicked(event -> {
 //                      flash the seat colour if the user tries to click a already booked seat
                         if (seatList.contains(button.getId())){
-                            button.setStyle("-fx-background-color: #ff6347; "); //redundent need a flash
+                            button.setImage(seatGrey);
 //                      if the seat is not booked add the seat to the temporary seatlist,change colour to green
                         }else if(!temp.contains(button.getId())){
-                            button.setStyle("-fx-background-color: #00ff00; ");
+                            button.setImage(seatGreen);
                             temp.add(button.getId());
 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                         }else if (temp.contains(button.getId())){
                             temp.remove(button.getId());
-                            button.setStyle("");
+                            button.setImage(seatBlack);
                         }
                     });
                     number++;
@@ -188,23 +193,25 @@ public class Guiiit extends Application {
         gridTwo.setPadding(new Insets(5, 2, 5, 2));
         gridTwo.setHgap(10);
         gridTwo.setVgap(10);
-        Scene viewSeat = new Scene(gridTwo, 770, 420);
+        Scene viewSeat = new Scene(gridTwo, 980, 320);
         window.setScene(viewSeat);
         window.show();
 
 //      values needed for the loop
         int number = 1;
-        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
+        Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
 
 //      loop to create seat buttons
-        for (int r = 0; r < 5; r++) {
-            for (int c = 0; c < 10; c++) {
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 14; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
-                    //button.setMaxSize(60, 60);
+                    ImageView button = new ImageView(seatBlack);
+                    button.setFitHeight(60);
+                    button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
                     if (seatList.contains(String.valueOf(number))){
-                        button.setStyle("-fx-background-color: #C0C0C0; ");
+                        button.setImage(seatGrey);
                     }
                     number++;
                     gridTwo.add(button, c, r);
@@ -230,19 +237,21 @@ public class Guiiit extends Application {
         gridTwo.setPadding(new Insets(5, 2, 5, 2));
         gridTwo.setHgap(10);
         gridTwo.setVgap(10);
-        Scene viewEmpty = new Scene(gridTwo, 770, 420);
+        Scene viewEmpty = new Scene(gridTwo, 980, 320);
         window.setScene(viewEmpty);
         window.show();
 
 //      values needed for the loop
         int number = 1;
-        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
 
 //      loop to create seat buttons
-        for (int r = 0; r < 5; r++) {
-            for (int c = 0; c < 10; c++) {
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 14; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
+                    ImageView button = new ImageView(seatBlack);
+                    button.setFitHeight(60);
+                    button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
 //                    if the seat is not booked the seat will be done
                     if (!seatList.contains(String.valueOf(number))) gridTwo.add(button, c, r);
