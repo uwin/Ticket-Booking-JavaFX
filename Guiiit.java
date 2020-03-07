@@ -98,7 +98,8 @@ public class Guiiit extends Application {
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
         grid.setVgap(10);
-        Scene addView = new Scene(grid, 980, 320);
+        Scene addView = new Scene(grid, 1020, 400);
+        window.setTitle("Train Booking System");
         window.setScene(addView);
         window.show();
 
@@ -149,7 +150,7 @@ public class Guiiit extends Application {
 //      space for user name
         TextField username = new TextField();
         username.setPromptText("enter name");
-        grid.add(username, 6, 3, 8, 4);
+        grid.add(username, 8, 5, 10, 6);
 
 //      Confirm button
         Button okBut = new Button("ok");
@@ -184,7 +185,7 @@ public class Guiiit extends Application {
                 listOption(nameList, seatList, temp);
             }
         });
-        grid.add(okBut, 10, 7,10,7);
+        grid.add(okBut, 12, 9,12,9);
 
 //      close button
         Button closeBut = new Button("close");
@@ -194,7 +195,7 @@ public class Guiiit extends Application {
             window.close();
             listOption(nameList, seatList, temp);
         });
-        grid.add(closeBut, 12, 7,12,7);
+        grid.add(closeBut, 14, 9,14,9);
     }
     public void   viewOption(List <String> nameList, List <String> seatList, List<String> temp){
 //      create the stage
@@ -203,7 +204,8 @@ public class Guiiit extends Application {
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
         grid.setVgap(10);
-        Scene viewSeat = new Scene(grid, 980, 320);
+        Scene viewSeat = new Scene(grid, 1020, 340);
+        window.setTitle("Train Booking System");
         window.setScene(viewSeat);
         window.show();
 
@@ -230,7 +232,7 @@ public class Guiiit extends Application {
         }
 
 //      window head
-        Label head = new Label("Select a seat");
+        Label head = new Label("viewing Seats ");
         head.setFont(new Font("Arial", 30));
         grid.add(head,1,1,10,1);
 
@@ -242,7 +244,7 @@ public class Guiiit extends Application {
             window.close();
             listOption(nameList, seatList, temp);
         });
-        grid.add(closeBut,12,6,12,6);
+        grid.add(closeBut,14,6,14,6);
 
     }
     public void  emptyOption(List <String> nameList, List <String> seatList, List<String> temp){
@@ -252,7 +254,8 @@ public class Guiiit extends Application {
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
         grid.setVgap(10);
-        Scene viewEmpty = new Scene(grid, 980, 320);
+        Scene viewEmpty = new Scene(grid, 1020, 340);
+        window.setTitle("Train Booking System");
         window.setScene(viewEmpty);
         window.show();
 
@@ -275,8 +278,8 @@ public class Guiiit extends Application {
             }
         }
 
-//        window head
-        Label head = new Label("Select a seat");
+//      window head
+        Label head = new Label("Empty Seats ");
         head.setFont(new Font("Arial", 30));
         grid.add(head,1,1,10,1);
 
@@ -288,7 +291,7 @@ public class Guiiit extends Application {
             window.close();
             listOption(nameList, seatList, temp);
         });
-        grid.add(closeBut,12,6,12,6);
+        grid.add(closeBut,14,6,14,6);
     }
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
         System.out.println(nameList+"\n"+seatList);
