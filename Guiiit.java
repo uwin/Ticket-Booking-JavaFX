@@ -158,6 +158,7 @@ public class Guiiit extends Application {
         bookBut.setMaxSize(120, 60);
         bookBut.setStyle("-fx-background-color: #00A4B2; ");
         bookBut.setOnAction(event -> {
+//            alert will be shown if either the name or a seat is not selected
             if (username.getText().trim().isEmpty()||temp.isEmpty()) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
@@ -167,6 +168,7 @@ public class Guiiit extends Application {
                     window.close();
                     addOption(nameList,seatList, temp);
                 });
+//                alert will be shown if the user name is already existing
             }else if (nameList.contains(username.getText().toLowerCase())) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setContentText("enter a unique name");
@@ -175,6 +177,7 @@ public class Guiiit extends Application {
                     window.close();
                     addOption(nameList,seatList, temp);
                 });
+//                all user selected seats will be added to the seatList
             }else {
                 for (Object ignored : temp) {
                     nameList.add(username.getText().toLowerCase());
@@ -298,12 +301,15 @@ public class Guiiit extends Application {
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
         List<String> deleteList = new ArrayList<>();
         //System.out.println(nameList+"\n"+seatList);
+//        getting user name
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name: ");
         String deleteName= scanName.next();
 
         if (nameList.contains(deleteName.toLowerCase())) {
+//            looping till a valid seat is given
             while (true){
+//                printing all the seats for the user name in a row
                 for (int i=0;i<nameList.size();i++){
                     if(nameList.get(i).equals(deleteName.toLowerCase())) {
                         System.out.print(seatList.get(i)+" | ");
@@ -311,11 +317,13 @@ public class Guiiit extends Application {
                     }
                 }
                 System.out.println();
+//                getting user to select a seat number
                 Scanner scanDelete = new Scanner(System.in);
                 System.out.println("enter your seat number: ");
                 String deleteSeat = scanDelete.next();
                 int deleteFinal = seatList.indexOf(deleteSeat);
 
+//                removing the given seat from the seat list
                 if (deleteList.contains(String.valueOf(deleteSeat))){
                     seatList.remove(deleteFinal);
                     nameList.remove(deleteFinal);
@@ -326,14 +334,17 @@ public class Guiiit extends Application {
                 System.out.println("the seat no is not booked");
             }
         }else{
+//            looping until a valid user name is given
             System.out.println("your have no seats booked");
             deleteOption(nameList,seatList,temp);
         }
     }
     public void   findOption(List <String> nameList, List <String> seatList, List<String> temp){
+//        getting user name
         Scanner scanFind = new Scanner(System.in);
-        System.out.println("enter your name:o");
+        System.out.println("enter your name:");
         String findName= scanFind.next();
+//        printing all seat values for the given name
         if (nameList.contains(findName.toLowerCase())){
             for (int i=0;i<nameList.size();i++){
                 if(nameList.get(i).equals(findName.toLowerCase())) {
@@ -342,7 +353,10 @@ public class Guiiit extends Application {
             }
             System.out.println();
             waitOption(nameList,seatList, temp);
-        }else {findOption(nameList,seatList, temp);}
+        }else {
+//            looping till a valid user name is given
+            findOption(nameList,seatList, temp);
+        }
 
     }
     public void   saveOption(List <String> nameList, List <String> seatList, List<String> temp) throws IOException {
