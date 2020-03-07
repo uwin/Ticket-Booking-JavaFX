@@ -32,7 +32,6 @@ public class Guiiit extends Application {
         List<String> temp = new ArrayList<>();
         listOption(nameList, seatList, temp);
     }
-
     public void   listOption(List <String> nameList, List <String> seatList, List<String> temp) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
