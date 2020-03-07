@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -143,8 +144,9 @@ public class Guiiit extends Application {
             }
         }
 //      window head
-        Label head = new Label("Select a seat");
+        Label head = new Label("Select Seat");
         head.setFont(new Font("Arial", 30));
+        head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
 //      space for user name
@@ -153,10 +155,10 @@ public class Guiiit extends Application {
         grid.add(username, 8, 5, 10, 6);
 
 //      Confirm button
-        Button okBut = new Button("ok");
-        okBut.setMaxSize(120, 60);
-        okBut.setStyle("-fx-background-color: #00A4B2; ");
-        okBut.setOnAction(event -> {
+        Button bookBut = new Button("Book");
+        bookBut.setMaxSize(120, 60);
+        bookBut.setStyle("-fx-background-color: #00A4B2; ");
+        bookBut.setOnAction(event -> {
             if (username.getText().trim().isEmpty()||temp.isEmpty()) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
@@ -185,12 +187,12 @@ public class Guiiit extends Application {
                 listOption(nameList, seatList, temp);
             }
         });
-        grid.add(okBut, 12, 9,12,9);
+        grid.add(bookBut, 12, 9,12,9);
 
 //      close button
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
-        closeBut.setStyle("-fx-background-color: #ab0000; ");
+        closeBut.setStyle("-fx-background-color: #FE2E2E; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList, temp);
@@ -232,14 +234,15 @@ public class Guiiit extends Application {
         }
 
 //      window head
-        Label head = new Label("viewing Seats ");
+        Label head = new Label("Viewing Seats ");
         head.setFont(new Font("Arial", 30));
+        head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
 //      close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
-        closeBut.setStyle("-fx-background-color: #ab0000; ");
+        closeBut.setStyle("-fx-background-color: #FE2E2E; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList, temp);
@@ -281,12 +284,13 @@ public class Guiiit extends Application {
 //      window head
         Label head = new Label("Empty Seats ");
         head.setFont(new Font("Arial", 30));
+        head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
 //      close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
-        closeBut.setStyle("-fx-background-color: #ab0000; ");
+        closeBut.setStyle("-fx-background-color: #FE2E2E; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList, temp);
@@ -354,7 +358,6 @@ public class Guiiit extends Application {
     }
     public void   oderOption(List <String> nameList, List <String> seatList, List<String> temp){
         String sortTemp;
-        System.out.println("Strings in sorted order:");
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
                 // comparing adjacent strings
