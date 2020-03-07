@@ -149,11 +149,11 @@ public class Guiiit extends Application {
 //      space for user name
         TextField username = new TextField();
         username.setPromptText("enter name");
-        grid.add(username, 3, 3, 7, 4);
+        grid.add(username, 6, 3, 8, 4);
 
 //      Comfirm button
         Button okBut = new Button("ok");
-        okBut.setMaxSize(60, 40);
+        okBut.setMaxSize(120, 60);
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
             //if (username.getText().trim().isEmpty()|| temp.contains("0")) {
@@ -174,17 +174,17 @@ public class Guiiit extends Application {
                 listOption(nameList, seatList);
             }
         });
-        grid.add(okBut, 7, 6,7,6);
+        grid.add(okBut, 10, 7,10,7);
 
 //      close buttton
         Button closeBut = new Button("close");
-        closeBut.setMaxSize(60, 40);
+        closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList);
         });
-        grid.add(closeBut, 9, 6,9,6);
+        grid.add(closeBut, 12, 7,12,7);
     }
     public void   viewOption(List <String> nameList, List <String> seatList){
 //      create the stage
@@ -221,13 +221,13 @@ public class Guiiit extends Application {
 
 //      close buttton
         Button closeBut = new Button("Close");
-        closeBut.setMaxSize(60, 40);
+        closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList);
         });
-        gridTwo.add(closeBut,9,6,9,6);
+        gridTwo.add(closeBut,12,6,12,6);
 
     }
     public void  emptyOption(List <String> nameList, List <String> seatList){
@@ -262,13 +262,13 @@ public class Guiiit extends Application {
 
 //      close buttton
         Button closeBut = new Button("Close");
-        closeBut.setMaxSize(60, 60);
+        closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: #ab0000; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList);
         });
-        gridTwo.add(closeBut,9,6,9,6);
+        gridTwo.add(closeBut,12,6,12,6);
     }
     public void deleteOption(List <String> nameList, List <String> seatList){
         System.out.println(nameList+"\n"+seatList);
