@@ -10,6 +10,7 @@ changed seat value to a png
 */
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -157,11 +158,25 @@ public class Guiiit extends Application {
         okBut.setStyle("-fx-background-color: #00A4B2; ");
         okBut.setOnAction(event -> {
             //if (username.getText().trim().isEmpty()|| temp.contains("0")) {
-            if (username.getText().trim().isEmpty()|| temp.isEmpty()) {
-
-                window.close();
-                addOption(nameList,seatList, temp);
-            } else {
+            if (username.getText().trim().isEmpty()||temp.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
+                if (temp.isEmpty())a.setHeaderText("select seats");
+                a.show();
+                a.setOnCloseRequest(event1 -> {
+                    window.close();
+                    addOption(nameList,seatList, temp);
+                });
+            }else if (nameList.contains(username.getText())) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                //a.setAlertType(Alert.AlertType.CONFIRMATION);
+                a.setContentText("enter a unique name");
+                a.show();
+                a.setOnCloseRequest(event1 -> {
+                    window.close();
+                    addOption(nameList,seatList, temp);
+                });
+            }else {
                 for (Object i : temp) {
                     nameList.add(username.getText());
                 }
