@@ -7,10 +7,12 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.io.*;
@@ -108,8 +110,8 @@ public class Guiiit extends Application {
         Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
 
 //      loop to create seat buttons
-        for (int r = 0; r < 3; r++) {
-            for (int c = 0; c < 14; c++) {
+        for (int r = 2; r < 5; r++) {
+            for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
                     ImageView button = new ImageView(seatBlack);
                     button.setFitHeight(60);
@@ -139,6 +141,10 @@ public class Guiiit extends Application {
                 }
             }
         }
+//      window head
+        Label head = new Label("Select a seat");
+        head.setFont(new Font("Arial", 30));
+        grid.add(head,1,1,10,1);
 
 //      space for user name
         TextField username = new TextField();
@@ -193,11 +199,11 @@ public class Guiiit extends Application {
     public void   viewOption(List <String> nameList, List <String> seatList, List<String> temp){
 //      create the stage
         Stage window= new Stage();
-        GridPane gridTwo = new GridPane();
-        gridTwo.setPadding(new Insets(5, 2, 5, 2));
-        gridTwo.setHgap(10);
-        gridTwo.setVgap(10);
-        Scene viewSeat = new Scene(gridTwo, 980, 320);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(5, 2, 5, 2));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        Scene viewSeat = new Scene(grid, 980, 320);
         window.setScene(viewSeat);
         window.show();
 
@@ -207,8 +213,8 @@ public class Guiiit extends Application {
         Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
 
 //      loop to create seat buttons
-        for (int r = 0; r < 3; r++) {
-            for (int c = 0; c < 14; c++) {
+        for (int r = 2; r < 5; r++) {
+            for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
                     ImageView button = new ImageView(seatBlack);
                     button.setFitHeight(60);
@@ -218,10 +224,15 @@ public class Guiiit extends Application {
                         button.setImage(seatGrey);
                     }
                     number++;
-                    gridTwo.add(button, c, r);
+                    grid.add(button, c, r);
                 }
             }
         }
+
+//      window head
+        Label head = new Label("Select a seat");
+        head.setFont(new Font("Arial", 30));
+        grid.add(head,1,1,10,1);
 
 //      close button
         Button closeBut = new Button("Close");
@@ -231,17 +242,17 @@ public class Guiiit extends Application {
             window.close();
             listOption(nameList, seatList, temp);
         });
-        gridTwo.add(closeBut,12,6,12,6);
+        grid.add(closeBut,12,6,12,6);
 
     }
     public void  emptyOption(List <String> nameList, List <String> seatList, List<String> temp){
 //      create the stage
         Stage window= new Stage();
-        GridPane gridTwo = new GridPane();
-        gridTwo.setPadding(new Insets(5, 2, 5, 2));
-        gridTwo.setHgap(10);
-        gridTwo.setVgap(10);
-        Scene viewEmpty = new Scene(gridTwo, 980, 320);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(5, 2, 5, 2));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        Scene viewEmpty = new Scene(grid, 980, 320);
         window.setScene(viewEmpty);
         window.show();
 
@@ -250,19 +261,24 @@ public class Guiiit extends Application {
         Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
 
 //      loop to create seat buttons
-        for (int r = 0; r < 3; r++) {
-            for (int c = 0; c < 14; c++) {
+        for (int r = 2; r < 5; r++) {
+            for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
                     ImageView button = new ImageView(seatBlack);
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
-                    if (!seatList.contains(String.valueOf(number))) gridTwo.add(button, c, r);
+                    if (!seatList.contains(String.valueOf(number))) grid.add(button, c, r);
                     number++;
                 }
             }
         }
+
+//        window head
+        Label head = new Label("Select a seat");
+        head.setFont(new Font("Arial", 30));
+        grid.add(head,1,1,10,1);
 
 //      close button
         Button closeBut = new Button("Close");
@@ -272,7 +288,7 @@ public class Guiiit extends Application {
             window.close();
             listOption(nameList, seatList, temp);
         });
-        gridTwo.add(closeBut,12,6,12,6);
+        grid.add(closeBut,12,6,12,6);
     }
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
         System.out.println(nameList+"\n"+seatList);
