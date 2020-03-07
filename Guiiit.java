@@ -3,6 +3,10 @@
 \need to flash when reClicked after booked
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
+change max size for all buttons in add option
+changed stage sizs
+added seatminit
+changed seat value to a png
 */
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -34,15 +38,15 @@ public class Guiiit extends Application {
     }
 
     public void   listOption(List <String> nameList, List <String> seatList) {
-        System.out.println(
+        System.out.println("\n\n"+
                 "A Add a seat\n"+
-                        "V View all seats\n"+
-                        "E View empty seats\n"+
-                        "D Delete seat\n"+
-                        "F Find the seat\n"+
-                        "S Save details\n"+
-                        "L Load details\n"+
-                        "O List seats\n");
+                "V View all seats\n"+
+                "E View empty seats\n"+
+                "D Delete seat\n"+
+                "F Find the seat\n"+
+                "S Save details\n"+
+                "L Load details\n"+
+                "O List seats\n");
         runOption(nameList,seatList);
     }
     public void    runOption(List <String> nameList, List <String> seatList){
@@ -104,58 +108,35 @@ public class Guiiit extends Application {
 //      values needed for the loop
         int number = 1;
         List<String> temp = new ArrayList<>();
-        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
-        Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
-        Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
-        Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("seatminit.png"));
+
 //      loop to create seat buttons
-        //ImageView button;
-        for (int r = 0; r < 3; r++) {
-            for (int c = 0; c < 14; c++) {
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 10; c++) {
                 if (number <=SEATING_CAPACITY) {
-                    final ImageView[] button = {new ImageView(seatBlack)};
-                    button[0].setFitHeight(60);
-                    button[0].setFitWidth(60);
-                    //Button button = new Button(String.valueOf(number), new ImageView(seatBlack));
-                    button[0].setId(String.valueOf(number)+"id");
-                    System.out.println(button[0].getId());
-                    System.out.println(String.valueOf(number)+"num");
+                    Button button = new Button(""/*String.valueOf(number)*/, new ImageView(seatBlack));
+                    button.setId(String.valueOf(number));
                     //button.setMaxSize(60, 60);
 //                    change seat colour to orange if it's already booked
-                    if (seatList.contains(button[0].getId())) {
-                        button[0] = new ImageView(seatRed);
-                        button[0].setFitHeight(60);
-                        button[0].setFitWidth(60);
-                        //button.setStyle("-fx-background-color: #ff6347; ");
+                    if (seatList.contains(button.getId())) {
+                        button.setStyle("-fx-background-color: #ff6347; ");
                     }
-                    int finalNumber = number;
-                    button[0].setOnMouseClicked(event -> {
-                        String id=button[0].getId();
+                    button.setOnAction(event -> {
 //                      flash the seat colour if the user tries to click a already booked seat
-                        if (seatList.contains(id)){
-                            System.out.println("in list");
-//                            finalButton = new ImageView(seatBlack);
-//                            finalButton.setFitHeight(60);
-//                            finalButton.setFitWidth(60);
-                            //finalButton.setStyle("-fx-background-color: #ff6347; "); //redundent need a flash
+                        if (seatList.contains(button.getId())){
+                            button.setStyle("-fx-background-color: #ff6347; "); //redundent need a flash
 //                      if the seat is not booked add the seat to the temporary seatlist,change colour to green
-                        }else if(!temp.contains(id)){
-                            button[0] = new ImageView(seatGreen);
-                            button[0].setFitHeight(60);
-                            button[0].setFitWidth(60);
-                            System.out.println("not in list>temp");
-                            //finalButton.setStyle("-fx-background-color: #00ff00; ");
-                            System.out.println(id);
-                            temp.add(id);
+                        }else if(!temp.contains(button.getId())){
+                            button.setStyle("-fx-background-color: #00ff00; ");
+                            temp.add(button.getId());
 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
-                        }else if (temp.contains(id)){
-                            System.out.println("temp>remove");
-                            temp.remove(String.valueOf(finalNumber));
-                            //button[0].setStyle("");
+                        }else if (temp.contains(button.getId())){
+                            temp.remove(button.getId());
+                            button.setStyle("");
                         }
                     });
                     number++;
-                    grid.add(button[0], c, r);
+                    grid.add(button, c, r);
                 }
             }
         }
