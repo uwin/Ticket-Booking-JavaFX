@@ -44,7 +44,8 @@ public class Guiiit extends Application {
                 "F Find the seat\n"+
                 "S Save details\n"+
                 "L Load details\n"+
-                "O List seats\n");
+                "O List seats\n"+
+                "q quit\n");
         runOption(nameList,seatList, temp);
     }
     public void    runOption(List <String> nameList, List <String> seatList, List<String> temp){
@@ -392,29 +393,53 @@ public class Guiiit extends Application {
 
     }
     public void   saveOption(List <String> nameList, List <String> seatList, List<String> temp) throws IOException {
-        PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
-        for (String s : seatList) {
-            saveSeats.println(s);
-        }
-        saveSeats.close();
-        PrintWriter saveNames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
-        for (String s : nameList) {
-            saveNames.println(s);
-        }
-        saveNames.close();
-        waitOption(nameList,seatList, temp);
-    }
-    public void   loadOption(List <String> nameList, List <String> seatList, List<String> temp) throws FileNotFoundException {
-        Scanner scanSeats = new Scanner(new File("seats.txt"));
-        while(scanSeats.hasNext()) seatList.add(scanSeats.next());
-        Scanner scanNames = new Scanner(new File("names.txt"));
-        while(scanNames.hasNext()) nameList.add(scanNames.next());
         for (String i : seatList){
             System.out.print(i+"|");
             System.out.print(nameList.get(seatList.indexOf(i)));
             System.out.println();
         }
-        waitOption(nameList,seatList, temp);
+        while (true){
+            Scanner scanSave =new Scanner(System.in);
+            System.out.println("\n Save "+seatList.size()+" Bookings?");
+            String saveSeat = scanSave.next();
+            if(saveSeat.toLowerCase().equals("y")){
+                PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
+                for (String s : seatList) {
+                    saveSeats.println(s);
+                }
+                saveSeats.close();
+                PrintWriter saveNames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
+                for (String s : nameList) {
+                    saveNames.println(s);
+                }
+                saveNames.close();
+                waitOption(nameList,seatList, temp);
+            }else if(saveSeat.toLowerCase().equals("q")){
+                listOption(nameList, seatList, temp);
+            }
+        }
+    }
+    public void   loadOption(List <String> nameList, List <String> seatList, List<String> temp) throws FileNotFoundException {
+        while (true){
+            Scanner scanLoad =new Scanner(System.in);
+            System.out.println("\n Save "+seatList.size()+" Bookings?");
+            String loadSeat = scanLoad.next();
+            if(loadSeat.toLowerCase().equals("y")){
+                Scanner scanSeats = new Scanner(new File("seats.txt"));
+                while(scanSeats.hasNext()) seatList.add(scanSeats.next());
+                Scanner scanNames = new Scanner(new File("names.txt"));
+                while(scanNames.hasNext()) nameList.add(scanNames.next());
+                for (String i : seatList){
+                    System.out.print(i+"|");
+                    System.out.print(nameList.get(seatList.indexOf(i)));
+                    System.out.println();
+                }
+                System.out.println("\n"+seatList.size()+" Bookings Loaded");
+                waitOption(nameList,seatList, temp);
+            }else if(loadSeat.toLowerCase().equals("q")){
+                listOption(nameList, seatList, temp);
+            }
+        }
     }
     public void   oderOption(List <String> nameList, List <String> seatList, List<String> temp){
         String sortTemp;
