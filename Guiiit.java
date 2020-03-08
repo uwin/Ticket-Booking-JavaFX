@@ -330,12 +330,12 @@ public class Guiiit extends Application {
         //System.out.println(nameList+"\n"+seatList);
 //        getting user name
         Scanner scanName = new Scanner(System.in);
-        System.out.println("enter your name: ");
+        System.out.println("enter your name:");
         String deleteName= scanName.next();
-
-        if (nameList.contains(deleteName.toLowerCase())) {
+        if (nameList.contains(deleteName.toLowerCase())|| !deleteName.toLowerCase().equals("q")) {
 //            looping till a valid seat is given
-            while (true){
+            String deleteSeat="";
+            while (!deleteSeat.toLowerCase().equals("q")){
 //                printing all the seats for the user name in a row
                 for (int i=0;i<nameList.size();i++){
                     if(nameList.get(i).equals(deleteName.toLowerCase())) {
@@ -346,8 +346,8 @@ public class Guiiit extends Application {
                 System.out.println();
 //                getting user to select a seat number
                 Scanner scanDelete = new Scanner(System.in);
-                System.out.println("enter your seat number: ");
-                String deleteSeat = scanDelete.next();
+                System.out.println("enter your seat number:");
+                deleteSeat = scanDelete.next();
                 int deleteFinal = seatList.indexOf(deleteSeat);
 
 //                removing the given seat from the seat list
@@ -360,7 +360,10 @@ public class Guiiit extends Application {
                  }
                 System.out.println("the seat no is not booked");
             }
-        }else{
+            listOption(nameList, seatList, temp);
+        }else if(deleteName.toLowerCase().equals("q")) {
+            listOption(nameList, seatList, temp);
+        }else {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
             deleteOption(nameList,seatList,temp);
@@ -380,7 +383,9 @@ public class Guiiit extends Application {
             }
             System.out.println();
             waitOption(nameList,seatList, temp);
-        }else {
+        }else if(findName.toLowerCase().equals("q")){
+            listOption(nameList, seatList, temp);
+        }else{
 //            looping till a valid user name is given
             findOption(nameList,seatList, temp);
         }
