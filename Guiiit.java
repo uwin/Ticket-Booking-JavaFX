@@ -328,12 +328,12 @@ public class Guiiit extends Application {
     }
     public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
         List<String> deleteList = new ArrayList<>();
-        //System.out.println(nameList+"\n"+seatList);
+        System.out.println(nameList+"\n"+seatList);
 //        getting user name
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanName.next();
-        if (nameList.contains(deleteName.toLowerCase())|| !deleteName.toLowerCase().equals("q")) {
+        if (nameList.contains(deleteName.toLowerCase())) {
 //            looping till a valid seat is given
             String deleteSeat="";
             while (!deleteSeat.toLowerCase().equals("q")){
@@ -356,13 +356,12 @@ public class Guiiit extends Application {
                     seatList.remove(deleteFinal);
                     nameList.remove(deleteFinal);
                     deleteList.clear();
-                    //System.out.println(nameList+"\n"+seatList);
+                    System.out.println(nameList+"\n"+seatList);
                     waitOption(nameList,seatList, temp);
+                    break;
                  }
                 System.out.println("the seat no is not booked");
             }
-            listOption(nameList, seatList, temp);
-        }else if(deleteName.toLowerCase().equals("q")) {
             listOption(nameList, seatList, temp);
         }else {
 //            looping until a valid user name is given
@@ -400,7 +399,7 @@ public class Guiiit extends Application {
         }
         while (true){
             Scanner scanSave =new Scanner(System.in);
-            System.out.println("\n Save "+seatList.size()+" Bookings?");
+            System.out.println("\n Save "+seatList.size()+" Bookings? (y/n)");
             String saveSeat = scanSave.next();
             if(saveSeat.toLowerCase().equals("y")){
                 PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
@@ -414,7 +413,8 @@ public class Guiiit extends Application {
                 }
                 saveNames.close();
                 waitOption(nameList,seatList, temp);
-            }else if(saveSeat.toLowerCase().equals("q")){
+                break;
+            }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")){
                 listOption(nameList, seatList, temp);
             }
         }
@@ -422,7 +422,7 @@ public class Guiiit extends Application {
     public void   loadOption(List <String> nameList, List <String> seatList, List<String> temp) throws FileNotFoundException {
         while (true){
             Scanner scanLoad =new Scanner(System.in);
-            System.out.println("\n Save "+seatList.size()+" Bookings?");
+            System.out.println("\n load Bookings? (y/n)");
             String loadSeat = scanLoad.next();
             if(loadSeat.toLowerCase().equals("y")){
                 Scanner scanSeats = new Scanner(new File("seats.txt"));
@@ -436,7 +436,8 @@ public class Guiiit extends Application {
                 }
                 System.out.println("\n"+seatList.size()+" Bookings Loaded");
                 waitOption(nameList,seatList, temp);
-            }else if(loadSeat.toLowerCase().equals("q")){
+                break;
+            }else if(loadSeat.toLowerCase().equals("q")||loadSeat.toLowerCase().equals("n")){
                 listOption(nameList, seatList, temp);
             }
         }
