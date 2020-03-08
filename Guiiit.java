@@ -409,6 +409,11 @@ public class Guiiit extends Application {
         while(scanSeats.hasNext()) seatList.add(scanSeats.next());
         Scanner scanNames = new Scanner(new File("names.txt"));
         while(scanNames.hasNext()) nameList.add(scanNames.next());
+        for (String i : seatList){
+            System.out.print(i+"|");
+            System.out.print(nameList.get(seatList.indexOf(i)));
+            System.out.println("");
+        }
         waitOption(nameList,seatList, temp);
     }
     public void   oderOption(List <String> nameList, List <String> seatList, List<String> temp){
