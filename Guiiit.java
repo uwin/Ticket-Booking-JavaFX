@@ -115,6 +115,9 @@ public class Guiiit extends Application {
             for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
                     ImageView button = new ImageView(seatBlack);
+                    Label num = new Label();
+                    num.setFont(new Font("Arial", 15));
+                    num.setText(String.valueOf(number));
                     button.setFitHeight(60);
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
@@ -139,6 +142,7 @@ public class Guiiit extends Application {
                     });
                     number++;
                     grid.add(button, c, r);
+                    grid.add(num, c, r);
                 }
             }
         }
@@ -153,10 +157,12 @@ public class Guiiit extends Application {
         username.setPromptText("enter name");
         grid.add(username, 8, 5, 10, 6);
 
-//      Confirm button
+
+
+        //      Confirm button
         Button bookBut = new Button("Book");
         bookBut.setMaxSize(120, 60);
-        bookBut.setStyle("-fx-background-color: #00A4B2; ");
+        bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
 //            alert will be shown if either the name or a seat is not selected
             if (username.getText().trim().isEmpty()||temp.isEmpty()) {
@@ -188,12 +194,23 @@ public class Guiiit extends Application {
                 listOption(nameList, seatList, temp);
             }
         });
-        grid.add(bookBut, 12, 9,12,9);
+        grid.add(bookBut, 10, 9,10,9);
+
+//      Reset Button
+        Button resetBut = new Button("Clear");
+        resetBut.setMaxSize(120, 60);
+        resetBut.setStyle("-fx-background-color: orange; ");
+        resetBut.setOnAction(event -> {
+            temp.clear();
+            window.close();
+            addOption(nameList,seatList, temp);
+        });
+        grid.add(resetBut, 12, 9,12,9);
 
 //      close button
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
-        closeBut.setStyle("-fx-background-color: #FE2E2E; ");
+        closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList, temp);
@@ -222,6 +239,9 @@ public class Guiiit extends Application {
             for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
                     ImageView button = new ImageView(seatBlack);
+                    Label num = new Label();
+                    num.setFont(new Font("Arial", 15));
+                    num.setText(String.valueOf(number));
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
@@ -230,6 +250,7 @@ public class Guiiit extends Application {
                     }
                     number++;
                     grid.add(button, c, r);
+                    grid.add(num, c, r);
                 }
             }
         }
@@ -243,7 +264,7 @@ public class Guiiit extends Application {
 //      close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
-        closeBut.setStyle("-fx-background-color: #FE2E2E; ");
+        closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList, temp);
@@ -272,11 +293,17 @@ public class Guiiit extends Application {
             for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
                     ImageView button = new ImageView(seatBlack);
+                    Label num = new Label();
+                    num.setFont(new Font("Arial", 15));
+                    num.setText(String.valueOf(number));
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
-                    if (!seatList.contains(String.valueOf(number))) grid.add(button, c, r);
+                    if (!seatList.contains(String.valueOf(number))) {
+                        grid.add(button, c, r);
+                        grid.add(num, c, r);
+                    }
                     number++;
                 }
             }
@@ -291,7 +318,7 @@ public class Guiiit extends Application {
 //      close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
-        closeBut.setStyle("-fx-background-color: #FE2E2E; ");
+        closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption(nameList, seatList, temp);
