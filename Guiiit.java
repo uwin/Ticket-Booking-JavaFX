@@ -401,7 +401,7 @@ public class Guiiit extends Application {
             Scanner scanSave =new Scanner(System.in);
             System.out.println("\n Save "+seatList.size()+" Bookings? (y/n)");
             String saveSeat = scanSave.next();
-            if(saveSeat.toLowerCase().equals("y")){
+            if(saveSeat.toLowerCase().equals("y")||saveSeat.toLowerCase().equals("yes")){
                 PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
                 for (String s : seatList) {
                     saveSeats.println(s);
@@ -414,7 +414,7 @@ public class Guiiit extends Application {
                 saveNames.close();
                 waitOption(nameList,seatList, temp);
                 break;
-            }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")){
+            }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")||saveSeat.toLowerCase().equals("no")){
                 listOption(nameList, seatList, temp);
             }
         }
