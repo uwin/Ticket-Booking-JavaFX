@@ -334,21 +334,20 @@ public class Guiiit extends Application {
         System.out.println("enter your name:");
         String deleteName= scanName.next();
         if (nameList.contains(deleteName.toLowerCase())) {
-//            looping till a valid seat is given
-            String deleteSeat="";
-            while (!deleteSeat.toLowerCase().equals("q")){
-//                printing all the seats for the user name in a row
-                for (int i=0;i<nameList.size();i++){
-                    if(nameList.get(i).equals(deleteName.toLowerCase())) {
-                        System.out.print(seatList.get(i)+" | ");
-                        deleteList.add(seatList.get(i));
-                    }
+//            printing all the seats for the user name in a row
+            for (int i=0;i<nameList.size();i++){
+                if(nameList.get(i).equals(deleteName.toLowerCase())) {
+                    System.out.print(seatList.get(i)+" | ");
+                    deleteList.add(seatList.get(i));
                 }
+            }
+//            looping till a valid seat is given
+            while (true){
                 System.out.println();
 //                getting user to select a seat number
                 Scanner scanDelete = new Scanner(System.in);
                 System.out.println("enter your seat number:");
-                deleteSeat = scanDelete.next();
+                String deleteSeat = scanDelete.next();
                 int deleteFinal = seatList.indexOf(deleteSeat);
 
 //                removing the given seat from the seat list
@@ -359,10 +358,12 @@ public class Guiiit extends Application {
                     System.out.println(nameList+"\n"+seatList);
                     waitOption(nameList,seatList, temp);
                     break;
-                 }
+                 }else if(deleteSeat.toLowerCase().equals("q")){
+                    listOption(nameList, seatList, temp);
+                    break;
+                }
                 System.out.println("the seat no is not booked");
             }
-            listOption(nameList, seatList, temp);
         }else {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
