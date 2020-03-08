@@ -412,7 +412,7 @@ public class Guiiit extends Application {
         for (String i : seatList){
             System.out.print(i+"|");
             System.out.print(nameList.get(seatList.indexOf(i)));
-            System.out.println("");
+            System.out.println();
         }
         waitOption(nameList,seatList, temp);
     }
