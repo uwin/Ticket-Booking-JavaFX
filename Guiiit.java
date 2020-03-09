@@ -25,17 +25,17 @@ public class Guiiit extends Application {
     public static void main(String[] args) {
         launch();
     }
+    private static final List<String> seatList = new ArrayList<>();
+    private static final List<String> nameList = new ArrayList<>();
+    private static final List<String> temp = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
-        List<String> seatList = new ArrayList<>();
-        List<String> nameList = new ArrayList<>();
-        List<String> temp = new ArrayList<>();
-        listOption(nameList, seatList, temp);
+        listOption();
     }
-    public void   listOption(List <String> nameList, List <String> seatList, List<String> temp) {
+    public void   listOption() {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -46,54 +46,54 @@ public class Guiiit extends Application {
                 "L Load details\n"+
                 "O List seats\n"+
                 "q quit\n");
-        runOption(nameList,seatList, temp);
+        runOption();
     }
-    public void    runOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void    runOption(){
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
             case "A":
-                addOption(nameList,seatList, temp);
+                addOption();
                 break;
             case "V":
-                viewOption(nameList,seatList,temp);
+                viewOption();
                 break;
             case "E":
-                emptyOption(nameList,seatList,temp);
+                emptyOption();
                 break;
             case "D":
-                deleteOption(nameList,seatList,temp);
+                deleteOption();
                 break;
             case "F":
-                findOption(nameList,seatList,temp);
+                findOption();
                 break;
             case "S":
                 try {
-                    saveOption(nameList, seatList,temp);
+                    saveOption();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
             case "L":
                 try {
-                    loadOption(nameList,seatList,temp);
+                    loadOption();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 break;
             case "O":
-                oderOption(nameList,seatList,temp);
+                oderOption();
                 break;
             case "Q":
                 System.exit(0);
             default:
                 System.out.println("invalid input");
-                listOption(nameList, seatList, temp);
+                listOption();
                 break;
         }
     }
-    public void    addOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void    addOption(){
 //      create the stage
         Stage window = new Stage();
         GridPane grid = new GridPane();
@@ -173,7 +173,7 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    addOption(nameList,seatList, temp);
+                    addOption();
                 });
 //                alert will be shown if the user name is already existing
             }else if (nameList.contains(username.getText().toLowerCase())) {
@@ -182,7 +182,7 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    addOption(nameList,seatList, temp);
+                    addOption();
                 });
 //                all user selected seats will be added to the seatList
             }else {
@@ -192,7 +192,7 @@ public class Guiiit extends Application {
                 seatList.addAll(temp);
                 temp.clear();
                 window.close();
-                listOption(nameList, seatList, temp);
+                listOption();
             }
         });
         grid.add(bookBut, 10, 9,10,9);
@@ -204,7 +204,7 @@ public class Guiiit extends Application {
         resetBut.setOnAction(event -> {
             temp.clear();
             window.close();
-            addOption(nameList,seatList, temp);
+            addOption();
         });
         grid.add(resetBut, 12, 9,12,9);
 
@@ -214,11 +214,11 @@ public class Guiiit extends Application {
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
-            listOption(nameList, seatList, temp);
+            listOption();
         });
         grid.add(closeBut, 14, 9,14,9);
     }
-    public void   viewOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void   viewOption(){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -268,12 +268,12 @@ public class Guiiit extends Application {
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
-            listOption(nameList, seatList, temp);
+            listOption();
         });
         grid.add(closeBut,14,6,14,6);
 
     }
-    public void  emptyOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void  emptyOption(){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -322,11 +322,11 @@ public class Guiiit extends Application {
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
-            listOption(nameList, seatList, temp);
+            listOption();
         });
         grid.add(closeBut,14,6,14,6);
     }
-    public void deleteOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void deleteOption(){
         List<String> deleteList = new ArrayList<>();
         System.out.println(nameList+"\n"+seatList);
 //        getting user name
@@ -356,23 +356,23 @@ public class Guiiit extends Application {
                     nameList.remove(deleteFinal);
                     deleteList.clear();
                     System.out.println(nameList+"\n"+seatList);
-                    waitOption(nameList,seatList, temp);
+                    waitOption();
                     break;
                  }else if(deleteSeat.toLowerCase().equals("q")){
-                    listOption(nameList, seatList, temp);
+                    listOption();
                     break;
                 }
                 System.out.println("the seat no is not booked");
             }
         }else if(deleteName.toLowerCase().equals("q")){
-            listOption(nameList, seatList, temp);
+            listOption();
         }else {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
-            deleteOption(nameList,seatList,temp);
+            deleteOption();
         }
     }
-    public void   findOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void   findOption(){
 //        getting user name
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name:");
@@ -385,16 +385,16 @@ public class Guiiit extends Application {
                 }
             }
             System.out.println();
-            waitOption(nameList,seatList, temp);
+            waitOption();
         }else if(findName.toLowerCase().equals("q")){
-            listOption(nameList, seatList, temp);
+            listOption();
         }else{
 //            looping till a valid user name is given
-            findOption(nameList,seatList, temp);
+            findOption();
         }
 
     }
-    public void   saveOption(List <String> nameList, List <String> seatList, List<String> temp) throws IOException {
+    public void   saveOption() throws IOException {
         for (String i : seatList){
             System.out.print(i+"|");
             System.out.print(nameList.get(seatList.indexOf(i)));
@@ -415,15 +415,15 @@ public class Guiiit extends Application {
                     saveNames.println(s);
                 }
                 saveNames.close();
-                waitOption(nameList,seatList, temp);
+                waitOption();
                 break;
             }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")||saveSeat.toLowerCase().equals("no")){
-                listOption(nameList, seatList, temp);
+                listOption();
                 break;
             }
         }
     }
-    public void   loadOption(List <String> nameList, List <String> seatList, List<String> temp) throws FileNotFoundException {
+    public void   loadOption() throws FileNotFoundException {
         while (true){
             Scanner scanLoad =new Scanner(System.in);
             System.out.println("\n load Bookings? (y/n)");
@@ -439,15 +439,15 @@ public class Guiiit extends Application {
                     System.out.println();
                 }
                 System.out.println("\n"+seatList.size()+" Bookings Loaded");
-                waitOption(nameList,seatList, temp);
+                waitOption();
                 break;
             }else if(loadSeat.toLowerCase().equals("q")||loadSeat.toLowerCase().equals("n")){
-                listOption(nameList, seatList, temp);
+                listOption();
                 break;
             }
         }
     }
-    public void   oderOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void   oderOption(){
         String sortTemp;
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
@@ -460,12 +460,12 @@ public class Guiiit extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        waitOption(nameList,seatList, temp);
+        waitOption();
     }
-    public void   waitOption(List <String> nameList, List <String> seatList, List<String> temp){
+    public void   waitOption(){
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
-        if (!continueConsole.isEmpty()) listOption(nameList, seatList, temp);
+        if (!continueConsole.isEmpty()) listOption();
     }
 }
