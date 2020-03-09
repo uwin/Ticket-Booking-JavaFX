@@ -364,6 +364,8 @@ public class Guiiit extends Application {
                 }
                 System.out.println("the seat no is not booked");
             }
+        }else if(deleteName.toLowerCase().equals("q")){
+            listOption(nameList, seatList, temp);
         }else {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
@@ -417,6 +419,7 @@ public class Guiiit extends Application {
                 break;
             }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")||saveSeat.toLowerCase().equals("no")){
                 listOption(nameList, seatList, temp);
+                break;
             }
         }
     }
@@ -440,6 +443,7 @@ public class Guiiit extends Application {
                 break;
             }else if(loadSeat.toLowerCase().equals("q")||loadSeat.toLowerCase().equals("n")){
                 listOption(nameList, seatList, temp);
+                break;
             }
         }
     }
