@@ -1,5 +1,8 @@
 /*
 \need to flash when reClicked after booked
+\
+\check for duplicates when loading and saving
+\
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */

@@ -30,7 +30,6 @@ public class Gui extends Application {
         List<String> nameList = new ArrayList<>();
         listOption(nameList, seatList);
     }
-
     public void   listOption(List <String> nameList, List <String> seatList) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
@@ -88,7 +87,6 @@ public class Gui extends Application {
                 break;
         }
     }
-
     public void    addOption(List <String> nameList, List <String> seatList){
         Stage window = new Stage();
         int number;
