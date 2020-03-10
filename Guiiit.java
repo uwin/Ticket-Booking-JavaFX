@@ -114,7 +114,7 @@ public class Guiiit extends Application {
         Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
 
-//      loop to create seat buttons
+//      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
             for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
@@ -125,7 +125,7 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
-//                    change seat colour to orange if it's already booked
+//                    change seat colour to red if it's already booked
                     if (seatList.contains(button.getId())) {
                         button.setImage(seatRed);
                     }
@@ -150,6 +150,7 @@ public class Guiiit extends Application {
                 }
             }
         }
+
 //      window head
         Label head = new Label("Select Seat");
         head.setFont(new Font("Arial", 30));
@@ -161,9 +162,7 @@ public class Guiiit extends Application {
         username.setPromptText("enter name");
         grid.add(username, 8, 5, 10, 6);
 
-
-
-        //      Confirm button
+//        Confirm button
         Button bookBut = new Button("Book");
         bookBut.setMaxSize(120, 60);
         bookBut.setStyle("-fx-background-color: green; ");
@@ -238,7 +237,7 @@ public class Guiiit extends Application {
         Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
         Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
 
-//      loop to create seat buttons
+//      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
             for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY) {
@@ -361,12 +360,14 @@ public class Guiiit extends Application {
                     System.out.println(nameList+"\n"+seatList);
                     waitOption();
                     break;
+//                    quit for entering seat number
                  }else if(deleteSeat.toLowerCase().equals("q")){
                     listOption();
                     break;
                 }
                 System.out.println("the seat no is not booked");
             }
+//            quit for entering name
         }else if(deleteName.toLowerCase().equals("q")){
             listOption();
         }else {
@@ -398,11 +399,13 @@ public class Guiiit extends Application {
 
     }
     public void   saveOption() throws IOException {
+//        print all the booked seats along with user name
         for (String i : seatList){
             System.out.print(i+"|");
             System.out.print(nameList.get(seatList.indexOf(i)));
             System.out.println();
         }
+
         while (true){
             Scanner scanSave =new Scanner(System.in);
             System.out.println("\n Save "+seatList.size()+" Bookings? (y/n)");
@@ -436,6 +439,8 @@ public class Guiiit extends Application {
                 while(scanSeats.hasNext()) seatList.add(scanSeats.next());
                 Scanner scanNames = new Scanner(new File("names.txt"));
                 while(scanNames.hasNext()) nameList.add(scanNames.next());
+
+//                print all the names & seats loaded
                 for (String i : seatList){
                     System.out.print(i+"|");
                     System.out.print(nameList.get(seatList.indexOf(i)));
@@ -444,7 +449,7 @@ public class Guiiit extends Application {
                 System.out.println("\n"+seatList.size()+" Bookings Loaded");
                 waitOption();
                 break;
-            }else if(loadSeat.toLowerCase().equals("q")||loadSeat.toLowerCase().equals("n")){
+            }else if(loadSeat.toLowerCase().equals("q")||loadSeat.toLowerCase().equals("n")||loadSeat.toLowerCase().equals("no")){
                 listOption();
                 break;
             }
@@ -466,6 +471,7 @@ public class Guiiit extends Application {
         waitOption();
     }
     public void   waitOption(){
+//        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
