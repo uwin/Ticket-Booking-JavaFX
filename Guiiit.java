@@ -414,7 +414,7 @@ public class Guiiit extends Application {
                 FileWriter save = new FileWriter("src/Data.txt");
                 for(String i: seatList){
                     int index= seatList.indexOf(i);
-                    save.write(seatList.get(index)+"|"+nameList.get(index)+"\n");
+                    save.write(seatList.get(index)+"-"+nameList.get(index)+"\n");
 
                 }
                 save.close();
@@ -432,11 +432,13 @@ public class Guiiit extends Application {
             System.out.println("\n load Bookings? (y/n)");
             String loadSeat = scanLoad.next();
             if(loadSeat.toLowerCase().equals("y")){
-                Scanner scanSeats = new Scanner(new File("seats.txt"));
-                while(scanSeats.hasNext()) seatList.add(scanSeats.next());
-                Scanner scanNames = new Scanner(new File("names.txt"));
-                while(scanNames.hasNext()) nameList.add(scanNames.next());
-
+                Scanner Load= new Scanner(new File("src/Data.txt"));
+                while (Load.hasNextLine()){
+                    String line = Load.nextLine();
+                    String [] separate= line.split("-");
+                    seatList.add(separate[0]);
+                    nameList.add(separate[1]);
+                }
 //                print all the names & seats loaded
                 for (String i : seatList){
                     System.out.print(i+"|");
