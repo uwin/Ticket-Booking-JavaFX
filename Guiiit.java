@@ -411,16 +411,13 @@ public class Guiiit extends Application {
             System.out.println("\n Save "+seatList.size()+" Bookings? (y/n)");
             String saveSeat = scanSave.next();
             if(saveSeat.toLowerCase().equals("y")||saveSeat.toLowerCase().equals("yes")){
-                PrintWriter saveSeats = new PrintWriter(new BufferedWriter(new FileWriter("seats.txt")));
-                for (String s : seatList) {
-                    saveSeats.println(s);
+                FileWriter save = new FileWriter("src/Data.txt");
+                for(String i: seatList){
+                    int index= seatList.indexOf(i);
+                    save.write(seatList.get(index)+"|"+nameList.get(index)+"\n");
+
                 }
-                saveSeats.close();
-                PrintWriter saveNames = new PrintWriter(new BufferedWriter(new FileWriter("names.txt")));
-                for (String s : nameList) {
-                    saveNames.println(s);
-                }
-                saveNames.close();
+                save.close();
                 waitOption();
                 break;
             }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")||saveSeat.toLowerCase().equals("no")){
