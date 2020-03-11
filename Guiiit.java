@@ -30,7 +30,6 @@ public class Guiiit extends Application {
     }
     private static final List<String> seatList = new ArrayList<>();
     private static final List<String> nameList = new ArrayList<>();
-    private static final List<String> temp = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
@@ -110,6 +109,7 @@ public class Guiiit extends Application {
 
 //      values needed for the loop
         int number = 1;
+        List<String> temp = new ArrayList<>();
         Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
