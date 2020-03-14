@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
@@ -33,6 +35,9 @@ public class Guiiit extends Application {
     }
     private static final List<String> seatList = new ArrayList<>();
     private static final List<String> nameList = new ArrayList<>();
+    private static final List<String> ColomboToBudulla = new ArrayList<>();
+    private static final List<String> BudullaTOColombo = new ArrayList<>();
+    List<String> temp = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
@@ -119,7 +124,6 @@ public class Guiiit extends Application {
 
 //      values needed for the loop
         int number = 1;
-        List<String> temp = new ArrayList<>();
         Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
@@ -172,6 +176,8 @@ public class Guiiit extends Application {
         username.setPromptText("enter name");
         grid.add(username, 8, 5, 10, 6);
 
+        AtomicInteger Budulla_Colomboverify= new AtomicInteger();
+        AtomicInteger Colombo_Budullaverify= new AtomicInteger();
 //        Confirm button
         Button bookBut = new Button("Book");
         bookBut.setMaxSize(120, 60);
@@ -202,6 +208,13 @@ public class Guiiit extends Application {
                     nameList.add(username.getText().toLowerCase());
                 }
                 seatList.addAll(temp);
+                if(Colombo_Budullaverify.get() ==1) ColomboToBudulla.addAll(temp);
+                Colombo_Budullaverify.set(0);
+                if(Budulla_Colomboverify.get() ==1) ColomboToBudulla.addAll(temp);
+                Budulla_Colomboverify.set(0);
+                System.out.println("ColomboToBudulla: "+ColomboToBudulla);
+                System.out.println("BudullaTOColombo: "+BudullaTOColombo);
+
                 temp.clear();
                 window.close();
                 listOption();
@@ -245,6 +258,7 @@ public class Guiiit extends Application {
         Button toBudulla = new Button("To Budulla");
         toBudulla.setMaxSize(120, 60);
         toBudulla.setOnAction(event -> {
+            Colombo_Budullaverify.set(1);
             window.close();
             window.setScene(addView);
             window.show();
@@ -255,6 +269,7 @@ public class Guiiit extends Application {
         Button toColombo = new Button("To Colombo");
         toColombo.setMaxSize(120, 60);
         toColombo.setOnAction(event -> {
+            Budulla_Colomboverify.set(1);
             window.close();
             window.setScene(addView);
             window.show();
