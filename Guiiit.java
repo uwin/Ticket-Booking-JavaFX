@@ -210,7 +210,7 @@ public class Guiiit extends Application {
                 seatList.addAll(temp);
                 if(Colombo_Budullaverify.get() ==1) ColomboToBudulla.addAll(temp);
                 Colombo_Budullaverify.set(0);
-                if(Budulla_Colomboverify.get() ==1) ColomboToBudulla.addAll(temp);
+                if(Budulla_Colomboverify.get() ==1) BudullaTOColombo.addAll(temp);
                 Budulla_Colomboverify.set(0);
                 System.out.println("ColomboToBudulla: "+ColomboToBudulla);
                 System.out.println("BudullaTOColombo: "+BudullaTOColombo);
