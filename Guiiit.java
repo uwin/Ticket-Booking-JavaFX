@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 public class Guiiit extends Application {
@@ -33,6 +34,7 @@ public class Guiiit extends Application {
     }
     private static final List<String> seatList = new ArrayList<>();
     private static final List<String> nameList = new ArrayList<>();
+    HashMap<String, String> Booking = new HashMap<String, String>();
     public void start(Stage stage) {
         welcome();
     }
@@ -191,8 +193,10 @@ public class Guiiit extends Application {
                 });
 //                all user selected seats will be added to the seatList
             }else {
-                for (Object ignored : temp) {
+                for (String i : temp) {
                     nameList.add(username.getText().toLowerCase());
+                    int indexHash=temp.indexOf(i);
+                    Booking.put(temp.get(indexHash),username.getText());
                 }
                 seatList.addAll(temp);
                 temp.clear();
