@@ -55,7 +55,7 @@ public class Guiiit extends Application {
                 "L Load details\n"+
                 "O List seats\n"+
                 "q quit\n");
-        runOption();
+        test();
     }
     public void    runOption(){
         Scanner scanOption= new Scanner(System.in);
@@ -63,13 +63,13 @@ public class Guiiit extends Application {
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
             case "A":
-                addOption();
+                test();
                 break;
             case "V":
-                viewOption();
+                test();
                 break;
             case "E":
-                emptyOption();
+                test();
                 break;
             case "D":
                 deleteOption();
@@ -102,7 +102,7 @@ public class Guiiit extends Application {
                 break;
         }
     }
-    public void    addOption(){
+    public void test(){
 //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -112,7 +112,51 @@ public class Guiiit extends Application {
         gridFirst.setVgap(10);
         Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
         window.setScene(addveiwFirst);
-        window.show();
+
+        Scanner scanOption= new Scanner(System.in);
+        System.out.println(">> select a option");
+        String userOption= scanOption.next().toUpperCase();
+        switch (userOption) {
+            case "A":
+                window.show();
+                break;
+            case "V":
+                window.show();
+                break;
+            case "E":
+                window.show();
+                break;
+            case "D":
+                deleteOption();
+                break;
+            case "F":
+                findOption();
+                break;
+            case "S":
+                try {
+                    saveOption();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "L":
+                try {
+                    loadOption();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "O":
+                oderOption();
+                break;
+            case "Q":
+                System.exit(0);
+            default:
+                System.out.println("invalid input");
+                listOption();
+                break;
+        }
+        //window.show();
 
 //        window headFirst
         Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
@@ -128,7 +172,9 @@ public class Guiiit extends Application {
             int Budulla_Colomboverify=0;
             System.out.println("C_B box"+Colombo_Budullaverify);
             window.close();
-            tet(Colombo_Budullaverify,Budulla_Colomboverify);
+            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify);
         });
         gridFirst.add(toBudulla,31, 9,16,12);
 
@@ -140,7 +186,9 @@ public class Guiiit extends Application {
             int Colombo_Budullaverify=0;
             System.out.println("B_C box"+Budulla_Colomboverify);
             window.close();
-            tet(Colombo_Budullaverify,Budulla_Colomboverify);
+            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify);
         });
         gridFirst.add(toColombo,44, 9,16,12);
 
@@ -153,7 +201,7 @@ public class Guiiit extends Application {
             listOption();
         });
     }
-    public void tet(int Colombo_Budullaverify,int Budulla_Colomboverify){
+    public void addOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
         //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -244,7 +292,6 @@ public class Guiiit extends Application {
         username.setPromptText("enter name");
         grid.add(username, 8, 5, 10, 6);
 
-
 //        Confirm button
         Button bookBut = new Button("Book");
         bookBut.setMaxSize(120, 60);
@@ -258,7 +305,7 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    addOption();
+                    test();
                 });
 //                alert will be shown if the user name is already existing
             }else if (nameList.contains(username.getText().toLowerCase())) {
@@ -267,7 +314,7 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    addOption();
+                    test();
                 });
 //                all user selected seats will be added to the seatList
             }else {
@@ -302,7 +349,7 @@ public class Guiiit extends Application {
             //Budulla_Colomboverify=0;
             temp.clear();
             window.close();
-            addOption();
+            test();
         });
         grid.add(resetBut, 12, 9,12,9);
 
@@ -319,7 +366,7 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
-    public void   viewOption(){
+    public void   viewOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -347,9 +394,10 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
-                    if (seatList.contains(String.valueOf(number))){
-                        button.setImage(seatGrey);
-                    }
+                    if (Colombo_Budullaverify==1){
+                    if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
+                    if (Budulla_Colomboverify==1){
+                    if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
                     number++;
                     grid.add(button, c, r);
                     grid.add(num, c, r);
@@ -374,7 +422,7 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
 
     }
-    public void  emptyOption(){
+    public void  emptyOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -402,9 +450,19 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
-                    if (!seatList.contains(String.valueOf(number))) {
-                        grid.add(button, c, r);
-                        grid.add(num, c, r);
+                    if (Colombo_Budullaverify==1){
+                        if (!ColomboToBudulla.containsKey(String.valueOf(number)))
+                        {
+                            grid.add(button, c, r);
+                            grid.add(num, c, r);
+                        }
+                    }
+                    if (Budulla_Colomboverify==1){
+                        if (!BudullaToColombo.containsKey(String.valueOf(number)))
+                        {
+                            grid.add(button, c, r);
+                            grid.add(num, c, r);
+                        }
                     }
                     number++;
                 }
