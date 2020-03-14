@@ -6,6 +6,8 @@
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
+ss
+ss
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -27,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
-
 public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
