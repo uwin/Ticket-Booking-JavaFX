@@ -7,10 +7,7 @@
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
 public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
@@ -38,8 +34,8 @@ public class Guiiit extends Application {
     }
     private static final List<String> seatList = new ArrayList<>();
     private static final List<String> nameList = new ArrayList<>();
-    HashMap<String, String> ColomboToBudulla = new HashMap<String, String>();
-    HashMap<String, String> BudullaToColombo = new HashMap<String, String>();
+    HashMap<String, String> ColomboToBudulla = new HashMap<>();
+    HashMap<String, String> BudullaToColombo = new HashMap<>();
     List<String> temp = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
@@ -314,15 +310,12 @@ public class Guiiit extends Application {
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
-        closeBut.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //Colombo_Budullaverify=0;
-                //Budulla_Colomboverify=0;
-                temp.clear();
-                window.close();
-                Guiiit.this.listOption();
-            }
+        closeBut.setOnAction(event -> {
+            //Colombo_Budullaverify=0;
+            //Budulla_Colomboverify=0;
+            temp.clear();
+            window.close();
+            listOption();
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
