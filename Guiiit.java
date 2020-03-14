@@ -6,8 +6,6 @@
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
-ss
-ss
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -26,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,8 +35,8 @@ public class Guiiit extends Application {
     }
     private static final List<String> seatList = new ArrayList<>();
     private static final List<String> nameList = new ArrayList<>();
-    private static final List<String> ColomboToBudulla = new ArrayList<>();
-    private static final List<String> BudullaTOColombo = new ArrayList<>();
+    HashMap<String, String> ColomboToBudulla = new HashMap<String, String>();
+    HashMap<String, String> BudullaToColombo = new HashMap<String, String>();
     List<String> temp = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
@@ -179,6 +178,7 @@ public class Guiiit extends Application {
 
         AtomicInteger Budulla_Colomboverify= new AtomicInteger();
         AtomicInteger Colombo_Budullaverify= new AtomicInteger();
+
 //        Confirm button
         Button bookBut = new Button("Book");
         bookBut.setMaxSize(120, 60);
@@ -207,15 +207,19 @@ public class Guiiit extends Application {
             }else {
                 for (String i : temp) {
                     nameList.add(username.getText().toLowerCase());
+                    int indexforHash=temp.indexOf(i);
+                    if(Colombo_Budullaverify.get() ==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                    if(Budulla_Colomboverify.get() ==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                 }
                 seatList.addAll(temp);
-                if(Colombo_Budullaverify.get() ==1) ColomboToBudulla.addAll(temp);
-                Colombo_Budullaverify.set(0);
-                if(Budulla_Colomboverify.get() ==1) BudullaTOColombo.addAll(temp);
-                Budulla_Colomboverify.set(0);
-                System.out.println("ColomboToBudulla: "+ColomboToBudulla);
-                System.out.println("BudullaTOColombo: "+BudullaTOColombo);
 
+                System.out.println("seatList"+seatList);
+                System.out.println("nameList"+nameList);
+                System.out.println("ColomboToBudulla: "+ColomboToBudulla);
+                System.out.println("BudullaTOColombo: "+BudullaToColombo);
+
+                Colombo_Budullaverify.set(0);
+                Budulla_Colomboverify.set(0);
                 temp.clear();
                 window.close();
                 listOption();
