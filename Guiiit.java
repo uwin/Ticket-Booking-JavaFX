@@ -106,8 +106,15 @@ public class Guiiit extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         Scene addView = new Scene(grid, 1020, 400);
+
+        GridPane gridFirst = new GridPane();
+        gridFirst.setPadding(new Insets(5, 2, 5, 2));
+        gridFirst.setHgap(10);
+        gridFirst.setVgap(10);
+        Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
+
         window.setTitle("Train Booking System");
-        window.setScene(addView);
+        window.setScene(addveiwFirst);
         window.show();
 
 //      values needed for the loop
@@ -154,7 +161,7 @@ public class Guiiit extends Application {
             }
         }
 
-//      window head
+//      window headFirst
         Label head = new Label("Select Seat");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
@@ -221,7 +228,48 @@ public class Guiiit extends Application {
             window.close();
             listOption();
         });
-        grid.add(closeBut, 14, 9,14,9);
+        grid.add(closeBut, 14, 9,14,9);//      close button
+
+//        window headFirst
+        Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
+        headFirst1.setFont(new Font("Arial", 30));
+        headFirst1.setTextFill(Color.web("#0076a3")); //light blue
+        gridFirst.add(headFirst1,25,3,20,4);
+
+        /*Label headFirst2 = new Label(" select route");
+        headFirst2.setFont(new Font("Arial", 30));
+        headFirst2.setTextFill(Color.web("#0076a3")); //light blue
+        gridFirst.add(headFirst2,9,5);*/
+
+        //        continue button
+        Button toBudulla = new Button("To Budulla");
+        toBudulla.setMaxSize(120, 60);
+        toBudulla.setOnAction(event -> {
+            window.close();
+            window.setScene(addView);
+            window.show();
+        });
+        gridFirst.add(toBudulla,31, 9,16,12);
+
+//                continue button
+        Button toColombo = new Button("To Colombo");
+        toColombo.setMaxSize(120, 60);
+        toColombo.setOnAction(event -> {
+            window.close();
+            window.setScene(addView);
+            window.show();
+        });
+        gridFirst.add(toColombo,44, 9,16,12);
+
+        //      close button
+        Button closeButFirst = new Button("close");
+        closeButFirst.setMaxSize(120, 60);
+        closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        gridFirst.add(closeButFirst, 38, 24,14,9);//      close button
     }
     public void   viewOption(){
 //      create the stage
@@ -364,7 +412,7 @@ public class Guiiit extends Application {
                     waitOption();
                     break;
 //                    quit for entering seat number
-                 }else if(deleteSeat.toLowerCase().equals("q")){
+                }else if(deleteSeat.toLowerCase().equals("q")){
                     listOption();
                     break;
                 }
