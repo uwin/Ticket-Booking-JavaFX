@@ -57,51 +57,6 @@ public class Guiiit extends Application {
                 "q quit\n");
         test();
     }
-    public void    runOption(){
-        Scanner scanOption= new Scanner(System.in);
-        System.out.println(">> select a option");
-        String userOption= scanOption.next().toUpperCase();
-        switch (userOption) {
-            case "A":
-                test();
-                break;
-            case "V":
-                test();
-                break;
-            case "E":
-                test();
-                break;
-            case "D":
-                deleteOption();
-                break;
-            case "F":
-                findOption();
-                break;
-            case "S":
-                try {
-                    saveOption();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "L":
-                try {
-                    loadOption();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "O":
-                oderOption();
-                break;
-            case "Q":
-                System.exit(0);
-            default:
-                System.out.println("invalid input");
-                listOption();
-                break;
-        }
-    }
     public void test(){
 //      create the stage
         Stage window = new Stage();
