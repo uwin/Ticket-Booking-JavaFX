@@ -7,6 +7,8 @@
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -104,13 +106,59 @@ public class Guiiit extends Application {
                 break;
         }
     }
-    public void    fisrtscreeen(){
-        Stage window = new Stage();
-        window.setTitle("Train Booking System");
-
-    }
     public void    addOption(){
 //      create the stage
+        Stage window = new Stage();
+        window.setTitle("Train Booking System");
+        GridPane gridFirst = new GridPane();
+        gridFirst.setPadding(new Insets(5, 2, 5, 2));
+        gridFirst.setHgap(10);
+        gridFirst.setVgap(10);
+        Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
+        window.setScene(addveiwFirst);
+        window.show();
+
+//        window headFirst
+        Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
+        headFirst1.setFont(new Font("Arial", 30));
+        headFirst1.setTextFill(Color.web("#0076a3")); //light blue
+        gridFirst.add(headFirst1,25,3,20,4);
+
+        //        continue button
+        Button toBudulla = new Button("To Budulla");
+        toBudulla.setMaxSize(120, 60);
+        toBudulla.setOnAction(event -> {
+            int Colombo_Budullaverify=1;
+            int Budulla_Colomboverify=0;
+            System.out.println("C_B box"+Colombo_Budullaverify);
+            window.close();
+            tet(Colombo_Budullaverify,Budulla_Colomboverify);
+        });
+        gridFirst.add(toBudulla,31, 9,16,12);
+
+//                continue button
+        Button toColombo = new Button("To Colombo");
+        toColombo.setMaxSize(120, 60);
+        toColombo.setOnAction(event -> {
+            int Budulla_Colomboverify=1;
+            int Colombo_Budullaverify=0;
+            System.out.println("B_C box"+Budulla_Colomboverify);
+            window.close();
+            tet(Colombo_Budullaverify,Budulla_Colomboverify);
+        });
+        gridFirst.add(toColombo,44, 9,16,12);
+
+        //      close button
+        Button closeButFirst = new Button("close");
+        closeButFirst.setMaxSize(120, 60);
+        closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+    }
+    public void tet(int Colombo_Budullaverify,int Budulla_Colomboverify){
+        //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
 
@@ -141,12 +189,7 @@ public class Guiiit extends Application {
                     button.setId(String.valueOf(number));
 //                    change seat colour to red if it's already booked
 
-                    System.out.print("cb"+Colombo_Budullaverify);
-                    System.out.print("bc"+Budulla_Colomboverify);
-                    System.out.println();
-
                     if(Colombo_Budullaverify==1) {
-                        System.out.println("C_B");
                         if (ColomboToBudulla.containsKey(button.getId())) {
                             button.setImage(seatRed);
                         }
@@ -169,19 +212,18 @@ public class Guiiit extends Application {
                             }
                         });
                     } else if(Budulla_Colomboverify==1){
-                        System.out.println("B_C");
                         if (BudullaToColombo.containsKey(button.getId())) {button.setImage(seatRed);}
                         if (temp.contains(button.getId())) {button.setImage(seatGreen);}
                         button.setOnMouseClicked(event -> {
-    //                      flash the seat colour if the user tries to click a already booked seat
+                            //                      flash the seat colour if the user tries to click a already booked seat
                             if (BudullaToColombo.containsKey(button.getId())){
                                 button.setImage(seatRed);
-    //                      if the seat is not booked add the seat to the temporary seatList,change colour to green
+                                //                      if the seat is not booked add the seat to the temporary seatList,change colour to green
                             }else if(!temp.contains(button.getId())){
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
                                 System.out.println(temp);
-    //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
+                                //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                             }else if (temp.contains(button.getId())){
                                 temp.remove(button.getId());
                                 button.setImage(seatBlack);
@@ -244,10 +286,10 @@ public class Guiiit extends Application {
                 System.out.println("seatList"+seatList);
                 System.out.println("nameList"+nameList);
                 System.out.println("ColomboToBudulla: "+ColomboToBudulla);
-                System.out.println("BudullaTOColombo: "+BudullaToColombo);
+                System.out.println("BudullaToColombo: "+BudullaToColombo);
 
-                Colombo_Budullaverify=0;
-                Budulla_Colomboverify=0;
+                //Colombo_Budullaverify=0;
+                //Budulla_Colomboverify=0;
                 temp.clear();
                 window.close();
                 listOption();
@@ -260,8 +302,8 @@ public class Guiiit extends Application {
         resetBut.setMaxSize(120, 60);
         resetBut.setStyle("-fx-background-color: orange; ");
         resetBut.setOnAction(event -> {
-            Colombo_Budullaverify=0;
-            Budulla_Colomboverify=0;
+            //Colombo_Budullaverify=0;
+            //Budulla_Colomboverify=0;
             temp.clear();
             window.close();
             addOption();
@@ -272,115 +314,17 @@ public class Guiiit extends Application {
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
-        closeBut.setOnAction(event -> {
-            Colombo_Budullaverify=0;
-            Budulla_Colomboverify=0;
-            temp.clear();
-            window.close();
-            listOption();
+        closeBut.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //Colombo_Budullaverify=0;
+                //Budulla_Colomboverify=0;
+                temp.clear();
+                window.close();
+                Guiiit.this.listOption();
+            }
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
-
-       GridPane gridFirst = new GridPane();
-        gridFirst.setPadding(new Insets(5, 2, 5, 2));
-        gridFirst.setHgap(10);
-        gridFirst.setVgap(10);
-        Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
-        window.setScene(addveiwFirst);
-        window.show();
-//        window headFirst
-        Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
-        headFirst1.setFont(new Font("Arial", 30));
-        headFirst1.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headFirst1,25,3,20,4);
-
-        *//*Label headFirst2 = new Label(" select route");
-        headFirst2.setFont(new Font("Arial", 30));
-        headFirst2.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headFirst2,9,5);*//*
-
-        //        continue button
-        Button toBudulla = new Button("To Budulla");
-        toBudulla.setMaxSize(120, 60);
-        toBudulla.setOnAction(event -> {
-            int Colombo_Budullaverify=1;
-            System.out.println("C_B box"+Colombo_Budullaverify);
-            window.close();
-            window.setScene(addView);
-            window.show();
-        });
-        gridFirst.add(toBudulla,31, 9,16,12);
-
-//                continue button
-        Button toColombo = new Button("To Colombo");
-        toColombo.setMaxSize(120, 60);
-        toColombo.setOnAction(event -> {
-            int Budulla_Colomboverify=1;
-            System.out.println("B_C box"+Budulla_Colomboverify);
-            window.close();
-            window.setScene(addView);
-            window.show();
-        });
-        gridFirst.add(toColombo,44, 9,16,12);
-
-        //      close button
-        Button closeButFirst = new Button("close");
-        closeButFirst.setMaxSize(120, 60);
-        closeButFirst.setStyle("-fx-background-color: red; ");
-        closeButFirst.setOnAction(event -> {
-            window.close();
-            listOption();
-        });
-        gridFirst.add(closeButFirst, 38, 24,14,9);//      close button*/
-        GridPane gridFirst = new GridPane();
-        gridFirst.setPadding(new Insets(5, 2, 5, 2));
-        gridFirst.setHgap(10);
-        gridFirst.setVgap(10);
-        Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
-        window.setScene(addveiwFirst);
-        window.show();
-//        window headFirst
-        Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
-        headFirst1.setFont(new Font("Arial", 30));
-        headFirst1.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headFirst1,25,3,20,4);
-
-        /*Label headFirst2 = new Label(" select route");
-        headFirst2.setFont(new Font("Arial", 30));
-        headFirst2.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headFirst2,9,5);*/
-
-        //        continue button
-        Button toBudulla = new Button("To Budulla");
-        toBudulla.setMaxSize(120, 60);
-        toBudulla.setOnAction(event -> {
-            int Colombo_Budullaverify=1;
-            System.out.println("C_B box"+Colombo_Budullaverify);
-            window.close();
-            addOption();
-        });
-        gridFirst.add(toBudulla,31, 9,16,12);
-
-//                continue button
-        Button toColombo = new Button("To Colombo");
-        toColombo.setMaxSize(120, 60);
-        toColombo.setOnAction(event -> {
-            int Budulla_Colomboverify=1;
-            System.out.println("B_C box"+Budulla_Colomboverify);
-            window.close();
-            addOption(Budulla_Colomboverif);
-        });
-        gridFirst.add(toColombo,44, 9,16,12);
-
-        //      close button
-        Button closeButFirst = new Button("close");
-        closeButFirst.setMaxSize(120, 60);
-        closeButFirst.setStyle("-fx-background-color: red; ");
-        closeButFirst.setOnAction(event -> {
-            window.close();
-            listOption();
-        });
-        gridFirst.add(closeButFirst, 38, 24,14,9);//      close button
     }
     public void   viewOption(){
 //      create the stage
