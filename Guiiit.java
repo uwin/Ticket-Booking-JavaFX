@@ -195,7 +195,6 @@ public class Guiiit extends Application {
                             } else if (!temp.contains(button.getId())) {
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
-                                System.out.println("temp"+temp);
                                 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                             } else if (temp.contains(button.getId())) {
                                 temp.remove(button.getId());
@@ -213,7 +212,6 @@ public class Guiiit extends Application {
                             }else if(!temp.contains(button.getId())){
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
-                                System.out.println("temp"+temp);
                                 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                             }else if (temp.contains(button.getId())){
                                 temp.remove(button.getId());
@@ -478,15 +476,16 @@ public class Guiiit extends Application {
                 if (deleteList.contains(String.valueOf(deleteSeat))){
                     for (String i : ColomboToBudulla.keySet()) {
                         if (i.equals(deleteSeat)){
-                            System.out.println("bfE"+ColomboToBudulla);
+                            //System.out.println("bfE"+ColomboToBudulla);
+                            System.out.println("[REMOVED] Seat : "+i);
                             ColomboToBudulla.remove(i);
-                            System.out.println("afE"+ColomboToBudulla);
+                            ///System.out.println("afE"+ColomboToBudulla);
                             break;
                         }
                 }
-                for (String i : ColomboToBudulla.keySet()) {
+/*                for (String i : ColomboToBudulla.keySet()) {
                         System.out.println( i + " |" + ColomboToBudulla.get(i));
-                }
+                }*/
                 //deleteList.clear();
                 waitOption();
                 break;
@@ -534,15 +533,16 @@ public class Guiiit extends Application {
                 if (deleteList.contains(String.valueOf(deleteSeat))){
                     for (String i : BudullaToColombo.keySet()) {
                         if (i.equals(deleteSeat)){
-                            System.out.println("bfE"+BudullaToColombo);
+                            //System.out.println("bfE"+BudullaToColombo);
+                            System.out.println("[REMOVED] Seat : "+i);
                             BudullaToColombo.remove(i);
-                            System.out.println("afE"+BudullaToColombo);
+                            //System.out.println("afE"+BudullaToColombo);
                             break;
                         }
                 }
-                for (String i : BudullaToColombo.keySet()) {
+/*                for (String i : BudullaToColombo.keySet()) {
                         System.out.println( i + " |" + BudullaToColombo.get(i));
-                }
+                }*/
                 //deleteList.clear();
                 waitOption();
                 break;
