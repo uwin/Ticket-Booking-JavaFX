@@ -121,7 +121,6 @@ public class Guiiit extends Application {
         toBudulla.setOnAction(event -> {
             int Colombo_Budullaverify=1;
             int Budulla_Colomboverify=0;
-            System.out.println("C_B box"+Colombo_Budullaverify);
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify);
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
@@ -135,7 +134,6 @@ public class Guiiit extends Application {
         toColombo.setOnAction(event -> {
             int Budulla_Colomboverify=1;
             int Colombo_Budullaverify=0;
-            System.out.println("B_C box"+Budulla_Colomboverify);
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify);
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
@@ -199,7 +197,7 @@ public class Guiiit extends Application {
                             } else if (!temp.contains(button.getId())) {
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
-                                System.out.println(temp);
+                                System.out.println("temp"+temp);
                                 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                             } else if (temp.contains(button.getId())) {
                                 temp.remove(button.getId());
@@ -217,7 +215,7 @@ public class Guiiit extends Application {
                             }else if(!temp.contains(button.getId())){
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
-                                System.out.println(temp);
+                                System.out.println("temp"+temp);
                                 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
                             }else if (temp.contains(button.getId())){
                                 temp.remove(button.getId());
@@ -495,21 +493,21 @@ public class Guiiit extends Application {
                 break;
 //                    quit for entering seat number
                 }else if(deleteSeat.toLowerCase().equals("q")){
-                    listOption();
+                    waitOption();
                     break;
                 }
                 System.out.println("the seat no is not booked");
             }
 //            quit for entering name
         }else if(deleteName.toLowerCase().equals("q")){
-            listOption();
+            waitOption();
         }else {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
             deleteOption();
         }
-        }else deleteOption();
-        if (Train.equals("2")){
+        }
+        else if (Train.equals("2")){
 
         List<String> deleteList = new ArrayList<>();
         for (String i : BudullaToColombo.keySet()) {
@@ -551,20 +549,24 @@ public class Guiiit extends Application {
                 break;
 //                    quit for entering seat number
                 }else if(deleteSeat.toLowerCase().equals("q")){
-                    listOption();
+                    waitOption();
                     break;
                 }
                 System.out.println("the seat no is not booked");
             }
 //            quit for entering name
         }else if(deleteName.toLowerCase().equals("q")){
-            listOption();
+            waitOption();
         }else {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
             deleteOption();
         }
-        }else deleteOption();
+        }
+        else if (Train.toLowerCase().equals("q")) {
+            waitOption();
+        }
+        else deleteOption();
     }
     public void   findOption(){
 //        getting user name
@@ -588,7 +590,7 @@ public class Guiiit extends Application {
                 System.out.println();
                 waitOption();
             }else if(findName.toLowerCase().equals("q")){
-                listOption();
+                waitOption();
             }else{
     //            looping till a valid user name is given
                 findOption();
@@ -608,7 +610,7 @@ public class Guiiit extends Application {
                 System.out.println();
                 waitOption();
             }else if(findName.toLowerCase().equals("q")){
-                listOption();
+                waitOption();
             }else{
     //            looping till a valid user name is given
                 findOption();
