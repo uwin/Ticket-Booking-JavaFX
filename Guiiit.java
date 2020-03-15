@@ -454,9 +454,9 @@ public class Guiiit extends Application {
         if (Train.equals("1")){
 
         List<String> deleteList = new ArrayList<>();
-        for (String i : ColomboToBudulla.keySet()) {
-                System.out.println( i + " |" + ColomboToBudulla.get(i));
-        }
+        //for (String i : ColomboToBudulla.keySet()) {
+                //System.out.println( i + " |" + ColomboToBudulla.get(i));
+        //}
 //        getting user name
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name:");
@@ -510,9 +510,9 @@ public class Guiiit extends Application {
         else if (Train.equals("2")){
 
         List<String> deleteList = new ArrayList<>();
-        for (String i : BudullaToColombo.keySet()) {
-                System.out.println( i + " |" + BudullaToColombo.get(i));
-        }
+        //for (String i : BudullaToColombo.keySet()) {
+        //        System.out.println( i + " |" + BudullaToColombo.get(i));
+        //}
 //        getting user name
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name:");
@@ -595,8 +595,8 @@ public class Guiiit extends Application {
     //            looping till a valid user name is given
                 findOption();
             }
-        } else findOption();
-        if (Train.equals("2")){
+        }
+        else if (Train.equals("2")){
             Scanner scanFind = new Scanner(System.in);
             System.out.println("enter your name:");
             String findName= scanFind.next();
@@ -615,7 +615,11 @@ public class Guiiit extends Application {
     //            looping till a valid user name is given
                 findOption();
             }
-        } else findOption();
+        }
+        else if (Train.toLowerCase().equals("q")) {
+            waitOption();
+        }
+        else findOption();
     }
     public void   saveOption() throws IOException {/*
 //        print all the booked seats along with user name
