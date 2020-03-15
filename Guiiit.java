@@ -19,11 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,9 +52,9 @@ public class Guiiit extends Application {
                 "L Load details\n"+
                 "O List seats\n"+
                 "q quit\n");
-        test();
+        testOptions();
     }
-    public void test(){
+    public void   testOptions(){
 //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -126,7 +123,7 @@ public class Guiiit extends Application {
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
             else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify);
         });
-        gridFirst.add(toBudulla,31, 9,16,12);
+        gridFirst.add(toBudulla,31, 9,10,12);
 
 //                continue button
         Button toColombo = new Button("To Colombo");
@@ -139,7 +136,7 @@ public class Guiiit extends Application {
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
             else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify);
         });
-        gridFirst.add(toColombo,44, 9,16,12);
+        gridFirst.add(toColombo,44, 9,10,12);
 
         //      close button
         Button closeButFirst = new Button("close");
@@ -149,8 +146,9 @@ public class Guiiit extends Application {
             window.close();
             listOption();
         });
+        gridFirst.add(closeButFirst,70,30,14,6);
     }
-    public void addOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
+    public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
         //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -308,7 +306,8 @@ public class Guiiit extends Application {
             //Budulla_Colomboverify=0;
             temp.clear();
             window.close();
-            test();
+            addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+
         });
         grid.add(resetBut, 12, 9,12,9);
 
