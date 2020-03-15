@@ -501,7 +501,7 @@ public class Guiiit extends Application {
             System.out.println("your have no seats booked");
             deleteOption();
         }
-        }
+        }else deleteOption();
         if (Train.equals("2")){
 
         List<String> deleteList = new ArrayList<>();
@@ -558,29 +558,56 @@ public class Guiiit extends Application {
             System.out.println("your have no seats booked");
             deleteOption();
         }
-        }
+        }else deleteOption();
     }
     public void   findOption(){
 //        getting user name
-        Scanner scanFind = new Scanner(System.in);
-        System.out.println("enter your name:");
-        String findName= scanFind.next();
-//        printing all seat values for the given name
-        if (ColomboToBudulla.containsValue(findName)){
-        for (String i : ColomboToBudulla.keySet()) {
-            if (ColomboToBudulla.get(i).equals(findName)){
-                System.out.println( i + " |" );
-            }
-        }
-            System.out.println();
-            waitOption();
-        }else if(findName.toLowerCase().equals("q")){
-            listOption();
-        }else{
-//            looping till a valid user name is given
-            findOption();
-        }
+        Scanner scanTrain = new Scanner(System.in);
+        System.out.println("select Train:");
+        System.out.println("1| Colombo To Budulla");
+        System.out.println("2| Budulla To Colombo");
+        String Train= scanTrain.next();
 
+        if (Train.equals("1")){
+            Scanner scanFind = new Scanner(System.in);
+            System.out.println("enter your name:");
+            String findName= scanFind.next();
+    //        printing all seat values for the given name
+            if (ColomboToBudulla.containsValue(findName)){
+            for (String i : ColomboToBudulla.keySet()) {
+                if (ColomboToBudulla.get(i).equals(findName)){
+                    System.out.println( i + " |" );
+                }
+            }
+                System.out.println();
+                waitOption();
+            }else if(findName.toLowerCase().equals("q")){
+                listOption();
+            }else{
+    //            looping till a valid user name is given
+                findOption();
+            }
+        } else findOption();
+        if (Train.equals("2")){
+            Scanner scanFind = new Scanner(System.in);
+            System.out.println("enter your name:");
+            String findName= scanFind.next();
+    //        printing all seat values for the given name
+            if (BudullaToColombo.containsValue(findName)){
+            for (String i : BudullaToColombo.keySet()) {
+                if (BudullaToColombo.get(i).equals(findName)){
+                    System.out.println( i + " |" );
+                }
+            }
+                System.out.println();
+                waitOption();
+            }else if(findName.toLowerCase().equals("q")){
+                listOption();
+            }else{
+    //            looping till a valid user name is given
+                findOption();
+            }
+        } else findOption();
     }
     public void   saveOption() throws IOException {
 //        print all the booked seats along with user name
