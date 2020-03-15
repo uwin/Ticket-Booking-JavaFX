@@ -34,8 +34,6 @@ public class Guiiit extends Application {
     public static void main(String[] args) {
         launch();
     }
-    private static final List<String> seatList = new ArrayList<>();
-    private static final List<String> nameList = new ArrayList<>();
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
     List<String> temp = new ArrayList<>();
@@ -261,7 +259,16 @@ public class Guiiit extends Application {
                     test();
                 });
 //                alert will be shown if the user name is already existing
-            }else if (nameList.contains(username.getText().toLowerCase())) {
+            }else if (BudullaToColombo.containsValue(username.getText().toLowerCase())) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setContentText("enter a unique name");
+                a.show();
+                a.setOnCloseRequest(event1 -> {
+                    window.close();
+                    test();
+                });
+//                all user selected seats will be added to the seatList
+            }else if (ColomboToBudulla.containsValue(username.getText().toLowerCase())) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setContentText("enter a unique name");
                 a.show();
@@ -272,20 +279,10 @@ public class Guiiit extends Application {
 //                all user selected seats will be added to the seatList
             }else {
                 for (String i : temp) {
-                    nameList.add(username.getText().toLowerCase());
                     int indexforHash=temp.indexOf(i);
                     if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                     if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                 }
-                seatList.addAll(temp);
-
-                System.out.println("seatList"+seatList);
-                System.out.println("nameList"+nameList);
-                System.out.println("ColomboToBudulla: "+ColomboToBudulla);
-                System.out.println("BudullaToColombo: "+BudullaToColombo);
-
-                //Colombo_Budullaverify=0;
-                //Budulla_Colomboverify=0;
                 temp.clear();
                 window.close();
                 listOption();
@@ -455,7 +452,6 @@ public class Guiiit extends Application {
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanName.next();
-//        if (nameList.contains(deleteName.toLowerCase())) {
         if (ColomboToBudulla.containsValue(deleteName.toLowerCase())) {
 //            printing all the seats for the user name in a row
             for (String i : ColomboToBudulla.keySet()) {
@@ -512,7 +508,6 @@ public class Guiiit extends Application {
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanName.next();
-//        if (nameList.contains(deleteName.toLowerCase())) {
         if (BudullaToColombo.containsValue(deleteName.toLowerCase())) {
 //            printing all the seats for the user name in a row
             for (String i : BudullaToColombo.keySet()) {
