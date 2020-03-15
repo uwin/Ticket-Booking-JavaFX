@@ -110,7 +110,7 @@ public class Guiiit extends Application {
         Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
         headFirst1.setFont(new Font("Arial", 30));
         headFirst1.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headFirst1,25,3,20,4);
+        gridFirst.add(headFirst1,25,3,40,4);
 
         //        continue button
         Button toBudulla = new Button("To Budulla");
