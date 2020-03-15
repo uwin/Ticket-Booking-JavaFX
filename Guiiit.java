@@ -8,13 +8,11 @@
 */
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -22,6 +20,8 @@ import javafx.scene.Scene;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,7 @@ public class Guiiit extends Application {
         Stage window = new Stage();
         window.setTitle("Train Booking System");
         GridPane gridFirst = new GridPane();
-        gridFirst.setPadding(new Insets(5, 2, 5, 2));
+        gridFirst.setPadding(new Insets(2, 2, 2, 2));
         gridFirst.setHgap(10);
         gridFirst.setVgap(10);
         Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
@@ -110,33 +110,44 @@ public class Guiiit extends Application {
         Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
         headFirst1.setFont(new Font("Arial", 30));
         headFirst1.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headFirst1,25,3,40,4);
+        gridFirst.add(headFirst1,20,3,50,8);
 
-        //        continue button
-        Button toBudulla = new Button("To Budulla");
+        Label headFirst2 = new Label("Enter Date");
+        headFirst2.setFont(new Font("Arial", 23));
+        headFirst2.setTextFill(Color.web("#0076a3")); //light blue
+        gridFirst.add(headFirst2,3,12,9,4);
+
+        DatePicker datePick = new DatePicker();
+        datePick.setValue(LocalDate.now());
+        gridFirst.add(datePick, 13, 12,18,4);
+
+                //        continue button
+        Button toBudulla = new Button("From Colombo");
         toBudulla.setMaxSize(120, 60);
         toBudulla.setOnAction(event -> {
             int Colombo_Budullaverify=1;
             int Budulla_Colomboverify=0;
+            String date=datePick.getValue().toString();
             window.close();
-            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify);
-            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
-            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
         });
-        gridFirst.add(toBudulla,31, 9,10,12);
+        gridFirst.add(toBudulla,35, 16,10,12);
 
 //                continue button
-        Button toColombo = new Button("To Colombo");
+        Button toColombo = new Button("From Budulla");
         toColombo.setMaxSize(120, 60);
         toColombo.setOnAction(event -> {
             int Budulla_Colomboverify=1;
             int Colombo_Budullaverify=0;
+            String date=datePick.getValue().toString();
             window.close();
-            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify);
-            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify);
-            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
         });
-        gridFirst.add(toColombo,44, 9,10,12);
+        gridFirst.add(toColombo,49, 16,10,12);
 
         //      close button
         Button closeButFirst = new Button("close");
@@ -146,9 +157,9 @@ public class Guiiit extends Application {
             window.close();
             listOption();
         });
-        gridFirst.add(closeButFirst,70,30,14,6);
+        gridFirst.add(closeButFirst,80,30,10,12);
     }
-    public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
+    public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify,String date){
         //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -250,7 +261,7 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+                    addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                 });
 //                alert will be shown if the user name is already existing
             }else if(Budulla_Colomboverify==1){
@@ -260,7 +271,7 @@ public class Guiiit extends Application {
                     a.show();
                     a.setOnCloseRequest(event1 -> {
                         window.close();
-                        addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+                        addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
                     for (String i : temp) {
@@ -279,7 +290,7 @@ public class Guiiit extends Application {
                     a.show();
                     a.setOnCloseRequest(event1 -> {
                         window.close();
-                        addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+                        addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
                     for (String i : temp) {
@@ -304,7 +315,7 @@ public class Guiiit extends Application {
             //Budulla_Colomboverify=0;
             temp.clear();
             window.close();
-            addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+            addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
 
         });
         grid.add(resetBut, 12, 9,12,9);
@@ -322,7 +333,7 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
-    public void   viewOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
+    public void   viewOption(int Colombo_Budullaverify, int Budulla_Colomboverify,String date){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -378,7 +389,7 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
 
     }
-    public void  emptyOption(int Colombo_Budullaverify, int Budulla_Colomboverify){
+    public void  emptyOption(int Colombo_Budullaverify, int Budulla_Colomboverify,String date){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
