@@ -256,36 +256,47 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    test();
+                    addOption(Colombo_Budullaverify,Budulla_Colomboverify);
                 });
 //                alert will be shown if the user name is already existing
-            }else if (BudullaToColombo.containsValue(username.getText().toLowerCase())) {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("enter a unique name");
-                a.show();
-                a.setOnCloseRequest(event1 -> {
+            }else if(Budulla_Colomboverify==1){
+                if (BudullaToColombo.containsValue(username.getText().toLowerCase())) {
+                    Alert a = new Alert(Alert.AlertType.WARNING);
+                    a.setContentText("enter a unique name");
+                    a.show();
+                    a.setOnCloseRequest(event1 -> {
+                        window.close();
+                        addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+                    });
+                }else {
+                    for (String i : temp) {
+                        int indexforHash=temp.indexOf(i);
+                        if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                    }
+                    temp.clear();
                     window.close();
-                    test();
-                });
-//                all user selected seats will be added to the seatList
-            }else if (ColomboToBudulla.containsValue(username.getText().toLowerCase())) {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("enter a unique name");
-                a.show();
-                a.setOnCloseRequest(event1 -> {
-                    window.close();
-                    test();
-                });
-//                all user selected seats will be added to the seatList
-            }else {
-                for (String i : temp) {
-                    int indexforHash=temp.indexOf(i);
-                    if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                    if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                    listOption();
                 }
-                temp.clear();
-                window.close();
-                listOption();
+            }else if (Colombo_Budullaverify==1){
+                if (ColomboToBudulla.containsValue(username.getText().toLowerCase())) {
+                    Alert a = new Alert(Alert.AlertType.WARNING);
+                    a.setContentText("enter a unique name");
+                    a.show();
+                    a.setOnCloseRequest(event1 -> {
+                        window.close();
+                        addOption(Colombo_Budullaverify,Budulla_Colomboverify);
+                    });
+                }else {
+                    for (String i : temp) {
+                        int indexforHash=temp.indexOf(i);
+                        if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                    }
+                    temp.clear();
+                    window.close();
+                    listOption();
+                }
             }
         });
         grid.add(bookBut, 10, 9,10,9);
@@ -604,7 +615,7 @@ public class Guiiit extends Application {
             }
         } else findOption();
     }
-    public void   saveOption() throws IOException {
+    public void   saveOption() throws IOException {/*
 //        print all the booked seats along with user name
         for (String i : seatList){
             System.out.print(i+"|");
@@ -630,9 +641,9 @@ public class Guiiit extends Application {
                 listOption();
                 break;
             }
-        }
+        }*/
     }
-    public void   loadOption() throws FileNotFoundException {
+    public void   loadOption() throws FileNotFoundException {/*
         while (true){
             Scanner scanLoad =new Scanner(System.in);
             System.out.println("\n load Bookings? (y/n)");
@@ -658,9 +669,9 @@ public class Guiiit extends Application {
                 listOption();
                 break;
             }
-        }
+        }*/
     }
-    public void   oderOption(){
+    public void   oderOption(){/*
         String sortTemp;
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
@@ -673,7 +684,7 @@ public class Guiiit extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        waitOption();
+        waitOption();*/
     }
     public void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
