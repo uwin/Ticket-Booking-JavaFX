@@ -442,36 +442,44 @@ public class Guiiit extends Application {
     }
     public void deleteOption(){
         List<String> deleteList = new ArrayList<>();
-        System.out.println(nameList+"\n"+seatList);
+        for (String i : ColomboToBudulla.keySet()) {
+                System.out.println( i + " |" + ColomboToBudulla.get(i));
+        }
 //        getting user name
         Scanner scanName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanName.next();
-        if (nameList.contains(deleteName.toLowerCase())) {
+//        if (nameList.contains(deleteName.toLowerCase())) {
+        if (ColomboToBudulla.containsValue(deleteName.toLowerCase())) {
 //            printing all the seats for the user name in a row
-            for (int i=0;i<nameList.size();i++){
-                if(nameList.get(i).equals(deleteName.toLowerCase())) {
-                    System.out.print(seatList.get(i)+" | ");
-                    deleteList.add(seatList.get(i));
+            for (String i : ColomboToBudulla.keySet()) {
+                if (ColomboToBudulla.get(i).equals(deleteName)){
+                    System.out.println( i + " |" + ColomboToBudulla.get(i));
+                    deleteList.add(i);
                 }
             }
 //            looping till a valid seat is given
             while (true){
-                System.out.println();
 //                getting user to select a seat number
                 Scanner scanDelete = new Scanner(System.in);
                 System.out.println("enter your seat number:");
                 String deleteSeat = scanDelete.next();
-                int deleteFinal = seatList.indexOf(deleteSeat);
 
-//                removing the given seat from the seat list
                 if (deleteList.contains(String.valueOf(deleteSeat))){
-                    seatList.remove(deleteFinal);
-                    nameList.remove(deleteFinal);
-                    deleteList.clear();
-                    System.out.println(nameList+"\n"+seatList);
-                    waitOption();
-                    break;
+                    for (String i : ColomboToBudulla.keySet()) {
+                        if (i.equals(deleteSeat)){
+                            System.out.println(ColomboToBudulla+": "+ i);
+                            ColomboToBudulla.remove(i);
+                            System.out.println(ColomboToBudulla);
+                            break;
+                        }
+                }
+                for (String i : ColomboToBudulla.keySet()) {
+                        System.out.println( i + " |" + ColomboToBudulla.get(i));
+                }
+                //deleteList.clear();
+                waitOption();
+                break;
 //                    quit for entering seat number
                 }else if(deleteSeat.toLowerCase().equals("q")){
                     listOption();
