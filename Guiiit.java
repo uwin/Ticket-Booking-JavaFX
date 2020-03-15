@@ -502,12 +502,12 @@ public class Guiiit extends Application {
         System.out.println("enter your name:");
         String findName= scanFind.next();
 //        printing all seat values for the given name
-        if (nameList.contains(findName.toLowerCase())){
-            for (int i=0;i<nameList.size();i++){
-                if(nameList.get(i).equals(findName.toLowerCase())) {
-                    System.out.print(seatList.get(i)+"| ");
-                }
+        if (ColomboToBudulla.containsValue(findName)){
+        for (String i : ColomboToBudulla.keySet()) {
+            if (ColomboToBudulla.get(i).equals(findName)){
+                System.out.println( i + " |" );
             }
+        }
             System.out.println();
             waitOption();
         }else if(findName.toLowerCase().equals("q")){
