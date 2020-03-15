@@ -292,6 +292,7 @@ public class Guiiit extends Application {
                     System.out.println(hashhash);
                     temp.clear();
                     window.close();
+                    BudullaToColombo.clear();
                     listOption();
                 }
             }else if (Colombo_Budullaverify==1){
@@ -307,7 +308,7 @@ public class Guiiit extends Application {
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
                         if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        //if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
                     dateList.add(date);
                     System.out.println(dateList);
@@ -316,11 +317,12 @@ public class Guiiit extends Application {
                     hashhash.add(new ArrayList<>());
                     int hashhashindex= dateList.size();
                     hashhashindex-=1;
-                    //hashhash.get(hashhashindex).add(0, ColomboToBudulla);
+                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
                     hashhash.get(hashhashindex).add(1, BudullaToColombo);
                     System.out.println(hashhash);
                     temp.clear();
                     window.close();
+                    ColomboToBudulla.clear();
                     listOption();
                 }
             }

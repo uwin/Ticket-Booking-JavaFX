@@ -1,5 +1,5 @@
-// Java Program to create a date picker 
-// and display it in stage 
+// Java Program to create a date picker
+// and display it in stage
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,4 +42,4 @@ public class Console extends Application {
         // launch the application
         launch(args);
     }
-} 
+}
