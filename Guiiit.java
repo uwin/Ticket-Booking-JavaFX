@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -73,11 +75,7 @@ public class Guiiit extends Application {
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
             case "A":
-                window.show();
-                break;
             case "V":
-                window.show();
-                break;
             case "E":
                 window.show();
                 break;
@@ -441,6 +439,14 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     public void deleteOption(){
+        Scanner scanTrain = new Scanner(System.in);
+        System.out.println("select Train:");
+        System.out.println("1| Colombo To Budulla");
+        System.out.println("2| Budulla To Colombo");
+        String Train= scanTrain.next();
+
+        if (Train.equals("1")){
+
         List<String> deleteList = new ArrayList<>();
         for (String i : ColomboToBudulla.keySet()) {
                 System.out.println( i + " |" + ColomboToBudulla.get(i));
@@ -454,7 +460,7 @@ public class Guiiit extends Application {
 //            printing all the seats for the user name in a row
             for (String i : ColomboToBudulla.keySet()) {
                 if (ColomboToBudulla.get(i).equals(deleteName)){
-                    System.out.println( i + " |" + ColomboToBudulla.get(i));
+                    System.out.println(i + " |");
                     deleteList.add(i);
                 }
             }
@@ -468,9 +474,9 @@ public class Guiiit extends Application {
                 if (deleteList.contains(String.valueOf(deleteSeat))){
                     for (String i : ColomboToBudulla.keySet()) {
                         if (i.equals(deleteSeat)){
-                            System.out.println(ColomboToBudulla+": "+ i);
+                            System.out.println("bfE"+ColomboToBudulla);
                             ColomboToBudulla.remove(i);
-                            System.out.println(ColomboToBudulla);
+                            System.out.println("afE"+ColomboToBudulla);
                             break;
                         }
                 }
@@ -494,6 +500,64 @@ public class Guiiit extends Application {
 //            looping until a valid user name is given
             System.out.println("your have no seats booked");
             deleteOption();
+        }
+        }
+        if (Train.equals("2")){
+
+        List<String> deleteList = new ArrayList<>();
+        for (String i : BudullaToColombo.keySet()) {
+                System.out.println( i + " |" + BudullaToColombo.get(i));
+        }
+//        getting user name
+        Scanner scanName = new Scanner(System.in);
+        System.out.println("enter your name:");
+        String deleteName= scanName.next();
+//        if (nameList.contains(deleteName.toLowerCase())) {
+        if (BudullaToColombo.containsValue(deleteName.toLowerCase())) {
+//            printing all the seats for the user name in a row
+            for (String i : BudullaToColombo.keySet()) {
+                if (BudullaToColombo.get(i).equals(deleteName)){
+                    System.out.println( i + " |");
+                    deleteList.add(i);
+                }
+            }
+//            looping till a valid seat is given
+            while (true){
+//                getting user to select a seat number
+                Scanner scanDelete = new Scanner(System.in);
+                System.out.println("enter your seat number:");
+                String deleteSeat = scanDelete.next();
+
+                if (deleteList.contains(String.valueOf(deleteSeat))){
+                    for (String i : BudullaToColombo.keySet()) {
+                        if (i.equals(deleteSeat)){
+                            System.out.println("bfE"+BudullaToColombo);
+                            BudullaToColombo.remove(i);
+                            System.out.println("afE"+BudullaToColombo);
+                            break;
+                        }
+                }
+                for (String i : BudullaToColombo.keySet()) {
+                        System.out.println( i + " |" + BudullaToColombo.get(i));
+                }
+                //deleteList.clear();
+                waitOption();
+                break;
+//                    quit for entering seat number
+                }else if(deleteSeat.toLowerCase().equals("q")){
+                    listOption();
+                    break;
+                }
+                System.out.println("the seat no is not booked");
+            }
+//            quit for entering name
+        }else if(deleteName.toLowerCase().equals("q")){
+            listOption();
+        }else {
+//            looping until a valid user name is given
+            System.out.println("your have no seats booked");
+            deleteOption();
+        }
         }
     }
     public void   findOption(){
