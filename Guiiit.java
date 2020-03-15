@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -21,7 +20,6 @@ import javafx.scene.Scene;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +32,8 @@ public class Guiiit extends Application {
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
     List<String> temp = new ArrayList<>();
+    List<LocalDate> dateList = new ArrayList<>();
+    ArrayList<ArrayList<HashMap>> hashhash = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
@@ -127,7 +127,7 @@ public class Guiiit extends Application {
         toBudulla.setOnAction(event -> {
             int Colombo_Budullaverify=1;
             int Budulla_Colomboverify=0;
-            String date=datePick.getValue().toString();
+             LocalDate date=datePick.getValue();
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -141,7 +141,7 @@ public class Guiiit extends Application {
         toColombo.setOnAction(event -> {
             int Budulla_Colomboverify=1;
             int Colombo_Budullaverify=0;
-            String date=datePick.getValue().toString();
+            LocalDate date=datePick.getValue();
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -159,7 +159,7 @@ public class Guiiit extends Application {
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
-    public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify,String date){
+    public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
         //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -274,11 +274,22 @@ public class Guiiit extends Application {
                         addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
+                    //dateList.add(date);
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
-                        if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                         if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
+                    dateList.add(date);
+                    System.out.println(dateList);
+                    System.out.println("C>B"+ColomboToBudulla);
+                    System.out.println("B>C"+BudullaToColombo);
+                    hashhash.add(new ArrayList<>());
+                    int hashhashindex= dateList.size();
+                    hashhashindex-=1;
+                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
+                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
+                    System.out.println(hashhash);
                     temp.clear();
                     window.close();
                     listOption();
@@ -296,8 +307,18 @@ public class Guiiit extends Application {
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
                         if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        //if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
+                    dateList.add(date);
+                    System.out.println(dateList);
+                    System.out.println("C>B"+ColomboToBudulla);
+                    System.out.println("B>C"+BudullaToColombo);
+                    hashhash.add(new ArrayList<>());
+                    int hashhashindex= dateList.size();
+                    hashhashindex-=1;
+                    //hashhash.get(hashhashindex).add(0, ColomboToBudulla);
+                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
+                    System.out.println(hashhash);
                     temp.clear();
                     window.close();
                     listOption();
@@ -333,7 +354,7 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
-    public void   viewOption(int Colombo_Budullaverify, int Budulla_Colomboverify,String date){
+    public void   viewOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -389,7 +410,7 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
 
     }
-    public void  emptyOption(int Colombo_Budullaverify, int Budulla_Colomboverify,String date){
+    public void  emptyOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
