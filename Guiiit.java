@@ -198,6 +198,15 @@ public class Guiiit extends Application {
 //                    change seat colour to red if it's already booked
 
                     if(Colombo_Budullaverify==1) {
+                        if(dateC2B.contains(date)){
+                            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+                            System.out.println("initi"+inti);
+                            HashMap<String,String> hash = inti.get(0);
+                            System.out.println("hash"+hash);
+                            for(String i: hash.keySet()){
+                                System.out.println("key: " + i + " value: " + hash.get(i));
+                                ColomboToBudulla.put(i,hash.get(i));
+                            }}else{ColomboToBudulla.put("","");}
                         if (ColomboToBudulla.containsKey(button.getId())) {
                             button.setImage(seatRed);
                         }
@@ -219,6 +228,15 @@ public class Guiiit extends Application {
                             }
                         });
                     } else if(Budulla_Colomboverify==1){
+                            if(dateB2C.contains(date)){
+                                ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                                System.out.println("initi"+inti);
+                                HashMap<String,String> hash = inti.get(0);
+                                System.out.println("hash"+hash);
+                                for(String i: hash.keySet()){
+                                    System.out.println("key: " + i + " value: " + hash.get(i));
+                                    BudullaToColombo.put(i,hash.get(i));
+                                }}else{ColomboToBudulla.put("","");}
                         if (BudullaToColombo.containsKey(button.getId())) {button.setImage(seatRed);}
                         if (temp.contains(button.getId())) {button.setImage(seatGreen);}
                         button.setOnMouseClicked(event -> {
@@ -353,6 +371,8 @@ public class Guiiit extends Application {
         closeBut.setOnAction(event -> {
             //Colombo_Budullaverify=0;
             //Budulla_Colomboverify=0;
+            ColomboToBudulla.clear();
+            BudullaToColombo.clear();
             temp.clear();
             window.close();
             listOption();
