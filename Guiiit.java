@@ -32,11 +32,12 @@ public class Guiiit extends Application {
     }
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
+    //HashMap hash = new HashMap<>();
     List<String> temp = new ArrayList<>();
     List<LocalDate> dateC2B = new ArrayList<>();
     List<LocalDate> dateB2C = new ArrayList<>();
-    ArrayList<ArrayList<HashMap>> hashC2B = new ArrayList<>();
-    ArrayList<ArrayList<HashMap>> hashB2C = new ArrayList<>();
+    ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
+    ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
@@ -387,6 +388,14 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
                     if (Colombo_Budullaverify==1){
+                        ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+                        System.out.println("initi"+inti);
+                        HashMap<String,String> hash = inti.get(0);
+                        System.out.println("hash"+hash);
+                        for(String i: hash.keySet()){
+                            System.out.println("key: " + i + " value: " + hash.get(i));
+                            ColomboToBudulla.put(i,hash.get(i));
+                        }
                     if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
                     if (Budulla_Colomboverify==1){
                     if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
