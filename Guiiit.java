@@ -327,6 +327,7 @@ public class Guiiit extends Application {
                         System.out.println("B>C" + TBudullaToColombo);
                         System.out.println(hashB2C);
                         hashB2C.get(dateB2C.indexOf(date)).get(0).clear();
+                        hashB2C.add(new ArrayList<>());
                         hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
                         System.out.println(hashB2C);
 //                            System.out.println(hashB2C);
