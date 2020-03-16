@@ -1,45 +1,48 @@
-// Java Program to create a date picker
-// and display it in stage
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.scene.control.Alert.AlertType;
-import java.time.LocalDate;
-public class Console extends Application {
+import java.util.*;
 
-    // launch the application
-    public void start(Stage s)
+class MultidimensionalArrayList {
+
+    /*function for creating and returning 2D ArrayList*/
+    static List create2DArrayList()
     {
-        // set title for the stage
-        s.setTitle("creating date picker");
-
-        // create a tile pane
-        TilePane r = new TilePane();
-
-        // create a date picker
-        DatePicker d = new DatePicker();
-        r.getChildren().add(d);
-
-        // add button and label
-
-
-        // create a scene
-        Scene sc = new Scene(r, 200, 200);
-
-        // set the scene
-        s.setScene(sc);
-
-        s.show();
+        /*Declaring 2D ArrayList*/
+        ArrayList<ArrayList<Integer> > x = new ArrayList<ArrayList<Integer> >();
+        /*one space allocated for 0th row*/
+        x.add(new ArrayList<Integer>());
+        /*Adding 3 to 0th row created above x(0, 0)*/
+        x.get(0).add(0, 3);
+        /*Creating 1st row and adding values
+       (another way for adding values in 2D collections)*/
+        x.add(new ArrayList<Integer>(Arrays.asList(3, 4, 6)));
+        /*Add 366 to 1st row 0th column x(1, 0)*/
+        x.get(1).add(0, 366);
+        /*Add 576 to 1st row 4th column x(1, 4)*/
+        x.get(1).add(4, 576);
+        /*Adding values to 2nd row*/
+        x.add(2, new ArrayList<>(Arrays.asList(3, 84)));
+        /*Adding values to 3rd row*/
+        x.add(new ArrayList<Integer>(Arrays.asList(83, 6684, 776)));
+        /*Adding values to 4th row*/
+        x.add(new ArrayList<>(Arrays.asList(8)));
+        return x;
     }
 
     public static void main(String args[])
     {
-        // launch the application
-        launch(args);
+/*        System.out.println("2D ArrayList :");
+        System.out.println(create2DArrayList());*/
+
+        ArrayList<ArrayList<Integer> > x = new ArrayList<ArrayList<Integer> >();
+        x.add(new ArrayList<Integer>());
+        x.get(0).add(0, 3);
+        x.add(new ArrayList<Integer>());
+        x.get(1).add(0, 4);
+/*        x.add(new ArrayList<Integer>(Arrays.asList(3, 4, 6)));
+        x.get(1).add(0, 366);
+        x.get(1).add(4, 576);
+        x.add(2, new ArrayList<>(Arrays.asList(3, 84)));
+        x.add(new ArrayList<Integer>(Arrays.asList(83, 6684, 776)));
+        x.add(new ArrayList<>(Arrays.asList(8)));*/
+        System.out.println(x);
     }
 }
