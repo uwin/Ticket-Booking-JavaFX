@@ -388,16 +388,6 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
                     if (Colombo_Budullaverify==1){
-/*                        try{dateC2B.indexOf(date);
-                        }catch(Exception e){
-                            Alert a = new Alert(Alert.AlertType.WARNING);
-                            a.setContentText("Date is not booked");
-                            a.show();
-                            a.setOnCloseRequest(event1 -> {
-                                window.close();
-                                addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
-                            });
-                        }*/
                         if(dateC2B.contains(date)){
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                             System.out.println("initi"+inti);
@@ -439,6 +429,8 @@ public class Guiiit extends Application {
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
+            ColomboToBudulla.clear();
+            BudullaToColombo.clear();
             listOption();
         });
         grid.add(closeBut,14,6,14,6);
@@ -473,6 +465,15 @@ public class Guiiit extends Application {
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
                     if (Colombo_Budullaverify==1){
+                        if(dateC2B.contains(date)){
+                            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+                            System.out.println("initi"+inti);
+                            HashMap<String,String> hash = inti.get(0);
+                            System.out.println("hash"+hash);
+                            for(String i: hash.keySet()){
+                                System.out.println("key: " + i + " value: " + hash.get(i));
+                                ColomboToBudulla.put(i,hash.get(i));
+                            }}else{ColomboToBudulla.put("","");}
                         if (!ColomboToBudulla.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -480,6 +481,15 @@ public class Guiiit extends Application {
                         }
                     }
                     if (Budulla_Colomboverify==1){
+                        if(dateB2C.contains(date)){
+                            ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                            System.out.println("initi"+inti);
+                            HashMap<String,String> hash = inti.get(0);
+                            System.out.println("hash"+hash);
+                            for(String i: hash.keySet()){
+                                System.out.println("key: " + i + " value: " + hash.get(i));
+                                BudullaToColombo.put(i,hash.get(i));
+                            }}else{ColomboToBudulla.put("","");}
                         if (!BudullaToColombo.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -502,6 +512,8 @@ public class Guiiit extends Application {
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
+            ColomboToBudulla.clear();
+            BudullaToColombo.clear();
             window.close();
             listOption();
         });
