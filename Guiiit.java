@@ -132,7 +132,6 @@ public class Guiiit extends Application {
             int Colombo_Budullaverify=1;
             int Budulla_Colomboverify=0;
              LocalDate date=datePick.getValue();
-            System.out.println("c2b"+hashC2B);
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -146,7 +145,6 @@ public class Guiiit extends Application {
         toColombo.setOnAction(event -> {
             int Budulla_Colomboverify=1;
             int Colombo_Budullaverify=0;
-            System.out.println("b2c"+hashB2C);
             LocalDate date=datePick.getValue();
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -200,11 +198,8 @@ public class Guiiit extends Application {
                     if(Colombo_Budullaverify==1) {
                         if(dateC2B.contains(date)){
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                            System.out.println("initi"+inti);
                             HashMap<String,String> hash = inti.get(0);
-                            System.out.println("hash"+hash);
                             for(String i: hash.keySet()){
-                                System.out.println("key: " + i + " value: " + hash.get(i));
                                 ColomboToBudulla.put(i,hash.get(i));
                             }}else{ColomboToBudulla.put("","");}
                         if (ColomboToBudulla.containsKey(button.getId())) {
@@ -230,11 +225,8 @@ public class Guiiit extends Application {
                     } else if(Budulla_Colomboverify==1){
                             if(dateB2C.contains(date)){
                                 ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                                System.out.println("initi"+inti);
                                 HashMap<String,String> hash = inti.get(0);
-                                System.out.println("hash"+hash);
                                 for(String i: hash.keySet()){
-                                    System.out.println("key: " + i + " value: " + hash.get(i));
                                     BudullaToColombo.put(i,hash.get(i));
                                 }}else{ColomboToBudulla.put("","");}
                         if (BudullaToColombo.containsKey(button.getId())) {button.setImage(seatRed);}
@@ -446,11 +438,8 @@ public class Guiiit extends Application {
                     if (Colombo_Budullaverify==1){
                         if(dateC2B.contains(date)){
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                            System.out.println("initi"+inti);
                             HashMap<String,String> hash = inti.get(0);
-                            System.out.println("hash"+hash);
                             for(String i: hash.keySet()){
-                                System.out.println("key: " + i + " value: " + hash.get(i));
                                 ColomboToBudulla.put(i,hash.get(i));
                         }}else{ColomboToBudulla.put("","");}
 
@@ -458,11 +447,8 @@ public class Guiiit extends Application {
                     if (Budulla_Colomboverify==1){
                         if(dateB2C.contains(date)){
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                        System.out.println("initi"+inti);
                         HashMap<String,String> hash = inti.get(0);
-                        System.out.println("hash"+hash);
                         for(String i: hash.keySet()){
-                            System.out.println("key: " + i + " value: " + hash.get(i));
                             BudullaToColombo.put(i,hash.get(i));
                         }}else{ColomboToBudulla.put("","");}
                     if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
@@ -523,11 +509,8 @@ public class Guiiit extends Application {
                     if (Colombo_Budullaverify==1){
                         if(dateC2B.contains(date)){
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                            System.out.println("initi"+inti);
                             HashMap<String,String> hash = inti.get(0);
-                            System.out.println("hash"+hash);
                             for(String i: hash.keySet()){
-                                System.out.println("key: " + i + " value: " + hash.get(i));
                                 ColomboToBudulla.put(i,hash.get(i));
                             }}else{ColomboToBudulla.put("","");}
                         if (!ColomboToBudulla.containsKey(String.valueOf(number)))
@@ -539,11 +522,8 @@ public class Guiiit extends Application {
                     if (Budulla_Colomboverify==1){
                         if(dateB2C.contains(date)){
                             ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                            System.out.println("initi"+inti);
                             HashMap<String,String> hash = inti.get(0);
-                            System.out.println("hash"+hash);
                             for(String i: hash.keySet()){
-                                System.out.println("key: " + i + " value: " + hash.get(i));
                                 BudullaToColombo.put(i,hash.get(i));
                             }}else{ColomboToBudulla.put("","");}
                         if (!BudullaToColombo.containsKey(String.valueOf(number)))
