@@ -178,9 +178,9 @@ public class Guiiit extends Application {
 
 //      values needed for the loop
         int number = 1;
-        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
-        Image seatRed = new Image(getClass().getResourceAsStream("red.png"));
-        Image seatGreen = new Image(getClass().getResourceAsStream("green.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
+        Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
+        Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
 
 //      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
@@ -421,8 +421,8 @@ public class Guiiit extends Application {
 
 //      values needed for the loop
         int number = 1;
-        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
-        Image seatGrey = new Image(getClass().getResourceAsStream("grey.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
+        Image seatGrey = new Image(getClass().getResourceAsStream("images/grey.png"));
 
 //      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
@@ -492,7 +492,7 @@ public class Guiiit extends Application {
 
 //      values needed for the loop
         int number = 1;
-        Image seatBlack = new Image(getClass().getResourceAsStream("black.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
 
 //      loop to create seat buttons
         for (int r = 2; r < 5; r++) {

@@ -1,4 +1,4 @@
-/*
+package otherCode;/*
 \open a alert <<<<<<window.close();
 \
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
