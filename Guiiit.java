@@ -32,8 +32,11 @@ public class Guiiit extends Application {
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
     List<String> temp = new ArrayList<>();
-    List<LocalDate> dateList = new ArrayList<>();
-    ArrayList<ArrayList<HashMap>> hashhash = new ArrayList<>();
+    List<LocalDate> dateListCtb = new ArrayList<>();
+    List<LocalDate> dateListBtc = new ArrayList<>();
+    ArrayList<ArrayList<String>> hashListCtb = new ArrayList<>();
+    ArrayList<ArrayList<String>> hashListBtc = new ArrayList<>();
+    //ArrayList<ArrayList<HashMap>> hashhash = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
@@ -274,25 +277,33 @@ public class Guiiit extends Application {
                         addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
-                    //dateList.add(date);
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
                         //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                         if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
-                    dateList.add(date);
-                    System.out.println(dateList);
+                    dateListBtc.add(date);
+                    System.out.println(dateListBtc);
                     System.out.println("C>B"+ColomboToBudulla);
                     System.out.println("B>C"+BudullaToColombo);
-                    hashhash.add(new ArrayList<>());
-                    int hashhashindex= dateList.size();
-                    hashhashindex-=1;
-                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
-                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
-                    System.out.println(hashhash);
+                    System.out.println(dateListBtc);
+
+                    int hashindex=dateListBtc.size();
+                    //hashindex-=1;
+                    //hashListBtc.add(new ArrayList<>());
+                    hashListBtc.get(hashindex).add(String.valueOf(BudullaToColombo));
+                    System.out.println(hashListBtc);
+                    BudullaToColombo.clear();
+                    System.out.println("C>B"+ColomboToBudulla);
+                    System.out.println("B>C"+BudullaToColombo);
+//                    hashhash.add(new ArrayList<>());
+//                    int hashhashindex= dateListBtc.size();
+//                    hashhashindex-=1;
+//                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
+//                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
+//                    System.out.println(hashhash);
                     temp.clear();
                     window.close();
-                    BudullaToColombo.clear();
                     listOption();
                 }
             }else if (Colombo_Budullaverify==1){
@@ -308,21 +319,29 @@ public class Guiiit extends Application {
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
                         if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        //if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(/*indexforHash*/),username.getText().toLowerCase());
                     }
-                    dateList.add(date);
-                    System.out.println(dateList);
+                    dateListCtb.add(date);
+                    System.out.println(dateListCtb);
                     System.out.println("C>B"+ColomboToBudulla);
                     System.out.println("B>C"+BudullaToColombo);
-                    hashhash.add(new ArrayList<>());
-                    int hashhashindex= dateList.size();
-                    hashhashindex-=1;
-                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
-                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
-                    System.out.println(hashhash);
+                    System.out.println(dateListCtb);
+                    int hashindex=dateListCtb.size();
+                    hashindex-=1;
+                    hashListBtc.add(new ArrayList<>());
+                    hashListCtb.get(hashindex).add(String.valueOf(ColomboToBudulla));
+                    System.out.println(hashListCtb);
+                    ColomboToBudulla.clear();
+                    System.out.println("C>B"+ColomboToBudulla);
+                    System.out.println("B>C"+BudullaToColombo);
+//                    hashhash.add(new ArrayList<>());
+//                    int hashhashindex= dateListCtb.size();
+//                    hashhashindex-=1;
+//                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
+//                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
+//                    System.out.println(hashhash);
                     temp.clear();
                     window.close();
-                    ColomboToBudulla.clear();
                     listOption();
                 }
             }
