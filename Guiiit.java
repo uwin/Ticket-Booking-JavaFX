@@ -198,14 +198,6 @@ public class Guiiit extends Application {
 //                    change seat colour to red if it's already booked
 
                     if(Colombo_Budullaverify==1) {
-                        ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                        System.out.println("initi"+inti);
-                        HashMap<String,String> hash = inti.get(0);
-                        System.out.println("hash"+hash);
-                        for(String i: hash.keySet()){
-                            System.out.println("key: " + i + " value: " + hash.get(i));
-                            ColomboToBudulla.put(i,hash.get(i));
-                        }
                         if (ColomboToBudulla.containsKey(button.getId())) {
                             button.setImage(seatRed);
                         }
@@ -227,14 +219,6 @@ public class Guiiit extends Application {
                             }
                         });
                     } else if(Budulla_Colomboverify==1){
-                        ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                        System.out.println("initi"+inti);
-                        HashMap<String,String> hash = inti.get(0);
-                        System.out.println("hash"+hash);
-                        for(String i: hash.keySet()){
-                            //System.out.println("key: " + i + " value: " + hash.get(i));
-                            BudullaToColombo.put(i,hash.get(i));
-                        }
                         if (BudullaToColombo.containsKey(button.getId())) {button.setImage(seatRed);}
                         if (temp.contains(button.getId())) {button.setImage(seatGreen);}
                         button.setOnMouseClicked(event -> {
@@ -287,14 +271,6 @@ public class Guiiit extends Application {
                 });
 //                alert will be shown if the user name is already existing
             }else if(Budulla_Colomboverify==1){
-                ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                System.out.println("initi"+inti);
-                HashMap<String,String> hash = inti.get(0);
-                System.out.println("hash"+hash);
-                for(String i: hash.keySet()){
-                    //System.out.println("key: " + i + " value: " + hash.get(i));
-                    BudullaToColombo.put(i,hash.get(i));
-                }
                 if (BudullaToColombo.containsValue(username.getText().toLowerCase())) {
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("enter a unique name");
@@ -325,14 +301,6 @@ public class Guiiit extends Application {
                     listOption();
                 }
             }else if (Colombo_Budullaverify==1){
-                ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                System.out.println("initi"+inti);
-                HashMap<String,String> hash = inti.get(0);
-                System.out.println("hash"+hash);
-                for(String i: hash.keySet()){
-                    System.out.println("key: " + i + " value: " + hash.get(i));
-                    ColomboToBudulla.put(i,hash.get(i));
-                }
                 if (ColomboToBudulla.containsValue(username.getText().toLowerCase())) {
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("enter a unique name");
@@ -420,24 +388,37 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
                     if (Colombo_Budullaverify==1){
-                        ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                        System.out.println("initi"+inti);
-                        HashMap<String,String> hash = inti.get(0);
-                        System.out.println("hash"+hash);
-                        for(String i: hash.keySet()){
-                            //System.out.println("key: " + i + " value: " + hash.get(i));
-                            ColomboToBudulla.put(i,hash.get(i));
-                        }
+/*                        try{dateC2B.indexOf(date);
+                        }catch(Exception e){
+                            Alert a = new Alert(Alert.AlertType.WARNING);
+                            a.setContentText("Date is not booked");
+                            a.show();
+                            a.setOnCloseRequest(event1 -> {
+                                window.close();
+                                addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+                            });
+                        }*/
+                        if(dateC2B.contains(date)){
+                            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+                            System.out.println("initi"+inti);
+                            HashMap<String,String> hash = inti.get(0);
+                            System.out.println("hash"+hash);
+                            for(String i: hash.keySet()){
+                                System.out.println("key: " + i + " value: " + hash.get(i));
+                                ColomboToBudulla.put(i,hash.get(i));
+                        }}else{ColomboToBudulla.put("","");}
+
                     if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
                     if (Budulla_Colomboverify==1){
+                        if(dateB2C.contains(date)){
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                         System.out.println("initi"+inti);
                         HashMap<String,String> hash = inti.get(0);
                         System.out.println("hash"+hash);
                         for(String i: hash.keySet()){
-                            //System.out.println("key: " + i + " value: " + hash.get(i));
+                            System.out.println("key: " + i + " value: " + hash.get(i));
                             BudullaToColombo.put(i,hash.get(i));
-                        }
+                        }}else{ColomboToBudulla.put("","");}
                     if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
                     number++;
                     grid.add(button, c, r);
@@ -492,15 +473,6 @@ public class Guiiit extends Application {
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
                     if (Colombo_Budullaverify==1){
-                        ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                        System.out.println("initi"+inti);
-                        HashMap<String,String> hash = inti.get(0);
-                        System.out.println("hash"+hash);
-                        for(String i: hash.keySet()){
-                            System.out.println("key: " + i + " value: " + hash.get(i));
-                            ColomboToBudulla.put(i,hash.get(i));
-                        }
-
                         if (!ColomboToBudulla.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -508,14 +480,6 @@ public class Guiiit extends Application {
                         }
                     }
                     if (Budulla_Colomboverify==1){
-                        ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                        System.out.println("initi"+inti);
-                        HashMap<String,String> hash = inti.get(0);
-                        System.out.println("hash"+hash);
-                        for(String i: hash.keySet()){
-                            //System.out.println("key: " + i + " value: " + hash.get(i));
-                            BudullaToColombo.put(i,hash.get(i));
-                        }
                         if (!BudullaToColombo.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
