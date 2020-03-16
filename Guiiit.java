@@ -298,20 +298,39 @@ public class Guiiit extends Application {
                         addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
-                    HashMap<String, String> TBudullaToColombo = new HashMap<String, String>();
-                    for (String i : temp) {
-                        int indexforHash=temp.indexOf(i);
-                        //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        if(Budulla_Colomboverify==1) TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                    if(!dateB2C.contains(date)) {
+                        HashMap<String, String> TBudullaToColombo = new HashMap<String, String>();
+                        for (String i : temp) {
+                            int indexforHash = temp.indexOf(i);
+                            //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                            if (Budulla_Colomboverify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
+                        }
+                        dateB2C.add(date);
+                        System.out.println("B>C" + dateB2C);
+                        System.out.println("B>C" + TBudullaToColombo);
+                        hashB2C.add(new ArrayList<>());
+                        int hashhashindex = dateB2C.size();
+                        hashhashindex -= 1;
+                        hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
+                        System.out.println(hashB2C);
+                    }else {
+                        System.out.println("pressed");
+                        ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                        System.out.println("initi"+inti);
+                        HashMap<String,String> TBudullaToColombo = inti.get(0);
+                        System.out.println("hash"+TBudullaToColombo);
+                        for(String i: temp){
+                            int indexforHash = temp.indexOf(i);
+                            TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        }
+                        System.out.println("B>C" + dateB2C);
+                        System.out.println("B>C" + TBudullaToColombo);
+                        System.out.println(hashB2C);
+                        hashB2C.get(dateB2C.indexOf(date)).get(0).clear();
+                        hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
+                        System.out.println(hashB2C);
+//                            System.out.println(hashB2C);
                     }
-                    dateB2C.add(date);
-                    System.out.println("B>C"+dateB2C);
-                    System.out.println("B>C"+TBudullaToColombo);
-                    hashB2C.add(new ArrayList<>());
-                    int hashhashindex= dateB2C.size();
-                    hashhashindex-=1;
-                    hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
-                    System.out.println(hashB2C);
                     temp.clear();
                     window.close();
                     listOption();
