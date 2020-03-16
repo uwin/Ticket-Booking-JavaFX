@@ -33,8 +33,10 @@ public class Guiiit extends Application {
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
     List<String> temp = new ArrayList<>();
-    List<LocalDate> dateList = new ArrayList<>();
-    ArrayList<ArrayList<HashMap>> hashhash = new ArrayList<>();
+    List<LocalDate> dateC2B = new ArrayList<>();
+    List<LocalDate> dateB2C = new ArrayList<>();
+    ArrayList<ArrayList<HashMap>> hashC2B = new ArrayList<>();
+    ArrayList<ArrayList<HashMap>> hashB2C = new ArrayList<>();
     public void start(Stage stage) {
         welcome();
     }
@@ -129,6 +131,7 @@ public class Guiiit extends Application {
             int Colombo_Budullaverify=1;
             int Budulla_Colomboverify=0;
              LocalDate date=datePick.getValue();
+            System.out.println("c2b"+hashC2B);
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
             else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -142,6 +145,7 @@ public class Guiiit extends Application {
         toColombo.setOnAction(event -> {
             int Budulla_Colomboverify=1;
             int Colombo_Budullaverify=0;
+            System.out.println("b2c"+hashB2C);
             LocalDate date=datePick.getValue();
             window.close();
             if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -275,25 +279,24 @@ public class Guiiit extends Application {
                         addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
-                    //dateList.add(date);
+                    HashMap<String, String> TBudullaToColombo = new HashMap<String, String>();
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
                         //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        if(Budulla_Colomboverify==1) TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
-                    dateList.add(date);
-                    System.out.println(dateList);
-                    System.out.println("C>B"+ColomboToBudulla);
-                    System.out.println("B>C"+BudullaToColombo);
-                    hashhash.add(new ArrayList<>());
-                    int hashhashindex= dateList.size();
+                    dateB2C.add(date);
+                    System.out.println("B>C"+dateB2C);
+                    //System.out.println("C>B"+TColomboToBudulla);
+                    System.out.println("B>C"+TBudullaToColombo);
+                    hashB2C.add(new ArrayList<>());
+                    int hashhashindex= dateB2C.size();
                     hashhashindex-=1;
-                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
-                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
-                    System.out.println(hashhash);
+                    hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
+                    //hashB2C.get(hashhashindex).add(1, date);
+                    //System.out.println(hashB2C);
                     temp.clear();
                     window.close();
-                    BudullaToColombo.clear();
                     listOption();
                 }
             }else if (Colombo_Budullaverify==1){
@@ -306,24 +309,22 @@ public class Guiiit extends Application {
                         addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
                     });
                 }else {
+                    HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
                     for (String i : temp) {
                         int indexforHash=temp.indexOf(i);
-                        if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        if(Colombo_Budullaverify==1) TColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        //if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
-                    dateList.add(date);
-                    System.out.println(dateList);
-                    System.out.println("C>B"+ColomboToBudulla);
-                    System.out.println("B>C"+BudullaToColombo);
-                    hashhash.add(new ArrayList<>());
-                    int hashhashindex= dateList.size();
+                    dateC2B.add(date);
+                    System.out.println("C>B"+dateC2B);
+                    System.out.println("C>B"+TColomboToBudulla);
+                    hashC2B.add(new ArrayList<>());
+                    int hashhashindex= dateC2B.size();
                     hashhashindex-=1;
-                    hashhash.get(hashhashindex).add(0, ColomboToBudulla);
-                    hashhash.get(hashhashindex).add(1, BudullaToColombo);
-                    System.out.println(hashhash);
+                    hashC2B.get(hashhashindex).add(0, TColomboToBudulla);
+                    System.out.println(hashC2B);
                     temp.clear();
                     window.close();
-                    ColomboToBudulla.clear();
                     listOption();
                 }
             }
