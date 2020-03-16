@@ -312,7 +312,7 @@ public class Guiiit extends Application {
                         int hashhashindex = dateB2C.size();
                         hashhashindex -= 1;
                         hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
-                        System.out.println(hashB2C);
+                        System.out.println("first time"+hashB2C);
                     }else {
                         System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
@@ -323,13 +323,12 @@ public class Guiiit extends Application {
                             int indexforHash = temp.indexOf(i);
                             TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
-                        System.out.println("B>C" + dateB2C);
-                        System.out.println("B>C" + TBudullaToColombo);
-                        System.out.println(hashB2C);
-                        hashB2C.get(dateB2C.indexOf(date)).get(0).clear();
-                        hashB2C.add(new ArrayList<>());
+                        hashB2C.get(dateB2C.indexOf(date)).clear();
+                        System.out.println("get"+hashB2C.get(dateB2C.indexOf(date)));
+                        //hashB2C.add(new ArrayList<>());
                         hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
-                        System.out.println(hashB2C);
+                        System.out.println(dateB2C);
+                        System.out.println("hash end"+hashB2C);
 //                            System.out.println(hashB2C);
                     }
                     temp.clear();
