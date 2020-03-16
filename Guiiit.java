@@ -306,14 +306,12 @@ public class Guiiit extends Application {
                     }
                     dateB2C.add(date);
                     System.out.println("B>C"+dateB2C);
-                    //System.out.println("C>B"+TColomboToBudulla);
                     System.out.println("B>C"+TBudullaToColombo);
                     hashB2C.add(new ArrayList<>());
                     int hashhashindex= dateB2C.size();
                     hashhashindex-=1;
                     hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
-                    //hashB2C.get(hashhashindex).add(1, date);
-                    //System.out.println(hashB2C);
+                    System.out.println(hashB2C);
                     temp.clear();
                     window.close();
                     listOption();
