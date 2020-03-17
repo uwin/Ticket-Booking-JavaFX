@@ -31,13 +31,18 @@ public class Guiiit extends Application {
     public static void main(String[] args) {
         launch();
     }
+
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
+
     List<String> temp = new ArrayList<>();
+
     List<LocalDate> dateC2B = new ArrayList<>();
     List<LocalDate> dateB2C = new ArrayList<>();
+
     ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
     ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
+
     public void start(Stage stage) {
         welcome();
     }
@@ -599,7 +604,7 @@ public class Guiiit extends Application {
         System.out.println("2| Badulla to Colombo");
 
         Scanner scanDFinal = new Scanner(System.in);
-        System.out.println("enter selection ");
+        System.out.println("enter Route ");
         String deleteFinal= scanDFinal.next();
 
         if (deleteFinal.equals("1"))
@@ -607,9 +612,9 @@ public class Guiiit extends Application {
             int count=0;
             int deleteCount = 1;
             List<LocalDate> dateList = new ArrayList<>();
-            for(LocalDate i: dateB2C)
+            for(LocalDate i: dateC2B)
             {
-                for (String j : hashB2C.get(count).get(0).keySet())
+                for (String j : hashC2B.get(count).get(0).keySet())
                 {
                     if (j.equals(deleteSeat))
                     {
@@ -624,7 +629,7 @@ public class Guiiit extends Application {
             System.out.println("select ");
             int Final= scFinal.nextInt();
             Final-=1;
-            int deleteIndex= dateB2C.indexOf(dateList.get(Final));
+            int deleteIndex= dateC2B.indexOf(dateList.get(Final));
             System.out.println(hashC2B.get(deleteIndex).get(0));
             hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
             System.out.println(hashC2B.get(deleteIndex).get(0));
@@ -668,8 +673,6 @@ public class Guiiit extends Application {
         String findName= scanFind.next().toLowerCase();
 
         System.out.println("Name: "+findName+"\n");
-
-
         int count=0;
         for(LocalDate i: dateC2B) {
             if (hashC2B.get(count).get(0).containsValue(findName))
