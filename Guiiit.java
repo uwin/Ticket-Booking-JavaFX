@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -700,27 +701,34 @@ public class Guiiit extends Application {
 //        getting user name
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name:");
-        String findName= scanFind.next();
+        String findName= scanFind.next().toLowerCase();
 
+        System.out.println("Name: "+findName);
+        int count=0;
+        for(LocalDate i: dateC2B) {
+            if (hashC2B.get(count).get(0).containsValue(findName))
+            {
+                System.out.println("Route: Colombo to Badulla");
+                System.out.println("Seats: ");
+                int count2=0;
+                for (String j : hashC2B.get(count).get(0).keySet())
+                {
+                    if (hashC2B.get(count).get(0).get(j).equals(findName))
+                    {
+                        System.out.print(j + "|");
+                        System.out.println(i);
+                    }
 
-        if(hashC2B.get(0).get(0).containsValue(findName))
-        {
-            System.out.println("Name: "+findName);
-            System.out.println("Route: Colombo to Badulla");
-            System.out.println("SeatNumbers: ");
-        }
-        int count =0;
-        for(String i: hashC2B.get(0).get(0).keySet()) {
-            if (hashC2B.get(0).get(0).containsValue(findName)){
-                System.out.print(i+"|");
-                System.out.println(dateC2B.get(count));
+                }
             }
             count++;
+//            int counttwo = 0;
+//            System.out.println("SeatNumbers: ");
+
+
         }
-
-
         //        printing all seat values for the given name
-
+        waitOption();
 /*        Scanner scanTrain = new Scanner(System.in);
         System.out.println("select Train:");
         System.out.println("1| Colombo To Budulla");
