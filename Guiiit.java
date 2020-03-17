@@ -142,13 +142,13 @@ public class Guiiit extends Application {
         datePick.setValue(LocalDate.now());
         gridFirst.add(datePick, 13, 12,18,4);
 
-                //        continue button
+        //        continue button
         Button toBudulla = new Button("From Colombo");
         toBudulla.setMaxSize(120, 60);
         toBudulla.setOnAction(event -> {
             int Colombo_Budullaverify=1;
             int Budulla_Colomboverify=0;
-             LocalDate date=datePick.getValue();
+            LocalDate date=datePick.getValue();
             window.close();
             switch (userOption.toLowerCase()) {
                 case "a":
@@ -251,12 +251,12 @@ public class Guiiit extends Application {
                     }
                     else if(Budulla_Colomboverify==1)
                     {
-                            if(dateB2C.contains(date))
-                            {
-                                ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                                HashMap<String,String> hash = inti.get(0);
-                                for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
-                            }else ColomboToBudulla.put("","");
+                        if(dateB2C.contains(date))
+                        {
+                            ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                            HashMap<String,String> hash = inti.get(0);
+                            for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
+                        }else ColomboToBudulla.put("","");
                         if (BudullaToColombo.containsKey(button.getId())) button.setImage(seatRed);
                         if (temp.contains(button.getId())) button.setImage(seatGreen);
                         button.setOnMouseClicked(event -> {
@@ -471,18 +471,18 @@ public class Guiiit extends Application {
                         }
                         else ColomboToBudulla.put("","");
 
-                    if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);
+                        if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);
                     }
                     if (Budulla_Colomboverify==1)
                     {
                         if(dateB2C.contains(date))
                         {
-                        ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                        HashMap<String,String> hash = inti.get(0);
-                        for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
+                            ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                            HashMap<String,String> hash = inti.get(0);
+                            for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
                         }
                         else ColomboToBudulla.put("","");
-                    if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);
+                        if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);
                     }
                     number++;
                     grid.add(button, c, r);
@@ -640,35 +640,35 @@ public class Guiiit extends Application {
             System.out.println(hashC2B.get(deleteIndex).get(0));
         }
         else
+        {
+            int count=0;
+            int deleteCount = 1;
+            List<LocalDate> dateList = new ArrayList<>();
+            for(LocalDate i: dateB2C)
             {
-                int count=0;
-                int deleteCount = 1;
-                List<LocalDate> dateList = new ArrayList<>();
-                for(LocalDate i: dateB2C)
+                for (String j : hashB2C.get(count).get(0).keySet())
                 {
-                    for (String j : hashB2C.get(count).get(0).keySet())
+                    if (j.equals(deleteSeat))
                     {
-                        if (j.equals(deleteSeat))
-                        {
-                            System.out.println(deleteCount + " | "+i);
-                            dateList.add(i);
-                            deleteCount++;
-                        }
+                        System.out.println(deleteCount + " | "+i);
+                        dateList.add(i);
+                        deleteCount++;
                     }
-                    count++;
                 }
-                Scanner scFinal = new Scanner(System.in);
-                System.out.println("select ");
-                int Final= scFinal.nextInt();
-                Final-=1;
-                System.out.println(dateList);
-                System.out.println(Final);
-                int deleteIndex= dateB2C.indexOf(dateList.get(Final));
-                System.out.println(deleteIndex);
-                System.out.println(hashB2C.get(deleteIndex).get(0));
-                hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
-                System.out.println(hashB2C.get(deleteIndex).get(0));
+                count++;
             }
+            Scanner scFinal = new Scanner(System.in);
+            System.out.println("select ");
+            int Final= scFinal.nextInt();
+            Final-=1;
+            System.out.println(dateList);
+            System.out.println(Final);
+            int deleteIndex= dateB2C.indexOf(dateList.get(Final));
+            System.out.println(deleteIndex);
+            System.out.println(hashB2C.get(deleteIndex).get(0));
+            hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
+            System.out.println(hashB2C.get(deleteIndex).get(0));
+        }
         waitOption();
     }
     public void   findOption(){
@@ -721,9 +721,10 @@ public class Guiiit extends Application {
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
 
+
         MongoCollection<Document> colombocollection = dbDatabase.getCollection("ColomboData");
         System.out.println("connected to Colombodetails");
-        FindIterable<Document> ColomboDocument = colombocollection.find();
+        FindIterable<Document> colomboDocument = colombocollection.find();
 
         if(colombocollection.countDocuments()==0)
         {
@@ -732,6 +733,7 @@ public class Guiiit extends Application {
                 Document userdocument = new Document();
                 for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
                 {
+                    //Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
                     userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
@@ -741,9 +743,10 @@ public class Guiiit extends Application {
                 colombocollection.insertOne(userdocument);
             }
             System.out.println("stored data for user names & seats");
-        }
-        else if(colombocollection.countDocuments()>1){
-            for (Document document: ColomboDocument){
+        }else if(colombocollection.countDocuments()>1)
+        {
+            for(Document document: colomboDocument)
+            {
                 colombocollection.deleteOne(document);
             }
             for(LocalDate colombodate: dateC2B)
@@ -751,6 +754,7 @@ public class Guiiit extends Application {
                 Document userdocument = new Document();
                 for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
                 {
+                    //Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
                     userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
@@ -759,12 +763,13 @@ public class Guiiit extends Application {
                 }
                 colombocollection.insertOne(userdocument);
             }
-            System.out.println(" replaced data for user names & seats");
+            System.out.println("restored data for user names & seats");
         }
 
         MongoCollection<Document> badullacollection = dbDatabase.getCollection("BadullaData");
-        System.out.println("connected to Badulladetails");
-        FindIterable<Document> BadullaDocument = badullacollection.find();
+        System.out.println("connected to badulladetails");
+        FindIterable<Document> badullaDocument = badullacollection.find();
+
         if(badullacollection.countDocuments()==0)
         {
             for(LocalDate badulladate: dateB2C)
@@ -772,6 +777,7 @@ public class Guiiit extends Application {
                 Document userdocument = new Document();
                 for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
                 {
+                    //Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
                     userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
@@ -781,9 +787,10 @@ public class Guiiit extends Application {
                 badullacollection.insertOne(userdocument);
             }
             System.out.println("stored data for user names & seats");
-        }
-        else if(badullacollection.countDocuments()>1){
-            for (Document document: BadullaDocument){
+        }else if(badullacollection.countDocuments()>1)
+        {
+            for(Document document: badullaDocument)
+            {
                 badullacollection.deleteOne(document);
             }
             for(LocalDate badulladate: dateB2C)
@@ -791,6 +798,7 @@ public class Guiiit extends Application {
                 Document userdocument = new Document();
                 for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
                 {
+                    //Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
                     userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
@@ -799,40 +807,50 @@ public class Guiiit extends Application {
                 }
                 badullacollection.insertOne(userdocument);
             }
-            System.out.println(" replaced data for user names & seats");
+            System.out.println("restored data for user names & seats");
         }
 
         dbclient.close();
         System.out.println("saved files");
         waitOption();
-}
-    public void   loadOption(){/*
-        while (true){
-            Scanner scanLoad =new Scanner(System.in);
-            System.out.println("\n load Bookings? (y/n)");
-            String loadSeat = scanLoad.next();
-            if(loadSeat.toLowerCase().equals("y")){
-                Scanner Load= new Scanner(new File("src/Data.txt"));
-                while (Load.hasNextLine()){
-                    String line = Load.nextLine();
-                    String [] separate= line.split("-");
-                    seatList.add(separate[0]);
-                    nameList.add(separate[1]);
-                }
-//                print all the names & seats loaded
-                for (String i : seatList){
-                    System.out.print(i+"|");
-                    System.out.print(nameList.get(seatList.indexOf(i)));
-                    System.out.println();
-                }
-                System.out.println("\n"+seatList.size()+" Bookings Loaded");
-                waitOption();
-                break;
-            }else if(loadSeat.toLowerCase().equals("q")||loadSeat.toLowerCase().equals("n")||loadSeat.toLowerCase().equals("no")){
-                listOption();
-                break;
+    }
+    public void testi(){
+        System.out.println(hashB2C);
+        System.out.println(hashC2B);
+    }
+    public void   loadOption(){
+        System.out.println("datec2b"+dateC2B);
+        dateC2B.clear();
+        System.out.println("datec2b"+dateC2B);
+        System.out.println("hashc2b"+hashC2B);
+        hashC2B.clear();
+        System.out.println("hashc2b"+hashC2B);
+        HashMap<String,String> temphashmap = new HashMap<>();
+        com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
+        MongoDatabase dbDatabase = dbclient.getDatabase("users");
+
+        MongoCollection<Document> colombocollection = dbDatabase.getCollection("ColomboData");
+        System.out.println("connected to Colombodetails");
+        FindIterable<Document> colomboDocument = colombocollection.find();
+        for(Document document:colomboDocument)
+        {
+            if (!dateC2B.contains(LocalDate.parse(document.getString("date"))))
+            {
+                dateC2B.add(LocalDate.parse(document.getString("date")));
+                temphashmap.put(document.getString("Seat number"),document.getString("user name"));
+                hashC2B.add(new ArrayList<>());
+                hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
-        }*/}
+            else{
+//                temphashmap.put(document.getString("Seat number"),document.getString("user name"));
+//                hashC2B.add(new ArrayList<>());
+//                hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
+            }
+        }
+        System.out.println("datec2b"+dateC2B);
+        System.out.println("hashc2b"+hashC2B);
+        waitOption();
+    }
     public void   oderOption(){/*
         String sortTemp;
         for (int j = 0; j < nameList.size(); j++) {
