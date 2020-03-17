@@ -188,7 +188,6 @@ public class Guiiit extends Application {
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
-
     public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
         //      create the stage
         Stage window = new Stage();
@@ -598,76 +597,69 @@ public class Guiiit extends Application {
         System.out.println("enter your name:");
         String deleteName= scanDName.next().toLowerCase();
 
-        Scanner scanDSeat = new Scanner(System.in);
-        System.out.println("enter your seat:");
-        String deleteSeat= scanDSeat.next();
+        if (getCustomerNames().contains(deleteName))
+        {   System.out.println("Name: " + deleteName);
 
-        System.out.println("Name: "+deleteName);
-        System.out.println("Seat: "+deleteSeat);
+            System.out.println("1| Colombo to Badulla");
+            System.out.println("2| Badulla to Colombo");
 
-        System.out.println("1| Colombo to Badulla");
-        System.out.println("2| Badulla to Colombo");
+            Scanner scanDFinal = new Scanner(System.in);
+            System.out.println("enter Route ");
+            String deleteFinal = scanDFinal.next();
 
-        Scanner scanDFinal = new Scanner(System.in);
-        System.out.println("enter Route ");
-        String deleteFinal= scanDFinal.next();
+            Scanner scanDSeat = new Scanner(System.in);
+            System.out.println("enter your seat:");
+            String deleteSeat = scanDSeat.next();
+            System.out.println("Seat: " + deleteSeat);
 
-        if (deleteFinal.equals("1"))
-        {
-            int count=0;
-            int deleteCount = 1;
-            List<LocalDate> dateList = new ArrayList<>();
-            for(LocalDate i: dateC2B)
-            {
-                for (String j : hashC2B.get(count).get(0).keySet())
-                {
-                    if (j.equals(deleteSeat))
-                    {
-                        System.out.println(deleteCount + " | "+i);
-                        dateList.add(i);
-                        deleteCount++;
+            if (deleteFinal.equals("1")) {
+                int count = 0;
+                int deleteCount = 1;
+                List<LocalDate> dateList = new ArrayList<>();
+                for (LocalDate i : dateC2B) {
+                    for (String j : hashC2B.get(count).get(0).keySet()) {
+                        if (j.equals(deleteSeat)) {
+                            System.out.println(deleteCount + " | " + i);
+                            dateList.add(i);
+                            deleteCount++;
+                        }
                     }
+                    count++;
                 }
-                count++;
-            }
-            Scanner scFinal = new Scanner(System.in);
-            System.out.println("select ");
-            int Final= scFinal.nextInt();
-            Final-=1;
-            int deleteIndex= dateC2B.indexOf(dateList.get(Final));
-            System.out.println(hashC2B.get(deleteIndex).get(0));
-            hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
-            System.out.println(hashC2B.get(deleteIndex).get(0));
-        }
-        else
-        {
-            int count=0;
-            int deleteCount = 1;
-            List<LocalDate> dateList = new ArrayList<>();
-            for(LocalDate i: dateB2C)
-            {
-                for (String j : hashB2C.get(count).get(0).keySet())
-                {
-                    if (j.equals(deleteSeat))
-                    {
-                        System.out.println(deleteCount + " | "+i);
-                        dateList.add(i);
-                        deleteCount++;
+                Scanner scFinal = new Scanner(System.in);
+                System.out.println("select ");
+                int Final = scFinal.nextInt();
+                Final -= 1;
+                int deleteIndex = dateC2B.indexOf(dateList.get(Final));
+                System.out.println(hashC2B.get(deleteIndex).get(0));
+                hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
+                System.out.println(hashC2B.get(deleteIndex).get(0));
+            } else {
+                int count = 0;
+                int deleteCount = 1;
+                List<LocalDate> dateList = new ArrayList<>();
+                for (LocalDate i : dateB2C) {
+                    for (String j : hashB2C.get(count).get(0).keySet()) {
+                        if (j.equals(deleteSeat)) {
+                            System.out.println(deleteCount + " | " + i);
+                            dateList.add(i);
+                            deleteCount++;
+                        }
                     }
+                    count++;
                 }
-                count++;
+                Scanner scFinal = new Scanner(System.in);
+                System.out.println("select ");
+                int Final = scFinal.nextInt();
+                Final -= 1;
+                System.out.println(dateList);
+                System.out.println(Final);
+                int deleteIndex = dateB2C.indexOf(dateList.get(Final));
+                System.out.println(deleteIndex);
+                System.out.println(hashB2C.get(deleteIndex).get(0));
+                hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
+                System.out.println(hashB2C.get(deleteIndex).get(0));
             }
-            Scanner scFinal = new Scanner(System.in);
-            System.out.println("select ");
-            int Final= scFinal.nextInt();
-            Final-=1;
-            System.out.println(dateList);
-            System.out.println(Final);
-            int deleteIndex= dateB2C.indexOf(dateList.get(Final));
-            System.out.println(deleteIndex);
-            System.out.println(hashB2C.get(deleteIndex).get(0));
-            hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
-            System.out.println(hashB2C.get(deleteIndex).get(0));
         }
         waitOption();
     }
@@ -676,45 +668,40 @@ public class Guiiit extends Application {
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name:");
         String findName= scanFind.next().toLowerCase();
-
-        System.out.println("Name: "+findName+"\n");
-        int count=0;
-        for(LocalDate i: dateC2B) {
-            if (hashC2B.get(count).get(0).containsValue(findName))
-            {
-                System.out.println("Route: Colombo to Badulla");
-                System.out.println("Date : "+i);
-                System.out.print("Seats: ");
-                for (String j : hashC2B.get(count).get(0).keySet())
-                {
-                    if (hashC2B.get(count).get(0).get(j).equals(findName))
-                    {
-                        System.out.print(j + "|");
+        //List<String> allC = getCustomerNames();
+        if (getCustomerNames().contains(findName)) {
+            System.out.println("Name: " + findName + "\n");
+            int count = 0;
+            for (LocalDate i : dateC2B) {
+                if (hashC2B.get(count).get(0).containsValue(findName)) {
+                    System.out.println("Route: Colombo to Badulla");
+                    System.out.println("Date : " + i);
+                    System.out.print("Seats: ");
+                    for (String j : hashC2B.get(count).get(0).keySet()) {
+                        if (hashC2B.get(count).get(0).get(j).equals(findName)) {
+                            System.out.print(j + "|");
+                        }
                     }
+                    System.out.println("\n");
                 }
-                System.out.println("\n");
+                count++;
             }
-            count++;
-
-        }
-        count=0;
-        for(LocalDate i: dateB2C) {
-            if (hashB2C.get(count).get(0).containsValue(findName))
-            {
-                System.out.println("Route: Badulla to Colombo");
-                System.out.println("Date : "+i);
-                System.out.print("Seats: ");
-                for (String j : hashB2C.get(count).get(0).keySet())
-                {
-                    if (hashB2C.get(count).get(0).get(j).equals(findName))
-                    {
-                        System.out.print(j + "|");
+            count = 0;
+            for (LocalDate i : dateB2C) {
+                if (hashB2C.get(count).get(0).containsValue(findName)) {
+                    System.out.println("Route: Badulla to Colombo");
+                    System.out.println("Date : " + i);
+                    System.out.print("Seats: ");
+                    for (String j : hashB2C.get(count).get(0).keySet()) {
+                        if (hashB2C.get(count).get(0).get(j).equals(findName)) {
+                            System.out.print(j + "|");
+                        }
                     }
+                    System.out.println("\n");
                 }
-                System.out.println("\n");
+                count++;
             }
-            count++;
-        }
+        }else findOption();
         waitOption();
     }
     public void   saveOption(){
@@ -810,10 +797,6 @@ public class Guiiit extends Application {
         System.out.println("saved files");
         waitOption();
     }
-    public void   testi(){
-        System.out.println(hashB2C);
-        System.out.println(hashC2B);
-    }
     public void   loadOption(){
         dateC2B.clear();
         hashC2B.clear();
@@ -869,11 +852,26 @@ public class Guiiit extends Application {
         dbclient.close();
         waitOption();
     }
-    public void   oderOption(){/*
+    public void   oderOption(){
         String sortTemp;
+        List<String> seatList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        for(LocalDate i :dateC2B){
+            for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
+                seatList.add(j);
+                nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
+            }
+        }
+        for(LocalDate i :dateB2C){
+            for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
+                seatList.add(j);
+                nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
+            }
+        }
+
+
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
-                // comparing adjacent strings
                 if (String.valueOf(nameList.get(i)).compareTo(String.valueOf(nameList.get(j))) < 0) {
                     sortTemp = String.valueOf(nameList.get(j));
                     nameList.set(j, nameList.get(i));
@@ -882,8 +880,25 @@ public class Guiiit extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        waitOption();*/}
-
+        waitOption();
+    }
+    public List<String>   getCustomerNames(){
+        List<String> seatList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        for(LocalDate i :dateC2B){
+            for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
+                seatList.add(j);
+                nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
+            }
+        }
+        for(LocalDate i :dateB2C){
+            for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
+                seatList.add(j);
+                nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
+            }
+        }
+        return nameList;
+    }
     public void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
