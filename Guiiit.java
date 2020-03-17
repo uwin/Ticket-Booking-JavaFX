@@ -202,7 +202,8 @@ public class Guiiit extends Application {
 //      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
             for (int c = 2; c < 16; c++) {
-                if (number <=SEATING_CAPACITY) {
+                if (number <=SEATING_CAPACITY)
+                {
                     ImageView button = new ImageView(seatBlack);
                     Label num = new Label();
                     num.setFont(new Font("Arial", 15));
@@ -211,53 +212,57 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
 //                    change seat colour to red if it's already booked
-
-                    if(Colombo_Budullaverify==1) {
-                        if(dateC2B.contains(date)){
+                    if(Colombo_Budullaverify==1)
+                    {
+                        if(dateC2B.contains(date))
+                        {
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
-                            for(String i: hash.keySet()){
-                                ColomboToBudulla.put(i,hash.get(i));
-                            }}else{ColomboToBudulla.put("","");}
-                        if (ColomboToBudulla.containsKey(button.getId())) {
-                            button.setImage(seatRed);
-                        }
-                        if (temp.contains(button.getId())) {
-                            button.setImage(seatGreen);
-                        }
+                            for(String i: hash.keySet()) ColomboToBudulla.put(i,hash.get(i));
+                        }else ColomboToBudulla.put("","");
+                        if (ColomboToBudulla.containsKey(button.getId())) button.setImage(seatRed);
+                        if (temp.contains(button.getId())) button.setImage(seatGreen);
                         button.setOnMouseClicked(event -> {
-                            //                      flash the seat colour if the user tries to click a already booked seat
-                            if (ColomboToBudulla.containsKey(button.getId())) {
+                            //flash the seat colour if the user tries to click a already booked seat
+                            if (ColomboToBudulla.containsKey(button.getId()))
+                            {
                                 button.setImage(seatRed);
-                                //                      if the seat is not booked add the seat to the temporary seatList,change colour to green
-                            } else if (!temp.contains(button.getId())) {
+                                //if the seat is not booked add the seat to the temporary seatList,change colour to green
+                            } else if (!temp.contains(button.getId()))
+                            {
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
-                                //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
-                            } else if (temp.contains(button.getId())) {
+                                //if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
+                            } else if (temp.contains(button.getId()))
+                            {
                                 temp.remove(button.getId());
                                 button.setImage(seatBlack);
                             }
                         });
-                    } else if(Budulla_Colomboverify==1){
-                            if(dateB2C.contains(date)){
+                    }
+                    else if(Budulla_Colomboverify==1)
+                    {
+                            if(dateB2C.contains(date))
+                            {
                                 ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                                 HashMap<String,String> hash = inti.get(0);
-                                for(String i: hash.keySet()){
-                                    BudullaToColombo.put(i,hash.get(i));
-                                }}else{ColomboToBudulla.put("","");}
-                        if (BudullaToColombo.containsKey(button.getId())) {button.setImage(seatRed);}
-                        if (temp.contains(button.getId())) {button.setImage(seatGreen);}
+                                for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
+                            }else ColomboToBudulla.put("","");
+                        if (BudullaToColombo.containsKey(button.getId())) button.setImage(seatRed);
+                        if (temp.contains(button.getId())) button.setImage(seatGreen);
                         button.setOnMouseClicked(event -> {
                             //                      flash the seat colour if the user tries to click a already booked seat
-                            if (BudullaToColombo.containsKey(button.getId())){
+                            if (BudullaToColombo.containsKey(button.getId()))
+                            {
                                 button.setImage(seatRed);
                                 //                      if the seat is not booked add the seat to the temporary seatList,change colour to green
-                            }else if(!temp.contains(button.getId())){
+                            }else if(!temp.contains(button.getId()))
+                            {
                                 button.setImage(seatGreen);
                                 temp.add(button.getId());
                                 //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
-                            }else if (temp.contains(button.getId())){
+                            }else if (temp.contains(button.getId()))
+                            {
                                 temp.remove(button.getId());
                                 button.setImage(seatBlack);
                             }
@@ -399,8 +404,6 @@ public class Guiiit extends Application {
         resetBut.setMaxSize(120, 60);
         resetBut.setStyle("-fx-background-color: orange; ");
         resetBut.setOnAction(event -> {
-            //Colombo_Budullaverify=0;
-            //Budulla_Colomboverify=0;
             temp.clear();
             window.close();
             addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
@@ -413,8 +416,6 @@ public class Guiiit extends Application {
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
-            //Colombo_Budullaverify=0;
-            //Budulla_Colomboverify=0;
             ColomboToBudulla.clear();
             BudullaToColombo.clear();
             temp.clear();
@@ -451,23 +452,29 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
-                    if (Colombo_Budullaverify==1){
-                        if(dateC2B.contains(date)){
+                    if (Colombo_Budullaverify==1)
+                    {
+                        if(dateC2B.contains(date))
+                        {
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
-                            for(String i: hash.keySet()){
-                                ColomboToBudulla.put(i,hash.get(i));
-                        }}else{ColomboToBudulla.put("","");}
+                            for(String i: hash.keySet()) ColomboToBudulla.put(i,hash.get(i));
+                        }
+                        else ColomboToBudulla.put("","");
 
-                    if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
-                    if (Budulla_Colomboverify==1){
-                        if(dateB2C.contains(date)){
+                    if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);
+                    }
+                    if (Budulla_Colomboverify==1)
+                    {
+                        if(dateB2C.contains(date))
+                        {
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                         HashMap<String,String> hash = inti.get(0);
-                        for(String i: hash.keySet()){
-                            BudullaToColombo.put(i,hash.get(i));
-                        }}else{ColomboToBudulla.put("","");}
-                    if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);}
+                        for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
+                        }
+                        else ColomboToBudulla.put("","");
+                    if (BudullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);
+                    }
                     number++;
                     grid.add(button, c, r);
                     grid.add(num, c, r);
@@ -523,12 +530,15 @@ public class Guiiit extends Application {
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
                     if (Colombo_Budullaverify==1){
-                        if(dateC2B.contains(date)){
+                        if(dateC2B.contains(date))
+                        {
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
-                            for(String i: hash.keySet()){
+                            for(String i: hash.keySet())
+                            {
                                 ColomboToBudulla.put(i,hash.get(i));
-                            }}else{ColomboToBudulla.put("","");}
+                            }
+                        }else ColomboToBudulla.put("","");
                         if (!ColomboToBudulla.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -536,12 +546,15 @@ public class Guiiit extends Application {
                         }
                     }
                     if (Budulla_Colomboverify==1){
-                        if(dateB2C.contains(date)){
+                        if(dateB2C.contains(date))
+                        {
                             ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
-                            for(String i: hash.keySet()){
+                            for(String i: hash.keySet())
+                            {
                                 BudullaToColombo.put(i,hash.get(i));
-                            }}else{ColomboToBudulla.put("","");}
+                            }
+                        }else BudullaToColombo.put("","");
                         if (!BudullaToColombo.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -572,130 +585,27 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     public void deleteOption(){
-        Scanner scanTrain = new Scanner(System.in);
-        System.out.println("select Train:");
-        System.out.println("1| Colombo To Budulla");
-        System.out.println("2| Budulla To Colombo");
-        String Train= scanTrain.next();
-
-        if (Train.equals("1")){
-
-        List<String> deleteList = new ArrayList<>();
-        //for (String i : ColomboToBudulla.keySet()) {
-                //System.out.println( i + " |" + ColomboToBudulla.get(i));
-        //}
-//        getting user name
-        Scanner scanName = new Scanner(System.in);
+        Scanner scandelete = new Scanner(System.in);
         System.out.println("enter your name:");
-        String deleteName= scanName.next();
-        if (ColomboToBudulla.containsValue(deleteName.toLowerCase())) {
-//            printing all the seats for the user name in a row
-            for (String i : ColomboToBudulla.keySet()) {
-                if (ColomboToBudulla.get(i).equals(deleteName)){
-                    System.out.println(i + " |");
-                    deleteList.add(i);
-                }
-            }
-//            looping till a valid seat is given
-            while (true){
-//                getting user to select a seat number
-                Scanner scanDelete = new Scanner(System.in);
-                System.out.println("enter your seat number:");
-                String deleteSeat = scanDelete.next();
+        String deleteSeat= scandelete.next().toLowerCase();
 
-                if (deleteList.contains(String.valueOf(deleteSeat))){
-                    for (String i : ColomboToBudulla.keySet()) {
-                        if (i.equals(deleteSeat)){
-                            //System.out.println("bfE"+ColomboToBudulla);
-                            System.out.println("[REMOVED] Seat : "+i);
-                            ColomboToBudulla.remove(i);
-                            ///System.out.println("afE"+ColomboToBudulla);
-                            break;
-                        }
+        System.out.println("Name: "+deleteSeat);
+        int count=0;
+        System.out.println("Colombo to Badulla");
+        for(LocalDate i: dateC2B)
+        {
+            for (String j : hashC2B.get(count).get(0).keySet())
+            {
+                if (hashC2B.get(count).get(0).get(j).equals(deleteSeat))
+                {
+                    System.out.println(j + " | "+i);
                 }
-/*                for (String i : ColomboToBudulla.keySet()) {
-                        System.out.println( i + " |" + ColomboToBudulla.get(i));
-                }*/
-                //deleteList.clear();
-                waitOption();
-                break;
-//                    quit for entering seat number
-                }else if(deleteSeat.toLowerCase().equals("q")){
-                    waitOption();
-                    break;
-                }
-                System.out.println("the seat no is not booked");
             }
-//            quit for entering name
-        }else if(deleteName.toLowerCase().equals("q")){
-            waitOption();
-        }else {
-//            looping until a valid user name is given
-            System.out.println("your have no seats booked");
-            deleteOption();
+            count++;
         }
-        }
-        else if (Train.equals("2")){
 
-        List<String> deleteList = new ArrayList<>();
-        //for (String i : BudullaToColombo.keySet()) {
-        //        System.out.println( i + " |" + BudullaToColombo.get(i));
-        //}
-//        getting user name
-        Scanner scanName = new Scanner(System.in);
-        System.out.println("enter your name:");
-        String deleteName= scanName.next();
-        if (BudullaToColombo.containsValue(deleteName.toLowerCase())) {
-//            printing all the seats for the user name in a row
-            for (String i : BudullaToColombo.keySet()) {
-                if (BudullaToColombo.get(i).equals(deleteName)){
-                    System.out.println( i + " |");
-                    deleteList.add(i);
-                }
-            }
-//            looping till a valid seat is given
-            while (true){
-//                getting user to select a seat number
-                Scanner scanDelete = new Scanner(System.in);
-                System.out.println("enter your seat number:");
-                String deleteSeat = scanDelete.next();
+        waitOption();
 
-                if (deleteList.contains(String.valueOf(deleteSeat))){
-                    for (String i : BudullaToColombo.keySet()) {
-                        if (i.equals(deleteSeat)){
-                            //System.out.println("bfE"+BudullaToColombo);
-                            System.out.println("[REMOVED] Seat : "+i);
-                            BudullaToColombo.remove(i);
-                            //System.out.println("afE"+BudullaToColombo);
-                            break;
-                        }
-                }
-/*                for (String i : BudullaToColombo.keySet()) {
-                        System.out.println( i + " |" + BudullaToColombo.get(i));
-                }*/
-                //deleteList.clear();
-                waitOption();
-                break;
-//                    quit for entering seat number
-                }else if(deleteSeat.toLowerCase().equals("q")){
-                    waitOption();
-                    break;
-                }
-                System.out.println("the seat no is not booked");
-            }
-//            quit for entering name
-        }else if(deleteName.toLowerCase().equals("q")){
-            waitOption();
-        }else {
-//            looping until a valid user name is given
-            System.out.println("your have no seats booked");
-            deleteOption();
-        }
-        }
-        else if (Train.toLowerCase().equals("q")) {
-            waitOption();
-        }
-        else deleteOption();
     }
     public void   findOption(){
 //        getting user name
@@ -703,15 +613,14 @@ public class Guiiit extends Application {
         System.out.println("enter your name:");
         String findName= scanFind.next().toLowerCase();
 
-        System.out.println("Name: "+findName);
+        System.out.println("Name: "+findName+"\n");
         int count=0;
         for(LocalDate i: dateC2B) {
             if (hashC2B.get(count).get(0).containsValue(findName))
             {
                 System.out.println("Route: Colombo to Badulla");
                 System.out.println("Date : "+i);
-                System.out.println("Seats: ");
-                System.out.println("");
+                System.out.print("Seats: ");
                 for (String j : hashC2B.get(count).get(0).keySet())
                 {
                     if (hashC2B.get(count).get(0).get(j).equals(findName))
@@ -719,8 +628,10 @@ public class Guiiit extends Application {
                         System.out.print(j + "|");
                     }
                 }
+                System.out.println("\n");
             }
             count++;
+
         }
         count=0;
         for(LocalDate i: dateB2C) {
@@ -728,15 +639,15 @@ public class Guiiit extends Application {
             {
                 System.out.println("Route: Badulla to Colombo");
                 System.out.println("Date : "+i);
-                System.out.println("Seats: ");
-                System.out.println("");
+                System.out.print("Seats: ");
                 for (String j : hashB2C.get(count).get(0).keySet())
                 {
-                    if (hashC2B.get(count).get(0).get(j).equals(findName))
+                    if (hashB2C.get(count).get(0).get(j).equals(findName))
                     {
                         System.out.print(j + "|");
                     }
                 }
+                System.out.println("\n");
             }
             count++;
         }
