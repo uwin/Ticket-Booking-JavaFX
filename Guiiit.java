@@ -3,7 +3,7 @@
 \need to flash when reClicked after booked
 \
 \check for duplicates when loading and saving
-\
+\ https://stackoverflow.com/questions/48238855/how-to-disable-past-dates-in-datepicker-of-javafx-scene-builder
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
@@ -122,6 +122,14 @@ public class Guiiit extends Application {
         gridFirst.add(headFirst2,3,12,9,4);
 
         DatePicker datePick = new DatePicker();
+        datePick.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
         datePick.setValue(LocalDate.now());
         gridFirst.add(datePick, 13, 12,18,4);
 
@@ -133,9 +141,17 @@ public class Guiiit extends Application {
             int Budulla_Colomboverify=0;
              LocalDate date=datePick.getValue();
             window.close();
-            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
-            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
-            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            switch (userOption.toLowerCase()) {
+                case "a":
+                    addOption(Colombo_Budullaverify, Budulla_Colomboverify, date);
+                    break;
+                case "v":
+                    viewOption(Colombo_Budullaverify, Budulla_Colomboverify, date);
+                    break;
+                case "e":
+                    emptyOption(Colombo_Budullaverify, Budulla_Colomboverify, date);
+                    break;
+            }
         });
         gridFirst.add(toBudulla,35, 16,10,12);
 
@@ -291,7 +307,7 @@ public class Guiiit extends Application {
                     });
                 }else {
                     if(!dateB2C.contains(date)) {
-                        HashMap<String, String> TBudullaToColombo = new HashMap<String, String>();
+                        HashMap<String, String> TBudullaToColombo = new HashMap<>();
                         for (String i : temp) {
                             int indexforHash = temp.indexOf(i);
                             //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
@@ -341,8 +357,7 @@ public class Guiiit extends Application {
                         HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
                         for (String i : temp) {
                             int indexforHash = temp.indexOf(i);
-                            if (Colombo_Budullaverify == 1)
-                                TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
+                            if (Colombo_Budullaverify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
                             //if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
                         dateC2B.add(date);
@@ -683,7 +698,30 @@ public class Guiiit extends Application {
     }
     public void   findOption(){
 //        getting user name
-        Scanner scanTrain = new Scanner(System.in);
+        Scanner scanFind = new Scanner(System.in);
+        System.out.println("enter your name:");
+        String findName= scanFind.next();
+
+
+        if(hashC2B.get(0).get(0).containsValue(findName))
+        {
+            System.out.println("Name: "+findName);
+            System.out.println("Route: Colombo to Badulla");
+            System.out.println("SeatNumbers: ");
+        }
+        int count =0;
+        for(String i: hashC2B.get(0).get(0).keySet()) {
+            if (hashC2B.get(0).get(0).containsValue(findName)){
+                System.out.print(i+"|");
+                System.out.println(dateC2B.get(count));
+            }
+            count++;
+        }
+
+
+        //        printing all seat values for the given name
+
+/*        Scanner scanTrain = new Scanner(System.in);
         System.out.println("select Train:");
         System.out.println("1| Colombo To Budulla");
         System.out.println("2| Budulla To Colombo");
@@ -732,7 +770,7 @@ public class Guiiit extends Application {
         else if (Train.toLowerCase().equals("q")) {
             waitOption();
         }
-        else findOption();
+        else findOption();*/
     }
     public void   saveOption() throws IOException {/*
 //        print all the booked seats along with user name
