@@ -7,6 +7,8 @@
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
+
+import com.mongodb.MongoClient;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -17,15 +19,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import com.mongodb.client.MongoClients;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ConnectionString;
+import com.mongodb.ServerAddress;
+import com.mongodb.MongoCredential;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.ClientSessionOptions;
+import com.mongodb.client.*;
+import com.mongodb.client.internal.MongoDatabaseImpl;
+import com.mongodb.connection.ClusterDescription;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
     public static void main(String[] args) {
@@ -39,7 +52,6 @@ public class Guiiit extends Application {
 
     List<LocalDate> dateC2B = new ArrayList<>();
     List<LocalDate> dateB2C = new ArrayList<>();
-
     ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
     ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
 
@@ -90,18 +102,10 @@ public class Guiiit extends Application {
                 findOption();
                 break;
             case "S":
-                try {
-                    saveOption();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveOption();
                 break;
             case "L":
-                try {
-                    loadOption();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                loadOption();
                 break;
             case "O":
                 oderOption();
@@ -184,6 +188,7 @@ public class Guiiit extends Application {
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
+
     public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
         //      create the stage
         Stage window = new Stage();
@@ -712,34 +717,96 @@ public class Guiiit extends Application {
         }
         waitOption();
     }
-    public void   saveOption() throws IOException {/*
-//        print all the booked seats along with user name
-        for (String i : seatList){
-            System.out.print(i+"|");
-            System.out.print(nameList.get(seatList.indexOf(i)));
-            System.out.println();
+    public void   saveOption(){
+        com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
+        MongoDatabase dbDatabase = dbclient.getDatabase("users");
+
+        MongoCollection<Document> colombocollection = dbDatabase.getCollection("ColomboData");
+        System.out.println("connected to Colombodetails");
+        FindIterable<Document> ColomboDocument = colombocollection.find();
+
+        if(colombocollection.countDocuments()==0)
+        {
+            for(LocalDate colombodate: dateC2B)
+            {
+                Document userdocument = new Document();
+                for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
+                {
+                    userdocument.append("Seat number",item);
+                    userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
+                    userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
+                    userdocument.append("from","Colombo");
+                    userdocument.append("to","Badulla");
+                }
+                colombocollection.insertOne(userdocument);
+            }
+            System.out.println("stored data for user names & seats");
+        }
+        else if(colombocollection.countDocuments()>1){
+            for (Document document: ColomboDocument){
+                colombocollection.deleteOne(document);
+            }
+            for(LocalDate colombodate: dateC2B)
+            {
+                Document userdocument = new Document();
+                for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
+                {
+                    userdocument.append("Seat number",item);
+                    userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
+                    userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
+                    userdocument.append("from","Colombo");
+                    userdocument.append("to","Badulla");
+                }
+                colombocollection.insertOne(userdocument);
+            }
+            System.out.println(" replaced data for user names & seats");
         }
 
-        while (true){
-            Scanner scanSave =new Scanner(System.in);
-            System.out.println("\n Save "+seatList.size()+" Bookings? (y/n)");
-            String saveSeat = scanSave.next();
-            if(saveSeat.toLowerCase().equals("y")||saveSeat.toLowerCase().equals("yes")){
-                FileWriter save = new FileWriter("src/Data.txt");
-                for(String i: seatList){
-                    int index= seatList.indexOf(i);
-                    save.write(seatList.get(index)+"-"+nameList.get(index)+"\n");
-
+        MongoCollection<Document> badullacollection = dbDatabase.getCollection("BadullaData");
+        System.out.println("connected to Badulladetails");
+        FindIterable<Document> BadullaDocument = badullacollection.find();
+        if(badullacollection.countDocuments()==0)
+        {
+            for(LocalDate badulladate: dateB2C)
+            {
+                Document userdocument = new Document();
+                for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
+                {
+                    userdocument.append("Seat number",item);
+                    userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
+                    userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
+                    userdocument.append("from","Badulla");
+                    userdocument.append("to","Colombo");
                 }
-                save.close();
-                waitOption();
-                break;
-            }else if(saveSeat.toLowerCase().equals("q")||saveSeat.toLowerCase().equals("n")||saveSeat.toLowerCase().equals("no")){
-                listOption();
-                break;
+                badullacollection.insertOne(userdocument);
             }
-        }*/}
-    public void   loadOption() throws FileNotFoundException {/*
+            System.out.println("stored data for user names & seats");
+        }
+        else if(badullacollection.countDocuments()>1){
+            for (Document document: BadullaDocument){
+                badullacollection.deleteOne(document);
+            }
+            for(LocalDate badulladate: dateB2C)
+            {
+                Document userdocument = new Document();
+                for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
+                {
+                    userdocument.append("Seat number",item);
+                    userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
+                    userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
+                    userdocument.append("from","Badulla");
+                    userdocument.append("to","Colombo");
+                }
+                badullacollection.insertOne(userdocument);
+            }
+            System.out.println(" replaced data for user names & seats");
+        }
+
+        dbclient.close();
+        System.out.println("saved files");
+        waitOption();
+}
+    public void   loadOption(){/*
         while (true){
             Scanner scanLoad =new Scanner(System.in);
             System.out.println("\n load Bookings? (y/n)");
@@ -780,6 +847,7 @@ public class Guiiit extends Application {
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
         waitOption();*/}
+
     public void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
