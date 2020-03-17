@@ -33,7 +33,6 @@ public class Guiiit extends Application {
     }
     HashMap<String, String> ColomboToBudulla = new HashMap<>();
     HashMap<String, String> BudullaToColombo = new HashMap<>();
-    //HashMap hash = new HashMap<>();
     List<String> temp = new ArrayList<>();
     List<LocalDate> dateC2B = new ArrayList<>();
     List<LocalDate> dateB2C = new ArrayList<>();
@@ -585,27 +584,82 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     public void deleteOption(){
-        Scanner scandelete = new Scanner(System.in);
+        Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
-        String deleteSeat= scandelete.next().toLowerCase();
+        String deleteName= scanDName.next().toLowerCase();
 
-        System.out.println("Name: "+deleteSeat);
-        int count=0;
-        System.out.println("Colombo to Badulla");
-        for(LocalDate i: dateC2B)
+        Scanner scanDSeat = new Scanner(System.in);
+        System.out.println("enter your seat:");
+        String deleteSeat= scanDSeat.next();
+
+        System.out.println("Name: "+deleteName);
+        System.out.println("Seat: "+deleteSeat);
+
+        System.out.println("1| Colombo to Badulla");
+        System.out.println("2| Badulla to Colombo");
+
+        Scanner scanDFinal = new Scanner(System.in);
+        System.out.println("enter selection ");
+        String deleteFinal= scanDFinal.next();
+
+        if (deleteFinal.equals("1"))
         {
-            for (String j : hashC2B.get(count).get(0).keySet())
+            int count=0;
+            int deleteCount = 1;
+            List<LocalDate> dateList = new ArrayList<>();
+            for(LocalDate i: dateB2C)
             {
-                if (hashC2B.get(count).get(0).get(j).equals(deleteSeat))
+                for (String j : hashB2C.get(count).get(0).keySet())
                 {
-                    System.out.println(j + " | "+i);
+                    if (j.equals(deleteSeat))
+                    {
+                        System.out.println(deleteCount + " | "+i);
+                        dateList.add(i);
+                        deleteCount++;
+                    }
                 }
+                count++;
             }
-            count++;
+            Scanner scFinal = new Scanner(System.in);
+            System.out.println("select ");
+            int Final= scFinal.nextInt();
+            Final-=1;
+            int deleteIndex= dateB2C.indexOf(dateList.get(Final));
+            System.out.println(hashC2B.get(deleteIndex).get(0));
+            hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
+            System.out.println(hashC2B.get(deleteIndex).get(0));
         }
-
+        else
+            {
+                int count=0;
+                int deleteCount = 1;
+                List<LocalDate> dateList = new ArrayList<>();
+                for(LocalDate i: dateB2C)
+                {
+                    for (String j : hashB2C.get(count).get(0).keySet())
+                    {
+                        if (j.equals(deleteSeat))
+                        {
+                            System.out.println(deleteCount + " | "+i);
+                            dateList.add(i);
+                            deleteCount++;
+                        }
+                    }
+                    count++;
+                }
+                Scanner scFinal = new Scanner(System.in);
+                System.out.println("select ");
+                int Final= scFinal.nextInt();
+                Final-=1;
+                System.out.println(dateList);
+                System.out.println(Final);
+                int deleteIndex= dateB2C.indexOf(dateList.get(Final));
+                System.out.println(deleteIndex);
+                System.out.println(hashB2C.get(deleteIndex).get(0));
+                hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
+                System.out.println(hashB2C.get(deleteIndex).get(0));
+            }
         waitOption();
-
     }
     public void   findOption(){
 //        getting user name
@@ -614,6 +668,8 @@ public class Guiiit extends Application {
         String findName= scanFind.next().toLowerCase();
 
         System.out.println("Name: "+findName+"\n");
+
+
         int count=0;
         for(LocalDate i: dateC2B) {
             if (hashC2B.get(count).get(0).containsValue(findName))
@@ -679,8 +735,7 @@ public class Guiiit extends Application {
                 listOption();
                 break;
             }
-        }*/
-    }
+        }*/}
     public void   loadOption() throws FileNotFoundException {/*
         while (true){
             Scanner scanLoad =new Scanner(System.in);
@@ -707,8 +762,7 @@ public class Guiiit extends Application {
                 listOption();
                 break;
             }
-        }*/
-    }
+        }*/}
     public void   oderOption(){/*
         String sortTemp;
         for (int j = 0; j < nameList.size(); j++) {
@@ -722,8 +776,7 @@ public class Guiiit extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        waitOption();*/
-    }
+        waitOption();*/}
     public void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
