@@ -730,17 +730,16 @@ public class Guiiit extends Application {
         {
             for(LocalDate colombodate: dateC2B)
             {
-                Document userdocument = new Document();
                 for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
                 {
-                    //Document userdocument = new Document();
+                    Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
                     userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Colombo");
                     userdocument.append("to","Badulla");
+                    colombocollection.insertOne(userdocument);
                 }
-                colombocollection.insertOne(userdocument);
             }
             System.out.println("stored data for user names & seats");
         }else if(colombocollection.countDocuments()>1)
@@ -751,17 +750,16 @@ public class Guiiit extends Application {
             }
             for(LocalDate colombodate: dateC2B)
             {
-                Document userdocument = new Document();
                 for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
                 {
-                    //Document userdocument = new Document();
+                    Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
                     userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Colombo");
                     userdocument.append("to","Badulla");
+                    colombocollection.insertOne(userdocument);
                 }
-                colombocollection.insertOne(userdocument);
             }
             System.out.println("restored data for user names & seats");
         }
@@ -774,17 +772,16 @@ public class Guiiit extends Application {
         {
             for(LocalDate badulladate: dateB2C)
             {
-                Document userdocument = new Document();
                 for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
                 {
-                    //Document userdocument = new Document();
+                    Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
                     userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Badulla");
                     userdocument.append("to","Colombo");
+                    badullacollection.insertOne(userdocument);
                 }
-                badullacollection.insertOne(userdocument);
             }
             System.out.println("stored data for user names & seats");
         }else if(badullacollection.countDocuments()>1)
@@ -795,17 +792,16 @@ public class Guiiit extends Application {
             }
             for(LocalDate badulladate: dateB2C)
             {
-                Document userdocument = new Document();
                 for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
                 {
-                    //Document userdocument = new Document();
+                    Document userdocument = new Document();
                     userdocument.append("Seat number",item);
                     userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
                     userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Badulla");
                     userdocument.append("to","Colombo");
+                    badullacollection.insertOne(userdocument);
                 }
-                badullacollection.insertOne(userdocument);
             }
             System.out.println("restored data for user names & seats");
         }
@@ -814,7 +810,7 @@ public class Guiiit extends Application {
         System.out.println("saved files");
         waitOption();
     }
-    public void testi(){
+    public void   testi(){
         System.out.println(hashB2C);
         System.out.println(hashC2B);
     }
