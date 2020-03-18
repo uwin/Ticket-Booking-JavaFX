@@ -25,13 +25,15 @@ import java.util.*;
 
 public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
+
     public static void main(String[] args) {
         launch();
     }
-    List<LocalDate> dateC2B = new ArrayList<>();
-    List<LocalDate> dateB2C = new ArrayList<>();
-    ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
-    ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
+
+    static final List<LocalDate> dateC2B = new ArrayList<>();
+    static final List<LocalDate> dateB2C = new ArrayList<>();
+    static final ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
+    static final ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
 
     public void start(Stage stage) {
         welcome();
@@ -41,7 +43,6 @@ public class Guiiit extends Application {
      * this method begins the ticket booking system with a welcome message
      * is used to create the data structures
      */
-
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         List<String> temp = new ArrayList<>();
@@ -261,8 +262,7 @@ public class Guiiit extends Application {
      * @param temp              this parameter stores temporarily stored seats
      * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
      */
-    private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> hashC2B, List<LocalDate> dateC2B,
-                                ImageView button, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla) {
+    private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> hashC2B, List<LocalDate> dateC2B, ImageView button, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla) {
 //        importing icons
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
@@ -907,7 +907,7 @@ public class Guiiit extends Application {
     }
 
     /**
-     * this method is used restore a saved user data set
+     * this method is used restore a saved user data set back to the arras
      * @param temp              this parameter stores temporarily stored seats
      * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
      * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
@@ -933,10 +933,7 @@ public class Guiiit extends Application {
                 hashC2B.add(new ArrayList<>());
                 hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
-            else{
-            }
         }
-
         dateB2C.clear();
         hashB2C.clear();
         temphashmap.clear();
@@ -958,7 +955,6 @@ public class Guiiit extends Application {
             else{
             }
         }
-
         System.out.println("datec2b"+dateC2B);
         System.out.println("hashc2b"+hashC2B);
         System.out.println("dateb2c"+dateB2C);
@@ -969,7 +965,7 @@ public class Guiiit extends Application {
     }
 
     /**
-     * this method used to alphabetically oder all booked seats
+     * this method used to alphabetically oder all booked seats using a bubble sort algorithm
      * @param temp              this parameter stores temporarily stored seats
      * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
      * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
@@ -1010,7 +1006,7 @@ public class Guiiit extends Application {
 
     /**
      * this method is used to get user confirmation to proceed after
-     * a console command is run
+     * a console command is run, without this the program will quickly show the menu items again.
      * @param temp              this parameter stores temporarily stored seats
      * @param ColomboToBadulla  this parameter used as a temporary data structure to reference for icon styling
      * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
@@ -1023,6 +1019,10 @@ public class Guiiit extends Application {
         if (!continueConsole.isEmpty()) listOption(temp, ColomboToBadulla, BadullaToColombo);
     }
 
+    /** this method is used to get a combined list of all customer names
+     *
+     * @return this retuns a array withh all customer names
+     */
     public List<String>   getCustomerNames(){
         List<String> nameList = new ArrayList<>();
         for(LocalDate i :dateC2B){
@@ -1037,19 +1037,4 @@ public class Guiiit extends Application {
         }
         return nameList;
     }
-    public List<String>   getCustomerSeats(){
-        List<String> seatList = new ArrayList<>();
-        for(LocalDate i :dateC2B){
-            for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
-                seatList.add(j);
-            }
-        }
-        for(LocalDate i :dateB2C){
-            for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
-                seatList.add(j);
-            }
-        }
-        return seatList;
-    }
-
 }
