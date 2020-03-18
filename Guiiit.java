@@ -331,38 +331,26 @@ public class Guiiit extends Application {
             }
             else if(badullaColomboVerify==1)
             {
-                if (BudullaToColombo.containsValue(username.getText().toLowerCase()))
+                if(!dateB2C.contains(date))
                 {
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setContentText("enter a unique name");
-                    a.show();
-                    a.setOnCloseRequest(event1 ->
+                    HashMap<String, String> TBudullaToColombo = new HashMap<>();
+                    for (String i : temp)
                     {
-                        window.close();
-                        addOption(colomboBadullaVerify,badullaColomboVerify,date);
-                    });
-                }
-                else {
-                    if(!dateB2C.contains(date))
-                    {
-                        HashMap<String, String> TBudullaToColombo = new HashMap<>();
-                        for (String i : temp)
-                        {
-                            int indexforHash = temp.indexOf(i);
-                            //if(colomboBadullaVerify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                            if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
-                        }
-                        dateB2C.add(date);
-                        System.out.println("B>C" + dateB2C);
-                        System.out.println("B>C" + TBudullaToColombo);
-                        hashB2C.add(new ArrayList<>());
-                        int hashhashindex = dateB2C.size();
-                        hashhashindex -= 1;
-                        hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
-                        System.out.println("first time"+hashB2C);
+                        int indexforHash = temp.indexOf(i);
+                        //if(colomboBadullaVerify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                        if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
                     }
-                    else
-                        {
+                    dateB2C.add(date);
+                    System.out.println("B>C" + dateB2C);
+                    System.out.println("B>C" + TBudullaToColombo);
+                    hashB2C.add(new ArrayList<>());
+                    int hashhashindex = dateB2C.size();
+                    hashhashindex -= 1;
+                    hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
+                    System.out.println("first time"+hashB2C);
+                }
+                else
+                    {
                         System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                         System.out.println("initi"+inti);
@@ -379,46 +367,34 @@ public class Guiiit extends Application {
                         hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
                         System.out.println(dateB2C);
                         System.out.println("hash end"+hashB2C);
-//                            System.out.println(hashB2C);
+                        System.out.println(hashB2C);
                     }
                     temp.clear();
                     window.close();
                     listOption();
-                }
             }
             else if (colomboBadullaVerify==1)
             {
-                if (ColomboToBudulla.containsValue(username.getText().toLowerCase()))
+                if(!dateC2B.contains(date))
                 {
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setContentText("enter a unique name");
-                    a.show();
-                    a.setOnCloseRequest(event1 ->
+                    HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
+                    for (String i : temp)
                     {
-                        window.close();
-                        addOption(colomboBadullaVerify,badullaColomboVerify,date);
-                    });
-                }
-                else {
-                    if(!dateC2B.contains(date))
+                        int indexforHash = temp.indexOf(i);
+                        if (colomboBadullaVerify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
+                        //if(badullaColomboVerify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                    }
+                    dateC2B.add(date);
+                    System.out.println("C>B" + dateC2B);
+                    System.out.println("C>B" + TColomboToBudulla);
+                    hashC2B.add(new ArrayList<>());
+                    int hashhashindex = dateC2B.size();
+                    hashhashindex -= 1;
+                    hashC2B.get(hashhashindex).add(0, TColomboToBudulla);
+                    System.out.println(hashC2B);
+                    }
+                else
                     {
-                        HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
-                        for (String i : temp)
-                        {
-                            int indexforHash = temp.indexOf(i);
-                            if (colomboBadullaVerify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
-                            //if(badullaColomboVerify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        }
-                        dateC2B.add(date);
-                        System.out.println("C>B" + dateC2B);
-                        System.out.println("C>B" + TColomboToBudulla);
-                        hashC2B.add(new ArrayList<>());
-                        int hashhashindex = dateC2B.size();
-                        hashhashindex -= 1;
-                        hashC2B.get(hashhashindex).add(0, TColomboToBudulla);
-                        System.out.println(hashC2B);
-                    }else
-                        {
                         System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                         System.out.println("initi"+inti);
@@ -435,11 +411,10 @@ public class Guiiit extends Application {
                         hashC2B.get(dateC2B.indexOf(date)).add(0,TColomboToBudulla);
                         System.out.println(dateC2B);
                         System.out.println("hash end"+hashC2B);
-                        }
+                    }
                     temp.clear();
                     window.close();
                     listOption();
-                }
             }
         });
         grid.add(bookBut, 10, 9,10,9);
