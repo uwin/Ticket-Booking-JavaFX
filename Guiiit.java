@@ -648,27 +648,35 @@ public class Guiiit extends Application {
                 int count = 0;
                 int deleteCount = 1;
                 List<LocalDate> dateList = new ArrayList<>();
-                for (LocalDate i : dateB2C) {
-                    for (String j : hashB2C.get(count).get(0).keySet()) {
-                        if (j.equals(deleteSeat)) {
+                List<String> seatList = new ArrayList<>();
+                for (LocalDate i : dateB2C)
+                {
+                    for (String j : hashB2C.get(count).get(0).keySet())
+                    {
+                        if (j.equals(deleteSeat))
+                        {
                             System.out.println(deleteCount + " | " + i);
                             dateList.add(i);
+                            seatList.add(j);
                             deleteCount++;
                         }
                     }
                     count++;
                 }
+                if (!seatList.contains(deleteSeat))
+                {
+                    System.out.println("seat number not booked");
+                    deleteOption();
+                }
                 Scanner scFinal = new Scanner(System.in);
-                System.out.println("select  ");
+                System.out.println("remove date ");
                 int Final = scFinal.nextInt();
                 Final -= 1;
-                System.out.println(dateList);
-                System.out.println(Final);
                 int deleteIndex = dateB2C.indexOf(dateList.get(Final));
-                System.out.println(deleteIndex);
-                System.out.println(hashB2C.get(deleteIndex).get(0));
+                //System.out.println(hashC2B.get(deleteIndex).get(0));
                 hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
-                System.out.println(hashB2C.get(deleteIndex).get(0));
+                System.out.println("Seat no:"+deleteSeat+" removed on :"+dateList.get(Final));
+                //System.out.println(hashC2B.get(deleteIndex).get(0));
             }
             else {
                 System.out.println("invaied input");
