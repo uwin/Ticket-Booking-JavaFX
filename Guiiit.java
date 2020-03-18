@@ -196,6 +196,14 @@ public class Guiiit extends Application {
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
+
+    /**
+     * in  this method  42 seat icons will be created & style with the use of parameters & data structures
+     * then give the user the ability to select & book seats on a preferred day
+     * @param colomboBadullaVerify this parameter passes a 0 01 depending on users choice of route
+     * @param badullaColomboVerify this parameter passes a 0 01 depending on users choice of route
+     * @param date                 this parameter passes the date selected by the user
+     */
     public void    addOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
         //      create the stage
         Stage window = new Stage();
@@ -308,29 +316,38 @@ public class Guiiit extends Application {
         bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
 //            alert will be shown if either the name or a seat is not selected
-            if (username.getText().trim().isEmpty()||temp.isEmpty()) {
+            if (username.getText().trim().isEmpty()||temp.isEmpty())
+            {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
                 if (temp.isEmpty())a.setHeaderText("select seats");
                 a.show();
-                a.setOnCloseRequest(event1 -> {
+                a.setOnCloseRequest(event1 ->
+                {
                     window.close();
                     addOption(colomboBadullaVerify,badullaColomboVerify,date);
                 });
 //                alert will be shown if the user name is already existing
-            }else if(badullaColomboVerify==1){
-                if (BudullaToColombo.containsValue(username.getText().toLowerCase())) {
+            }
+            else if(badullaColomboVerify==1)
+            {
+                if (BudullaToColombo.containsValue(username.getText().toLowerCase()))
+                {
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("enter a unique name");
                     a.show();
-                    a.setOnCloseRequest(event1 -> {
+                    a.setOnCloseRequest(event1 ->
+                    {
                         window.close();
                         addOption(colomboBadullaVerify,badullaColomboVerify,date);
                     });
-                }else {
-                    if(!dateB2C.contains(date)) {
+                }
+                else {
+                    if(!dateB2C.contains(date))
+                    {
                         HashMap<String, String> TBudullaToColombo = new HashMap<>();
-                        for (String i : temp) {
+                        for (String i : temp)
+                        {
                             int indexforHash = temp.indexOf(i);
                             //if(colomboBadullaVerify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                             if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
@@ -343,13 +360,16 @@ public class Guiiit extends Application {
                         hashhashindex -= 1;
                         hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
                         System.out.println("first time"+hashB2C);
-                    }else {
+                    }
+                    else
+                        {
                         System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                         System.out.println("initi"+inti);
                         HashMap<String,String> TBudullaToColombo = inti.get(0);
                         System.out.println("hash"+TBudullaToColombo);
-                        for(String i: temp){
+                        for(String i: temp)
+                        {
                             int indexforHash = temp.indexOf(i);
                             TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
@@ -365,19 +385,26 @@ public class Guiiit extends Application {
                     window.close();
                     listOption();
                 }
-            }else if (colomboBadullaVerify==1){
-                if (ColomboToBudulla.containsValue(username.getText().toLowerCase())) {
+            }
+            else if (colomboBadullaVerify==1)
+            {
+                if (ColomboToBudulla.containsValue(username.getText().toLowerCase()))
+                {
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("enter a unique name");
                     a.show();
-                    a.setOnCloseRequest(event1 -> {
+                    a.setOnCloseRequest(event1 ->
+                    {
                         window.close();
                         addOption(colomboBadullaVerify,badullaColomboVerify,date);
                     });
-                }else {
-                    if(!dateC2B.contains(date)) {
+                }
+                else {
+                    if(!dateC2B.contains(date))
+                    {
                         HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
-                        for (String i : temp) {
+                        for (String i : temp)
+                        {
                             int indexforHash = temp.indexOf(i);
                             if (colomboBadullaVerify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
                             //if(badullaColomboVerify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
@@ -390,13 +417,15 @@ public class Guiiit extends Application {
                         hashhashindex -= 1;
                         hashC2B.get(hashhashindex).add(0, TColomboToBudulla);
                         System.out.println(hashC2B);
-                    }else{
+                    }else
+                        {
                         System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                         System.out.println("initi"+inti);
                         HashMap<String,String> TColomboToBudulla = inti.get(0);
                         System.out.println("hash"+TColomboToBudulla);
-                        for(String i: temp){
+                        for(String i: temp)
+                        {
                             int indexforHash = temp.indexOf(i);
                             TColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
@@ -406,7 +435,7 @@ public class Guiiit extends Application {
                         hashC2B.get(dateC2B.indexOf(date)).add(0,TColomboToBudulla);
                         System.out.println(dateC2B);
                         System.out.println("hash end"+hashC2B);
-                    }
+                        }
                     temp.clear();
                     window.close();
                     listOption();
