@@ -200,6 +200,14 @@ public class Guiiit extends Application {
         gridFirst.add(closeButFirst,80,30,10,12);
     }
 
+    /**
+     * this method is used perform the actions for seat icons
+     * @param dateB2C passing date list to verify status of booking
+     * @param hashB2C passing seat data list to verify status of booking
+     * @param date   date related for the booking
+     * @param badullaColomboVerify this parameter passes the route selected by the user
+     * @param username
+     */
     private void buttonAtion(List<LocalDate> dateB2C, ArrayList<ArrayList<HashMap<String, String>>> hashB2C,
                              LocalDate date, int badullaColomboVerify, TextField username) {
         if(!dateB2C.contains(date))
@@ -236,8 +244,8 @@ public class Guiiit extends Application {
 
     /**
      * this method is used to colour changes for the add view
-     * @param hashC2B passing seat data list to verify status
-     * @param dateC2B passing date list to verify status
+     * @param hashC2B passing seat data list to verify status of booking
+     * @param dateC2B passing date list to verify status of booking
      * @param button passing the image which needs to be styled
      * @param date   date related for the booking
      */
@@ -412,6 +420,12 @@ public class Guiiit extends Application {
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
 
+    /**
+     *
+     * @param colomboBadullaVerify
+     * @param badullaColomboVerify
+     * @param date
+     */
     public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
