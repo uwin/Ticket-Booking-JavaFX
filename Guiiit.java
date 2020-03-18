@@ -913,17 +913,19 @@ public class Guiiit extends Application {
      * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   loadOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
+        System.out.println("datec2b"+dateC2B);
         dateC2B.clear();
+        System.out.println("datec2b"+dateC2B);
+        System.out.println("hashc2b"+hashC2B);
         hashC2B.clear();
+        System.out.println("hashc2b"+hashC2B);
         HashMap<String,String> temphashmap = new HashMap<>();
-
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
 
         MongoCollection<Document> colombocollection = dbDatabase.getCollection("ColomboData");
         System.out.println("connected to Colombodetails");
         FindIterable<Document> colomboDocument = colombocollection.find();
-
         for(Document document:colomboDocument)
         {
             if (!dateC2B.contains(LocalDate.parse(document.getString("date"))))
@@ -933,34 +935,14 @@ public class Guiiit extends Application {
                 hashC2B.add(new ArrayList<>());
                 hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
-        }
-        dateB2C.clear();
-        hashB2C.clear();
-        temphashmap.clear();
-        System.out.println(temphashmap);
-
-        MongoCollection<Document> badullacollection = dbDatabase.getCollection("BadullaData");
-        System.out.println("connected to Badulladetails");
-        FindIterable<Document> badullaDocument = badullacollection.find();
-
-        for(Document document:badullaDocument)
-        {
-            if (!dateB2C.contains(LocalDate.parse(document.getString("date"))))
-            {
-                dateB2C.add(LocalDate.parse(document.getString("date")));
-                temphashmap.put(document.getString("Seat number"),document.getString("user name"));
-                hashB2C.add(new ArrayList<>());
-                hashB2C.get(dateB2C.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
-            }
             else{
+//                temphashmap.put(document.getString("Seat number"),document.getString("user name"));
+//                hashC2B.add(new ArrayList<>());
+//                hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
         }
         System.out.println("datec2b"+dateC2B);
         System.out.println("hashc2b"+hashC2B);
-        System.out.println("dateb2c"+dateB2C);
-        System.out.println("hashb2c"+hashB2C);
-
-        dbclient.close();
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
 
