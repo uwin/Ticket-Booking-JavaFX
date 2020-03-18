@@ -315,6 +315,10 @@ public class Guiiit extends Application {
         bookBut.setMaxSize(120, 60);
         bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
+            System.out.println("[ c ]"+hashC2B);
+            System.out.println("[ c ]"+dateC2B);
+            System.out.println("[ b ]"+hashB2C);
+            System.out.println("[ b ]"+dateB2C);
 //            alert will be shown if either the name or a seat is not selected
             if (username.getText().trim().isEmpty()||temp.isEmpty())
             {
@@ -341,34 +345,38 @@ public class Guiiit extends Application {
                         if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
                     }
                     dateB2C.add(date);
-                    System.out.println("B>C" + dateB2C);
-                    System.out.println("B>C" + TBudullaToColombo);
+                    //System.out.println("B>C" + dateB2C);
+                    //System.out.println("B>C" + TBudullaToColombo);
                     hashB2C.add(new ArrayList<>());
                     int hashhashindex = dateB2C.size();
                     hashhashindex -= 1;
                     hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
-                    System.out.println("first time"+hashB2C);
+                    //System.out.println("first time"+hashB2C);
                 }
                 else
                     {
-                        System.out.println("pressed");
+                        //System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                        System.out.println("initi"+inti);
+                        //System.out.println("initi"+inti);
                         HashMap<String,String> TBudullaToColombo = inti.get(0);
-                        System.out.println("hash"+TBudullaToColombo);
+                        //System.out.println("hash"+TBudullaToColombo);
                         for(String i: temp)
                         {
                             int indexforHash = temp.indexOf(i);
                             TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
                         hashB2C.get(dateB2C.indexOf(date)).clear();
-                        System.out.println("get"+hashB2C.get(dateB2C.indexOf(date)));
+                        //System.out.println("get"+hashB2C.get(dateB2C.indexOf(date)));
                         //hashB2C.add(new ArrayList<>());
                         hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
-                        System.out.println(dateB2C);
-                        System.out.println("hash end"+hashB2C);
-                        System.out.println(hashB2C);
+                        //System.out.println(dateB2C);
+                        //System.out.println("hash end"+hashB2C);
+                        //System.out.println(hashB2C);
                     }
+                    System.out.println("[ c ]"+hashC2B);
+                    System.out.println("[ c ]"+dateC2B);
+                    System.out.println("[ b ]"+hashB2C);
+                    System.out.println("[ b ]"+dateB2C);
                     temp.clear();
                     window.close();
                     listOption();
@@ -385,19 +393,19 @@ public class Guiiit extends Application {
                         //if(badullaColomboVerify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                     }
                     dateC2B.add(date);
-                    System.out.println("C>B" + dateC2B);
-                    System.out.println("C>B" + TColomboToBudulla);
+                    //System.out.println("C>B" + dateC2B);
+                    //System.out.println("C>B" + TColomboToBudulla);
                     hashC2B.add(new ArrayList<>());
                     int hashhashindex = dateC2B.size();
                     hashhashindex -= 1;
                     hashC2B.get(hashhashindex).add(0, TColomboToBudulla);
-                    System.out.println(hashC2B);
+                    //System.out.println(hashC2B);
                     }
                 else
                     {
-                        System.out.println("pressed");
+                        //System.out.println("pressed");
                         ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                        System.out.println("initi"+inti);
+                        //System.out.println("initi"+inti);
                         HashMap<String,String> TColomboToBudulla = inti.get(0);
                         System.out.println("hash"+TColomboToBudulla);
                         for(String i: temp)
@@ -406,12 +414,16 @@ public class Guiiit extends Application {
                             TColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
                         hashC2B.get(dateC2B.indexOf(date)).clear();
-                        System.out.println("get"+hashC2B.get(dateC2B.indexOf(date)));
+                        //System.out.println("get"+hashC2B.get(dateC2B.indexOf(date)));
                         //hashB2C.add(new ArrayList<>());
                         hashC2B.get(dateC2B.indexOf(date)).add(0,TColomboToBudulla);
-                        System.out.println(dateC2B);
-                        System.out.println("hash end"+hashC2B);
+                        //System.out.println(dateC2B);
+                        //System.out.println("hash end"+hashC2B);
                     }
+                    System.out.println("[ c ]"+hashC2B);
+                    System.out.println("[ c ]"+dateC2B);
+                    System.out.println("[ b ]"+hashB2C);
+                    System.out.println("[ b ]"+dateB2C);
                     temp.clear();
                     window.close();
                     listOption();
