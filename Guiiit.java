@@ -42,6 +42,7 @@ public class Guiiit extends Application {
     public void start(Stage stage) {
         welcome();
     }
+
     /**
      * this method is used to initiate the  ticket booking system with a message
      */
@@ -50,6 +51,7 @@ public class Guiiit extends Application {
         //opens the options menu
         listOption();
     }
+
     /**
      * this method is used to show the user options to interact with the system
      */
@@ -66,6 +68,7 @@ public class Guiiit extends Application {
                 "q quit\n");
         testOptions();
     }
+
     /**
      * this method is used to handle the options selected by the user & to call the
      * respective method, if the option is view, add or empty, a gui will be shown for
@@ -197,6 +200,85 @@ public class Guiiit extends Application {
         gridFirst.add(closeButFirst,80,30,10,12);
     }
 
+    private void buttonAtion(List<LocalDate> dateB2C, ArrayList<ArrayList<HashMap<String, String>>> hashB2C,
+                             LocalDate date, int badullaColomboVerify, TextField username) {
+        if(!dateB2C.contains(date))
+        {
+            HashMap<String, String> TBudullaToColombo = new HashMap<>();
+            for (String i : temp)
+            {
+                int indexforHash = temp.indexOf(i);
+                //if(colomboBadullaVerify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
+            }
+            dateB2C.add(date);
+            //System.out.println("B>C" + dateB2C);
+            //System.out.println("B>C" + TBudullaToColombo);
+            hashB2C.add(new ArrayList<>());
+            int hashhashindex = dateB2C.size();
+            hashhashindex -= 1;
+            hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
+            //System.out.println("first time"+hashB2C);
+        }
+        else
+            {
+                ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                HashMap<String,String> TBudullaToColombo = inti.get(0);
+                for(String i: temp)
+                {
+                    int indexforHash = temp.indexOf(i);
+                    TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                }
+                hashB2C.get(dateB2C.indexOf(date)).clear();
+                hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
+            }
+    }
+
+    /**
+     * this method is used to colour changes for the add view
+     * @param hashC2B passing seat data list to verify status
+     * @param dateC2B passing date list to verify status
+     * @param button passing the image which needs to be styled
+     * @param date   date related for the booking
+     */
+    private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> hashC2B, List<LocalDate> dateC2B,
+                                ImageView button, LocalDate date) {
+        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
+        Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
+        Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
+        if(dateC2B.contains(date))
+        {
+            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+            HashMap<String,String> hash = inti.get(0);
+            for(String i: hash.keySet()) ColomboToBudulla.put(i,hash.get(i));
+        }
+        else ColomboToBudulla.put("","");
+//                      if seat is already booked change colour to red
+        if (ColomboToBudulla.containsKey(button.getId())) button.setImage(seatRed);
+//                      if seat is temporary booked change colour to red
+        if (temp.contains(button.getId())) button.setImage(seatGreen);
+
+        button.setOnMouseClicked(event -> {
+//                          flash the seat colour if the user tries to click a already booked seat
+            if (ColomboToBudulla.containsKey(button.getId()))
+            {
+                button.setImage(seatRed);
+            }
+//                          if the seat is not booked add the seat to the temporary seatList,change colour to green
+            else if (!temp.contains(button.getId()))
+            {
+                button.setImage(seatGreen);
+                temp.add(button.getId());
+            }
+//                          if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
+            else if (temp.contains(button.getId()))
+            {
+                temp.remove(button.getId());
+                button.setImage(seatBlack);
+            }
+        });
+    }
+
     /**
      * in  this method  42 seat icons will be created & style with the use of parameters & data structures
      * then give the user the ability to select & book seats on a preferred day
@@ -205,7 +287,7 @@ public class Guiiit extends Application {
      * @param date                 this parameter passes the date selected by the user
      */
     public void    addOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
-        //      create the stage
+//      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
 
@@ -217,7 +299,7 @@ public class Guiiit extends Application {
         window.setScene(addView);
         window.show();
 
-//      values needed for the loop
+//      variables needed for seat icon loop
         int number = 1;
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
@@ -235,62 +317,15 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
-//                    change seat colour to red if it's already booked
+
+//                    style seat icons depending on the route
                     if(colomboBadullaVerify==1)
                     {
-                        if(dateC2B.contains(date))
-                        {
-                            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                            HashMap<String,String> hash = inti.get(0);
-                            for(String i: hash.keySet()) ColomboToBudulla.put(i,hash.get(i));
-                        }else ColomboToBudulla.put("","");
-                        if (ColomboToBudulla.containsKey(button.getId())) button.setImage(seatRed);
-                        if (temp.contains(button.getId())) button.setImage(seatGreen);
-                        button.setOnMouseClicked(event -> {
-                            //flash the seat colour if the user tries to click a already booked seat
-                            if (ColomboToBudulla.containsKey(button.getId()))
-                            {
-                                button.setImage(seatRed);
-                                //if the seat is not booked add the seat to the temporary seatList,change colour to green
-                            } else if (!temp.contains(button.getId()))
-                            {
-                                button.setImage(seatGreen);
-                                temp.add(button.getId());
-                                //if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
-                            } else if (temp.contains(button.getId()))
-                            {
-                                temp.remove(button.getId());
-                                button.setImage(seatBlack);
-                            }
-                        });
+                        seatcolourloop(hashC2B,dateC2B,button,date);
                     }
                     else if(badullaColomboVerify==1)
                     {
-                        if(dateB2C.contains(date))
-                        {
-                            ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                            HashMap<String,String> hash = inti.get(0);
-                            for(String i: hash.keySet()) BudullaToColombo.put(i,hash.get(i));
-                        }else ColomboToBudulla.put("","");
-                        if (BudullaToColombo.containsKey(button.getId())) button.setImage(seatRed);
-                        if (temp.contains(button.getId())) button.setImage(seatGreen);
-                        button.setOnMouseClicked(event -> {
-                            //                      flash the seat colour if the user tries to click a already booked seat
-                            if (BudullaToColombo.containsKey(button.getId()))
-                            {
-                                button.setImage(seatRed);
-                                //                      if the seat is not booked add the seat to the temporary seatList,change colour to green
-                            }else if(!temp.contains(button.getId()))
-                            {
-                                button.setImage(seatGreen);
-                                temp.add(button.getId());
-                                //                      if the user again clicks a already booked seat, remove it from the temp booked list, revert colour
-                            }else if (temp.contains(button.getId()))
-                            {
-                                temp.remove(button.getId());
-                                button.setImage(seatBlack);
-                            }
-                        });
+                        seatcolourloop(hashB2C,dateB2C,button,date);
                     }
                     number++;
                     grid.add(button, c, r);
@@ -335,99 +370,19 @@ public class Guiiit extends Application {
             }
             else if(badullaColomboVerify==1)
             {
-                if(!dateB2C.contains(date))
-                {
-                    HashMap<String, String> TBudullaToColombo = new HashMap<>();
-                    for (String i : temp)
-                    {
-                        int indexforHash = temp.indexOf(i);
-                        //if(colomboBadullaVerify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
-                    }
-                    dateB2C.add(date);
-                    //System.out.println("B>C" + dateB2C);
-                    //System.out.println("B>C" + TBudullaToColombo);
-                    hashB2C.add(new ArrayList<>());
-                    int hashhashindex = dateB2C.size();
-                    hashhashindex -= 1;
-                    hashB2C.get(hashhashindex).add(0, TBudullaToColombo);
-                    //System.out.println("first time"+hashB2C);
-                }
-                else
-                    {
-                        //System.out.println("pressed");
-                        ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
-                        //System.out.println("initi"+inti);
-                        HashMap<String,String> TBudullaToColombo = inti.get(0);
-                        //System.out.println("hash"+TBudullaToColombo);
-                        for(String i: temp)
-                        {
-                            int indexforHash = temp.indexOf(i);
-                            TBudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        }
-                        hashB2C.get(dateB2C.indexOf(date)).clear();
-                        //System.out.println("get"+hashB2C.get(dateB2C.indexOf(date)));
-                        //hashB2C.add(new ArrayList<>());
-                        hashB2C.get(dateB2C.indexOf(date)).add(0,TBudullaToColombo);
-                        //System.out.println(dateB2C);
-                        //System.out.println("hash end"+hashB2C);
-                        //System.out.println(hashB2C);
-                    }
-                    System.out.println("[ c ]"+hashC2B);
-                    System.out.println("[ c ]"+dateC2B);
-                    System.out.println("[ b ]"+hashB2C);
-                    System.out.println("[ b ]"+dateB2C);
-                    temp.clear();
-                    window.close();
-                    listOption();
+                buttonAtion(dateB2C,hashB2C,date,badullaColomboVerify,username);
             }
             else if (colomboBadullaVerify==1)
             {
-                if(!dateC2B.contains(date))
-                {
-                    HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
-                    for (String i : temp)
-                    {
-                        int indexforHash = temp.indexOf(i);
-                        if (colomboBadullaVerify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
-                        //if(badullaColomboVerify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
-                    }
-                    dateC2B.add(date);
-                    //System.out.println("C>B" + dateC2B);
-                    //System.out.println("C>B" + TColomboToBudulla);
-                    hashC2B.add(new ArrayList<>());
-                    int hashhashindex = dateC2B.size();
-                    hashhashindex -= 1;
-                    hashC2B.get(hashhashindex).add(0, TColomboToBudulla);
-                    //System.out.println(hashC2B);
-                    }
-                else
-                    {
-                        //System.out.println("pressed");
-                        ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
-                        //System.out.println("initi"+inti);
-                        HashMap<String,String> TColomboToBudulla = inti.get(0);
-                        System.out.println("hash"+TColomboToBudulla);
-                        for(String i: temp)
-                        {
-                            int indexforHash = temp.indexOf(i);
-                            TColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                        }
-                        hashC2B.get(dateC2B.indexOf(date)).clear();
-                        //System.out.println("get"+hashC2B.get(dateC2B.indexOf(date)));
-                        //hashB2C.add(new ArrayList<>());
-                        hashC2B.get(dateC2B.indexOf(date)).add(0,TColomboToBudulla);
-                        //System.out.println(dateC2B);
-                        //System.out.println("hash end"+hashC2B);
-                    }
-                    System.out.println("[ c ]"+hashC2B);
-                    System.out.println("[ c ]"+dateC2B);
-                    System.out.println("[ b ]"+hashB2C);
-                    System.out.println("[ b ]"+dateB2C);
-                    temp.clear();
-                    window.close();
-                    listOption();
+                buttonAtion(dateC2B, hashC2B, date, colomboBadullaVerify, username);
             }
+            System.out.println("[ c ]"+hashC2B);
+            System.out.println("[ c ]"+dateC2B);
+            System.out.println("[ b ]"+hashB2C);
+            System.out.println("[ b ]"+dateB2C);
+            temp.clear();
+            window.close();
+            listOption();
         });
         grid.add(bookBut, 10, 9,10,9);
 
@@ -456,6 +411,7 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
+
     public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
@@ -933,6 +889,7 @@ public class Guiiit extends Application {
         }
         waitOption();
     }
+
     public List<String>   getCustomerNames(){
         List<String> nameList = new ArrayList<>();
         for(LocalDate i :dateC2B){
