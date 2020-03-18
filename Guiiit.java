@@ -421,10 +421,10 @@ public class Guiiit extends Application {
     }
 
     /**
-     *
-     * @param colomboBadullaVerify
-     * @param badullaColomboVerify
-     * @param date
+     *this method is used to show seats, booked seats will be styled
+     * @param colomboBadullaVerify parameter is passed to show the selected route
+     * @param badullaColomboVerify parameter is passed to show the selected route
+     * @param date parameter is passed to show the bookings for the selected date
      */
     public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
@@ -503,6 +503,7 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
 
     }
+
     public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
