@@ -742,6 +742,9 @@ public class Guiiit extends Application {
         waitOption();
     }
 
+    /**
+     * this method is used to save user data to a data base
+     */
     public void   saveOption(){
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
@@ -835,6 +838,10 @@ public class Guiiit extends Application {
         System.out.println("saved files");
         waitOption();
     }
+
+    /**
+     * this method is used restore a saved user data set
+     */
     public void   loadOption(){
         dateC2B.clear();
         hashC2B.clear();
@@ -890,6 +897,7 @@ public class Guiiit extends Application {
         dbclient.close();
         waitOption();
     }
+
     public void   oderOption(){
         String sortTemp;
         List<String> seatList = new ArrayList<>();
