@@ -504,6 +504,12 @@ public class Guiiit extends Application {
 
     }
 
+    /**
+     *this method is used to show empty seats, booked seats will not be shown
+     * @param colomboBadullaVerify parameter is passed to show the selected route
+     * @param badullaColomboVerify parameter is passed to show the selected route
+     * @param date parameter is passed to show the bookings for the selected date
+     */
     public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
@@ -587,6 +593,10 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
+
+    /**
+     * this method is used to find & remove user seat  bookings from a given day
+     */
     public void deleteOption(){
         Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
@@ -685,6 +695,11 @@ public class Guiiit extends Application {
         }
         waitOption();
     }
+
+
+    /**
+     * this method is used a allow the user to find all bookings using user name
+     */
     public void   findOption(){
 //        getting user name
         Scanner scanFind = new Scanner(System.in);
@@ -726,6 +741,7 @@ public class Guiiit extends Application {
         }else findOption();
         waitOption();
     }
+
     public void   saveOption(){
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
