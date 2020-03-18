@@ -53,9 +53,10 @@ public class Guiiit extends Application {
 
     /**
      * this method is used to show the user options to interact with the system
-     * @param temp              this parameter stores temporarily stored seats              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * users are given a list of options to choice from
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla  this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling this parameter used as a temporary data structure to reference for icon styling
      */
     public void   listOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo) {
         System.out.println("\n\n"+
@@ -76,8 +77,8 @@ public class Guiiit extends Application {
      * respective method, if the option is view, add or empty, a gui will be shown for
      * the user to select the  route & the date
      *  @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   testOptions(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
@@ -90,12 +91,12 @@ public class Guiiit extends Application {
         Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
         window.setScene(addveiwFirst);
 
-//      calling methods depending on the users input
+//      calling methods depending on the users input for the previous method
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
-            case "A":
+            case "A":            //gui related methods wil be further tested in this method for getting the route & date
             case "V":
             case "E":
                 window.show();
@@ -153,11 +154,11 @@ public class Guiiit extends Application {
         Button fromColombo = new Button("From Colombo");
         fromColombo.setMaxSize(120, 60);
         fromColombo.setOnAction(event -> {
-            int colomboBadullaVerify=1;
+            int colomboBadullaVerify=1; //given 1 since it's the choosen value
             int badullaColomboVerify=0;
             LocalDate date=datePick.getValue();
             window.close();
-            switch (userOption.toLowerCase()) {
+            switch (userOption.toLowerCase()) {  //calling the Gui related functions
                 case "a":
                     addOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BadullaToColombo, BadullaToColombo);
                     break;
@@ -175,11 +176,11 @@ public class Guiiit extends Application {
         Button toColombo = new Button("From Badulla");
         toColombo.setMaxSize(120, 60);
         toColombo.setOnAction(event -> {
-            int badullaColomboVerify=1;
+            int badullaColomboVerify=1; //given 1 since it's the choosen value
             int colomboBadullaVerify=0;
             LocalDate date=datePick.getValue();
             window.close();
-            switch (userOption.toLowerCase()) {
+            switch (userOption.toLowerCase()) {   //calling the Gui related functions
                 case "a":
                     addOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BadullaToColombo, BadullaToColombo);
                     break;
@@ -206,35 +207,38 @@ public class Guiiit extends Application {
 
     /**
      * this method is used perform the actions for seat icons
+     * adding the seat number to temp list
+     *
      * @param dateB2C passing date list to verify status of booking
      * @param hashB2C passing seat data list to verify status of booking
      * @param date   date related for the booking
      * @param badullaColomboVerify this parameter passes the route selected by the user
-     * @param username
+     * @param username          this is the value from the text box
      * @param temp              this parameter stores temporarily stored seats
      */
     private void buttonAtion(List<LocalDate> dateB2C, ArrayList<ArrayList<HashMap<String, String>>> hashB2C,
                              LocalDate date, int badullaColomboVerify, TextField username, List<String> temp) {
+
         if(!dateB2C.contains(date))
         {
+//            creating a temp hashmap to get name  from the text & seat numbers from temp list
             HashMap<String, String> TBadullaToColombo = new HashMap<>();
             for (String i : temp)
             {
                 int indexforHash = temp.indexOf(i);
-                //if(colomboBadullaVerify==1) ColomboToBadulla.put(temp.get(indexforHash),username.getText().toLowerCase());
                 if (badullaColomboVerify == 1) TBadullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
             }
+//            adding the  date to the date list
             dateB2C.add(date);
-            //System.out.println("B>C" + dateB2C);
-            //System.out.println("B>C" + TBadullaToColombo);
+//            adding seat numbers & names to the data structure
             hashB2C.add(new ArrayList<>());
             int hashhashindex = dateB2C.size();
             hashhashindex -= 1;
             hashB2C.get(hashhashindex).add(0, TBadullaToColombo);
-            //System.out.println("first time"+hashB2C);
         }
         else
             {
+//                creating a temp hashmap to get name  from the text & seat numbers from temp list
                 ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                 HashMap<String,String> TBadullaToColombo = inti.get(0);
                 for(String i: temp)
@@ -242,6 +246,7 @@ public class Guiiit extends Application {
                     int indexforHash = temp.indexOf(i);
                     TBadullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                 }
+//                replacing the exisiting hashmap at data structure index relavent to the date with the temprary hashmap
                 hashB2C.get(dateB2C.indexOf(date)).clear();
                 hashB2C.get(dateB2C.indexOf(date)).add(0,TBadullaToColombo);
             }
@@ -254,15 +259,18 @@ public class Guiiit extends Application {
      * @param button passing the image which needs to be styled
      * @param date   date related for the booking
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
      */
     private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> hashC2B, List<LocalDate> dateC2B,
                                 ImageView button, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla) {
+//        importing icons
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
+
         if(dateC2B.contains(date))
         {
+//            creating a temporary hashmap for styling
             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
             HashMap<String,String> hash = inti.get(0);
             for(String i: hash.keySet()) ColomboToBadulla.put(i,hash.get(i));
@@ -274,7 +282,7 @@ public class Guiiit extends Application {
         if (temp.contains(button.getId())) button.setImage(seatGreen);
 
         button.setOnMouseClicked(event -> {
-//                          flash the seat colour if the user tries to click a already booked seat
+//                           keep the seat colour red  if the user tries to click a already booked seat
             if (ColomboToBadulla.containsKey(button.getId()))
             {
                 button.setImage(seatRed);
@@ -301,8 +309,8 @@ public class Guiiit extends Application {
      * @param badullaColomboVerify this parameter passes a 0 01 depending on users choice of route
      * @param date                 this parameter passes the date selected by the user
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void    addOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
@@ -318,10 +326,8 @@ public class Guiiit extends Application {
         window.show();
 
 //      variables needed for seat icon loop
-        int number = 1;
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
-        Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
-        Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
+        int number = 1; //used to set the seat number
 
 //      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
@@ -336,7 +342,7 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
 
-//                    style seat icons depending on the route
+//                    calling the relavent method to style seat icons depending on the route
                     if(colomboBadullaVerify==1)
                     {
                         seatcolourloop(hashC2B,dateC2B,button,date, temp, ColomboToBadulla);
@@ -345,6 +351,7 @@ public class Guiiit extends Application {
                     {
                         seatcolourloop(hashB2C,dateB2C,button,date, temp, ColomboToBadulla);
                     }
+//                    adding images to grid
                     number++;
                     grid.add(button, c, r);
                     grid.add(num, c, r);
@@ -384,8 +391,8 @@ public class Guiiit extends Application {
                     window.close();
                     addOption(colomboBadullaVerify,badullaColomboVerify,date, temp, ColomboToBadulla, BadullaToColombo);
                 });
-//                alert will be shown if the user name is already existing
             }
+//            relavent method is called to handle the button actions
             else if(badullaColomboVerify==1)
             {
                 buttonAtion(dateB2C,hashB2C,date,badullaColomboVerify,username, temp);
@@ -394,6 +401,7 @@ public class Guiiit extends Application {
             {
                 buttonAtion(dateC2B, hashC2B, date, colomboBadullaVerify, username, temp);
             }
+
             System.out.println("[ c ]"+hashC2B);
             System.out.println("[ c ]"+dateC2B);
             System.out.println("[ b ]"+hashB2C);
@@ -436,8 +444,8 @@ public class Guiiit extends Application {
      * @param badullaColomboVerify parameter is passed to show the selected route
      * @param date parameter is passed to show the bookings for the selected date
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
@@ -452,10 +460,12 @@ public class Guiiit extends Application {
         window.show();
 
 //      values needed for the loop
-        int number = 1;
+
+//        impoting icons
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
         Image seatGrey = new Image(getClass().getResourceAsStream("images/grey.png"));
 
+        int number = 1; //used to get value for seat number
 //      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
             for (int c = 2; c < 16; c++) {
@@ -466,28 +476,30 @@ public class Guiiit extends Application {
                     num.setText(String.valueOf(number));
                     button.setFitHeight(60);
                     button.setFitWidth(60);
-//                    if seat is booked the seat button is greyed out
+
+//                    styling done relavent to the route
                     if (colomboBadullaVerify==1)
                     {
                         if(dateC2B.contains(date))
-                        {
+                        { //creating atemporary hashmap for styling
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet()) ColomboToBadulla.put(i,hash.get(i));
                         }
                         else ColomboToBadulla.put("","");
-
+//                     if seat is booked the seat button is greyed out
                         if (ColomboToBadulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);
                     }
                     if (badullaColomboVerify==1)
                     {
                         if(dateB2C.contains(date))
-                        {
+                        { //creating a temporary hashmap for styling
                             ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet()) BadullaToColombo.put(i,hash.get(i));
                         }
                         else ColomboToBadulla.put("","");
+                        //if seat is booked the seat button is greyed out
                         if (BadullaToColombo.containsKey(String.valueOf(number))) button.setImage(seatGrey);
                     }
                     number++;
@@ -523,8 +535,8 @@ public class Guiiit extends Application {
      * @param badullaColomboVerify parameter is passed to show the selected route
      * @param date parameter is passed to show the bookings for the selected date
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
@@ -553,10 +565,11 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
-//                  if the seat is not booked the seat will be shown
+
+//                    styling will be done relavent to the route
                     if (colomboBadullaVerify==1){
                         if(dateC2B.contains(date))
-                        {
+                        { //creating atemporary hashmap for styling
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet())
@@ -564,6 +577,7 @@ public class Guiiit extends Application {
                                 ColomboToBadulla.put(i,hash.get(i));
                             }
                         }else ColomboToBadulla.put("","");
+                        //                  if the seat is not booked the seat will be shown
                         if (!ColomboToBadulla.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -572,7 +586,7 @@ public class Guiiit extends Application {
                     }
                     if (badullaColomboVerify==1){
                         if(dateB2C.contains(date))
-                        {
+                        {   //creating atemporary hashmap for styling
                             ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet())
@@ -580,6 +594,7 @@ public class Guiiit extends Application {
                                 BadullaToColombo.put(i,hash.get(i));
                             }
                         }else BadullaToColombo.put("","");
+                        //                  if the seat is not booked the seat will be shown
                         if (!BadullaToColombo.containsKey(String.valueOf(number)))
                         {
                             grid.add(button, c, r);
@@ -613,16 +628,19 @@ public class Guiiit extends Application {
     /**
      * this method is used to find & remove user seat  bookings from a given day
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void deleteOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
+//        getting user name
         Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanDName.next().toLowerCase();
 
+        //checking if the name is vaid
         if (getCustomerNames().contains(deleteName))
         {
+            //asking for the route
             System.out.println("1| Colombo to Badulla");
             System.out.println("2| Badulla to Colombo");
 
@@ -631,13 +649,19 @@ public class Guiiit extends Application {
             String  route = scanRoute.next();
 
             if (route.equals("1")) {
+
+                //getting seat number
                 Scanner scanDeleteSeat= new Scanner(System.in);
                 System.out.println("enter seat number ");
                 String  deleteSeat = scanDeleteSeat.next();
+
                 int count = 0;
                 int deleteCount = 1;
+
+//                creating temporarylist for deleting
                 List<LocalDate> dateList = new ArrayList<>();
                 List<String> seatList = new ArrayList<>();
+//                looping dates
                 for (LocalDate i : dateC2B)
                 {
                     for (String j : hashC2B.get(count).get(0).keySet())
@@ -645,29 +669,29 @@ public class Guiiit extends Application {
                         if (j.equals(deleteSeat))
                         {
                             System.out.println(deleteCount + " | " + i);
-                            dateList.add(i);
-                            seatList.add(j);
+                            dateList.add(i);   //adding vaid dates to temporary list
+                            seatList.add(j);   //adding vaid seatnumbers to temporary list
                             deleteCount++;
                         }
                     }
                     count++;
                 }
-                if (!seatList.contains(deleteSeat))
+                if (!seatList.contains(deleteSeat)) //checking if the seat number was vaid
                 {
                     System.out.println("seat number not booked");
                     deleteOption(temp, ColomboToBadulla, BadullaToColombo);
                 }
                 Scanner scFinal = new Scanner(System.in);
-                System.out.println("remove date ");
+                System.out.println("remove date ");              //selecting date for deletion
                 int Final = scFinal.nextInt();
                 Final -= 1;
                 int deleteIndex = dateC2B.indexOf(dateList.get(Final));
                 //System.out.println(hashC2B.get(deleteIndex).get(0));
                 hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
-                System.out.println("Seat no:"+deleteSeat+" removed on :"+dateList.get(Final));
+                System.out.println("Seat no:"+deleteSeat+" removed on :"+dateList.get(Final)); //deleting seat from the given date
                 //System.out.println(hashC2B.get(deleteIndex).get(0));
             }
-            else if(route.equals("2")){
+            else if(route.equals("2")){                           //same process is repeated
                 Scanner scanDeleteSeat= new Scanner(System.in);
                 System.out.println("enter seat number ");
                 String  deleteSeat = scanDeleteSeat.next();
@@ -705,11 +729,11 @@ public class Guiiit extends Application {
                 //System.out.println(hashC2B.get(deleteIndex).get(0));
             }
             else {
-                System.out.println("invaied route");
+                System.out.println("invaied route");                      //if route is in vaid method is looped
                 deleteOption(temp, ColomboToBadulla, BadullaToColombo);
             }
         } else {
-            System.out.println("name is not booked");
+            System.out.println("name is not booked");                    //if name is in vaied method is looped
             deleteOption(temp, ColomboToBadulla, BadullaToColombo);
         }
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
@@ -719,25 +743,33 @@ public class Guiiit extends Application {
     /**
      * this method is used a allow the user to find all bookings using user name
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   findOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //        getting user name
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name:");
         String findName= scanFind.next().toLowerCase();
+
         //List<String> allC = getCustomerNames();
+        //validating name
         if (getCustomerNames().contains(findName)) {
             System.out.println("Name: " + findName + "\n");
             int count = 0;
-            for (LocalDate i : dateC2B) {
-                if (hashC2B.get(count).get(0).containsValue(findName)) {
+//            looping for each day with the given name for the relavent route
+            for (LocalDate i : dateC2B)
+            {
+//                getting relavent details
+                if (hashC2B.get(count).get(0).containsValue(findName))
+                {
                     System.out.println("Route: Colombo to Badulla");
                     System.out.println("Date : " + i);
                     System.out.print("Seats: ");
-                    for (String j : hashC2B.get(count).get(0).keySet()) {
-                        if (hashC2B.get(count).get(0).get(j).equals(findName)) {
+                    for (String j : hashC2B.get(count).get(0).keySet())
+                    {
+                        if (hashC2B.get(count).get(0).get(j).equals(findName))
+                        {
                             System.out.print(j + "|");
                         }
                     }
@@ -746,7 +778,7 @@ public class Guiiit extends Application {
                 count++;
             }
             count = 0;
-            for (LocalDate i : dateB2C) {
+            for (LocalDate i : dateB2C) { //same prosess is repeated
                 if (hashB2C.get(count).get(0).containsValue(findName)) {
                     System.out.println("Route: Badulla to Colombo");
                     System.out.println("Date : " + i);
@@ -760,25 +792,28 @@ public class Guiiit extends Application {
                 }
                 count++;
             }
-        }else findOption(temp, ColomboToBadulla, BadullaToColombo);
+        }else findOption(temp, ColomboToBadulla, BadullaToColombo); //if name is invaid method is looped
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
 
     /**
      * this method is used to save user data to a data base
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   saveOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
+//        start mongo client
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
+//        create database
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
-
-
+//        create collection for relavent route
         MongoCollection<Document> colombocollection = dbDatabase.getCollection("ColomboData");
         System.out.println("connected to Colombodetails");
         FindIterable<Document> colomboDocument = colombocollection.find();
 
+//if the database is empty
+//create document
         if(colombocollection.countDocuments()==0)
         {
             for(LocalDate colombodate: dateC2B)
@@ -795,6 +830,8 @@ public class Guiiit extends Application {
                 }
             }
             System.out.println("stored data for user names & seats");
+//if a database is not empty
+// dete the existing file & replace it
         }else if(colombocollection.countDocuments()>1)
         {
             for(Document document: colomboDocument)
@@ -817,9 +854,12 @@ public class Guiiit extends Application {
             System.out.println("restored data for user names & seats");
         }
 
+//        create collection for relavent route
         MongoCollection<Document> badullacollection = dbDatabase.getCollection("BadullaData");
         System.out.println("connected to badulladetails");
         FindIterable<Document> badullaDocument = badullacollection.find();
+//if the database is empty
+//create document
 
         if(badullacollection.countDocuments()==0)
         {
@@ -837,6 +877,8 @@ public class Guiiit extends Application {
                 }
             }
             System.out.println("stored data for user names & seats");
+//if a database is not empty
+// dete the existing file & replace it
         }else if(badullacollection.countDocuments()>1)
         {
             for(Document document: badullaDocument)
@@ -858,7 +900,7 @@ public class Guiiit extends Application {
             }
             System.out.println("restored data for user names & seats");
         }
-
+//close client
         dbclient.close();
         System.out.println("saved files");
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
@@ -867,8 +909,8 @@ public class Guiiit extends Application {
     /**
      * this method is used restore a saved user data set
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   loadOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
         dateC2B.clear();
@@ -929,13 +971,16 @@ public class Guiiit extends Application {
     /**
      * this method used to alphabetically oder all booked seats
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   oderOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
         String sortTemp;
+//        create temporary arrays
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
+
+//        transfer hashhmap arrays to 2 arraylists
         for(LocalDate i :dateC2B){
             for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
                 seatList.add(j);
@@ -949,7 +994,7 @@ public class Guiiit extends Application {
             }
         }
 
-
+//        creating the buble sort
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
                 if (String.valueOf(nameList.get(i)).compareTo(String.valueOf(nameList.get(j))) < 0) {
@@ -967,8 +1012,8 @@ public class Guiiit extends Application {
      * this method is used to get user confirmation to proceed after
      * a console command is run
      * @param temp              this parameter stores temporarily stored seats
-     * @param ColomboToBadulla
-     * @param BadullaToColombo
+     * @param ColomboToBadulla  this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   waitOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //        to let the use consume the details of console functions before moving to the menu
