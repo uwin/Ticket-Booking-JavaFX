@@ -33,10 +33,6 @@ public class Guiiit extends Application {
     ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
     ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
 
-    //List<String> temp = new ArrayList<>();
-    //;
-    HashMap<String, String> BudullaToColombo = new HashMap<>();
-
     public void start(Stage stage) {
         welcome();
     }
@@ -48,16 +44,18 @@ public class Guiiit extends Application {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         List<String> temp = new ArrayList<>();
         HashMap<String, String> ColomboToBudulla = new HashMap<>();
+        HashMap<String, String> BudullaToColombo = new HashMap<>();
         //opens the options menu
-        listOption(temp, ColomboToBudulla);
+        listOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     /**
      * this method is used to show the user options to interact with the system
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   listOption(List<String> temp, HashMap<String, String> ColomboToBudulla) {
+    public void   listOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -68,18 +66,18 @@ public class Guiiit extends Application {
                 "L Load details\n"+
                 "O List seats\n"+
                 "q quit\n");
-        testOptions(temp, ColomboToBudulla);
+        testOptions(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     /**
      * this method is used to handle the options selected by the user & to call the
      * respective method, if the option is view, add or empty, a gui will be shown for
      * the user to select the  route & the date
-     *
-     * @param temp
+     *  @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   testOptions(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   testOptions(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
 //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -101,25 +99,25 @@ public class Guiiit extends Application {
                 window.show();
                 break;
             case "D":
-                deleteOption(temp, ColomboToBudulla);
+                deleteOption(temp, ColomboToBudulla, BudullaToColombo);
                 break;
             case "F":
-                findOption(temp, ColomboToBudulla);
+                findOption(temp, ColomboToBudulla, BudullaToColombo);
                 break;
             case "S":
-                saveOption(temp, ColomboToBudulla);
+                saveOption(temp, ColomboToBudulla, BudullaToColombo);
                 break;
             case "L":
-                loadOption(temp, ColomboToBudulla);
+                loadOption(temp, ColomboToBudulla, BudullaToColombo);
                 break;
             case "O":
-                oderOption(temp, ColomboToBudulla);
+                oderOption(temp, ColomboToBudulla, BudullaToColombo);
                 break;
             case "Q":
                 System.exit(0);
             default:
                 System.out.println("invalid input");
-                listOption(temp, ColomboToBudulla);
+                listOption(temp, ColomboToBudulla, BudullaToColombo);
                 break;
         }
         //window.show();
@@ -159,13 +157,13 @@ public class Guiiit extends Application {
             window.close();
             switch (userOption.toLowerCase()) {
                 case "a":
-                    addOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo);
+                    addOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo, BudullaToColombo);
                     break;
                 case "v":
-                    viewOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo);
+                    viewOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo, BudullaToColombo);
                     break;
                 case "e":
-                    emptyOption(colomboBadullaVerify, badullaColomboVerify, date, temp, ColomboToBudulla);
+                    emptyOption(colomboBadullaVerify, badullaColomboVerify, date, temp, ColomboToBudulla, BudullaToColombo);
                     break;
             }
         });
@@ -181,13 +179,13 @@ public class Guiiit extends Application {
             window.close();
             switch (userOption.toLowerCase()) {
                 case "a":
-                    addOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo);
+                    addOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo, BudullaToColombo);
                     break;
                 case "v":
-                    viewOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo);
+                    viewOption(colomboBadullaVerify, badullaColomboVerify, date, temp, BudullaToColombo, BudullaToColombo);
                     break;
                 case "e":
-                    emptyOption(colomboBadullaVerify, badullaColomboVerify, date, temp, ColomboToBudulla);
+                    emptyOption(colomboBadullaVerify, badullaColomboVerify, date, temp, ColomboToBudulla, BudullaToColombo);
                     break;
             }
         });
@@ -199,7 +197,7 @@ public class Guiiit extends Application {
         closeButFirst.setStyle("-fx-background-color: red; ");
         closeButFirst.setOnAction(event -> {
             window.close();
-            listOption(temp, ColomboToBudulla);
+            listOption(temp, ColomboToBudulla, BudullaToColombo);
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
@@ -302,8 +300,9 @@ public class Guiiit extends Application {
      * @param date                 this parameter passes the date selected by the user
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void    addOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void    addOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
 //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -381,7 +380,7 @@ public class Guiiit extends Application {
                 a.setOnCloseRequest(event1 ->
                 {
                     window.close();
-                    addOption(colomboBadullaVerify,badullaColomboVerify,date, temp, ColomboToBudulla);
+                    addOption(colomboBadullaVerify,badullaColomboVerify,date, temp, ColomboToBudulla, BudullaToColombo);
                 });
 //                alert will be shown if the user name is already existing
             }
@@ -399,7 +398,7 @@ public class Guiiit extends Application {
             System.out.println("[ b ]"+dateB2C);
             temp.clear();
             window.close();
-            listOption(temp, ColomboToBudulla);
+            listOption(temp, ColomboToBudulla, BudullaToColombo);
         });
         grid.add(bookBut, 10, 9,10,9);
 
@@ -410,7 +409,7 @@ public class Guiiit extends Application {
         resetBut.setOnAction(event -> {
             temp.clear();
             window.close();
-            addOption(colomboBadullaVerify,badullaColomboVerify,date, temp, ColomboToBudulla);
+            addOption(colomboBadullaVerify,badullaColomboVerify,date, temp, ColomboToBudulla, BudullaToColombo);
 
         });
         grid.add(resetBut, 12, 9,12,9);
@@ -424,7 +423,7 @@ public class Guiiit extends Application {
             BudullaToColombo.clear();
             temp.clear();
             window.close();
-            listOption(temp, ColomboToBudulla);
+            listOption(temp, ColomboToBudulla, BudullaToColombo);
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
@@ -436,8 +435,9 @@ public class Guiiit extends Application {
      * @param date parameter is passed to show the bookings for the selected date
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -509,7 +509,7 @@ public class Guiiit extends Application {
             window.close();
             ColomboToBudulla.clear();
             BudullaToColombo.clear();
-            listOption(temp, ColomboToBudulla);
+            listOption(temp, ColomboToBudulla, BudullaToColombo);
         });
         grid.add(closeBut,14,6,14,6);
 
@@ -522,8 +522,9 @@ public class Guiiit extends Application {
      * @param date parameter is passed to show the bookings for the selected date
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -602,7 +603,7 @@ public class Guiiit extends Application {
             ColomboToBudulla.clear();
             BudullaToColombo.clear();
             window.close();
-            listOption(temp, ColomboToBudulla);
+            listOption(temp, ColomboToBudulla, BudullaToColombo);
         });
         grid.add(closeBut,14,6,14,6);
     }
@@ -611,8 +612,9 @@ public class Guiiit extends Application {
      * this method is used to find & remove user seat  bookings from a given day
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void deleteOption(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void deleteOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
         Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanDName.next().toLowerCase();
@@ -651,7 +653,7 @@ public class Guiiit extends Application {
                 if (!seatList.contains(deleteSeat))
                 {
                     System.out.println("seat number not booked");
-                    deleteOption(temp, ColomboToBudulla);
+                    deleteOption(temp, ColomboToBudulla, BudullaToColombo);
                 }
                 Scanner scFinal = new Scanner(System.in);
                 System.out.println("remove date ");
@@ -688,7 +690,7 @@ public class Guiiit extends Application {
                 if (!seatList.contains(deleteSeat))
                 {
                     System.out.println("seat number not booked");
-                    deleteOption(temp, ColomboToBudulla);
+                    deleteOption(temp, ColomboToBudulla, BudullaToColombo);
                 }
                 Scanner scFinal = new Scanner(System.in);
                 System.out.println("remove date ");
@@ -702,13 +704,13 @@ public class Guiiit extends Application {
             }
             else {
                 System.out.println("invaied route");
-                deleteOption(temp, ColomboToBudulla);
+                deleteOption(temp, ColomboToBudulla, BudullaToColombo);
             }
         } else {
             System.out.println("name is not booked");
-            deleteOption(temp, ColomboToBudulla);
+            deleteOption(temp, ColomboToBudulla, BudullaToColombo);
         }
-        waitOption(temp, ColomboToBudulla);
+        waitOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
 
@@ -716,8 +718,9 @@ public class Guiiit extends Application {
      * this method is used a allow the user to find all bookings using user name
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   findOption(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   findOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
 //        getting user name
         Scanner scanFind = new Scanner(System.in);
         System.out.println("enter your name:");
@@ -755,16 +758,17 @@ public class Guiiit extends Application {
                 }
                 count++;
             }
-        }else findOption(temp, ColomboToBudulla);
-        waitOption(temp, ColomboToBudulla);
+        }else findOption(temp, ColomboToBudulla, BudullaToColombo);
+        waitOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     /**
      * this method is used to save user data to a data base
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   saveOption(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   saveOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
 
@@ -855,15 +859,16 @@ public class Guiiit extends Application {
 
         dbclient.close();
         System.out.println("saved files");
-        waitOption(temp, ColomboToBudulla);
+        waitOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     /**
      * this method is used restore a saved user data set
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   loadOption(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   loadOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
         dateC2B.clear();
         hashC2B.clear();
         HashMap<String,String> temphashmap = new HashMap<>();
@@ -916,15 +921,16 @@ public class Guiiit extends Application {
         System.out.println("hashb2c"+hashB2C);
 
         dbclient.close();
-        waitOption(temp, ColomboToBudulla);
+        waitOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     /**
      * this method used to alphabetically oder all booked seats
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   oderOption(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   oderOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
         String sortTemp;
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
@@ -952,7 +958,7 @@ public class Guiiit extends Application {
             }
             System.out.println(seatList.get(j)+": "+nameList.get(j));
         }
-        waitOption(temp, ColomboToBudulla);
+        waitOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     /**
@@ -960,13 +966,14 @@ public class Guiiit extends Application {
      * a console command is run
      * @param temp
      * @param ColomboToBudulla
+     * @param BudullaToColombo
      */
-    public void   waitOption(List<String> temp, HashMap<String, String> ColomboToBudulla){
+    public void   waitOption(List<String> temp, HashMap<String, String> ColomboToBudulla, HashMap<String, String> BudullaToColombo){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
-        if (!continueConsole.isEmpty()) listOption(temp, ColomboToBudulla);
+        if (!continueConsole.isEmpty()) listOption(temp, ColomboToBudulla, BudullaToColombo);
     }
 
     public List<String>   getCustomerNames(){
