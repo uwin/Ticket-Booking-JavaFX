@@ -30,10 +30,10 @@ public class Guiiit extends Application {
         launch();
     }
 
-    static final List<LocalDate> dateC2B = new ArrayList<>();
-    static final List<LocalDate> dateB2C = new ArrayList<>();
-    static final ArrayList<ArrayList<HashMap<String,String>>> hashC2B = new ArrayList<>();
-    static final ArrayList<ArrayList<HashMap<String,String>>> hashB2C = new ArrayList<>();
+    static final List<LocalDate> dateColomboList = new ArrayList<>();
+    static final List<LocalDate> dateBadullaList = new ArrayList<>();
+    static final ArrayList<ArrayList<HashMap<String,String>>> dataColombo = new ArrayList<>();
+    static final ArrayList<ArrayList<HashMap<String,String>>> dataBadulla = new ArrayList<>();
 
     public void start(Stage stage) {
         welcome();
@@ -210,17 +210,17 @@ public class Guiiit extends Application {
      * this method is used perform the actions for seat icons
      * adding the seat number to temp list
      *
-     * @param dateB2C passing date list to verify status of booking
-     * @param hashB2C passing seat data list to verify status of booking
+     * @param dateBadullaList passing date list to verify status of booking
+     * @param dataBadulla passing seat data list to verify status of booking
      * @param date   date related for the booking
      * @param badullaColomboVerify this parameter passes the route selected by the user
      * @param username          this is the value from the text box
      * @param temp              this parameter stores temporarily stored seats
      */
-    private void buttonAtion(List<LocalDate> dateB2C, ArrayList<ArrayList<HashMap<String, String>>> hashB2C,
+    private void buttonAtion(List<LocalDate> dateBadullaList, ArrayList<ArrayList<HashMap<String, String>>> dataBadulla,
                              LocalDate date, int badullaColomboVerify, TextField username, List<String> temp) {
 
-        if(!dateB2C.contains(date))
+        if(!dateBadullaList.contains(date))
         {
 //            creating a temp hashmap to get name  from the text & seat numbers from temp list
             HashMap<String, String> TBadullaToColombo = new HashMap<>();
@@ -230,17 +230,17 @@ public class Guiiit extends Application {
                 if (badullaColomboVerify == 1) TBadullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
             }
 //            adding the  date to the date list
-            dateB2C.add(date);
+            dateBadullaList.add(date);
 //            adding seat numbers & names to the data structure
-            hashB2C.add(new ArrayList<>());
-            int hashhashindex = dateB2C.size();
+            dataBadulla.add(new ArrayList<>());
+            int hashhashindex = dateBadullaList.size();
             hashhashindex -= 1;
-            hashB2C.get(hashhashindex).add(0, TBadullaToColombo);
+            dataBadulla.get(hashhashindex).add(0, TBadullaToColombo);
         }
         else
             {
 //                creating a temp hashmap to get name  from the text & seat numbers from temp list
-                ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                ArrayList<HashMap<String,String>> inti = dataBadulla.get(dateBadullaList.indexOf(date));
                 HashMap<String,String> TBadullaToColombo = inti.get(0);
                 for(String i: temp)
                 {
@@ -248,30 +248,30 @@ public class Guiiit extends Application {
                     TBadullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                 }
 //                replacing the exisiting hashmap at data structure index relavent to the date with the temprary hashmap
-                hashB2C.get(dateB2C.indexOf(date)).clear();
-                hashB2C.get(dateB2C.indexOf(date)).add(0,TBadullaToColombo);
+                dataBadulla.get(dateBadullaList.indexOf(date)).clear();
+                dataBadulla.get(dateBadullaList.indexOf(date)).add(0,TBadullaToColombo);
             }
     }
 
     /**
      * this method is used to colour changes for the add view
-     * @param hashC2B passing seat data list to verify status of booking
-     * @param dateC2B passing date list to verify status of booking
+     * @param dataColombo passing seat data list to verify status of booking
+     * @param dateColomboList passing date list to verify status of booking
      * @param button passing the image which needs to be styled
      * @param date   date related for the booking
      * @param temp              this parameter stores temporarily stored seats
      * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
      */
-    private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> hashC2B, List<LocalDate> dateC2B, ImageView button, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla) {
+    private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> dataColombo, List<LocalDate> dateColomboList, ImageView button, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla) {
 //        importing icons
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
         Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
 
-        if(dateC2B.contains(date))
+        if(dateColomboList.contains(date))
         {
 //            creating a temporary hashmap for styling
-            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+            ArrayList<HashMap<String,String>> inti = dataColombo.get(dateColomboList.indexOf(date));
             HashMap<String,String> hash = inti.get(0);
             for(String i: hash.keySet()) ColomboToBadulla.put(i,hash.get(i));
         }
@@ -345,11 +345,11 @@ public class Guiiit extends Application {
 //                    calling the relavent method to style seat icons depending on the route
                     if(colomboBadullaVerify==1)
                     {
-                        seatcolourloop(hashC2B,dateC2B,button,date, temp, ColomboToBadulla);
+                        seatcolourloop(dataColombo,dateColomboList,button,date, temp, ColomboToBadulla);
                     }
                     else if(badullaColomboVerify==1)
                     {
-                        seatcolourloop(hashB2C,dateB2C,button,date, temp, ColomboToBadulla);
+                        seatcolourloop(dataBadulla,dateBadullaList,button,date, temp, ColomboToBadulla);
                     }
 //                    adding images to grid
                     number++;
@@ -375,10 +375,10 @@ public class Guiiit extends Application {
         bookBut.setMaxSize(120, 60);
         bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
-            System.out.println("[ c ]"+hashC2B);
-            System.out.println("[ c ]"+dateC2B);
-            System.out.println("[ b ]"+hashB2C);
-            System.out.println("[ b ]"+dateB2C);
+            System.out.println("[ c ]"+dataColombo);
+            System.out.println("[ c ]"+dateColomboList);
+            System.out.println("[ b ]"+dataBadulla);
+            System.out.println("[ b ]"+dateBadullaList);
 //            alert will be shown if either the name or a seat is not selected
             if (username.getText().trim().isEmpty()||temp.isEmpty())
             {
@@ -395,17 +395,17 @@ public class Guiiit extends Application {
 //            relavent method is called to handle the button actions
             else if(badullaColomboVerify==1)
             {
-                buttonAtion(dateB2C,hashB2C,date,badullaColomboVerify,username, temp);
+                buttonAtion(dateBadullaList,dataBadulla,date,badullaColomboVerify,username, temp);
             }
             else if (colomboBadullaVerify==1)
             {
-                buttonAtion(dateC2B, hashC2B, date, colomboBadullaVerify, username, temp);
+                buttonAtion(dateColomboList, dataColombo, date, colomboBadullaVerify, username, temp);
             }
 
-            System.out.println("[ c ]"+hashC2B);
-            System.out.println("[ c ]"+dateC2B);
-            System.out.println("[ b ]"+hashB2C);
-            System.out.println("[ b ]"+dateB2C);
+            System.out.println("[ c ]"+dataColombo);
+            System.out.println("[ c ]"+dateColomboList);
+            System.out.println("[ b ]"+dataBadulla);
+            System.out.println("[ b ]"+dateBadullaList);
             temp.clear();
             window.close();
             listOption(temp, ColomboToBadulla, BadullaToColombo);
@@ -480,9 +480,9 @@ public class Guiiit extends Application {
 //                    styling done relavent to the route
                     if (colomboBadullaVerify==1)
                     {
-                        if(dateC2B.contains(date))
+                        if(dateColomboList.contains(date))
                         { //creating atemporary hashmap for styling
-                            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+                            ArrayList<HashMap<String,String>> inti = dataColombo.get(dateColomboList.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet()) ColomboToBadulla.put(i,hash.get(i));
                         }
@@ -492,9 +492,9 @@ public class Guiiit extends Application {
                     }
                     if (badullaColomboVerify==1)
                     {
-                        if(dateB2C.contains(date))
+                        if(dateBadullaList.contains(date))
                         { //creating a temporary hashmap for styling
-                            ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                            ArrayList<HashMap<String,String>> inti = dataBadulla.get(dateBadullaList.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet()) BadullaToColombo.put(i,hash.get(i));
                         }
@@ -568,9 +568,9 @@ public class Guiiit extends Application {
 
 //                    styling will be done relavent to the route
                     if (colomboBadullaVerify==1){
-                        if(dateC2B.contains(date))
+                        if(dateColomboList.contains(date))
                         { //creating atemporary hashmap for styling
-                            ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
+                            ArrayList<HashMap<String,String>> inti = dataColombo.get(dateColomboList.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet())
                             {
@@ -585,9 +585,9 @@ public class Guiiit extends Application {
                         }
                     }
                     if (badullaColomboVerify==1){
-                        if(dateB2C.contains(date))
+                        if(dateBadullaList.contains(date))
                         {   //creating atemporary hashmap for styling
-                            ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
+                            ArrayList<HashMap<String,String>> inti = dataBadulla.get(dateBadullaList.indexOf(date));
                             HashMap<String,String> hash = inti.get(0);
                             for(String i: hash.keySet())
                             {
@@ -662,9 +662,9 @@ public class Guiiit extends Application {
                 List<LocalDate> dateList = new ArrayList<>();
                 List<String> seatList = new ArrayList<>();
 //                looping dates
-                for (LocalDate i : dateC2B)
+                for (LocalDate i : dateColomboList)
                 {
-                    for (String j : hashC2B.get(count).get(0).keySet())
+                    for (String j : dataColombo.get(count).get(0).keySet())
                     {
                         if (j.equals(deleteSeat))
                         {
@@ -685,11 +685,11 @@ public class Guiiit extends Application {
                 System.out.println("remove date ");              //selecting date for deletion
                 int Final = scFinal.nextInt();
                 Final -= 1;
-                int deleteIndex = dateC2B.indexOf(dateList.get(Final));
-                //System.out.println(hashC2B.get(deleteIndex).get(0));
-                hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
+                int deleteIndex = dateColomboList.indexOf(dateList.get(Final));
+                //System.out.println(dataColombo.get(deleteIndex).get(0));
+                dataColombo.get(deleteIndex).get(0).remove(deleteSeat);
                 System.out.println("Seat no:"+deleteSeat+" removed on :"+dateList.get(Final)); //deleting seat from the given date
-                //System.out.println(hashC2B.get(deleteIndex).get(0));
+                //System.out.println(dataColombo.get(deleteIndex).get(0));
             }
             else if(route.equals("2")){                           //same process is repeated
                 Scanner scanDeleteSeat= new Scanner(System.in);
@@ -699,9 +699,9 @@ public class Guiiit extends Application {
                 int deleteCount = 1;
                 List<LocalDate> dateList = new ArrayList<>();
                 List<String> seatList = new ArrayList<>();
-                for (LocalDate i : dateB2C)
+                for (LocalDate i : dateBadullaList)
                 {
-                    for (String j : hashB2C.get(count).get(0).keySet())
+                    for (String j : dataBadulla.get(count).get(0).keySet())
                     {
                         if (j.equals(deleteSeat))
                         {
@@ -722,11 +722,11 @@ public class Guiiit extends Application {
                 System.out.println("remove date ");
                 int Final = scFinal.nextInt();
                 Final -= 1;
-                int deleteIndex = dateB2C.indexOf(dateList.get(Final));
-                //System.out.println(hashC2B.get(deleteIndex).get(0));
-                hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
+                int deleteIndex = dateBadullaList.indexOf(dateList.get(Final));
+                //System.out.println(dataColombo.get(deleteIndex).get(0));
+                dataBadulla.get(deleteIndex).get(0).remove(deleteSeat);
                 System.out.println("Seat no:"+deleteSeat+" removed on :"+dateList.get(Final));
-                //System.out.println(hashC2B.get(deleteIndex).get(0));
+                //System.out.println(dataColombo.get(deleteIndex).get(0));
             }
             else {
                 System.out.println("invaied route");                      //if route is in vaid method is looped
@@ -758,17 +758,17 @@ public class Guiiit extends Application {
             System.out.println("Name: " + findName + "\n");
             int count = 0;
 //            looping for each day with the given name for the relavent route
-            for (LocalDate i : dateC2B)
+            for (LocalDate i : dateColomboList)
             {
 //                getting relavent details
-                if (hashC2B.get(count).get(0).containsValue(findName))
+                if (dataColombo.get(count).get(0).containsValue(findName))
                 {
                     System.out.println("Route: Colombo to Badulla");
                     System.out.println("Date : " + i);
                     System.out.print("Seats: ");
-                    for (String j : hashC2B.get(count).get(0).keySet())
+                    for (String j : dataColombo.get(count).get(0).keySet())
                     {
-                        if (hashC2B.get(count).get(0).get(j).equals(findName))
+                        if (dataColombo.get(count).get(0).get(j).equals(findName))
                         {
                             System.out.print(j + "|");
                         }
@@ -778,13 +778,13 @@ public class Guiiit extends Application {
                 count++;
             }
             count = 0;
-            for (LocalDate i : dateB2C) { //same prosess is repeated
-                if (hashB2C.get(count).get(0).containsValue(findName)) {
+            for (LocalDate i : dateBadullaList) { //same prosess is repeated
+                if (dataBadulla.get(count).get(0).containsValue(findName)) {
                     System.out.println("Route: Badulla to Colombo");
                     System.out.println("Date : " + i);
                     System.out.print("Seats: ");
-                    for (String j : hashB2C.get(count).get(0).keySet()) {
-                        if (hashB2C.get(count).get(0).get(j).equals(findName)) {
+                    for (String j : dataBadulla.get(count).get(0).keySet()) {
+                        if (dataBadulla.get(count).get(0).get(j).equals(findName)) {
                             System.out.print(j + "|");
                         }
                     }
@@ -816,13 +816,13 @@ public class Guiiit extends Application {
 //create document
         if(colombocollection.countDocuments()==0)
         {
-            for(LocalDate colombodate: dateC2B)
+            for(LocalDate colombodate: dateColomboList)
             {
-                for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
+                for(String item: dataColombo.get(dateColomboList.indexOf(colombodate)).get(0).keySet())
                 {
                     Document userdocument = new Document();
                     userdocument.append("Seat number",item);
-                    userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
+                    userdocument.append("user name",dataColombo.get(dateColomboList.indexOf(colombodate)).get(0).get(item));
                     userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Colombo");
                     userdocument.append("to","Badulla");
@@ -838,13 +838,13 @@ public class Guiiit extends Application {
             {
                 colombocollection.deleteOne(document);
             }
-            for(LocalDate colombodate: dateC2B)
+            for(LocalDate colombodate: dateColomboList)
             {
-                for(String item: hashC2B.get(dateC2B.indexOf(colombodate)).get(0).keySet())
+                for(String item: dataColombo.get(dateColomboList.indexOf(colombodate)).get(0).keySet())
                 {
                     Document userdocument = new Document();
                     userdocument.append("Seat number",item);
-                    userdocument.append("user name",hashC2B.get(dateC2B.indexOf(colombodate)).get(0).get(item));
+                    userdocument.append("user name",dataColombo.get(dateColomboList.indexOf(colombodate)).get(0).get(item));
                     userdocument.append("date",colombodate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Colombo");
                     userdocument.append("to","Badulla");
@@ -863,13 +863,13 @@ public class Guiiit extends Application {
 
         if(badullacollection.countDocuments()==0)
         {
-            for(LocalDate badulladate: dateB2C)
+            for(LocalDate badulladate: dateBadullaList)
             {
-                for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
+                for(String item: dataBadulla.get(dateBadullaList.indexOf(badulladate)).get(0).keySet())
                 {
                     Document userdocument = new Document();
                     userdocument.append("Seat number",item);
-                    userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
+                    userdocument.append("user name",dataBadulla.get(dateBadullaList.indexOf(badulladate)).get(0).get(item));
                     userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Badulla");
                     userdocument.append("to","Colombo");
@@ -885,13 +885,13 @@ public class Guiiit extends Application {
             {
                 badullacollection.deleteOne(document);
             }
-            for(LocalDate badulladate: dateB2C)
+            for(LocalDate badulladate: dateBadullaList)
             {
-                for(String item: hashB2C.get(dateB2C.indexOf(badulladate)).get(0).keySet())
+                for(String item: dataBadulla.get(dateBadullaList.indexOf(badulladate)).get(0).keySet())
                 {
                     Document userdocument = new Document();
                     userdocument.append("Seat number",item);
-                    userdocument.append("user name",hashB2C.get(dateB2C.indexOf(badulladate)).get(0).get(item));
+                    userdocument.append("user name",dataBadulla.get(dateBadullaList.indexOf(badulladate)).get(0).get(item));
                     userdocument.append("date",badulladate.toString()); //LocalDate.parse("2019-03-29");
                     userdocument.append("from","Badulla");
                     userdocument.append("to","Colombo");
@@ -913,12 +913,12 @@ public class Guiiit extends Application {
      * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
      */
     public void   loadOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
-        System.out.println("datec2b"+dateC2B);
-        dateC2B.clear();
-        System.out.println("datec2b"+dateC2B);
-        System.out.println("hashc2b"+hashC2B);
-        hashC2B.clear();
-        System.out.println("hashc2b"+hashC2B);
+        System.out.println("dateColomboList"+dateColomboList);
+        dateColomboList.clear();
+        System.out.println("dateColomboList"+dateColomboList);
+        System.out.println("dataColombo"+dataColombo);
+        dataColombo.clear();
+        System.out.println("dataColombo"+dataColombo);
         HashMap<String,String> temphashmap = new HashMap<>();
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbclient.getDatabase("users");
@@ -928,21 +928,21 @@ public class Guiiit extends Application {
         FindIterable<Document> colomboDocument = colombocollection.find();
         for(Document document:colomboDocument)
         {
-            if (!dateC2B.contains(LocalDate.parse(document.getString("date"))))
+            if (!dateColomboList.contains(LocalDate.parse(document.getString("date"))))
             {
-                dateC2B.add(LocalDate.parse(document.getString("date")));
+                dateColomboList.add(LocalDate.parse(document.getString("date")));
                 temphashmap.put(document.getString("Seat number"),document.getString("user name"));
-                hashC2B.add(new ArrayList<>());
-                hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
+                dataColombo.add(new ArrayList<>());
+                dataColombo.get(dateColomboList.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
             else{
 //                temphashmap.put(document.getString("Seat number"),document.getString("user name"));
-//                hashC2B.add(new ArrayList<>());
-//                hashC2B.get(dateC2B.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
+//                dataColombo.add(new ArrayList<>());
+//                dataColombo.get(dateColomboList.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
         }
-        System.out.println("datec2b"+dateC2B);
-        System.out.println("hashc2b"+hashC2B);
+        System.out.println("dateColomboList"+dateColomboList);
+        System.out.println("dataColombo"+dataColombo);
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
 
@@ -959,16 +959,16 @@ public class Guiiit extends Application {
         List<String> nameList = new ArrayList<>();
 
 //        transfer hashhmap arrays to 2 arraylists
-        for(LocalDate i :dateC2B){
-            for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
+        for(LocalDate i :dateColomboList){
+            for (String j : dataColombo.get(dateColomboList.indexOf(i)).get(0).keySet()) {
                 seatList.add(j);
-                nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
+                nameList.add(dataColombo.get(dateColomboList.indexOf(i)).get(0).get(j));
             }
         }
-        for(LocalDate i :dateB2C){
-            for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
+        for(LocalDate i :dateBadullaList){
+            for (String j : dataBadulla.get(dateBadullaList.indexOf(i)).get(0).keySet()) {
                 seatList.add(j);
-                nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
+                nameList.add(dataBadulla.get(dateBadullaList.indexOf(i)).get(0).get(j));
             }
         }
 
@@ -1007,14 +1007,14 @@ public class Guiiit extends Application {
      */
     public List<String>   getCustomerNames(){
         List<String> nameList = new ArrayList<>();
-        for(LocalDate i :dateC2B){
-            for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
-                nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
+        for(LocalDate i :dateColomboList){
+            for (String j : dataColombo.get(dateColomboList.indexOf(i)).get(0).keySet()) {
+                nameList.add(dataColombo.get(dateColomboList.indexOf(i)).get(0).get(j));
             }
         }
-        for(LocalDate i :dateB2C){
-            for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
-                nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
+        for(LocalDate i :dateBadullaList){
+            for (String j : dataBadulla.get(dateBadullaList.indexOf(i)).get(0).keySet()) {
+                nameList.add(dataBadulla.get(dateBadullaList.indexOf(i)).get(0).get(j));
             }
         }
         return nameList;
