@@ -1,4 +1,3 @@
-//test
 /*
 \need to flash when reClicked after booked
 \
@@ -43,11 +42,17 @@ public class Guiiit extends Application {
     public void start(Stage stage) {
         welcome();
     }
+    /**
+     * this method is used to initiate the  ticket booking system with a message
+     */
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
-        /*opens the options menue*/
+        //opens the options menu
         listOption();
     }
+    /**
+     * this method is used to show the user options to interact with the system
+     */
     public void   listOption() {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
@@ -61,6 +66,12 @@ public class Guiiit extends Application {
                 "q quit\n");
         testOptions();
     }
+    /**
+     * this method is used to handle the options selected by the user & to call the
+     * respective method, if the option is view, add or empty, a gui will be shown for
+     * the user to select the  route & the date
+     *
+     */
     public void   testOptions(){
 //      create the stage
         Stage window = new Stage();
@@ -907,17 +918,14 @@ public class Guiiit extends Application {
         waitOption();
     }
     public List<String>   getCustomerNames(){
-        List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
         for(LocalDate i :dateC2B){
             for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
-                seatList.add(j);
                 nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
             }
         }
         for(LocalDate i :dateB2C){
             for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
-                seatList.add(j);
                 nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
             }
         }
@@ -925,17 +933,14 @@ public class Guiiit extends Application {
     }
     public List<String>   getCustomerSeats(){
         List<String> seatList = new ArrayList<>();
-        List<String> nameList = new ArrayList<>();
         for(LocalDate i :dateC2B){
             for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
                 seatList.add(j);
-                nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
             }
         }
         for(LocalDate i :dateB2C){
             for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
                 seatList.add(j);
-                nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
             }
         }
         return seatList;
