@@ -598,43 +598,53 @@ public class Guiiit extends Application {
         String deleteName= scanDName.next().toLowerCase();
 
         if (getCustomerNames().contains(deleteName))
-        {   System.out.println("Name: " + deleteName);
-
+        {
             System.out.println("1| Colombo to Badulla");
             System.out.println("2| Badulla to Colombo");
 
-            Scanner scanDFinal = new Scanner(System.in);
+            Scanner scanRoute = new Scanner(System.in);
             System.out.println("enter Route ");
-            String deleteFinal = scanDFinal.next();
+            String  route = scanRoute.next();
 
-            Scanner scanDSeat = new Scanner(System.in);
-            System.out.println("enter your seat:");
-            String deleteSeat = scanDSeat.next();
-            System.out.println("Seat: " + deleteSeat);
+            Scanner scanDeleteSeat= new Scanner(System.in);
+            System.out.println("enter seat number ");
+            String  deleteSeat = scanDeleteSeat.next();
 
-            if (deleteFinal.equals("1")) {
+            if (route.equals("1")) {
                 int count = 0;
                 int deleteCount = 1;
                 List<LocalDate> dateList = new ArrayList<>();
-                for (LocalDate i : dateC2B) {
-                    for (String j : hashC2B.get(count).get(0).keySet()) {
-                        if (j.equals(deleteSeat)) {
+                List<String> seatList = new ArrayList<>();
+                for (LocalDate i : dateC2B)
+                {
+                    for (String j : hashC2B.get(count).get(0).keySet())
+                    {
+                        if (j.equals(deleteSeat))
+                        {
                             System.out.println(deleteCount + " | " + i);
                             dateList.add(i);
+                            seatList.add(j);
                             deleteCount++;
                         }
                     }
                     count++;
                 }
+                if (!seatList.contains(deleteSeat))
+                {
+                    System.out.println("seat number not booked");
+                    deleteOption();
+                }
                 Scanner scFinal = new Scanner(System.in);
-                System.out.println("select ");
+                System.out.println("remove date ");
                 int Final = scFinal.nextInt();
                 Final -= 1;
                 int deleteIndex = dateC2B.indexOf(dateList.get(Final));
-                System.out.println(hashC2B.get(deleteIndex).get(0));
+                //System.out.println(hashC2B.get(deleteIndex).get(0));
                 hashC2B.get(deleteIndex).get(0).remove(deleteSeat);
-                System.out.println(hashC2B.get(deleteIndex).get(0));
-            } else {
+                System.out.println("Seat no:"+deleteSeat+" removed on :"+dateList.get(Final));
+                //System.out.println(hashC2B.get(deleteIndex).get(0));
+            }
+            else if(route.equals("2")){
                 int count = 0;
                 int deleteCount = 1;
                 List<LocalDate> dateList = new ArrayList<>();
@@ -649,7 +659,7 @@ public class Guiiit extends Application {
                     count++;
                 }
                 Scanner scFinal = new Scanner(System.in);
-                System.out.println("select ");
+                System.out.println("select  ");
                 int Final = scFinal.nextInt();
                 Final -= 1;
                 System.out.println(dateList);
@@ -660,6 +670,13 @@ public class Guiiit extends Application {
                 hashB2C.get(deleteIndex).get(0).remove(deleteSeat);
                 System.out.println(hashB2C.get(deleteIndex).get(0));
             }
+            else {
+                System.out.println("invaied input");
+                deleteOption();
+            }
+        } else {
+            System.out.println("name is vaid");
+            deleteOption();
         }
         waitOption();
     }
@@ -898,6 +915,23 @@ public class Guiiit extends Application {
             }
         }
         return nameList;
+    }
+    public List<String>   getCustomerSeats(){
+        List<String> seatList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        for(LocalDate i :dateC2B){
+            for (String j : hashC2B.get(dateC2B.indexOf(i)).get(0).keySet()) {
+                seatList.add(j);
+                nameList.add(hashC2B.get(dateC2B.indexOf(i)).get(0).get(j));
+            }
+        }
+        for(LocalDate i :dateB2C){
+            for (String j : hashB2C.get(dateB2C.indexOf(i)).get(0).keySet()) {
+                seatList.add(j);
+                nameList.add(hashB2C.get(dateB2C.indexOf(i)).get(0).get(j));
+            }
+        }
+        return seatList;
     }
     public void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
