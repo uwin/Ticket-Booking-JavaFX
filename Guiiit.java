@@ -606,11 +606,10 @@ public class Guiiit extends Application {
             System.out.println("enter Route ");
             String  route = scanRoute.next();
 
-            Scanner scanDeleteSeat= new Scanner(System.in);
-            System.out.println("enter seat number ");
-            String  deleteSeat = scanDeleteSeat.next();
-
             if (route.equals("1")) {
+                Scanner scanDeleteSeat= new Scanner(System.in);
+                System.out.println("enter seat number ");
+                String  deleteSeat = scanDeleteSeat.next();
                 int count = 0;
                 int deleteCount = 1;
                 List<LocalDate> dateList = new ArrayList<>();
@@ -645,6 +644,9 @@ public class Guiiit extends Application {
                 //System.out.println(hashC2B.get(deleteIndex).get(0));
             }
             else if(route.equals("2")){
+                Scanner scanDeleteSeat= new Scanner(System.in);
+                System.out.println("enter seat number ");
+                String  deleteSeat = scanDeleteSeat.next();
                 int count = 0;
                 int deleteCount = 1;
                 List<LocalDate> dateList = new ArrayList<>();
@@ -679,11 +681,11 @@ public class Guiiit extends Application {
                 //System.out.println(hashC2B.get(deleteIndex).get(0));
             }
             else {
-                System.out.println("invaied input");
+                System.out.println("invaied route");
                 deleteOption();
             }
         } else {
-            System.out.println("name is vaid");
+            System.out.println("name is not booked");
             deleteOption();
         }
         waitOption();
