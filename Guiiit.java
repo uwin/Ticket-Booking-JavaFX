@@ -19,23 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.bson.Document;
-import org.bson.conversions.Bson;
-import com.mongodb.client.MongoClients;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.ConnectionString;
-import com.mongodb.ServerAddress;
-import com.mongodb.MongoCredential;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.ClientSessionOptions;
 import com.mongodb.client.*;
-import com.mongodb.client.internal.MongoDatabaseImpl;
-import com.mongodb.connection.ClusterDescription;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -60,6 +45,7 @@ public class Guiiit extends Application {
     }
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
+        /*opens the options menue*/
         listOption();
     }
     public void   listOption() {
@@ -86,6 +72,7 @@ public class Guiiit extends Application {
         Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
         window.setScene(addveiwFirst);
 
+//      calling methods depending on the users input
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
@@ -119,66 +106,76 @@ public class Guiiit extends Application {
         }
         //window.show();
 
-//        window headFirst
-        Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Budulla");
+
+//      main head for first window
+        Label headFirst1 = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-badulla");
         headFirst1.setFont(new Font("Arial", 30));
         headFirst1.setTextFill(Color.web("#0076a3")); //light blue
         gridFirst.add(headFirst1,20,3,50,8);
 
+//      Secondary text
         Label headFirst2 = new Label("Enter Date");
         headFirst2.setFont(new Font("Arial", 23));
         headFirst2.setTextFill(Color.web("#0076a3")); //light blue
         gridFirst.add(headFirst2,3,12,9,4);
 
+//      creating Gui element to select date
         DatePicker datePick = new DatePicker();
+        //disabling past days on the date picker
         datePick.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-
-                setDisable(empty || date.compareTo(today) < 0 );
+                setDisable(empty || date.compareTo(LocalDate.now()) < 0 );
             }
         });
         datePick.setValue(LocalDate.now());
         gridFirst.add(datePick, 13, 12,18,4);
 
-        //        continue button
-        Button toBudulla = new Button("From Colombo");
-        toBudulla.setMaxSize(120, 60);
-        toBudulla.setOnAction(event -> {
-            int Colombo_Budullaverify=1;
-            int Budulla_Colomboverify=0;
+//      gui element to progress to Colombo to Badulla booking page
+        Button fromColombo = new Button("From Colombo");
+        fromColombo.setMaxSize(120, 60);
+        fromColombo.setOnAction(event -> {
+            int colomboBadullaVerify=1;
+            int badullaColomboVerify=0;
             LocalDate date=datePick.getValue();
             window.close();
             switch (userOption.toLowerCase()) {
                 case "a":
-                    addOption(Colombo_Budullaverify, Budulla_Colomboverify, date);
+                    addOption(colomboBadullaVerify, badullaColomboVerify, date);
                     break;
                 case "v":
-                    viewOption(Colombo_Budullaverify, Budulla_Colomboverify, date);
+                    viewOption(colomboBadullaVerify, badullaColomboVerify, date);
                     break;
                 case "e":
-                    emptyOption(Colombo_Budullaverify, Budulla_Colomboverify, date);
+                    emptyOption(colomboBadullaVerify, badullaColomboVerify, date);
                     break;
             }
         });
-        gridFirst.add(toBudulla,35, 16,10,12);
+        gridFirst.add(fromColombo,35, 16,10,12);
 
-//                continue button
-        Button toColombo = new Button("From Budulla");
+//      gui element to progress to Badulla to Colombo booking page
+        Button toColombo = new Button("From Badulla");
         toColombo.setMaxSize(120, 60);
         toColombo.setOnAction(event -> {
-            int Budulla_Colomboverify=1;
-            int Colombo_Budullaverify=0;
+            int badullaColomboVerify=1;
+            int colomboBadullaVerify=0;
             LocalDate date=datePick.getValue();
             window.close();
-            if (userOption.toLowerCase().equals("a")) addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
-            else if (userOption.toLowerCase().equals("v")) viewOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
-            else if (userOption.toLowerCase().equals("e")) emptyOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            switch (userOption.toLowerCase()) {
+                case "a":
+                    addOption(colomboBadullaVerify, badullaColomboVerify, date);
+                    break;
+                case "v":
+                    viewOption(colomboBadullaVerify, badullaColomboVerify, date);
+                    break;
+                case "e":
+                    emptyOption(colomboBadullaVerify, badullaColomboVerify, date);
+                    break;
+            }
         });
         gridFirst.add(toColombo,49, 16,10,12);
 
-        //      close button
+//      close button
         Button closeButFirst = new Button("close");
         closeButFirst.setMaxSize(120, 60);
         closeButFirst.setStyle("-fx-background-color: red; ");
@@ -188,7 +185,7 @@ public class Guiiit extends Application {
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
-    public void    addOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
+    public void    addOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
         //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -220,7 +217,7 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
 //                    change seat colour to red if it's already booked
-                    if(Colombo_Budullaverify==1)
+                    if(colomboBadullaVerify==1)
                     {
                         if(dateC2B.contains(date))
                         {
@@ -248,7 +245,7 @@ public class Guiiit extends Application {
                             }
                         });
                     }
-                    else if(Budulla_Colomboverify==1)
+                    else if(badullaColomboVerify==1)
                     {
                         if(dateB2C.contains(date))
                         {
@@ -307,25 +304,25 @@ public class Guiiit extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 -> {
                     window.close();
-                    addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+                    addOption(colomboBadullaVerify,badullaColomboVerify,date);
                 });
 //                alert will be shown if the user name is already existing
-            }else if(Budulla_Colomboverify==1){
+            }else if(badullaColomboVerify==1){
                 if (BudullaToColombo.containsValue(username.getText().toLowerCase())) {
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("enter a unique name");
                     a.show();
                     a.setOnCloseRequest(event1 -> {
                         window.close();
-                        addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+                        addOption(colomboBadullaVerify,badullaColomboVerify,date);
                     });
                 }else {
                     if(!dateB2C.contains(date)) {
                         HashMap<String, String> TBudullaToColombo = new HashMap<>();
                         for (String i : temp) {
                             int indexforHash = temp.indexOf(i);
-                            //if(Colombo_Budullaverify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
-                            if (Budulla_Colomboverify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
+                            //if(colomboBadullaVerify==1) ColomboToBudulla.put(temp.get(indexforHash),username.getText().toLowerCase());
+                            if (badullaColomboVerify == 1) TBudullaToColombo.put(temp.get(indexforHash), username.getText().toLowerCase());
                         }
                         dateB2C.add(date);
                         System.out.println("B>C" + dateB2C);
@@ -357,22 +354,22 @@ public class Guiiit extends Application {
                     window.close();
                     listOption();
                 }
-            }else if (Colombo_Budullaverify==1){
+            }else if (colomboBadullaVerify==1){
                 if (ColomboToBudulla.containsValue(username.getText().toLowerCase())) {
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("enter a unique name");
                     a.show();
                     a.setOnCloseRequest(event1 -> {
                         window.close();
-                        addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+                        addOption(colomboBadullaVerify,badullaColomboVerify,date);
                     });
                 }else {
                     if(!dateC2B.contains(date)) {
                         HashMap<String, String> TColomboToBudulla = new HashMap<String, String>();
                         for (String i : temp) {
                             int indexforHash = temp.indexOf(i);
-                            if (Colombo_Budullaverify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
-                            //if(Budulla_Colomboverify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
+                            if (colomboBadullaVerify == 1) TColomboToBudulla.put(temp.get(indexforHash), username.getText().toLowerCase());
+                            //if(badullaColomboVerify==1) BudullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
                         }
                         dateC2B.add(date);
                         System.out.println("C>B" + dateC2B);
@@ -414,7 +411,7 @@ public class Guiiit extends Application {
         resetBut.setOnAction(event -> {
             temp.clear();
             window.close();
-            addOption(Colombo_Budullaverify,Budulla_Colomboverify,date);
+            addOption(colomboBadullaVerify,badullaColomboVerify,date);
 
         });
         grid.add(resetBut, 12, 9,12,9);
@@ -432,7 +429,7 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
-    public void   viewOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
+    public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -460,7 +457,7 @@ public class Guiiit extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 //                    if seat is booked the seat button is greyed out
-                    if (Colombo_Budullaverify==1)
+                    if (colomboBadullaVerify==1)
                     {
                         if(dateC2B.contains(date))
                         {
@@ -472,7 +469,7 @@ public class Guiiit extends Application {
 
                         if (ColomboToBudulla.containsKey(String.valueOf(number))) button.setImage(seatGrey);
                     }
-                    if (Budulla_Colomboverify==1)
+                    if (badullaColomboVerify==1)
                     {
                         if(dateB2C.contains(date))
                         {
@@ -509,7 +506,7 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
 
     }
-    public void  emptyOption(int Colombo_Budullaverify, int Budulla_Colomboverify,LocalDate date){
+    public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify,LocalDate date){
 //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -537,7 +534,7 @@ public class Guiiit extends Application {
                     button.setFitWidth(60);
 //                  if the seat is booked nothing will be done
 //                  if the seat is not booked the seat will be shown
-                    if (Colombo_Budullaverify==1){
+                    if (colomboBadullaVerify==1){
                         if(dateC2B.contains(date))
                         {
                             ArrayList<HashMap<String,String>> inti = hashC2B.get(dateC2B.indexOf(date));
@@ -553,7 +550,7 @@ public class Guiiit extends Application {
                             grid.add(num, c, r);
                         }
                     }
-                    if (Budulla_Colomboverify==1){
+                    if (badullaColomboVerify==1){
                         if(dateB2C.contains(date))
                         {
                             ArrayList<HashMap<String,String>> inti = hashB2C.get(dateB2C.indexOf(date));
