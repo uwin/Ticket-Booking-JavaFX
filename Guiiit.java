@@ -898,6 +898,9 @@ public class Guiiit extends Application {
         waitOption();
     }
 
+    /**
+     * this method used to alphabetically oder all booked seats
+     */
     public void   oderOption(){
         String sortTemp;
         List<String> seatList = new ArrayList<>();
@@ -929,6 +932,18 @@ public class Guiiit extends Application {
         waitOption();
     }
 
+    /**
+     * this method is used to get user confirmation to proceed after
+     * a console command is run
+     */
+    public void   waitOption(){
+//        to let the use consume the details of console functions before moving to the menu
+        Scanner scanContinue = new Scanner(System.in);
+        System.out.println("Press any key to continue");
+        String continueConsole=scanContinue.next();
+        if (!continueConsole.isEmpty()) listOption();
+    }
+
     public List<String>   getCustomerNames(){
         List<String> nameList = new ArrayList<>();
         for(LocalDate i :dateC2B){
@@ -957,11 +972,5 @@ public class Guiiit extends Application {
         }
         return seatList;
     }
-    public void   waitOption(){
-//        to let the use consume the details of console functions before moving to the menu
-        Scanner scanContinue = new Scanner(System.in);
-        System.out.println("Press any key to continue");
-        String continueConsole=scanContinue.next();
-        if (!continueConsole.isEmpty()) listOption();
-    }
+
 }
