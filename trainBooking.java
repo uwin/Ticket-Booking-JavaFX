@@ -16,7 +16,7 @@ import org.bson.Document;
 import java.time.LocalDate;
 import java.util.*;
 import static javax.xml.bind.DatatypeConverter.parseInt;
-public class trainbooking extends Application {
+public class trainBooking extends Application {
     static final int SEATING_CAPACITY = 42;
     static final ArrayList<ArrayList<String>> booking = new ArrayList<>();
     public static void main(String[] args) {
@@ -81,8 +81,8 @@ public class trainbooking extends Application {
         First.setPadding(new Insets(2, 2, 2, 2));
         First.setHgap(10);
         First.setVgap(10);
-        Scene addveiwFirst = new Scene(First, 1020, 400);
-        window.setScene(addveiwFirst);
+        Scene addViewFirst = new Scene(First, 1020, 400);
+        window.setScene(addViewFirst);
         window.show();
 
 //      main head for first window
@@ -143,9 +143,9 @@ public class trainbooking extends Application {
 
 
 //      gui element to progress to booking page
-        Button continuebut = new Button("Continue");
-        continuebut.setMaxSize(120, 60);
-        continuebut.setOnAction(event -> {
+        Button continueBut = new Button("Continue");
+        continueBut.setMaxSize(120, 60);
+        continueBut.setOnAction(event -> {
             ArrayList<String> temporaryList = new ArrayList<>(5);
             ArrayList <String>temporarySeat = new ArrayList<>();
             /*[ date , start , end , name , seatNo ]*/
@@ -172,7 +172,7 @@ public class trainbooking extends Application {
                     break;
             }
         });
-        First.add(continuebut,70, 30,10,12);
+        First.add(continueBut,70, 30,10,12);
 
 //      close button
         Button closeButFirst = new Button("close");
@@ -531,41 +531,41 @@ public class trainbooking extends Application {
             }
     }
     private void saveOption() {
-        com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
-        MongoDatabase dbDatabase = dbclient.getDatabase("TrainbookingSystem");
+        com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
+        MongoDatabase dbDatabase = dbClient.getDatabase("trainBookingSystem");
         MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
         System.out.println("connected to BookingData");
-        FindIterable<Document> bookingdocument = bookings.find();
+        FindIterable<Document> bookingDocument = bookings.find();
 
-        if(bookings.countDocuments()>1) for(Document document: bookingdocument) bookings.deleteOne(document);
+        if(bookings.countDocuments()>1) for(Document document: bookingDocument) bookings.deleteOne(document);
 
         for (ArrayList<String> data : booking)
         {
-            Document userdocument = new Document();
-            userdocument.append("date", data.get(0));
-            userdocument.append("start",data.get(1));
-            userdocument.append("end",  data.get(2));
-            userdocument.append("user", data.get(3));
-            userdocument.append("Seat", data.get(4));
-            bookings.insertOne(userdocument);
+            Document userDocument = new Document();
+            userDocument.append("date", data.get(0));
+            userDocument.append("start",data.get(1));
+            userDocument.append("end",  data.get(2));
+            userDocument.append("user", data.get(3));
+            userDocument.append("Seat", data.get(4));
+            bookings.insertOne(userDocument);
         }
-        dbclient.close();
+        dbClient.close();
         System.out.println("saved files");
         waitOption();
     }
     private void loadOption() {
-        com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
-        MongoDatabase dbDatabase = dbclient.getDatabase("TrainbookingSystem");
+        com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
+        MongoDatabase dbDatabase = dbClient.getDatabase("trainBookingSystem");
         MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
         System.out.println("connected to BookingData");
-        FindIterable<Document> bookingdocument = bookings.find();
+        FindIterable<Document> bookingDocument = bookings.find();
 
         ArrayList<String> temporaryList = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
             temporaryList.add("0");
         }
         booking.clear();
-        for(Document document:bookingdocument)
+        for(Document document:bookingDocument)
         {
             temporaryList.set(0,document.getString("date"));
             temporaryList.set(1,document.getString("start"));
@@ -575,7 +575,7 @@ public class trainbooking extends Application {
             booking.add(new ArrayList<>(temporaryList));
         }
         System.out.println(booking);
-        dbclient.close();
+        dbClient.close();
         System.out.println("files loaded");
         waitOption();
     }
