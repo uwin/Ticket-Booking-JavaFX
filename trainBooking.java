@@ -25,11 +25,11 @@ public class trainBooking extends Application {
     public void start(Stage stage) {
         welcome();
     }
-    public void welcome() {
+    private void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         listOption();
     }
-    public void   listOption() {
+    private void   listOption() {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -73,7 +73,7 @@ public class trainBooking extends Application {
                 break;
         }
     }
-    public void  firstGui(String userOption){
+    private void  firstGui(String userOption){
 //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -598,7 +598,7 @@ public class trainBooking extends Application {
         }
         waitOption();
     }
-    public void   waitOption(){
+    private void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
