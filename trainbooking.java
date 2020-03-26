@@ -277,7 +277,7 @@ public class trainbooking extends Application {
                 temporaryList.set(3,username.getText());
                 for(String seat: temporarySeat)
                 {
-                   temporaryList.set(4,seat);
+                    temporaryList.set(4,seat);
                     booking.add(new ArrayList<>(temporaryList));
                 }
                 temporarySeat.clear();
@@ -354,14 +354,14 @@ public class trainbooking extends Application {
                 }
             }
         }
-    //      window head
-    Label head = new Label("Viewing Seats ");
+        //      window head
+        Label head = new Label("Viewing Seats ");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
-    //      close button
-    Button closeBut = new Button("Close");
+        //      close button
+        Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
@@ -437,13 +437,42 @@ public class trainbooking extends Application {
         Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanDName.next().toLowerCase();
-
-        for (ArrayList<String> data : booking) {
-            if (data.get(3).equals(deleteName)) {
-                System.out.println(data.get(0));
-                System.out.println("From: "+data.get(1)+"To: "+data.get(2));
+        if (booking.contains(deleteName))
+        {
+            ArrayList <Integer>deleteDates = new ArrayList<Integer>();
+            int i=1;
+            for (ArrayList<String> data : booking) {
+                if (data.get(3).equals(deleteName))
+                {
+                    if(!deleteDates.contains(data.get(0)))
+                    {
+                        System.out.println(i+" | "+data.get(0));
+                        i++;
+                        deleteDates.add(booking.indexOf(data));
+                    }
+                }
             }
+            while (true)
+            {
+                Scanner scanDDate = new Scanner(System.in);
+                System.out.println("select the date");
+                int deleteDate= scanDDate.nextInt();
+                if (deleteDate<deleteDates.size())
+                {
+                    booking.remove(deleteDate);
+                }
+                else
+                    {
+                        System.out.println("input is not available");
+                    }
+            }
+
         }
+        else
+            {
+                System.out.println("name is not in records");
+                deleteOption();
+            }
     }
 
     private void findOption() {
