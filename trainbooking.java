@@ -1,5 +1,3 @@
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -20,7 +18,7 @@ import java.util.*;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 public class trainbooking extends Application {
     static final int SEATING_CAPACITY = 42;
-    static final ArrayList<ArrayList<String>> booking = new ArrayList<ArrayList<String>>();
+    static final ArrayList<ArrayList<String>> booking = new ArrayList<>();
     public static void main(String[] args) {
         launch();
     }
@@ -79,25 +77,26 @@ public class trainbooking extends Application {
 //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
-        GridPane gridFirst = new GridPane();
-        gridFirst.setPadding(new Insets(2, 2, 2, 2));
-        gridFirst.setHgap(10);
-        gridFirst.setVgap(10);
-        Scene addveiwFirst = new Scene(gridFirst, 1020, 400);
+        GridPane First = new GridPane();
+        First.setPadding(new Insets(2, 2, 2, 2));
+        First.setHgap(10);
+        First.setVgap(10);
+        Scene addveiwFirst = new Scene(First, 1020, 400);
         window.setScene(addveiwFirst);
         window.show();
 
 //      main head for first window
-        Label head = new Label("Denuwara Menike Ticket Booking System\n                   Colombo-Badulla");
+        Label head = new Label("Denuwara Menike Ticket Booking System\n" +
+                "                   Colombo-Badulla");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(head,20,3,50,8);
+        First.add(head,20,3,50,8);
 
 //      Secondary text
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
         headDate.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headDate,3,12,9,4);
+        First.add(headDate,3,12,9,4);
 
 //      creating Gui element to select date
         DatePicker datePick = new DatePicker();
@@ -109,38 +108,38 @@ public class trainbooking extends Application {
             }
         });
         datePick.setValue(LocalDate.now());
-        gridFirst.add(datePick, 12, 12,18,4);
+        First.add(datePick, 12, 12,18,4);
 
         //      Secondary text
         Label headStart = new Label("Start");
         headStart.setFont(new Font("Arial", 23));
         headStart.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headStart,3,16,9,4);
+        First.add(headStart,3,16,9,4);
 
         ComboBox<String> startComboBox = new ComboBox<>();
         startComboBox.getItems().addAll(
 
-                "Colombo Fort","Polgahawela","Peradeniya Junction","Gampola","Nawalapitiya",
-                "Hatton","Thalawakele","Nanuoya","Haputale","Diyatalawa","Bandarawela","Ella",
-                "Badulla"
+                "Colombo Fort","Polgahawela","Peradeniya Junction",
+                "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
+                "Haputale","Diyatalawa","Bandarawela","Ella", "Badulla"
         );
         startComboBox.setValue("Colombo Fort");
-        gridFirst.add(startComboBox,12,16,9,4);
+        First.add(startComboBox,12,16,9,4);
 
         //      Secondary text
         Label headEnd = new Label("End");
         headEnd.setFont(new Font("Arial", 23));
         headEnd.setTextFill(Color.web("#0076a3")); //light blue
-        gridFirst.add(headEnd,3,20,9,4);
+        First.add(headEnd,3,20,9,4);
 
         ComboBox<String> endComboBox = new ComboBox<>();
         endComboBox.getItems().addAll(
-                "Colombo Fort","Polgahawela","Peradeniya Junction","Gampola","Nawalapitiya",
-                "Hatton","Thalawakele","Nanuoya","Haputale","Diyatalawa","Bandarawela","Ella",
-                "Badulla"
+                "Colombo Fort","Polgahawela","Peradeniya Junction",
+                "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
+                "Haputale","Diyatalawa","Bandarawela","Ella", "Badulla"
         );
         endComboBox.setValue("Badulla");
-        gridFirst.add(endComboBox,12,20,9,4);
+        First.add(endComboBox,12,20,9,4);
 
 
 //      gui element to progress to booking page
@@ -154,8 +153,8 @@ public class trainbooking extends Application {
                 temporaryList.add("0");
             }
             String temporaryDate  = datePick.getValue().toString();
-            String temporaryStart = startComboBox.getValue().toString();
-            String temporaryEnd   = endComboBox.getValue().toString();
+            String temporaryStart = startComboBox.getValue();
+            String temporaryEnd   = endComboBox.getValue();
             temporaryList.set(0,temporaryDate);
             temporaryList.set(1,temporaryStart);
             temporaryList.set(2,temporaryEnd);
@@ -173,7 +172,7 @@ public class trainbooking extends Application {
                     break;
             }
         });
-        gridFirst.add(continuebut,70, 30,10,12);
+        First.add(continuebut,70, 30,10,12);
 
 //      close button
         Button closeButFirst = new Button("close");
@@ -183,7 +182,7 @@ public class trainbooking extends Application {
             window.close();
             listOption();
         });
-        gridFirst.add(closeButFirst,80,30,10,12);
+        First.add(closeButFirst,80,30,10,12);
     }
     private void addOption(ArrayList<String> temporaryList, ArrayList<String> temporarySeat) {
         //      create the stage
