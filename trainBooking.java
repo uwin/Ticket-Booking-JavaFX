@@ -561,9 +561,7 @@ public class trainBooking extends Application {
         FindIterable<Document> bookingDocument = bookings.find();
 
         ArrayList<String> temporaryList = new ArrayList<>(5);
-        for (int i = 0; i < 5; i++) {
-            temporaryList.add("0");
-        }
+        for (int i = 0; i < 5; i++) temporaryList.add("0");
         booking.clear();
         for(Document document:bookingDocument)
         {
@@ -588,8 +586,6 @@ public class trainBooking extends Application {
             nameList.add(data.get(3));
             seatList.add(data.get(4));
         }
-
-
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
                 if (String.valueOf(nameList.get(i)).compareTo(String.valueOf(nameList.get(j))) < 0) {
