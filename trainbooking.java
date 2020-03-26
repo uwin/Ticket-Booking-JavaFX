@@ -1,3 +1,7 @@
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -8,12 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.bson.Document;
 
 import java.time.LocalDate;
 import java.util.*;
 
 import static javax.xml.bind.DatatypeConverter.parseInt;
-
 public class trainbooking extends Application {
     static final int SEATING_CAPACITY = 42;
     static final ArrayList<ArrayList<String>> booking = new ArrayList<ArrayList<String>>();
@@ -435,7 +439,6 @@ public class trainbooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
-
     private void deleteOption() {
         Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
@@ -503,38 +506,99 @@ public class trainbooking extends Application {
                 deleteOption();
         }
     }
-
     private void findOption() {
-        Scanner scanDName = new Scanner(System.in);
+        Scanner scanFName = new Scanner(System.in);
         System.out.println("enter your name:");
-        String deleteName= scanDName.next().toLowerCase();
+        String findName= scanFName.next().toLowerCase();
         ArrayList <String>nameList = new ArrayList<>();
         for (ArrayList<String> data : booking) nameList.add(data.get(3));
-        if (nameList.contains(deleteName))
+        if (nameList.contains(findName))
         {
             for (ArrayList<String> data : booking)
             {
-                if (data.get(3).equals(deleteName))
+                if (data.get(3).equals(findName))
                 {
                     System.out.println("From: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
                 }
             }
+        }
+        else if (findName.toLowerCase().equals("q"))
+        {
+            waitOption();
         }
         else
             {
                 System.out.println("name not in records");
             }
     }
-
     private void saveOption() {
+        com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
+        MongoDatabase dbDatabase = dbclient.getDatabase("TrainbookingSystem");
+        MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
+        System.out.println("connected to BookingData");
+        FindIterable<Document> bookingdocument = bookings.find();
+        for (ArrayList<String> data : booking)
+        {
+            Document userdocument = new Document();
+            userdocument.append("date", data.get(0));
+            userdocument.append("start",data.get(1));
+            userdocument.append("end",  data.get(2));
+            userdocument.append("user", data.get(3));
+            userdocument.append("Seat", data.get(4));
+            bookings.insertOne(userdocument);
+        }
+        dbclient.close();
+        System.out.println("saved files");
+        waitOption();
     }
-
     private void loadOption() {
-    }
+        com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
+        MongoDatabase dbDatabase = dbclient.getDatabase("TrainbookingSystem");
+        MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
+        System.out.println("connected to BookingData");
+        FindIterable<Document> bookingdocument = bookings.find();
 
+        ArrayList<String> temporaryList = new ArrayList<>(5);
+        for (int i = 0; i < 5; i++) {
+            temporaryList.add("0");
+        }
+        booking.clear();
+        for(Document document:bookingdocument)
+        {
+            temporaryList.set(0,document.getString("date"));
+            temporaryList.set(1,document.getString("start"));
+            temporaryList.set(2,document.getString("end"));
+            temporaryList.set(3,document.getString("user"));
+            temporaryList.set(4,document.getString("Seat"));
+            booking.add(temporaryList);
+        }
+        dbclient.close();
+        System.out.println("saved files");
+        waitOption();
+    }
     private void oderOption() {
-    }
+        String sortTemp;
+        List<String> seatList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        for (ArrayList<String> data : booking)
+        {
+            nameList.add(data.get(3));
+            seatList.add(data.get(4));
+        }
 
+
+        for (int j = 0; j < nameList.size(); j++) {
+            for (int i = j + 1; i < nameList.size(); i++) {
+                if (String.valueOf(nameList.get(i)).compareTo(String.valueOf(nameList.get(j))) < 0) {
+                    sortTemp = String.valueOf(nameList.get(j));
+                    nameList.set(j, nameList.get(i));
+                    nameList.set(i, sortTemp);
+                }
+            }
+            System.out.println(seatList.get(j)+": "+nameList.get(j));
+        }
+        waitOption();
+    }
     public void   waitOption(){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
