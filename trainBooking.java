@@ -184,7 +184,7 @@ public class trainBooking extends Application {
         });
         First.add(closeButFirst,80,30,10,12);
     }
-    private void addOption(ArrayList<String> temporaryList, ArrayList<String> temporarySeat) {
+    private void    addOption(ArrayList<String> temporaryList, ArrayList<String> temporarySeat) {
         //      create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -316,7 +316,7 @@ public class trainBooking extends Application {
         grid.add(closeBut, 14, 9,14,9);//      close button
 
     }
-    private void viewOption(ArrayList<String> temporaryList) {
+    private void   viewOption(ArrayList<String> temporaryList) {
         //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -376,7 +376,7 @@ public class trainBooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
-    private void emptyOption(ArrayList<String> temporaryList) {
+    private void  emptyOption(ArrayList<String> temporaryList) {
         //      create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -505,7 +505,7 @@ public class trainBooking extends Application {
                 deleteOption();
         }
     }
-    private void findOption() {
+    private void   findOption() {
         Scanner scanFName = new Scanner(System.in);
         System.out.println("enter your name:");
         String findName= scanFName.next().toLowerCase();
@@ -530,7 +530,7 @@ public class trainBooking extends Application {
                 System.out.println("name not in records");
             }
     }
-    private void saveOption() {
+    private void   saveOption() {
         com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbClient.getDatabase("trainBookingSystem");
         MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
@@ -553,7 +553,7 @@ public class trainBooking extends Application {
         System.out.println("saved files");
         waitOption();
     }
-    private void loadOption() {
+    private void   loadOption() {
         com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
         MongoDatabase dbDatabase = dbClient.getDatabase("trainBookingSystem");
         MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
@@ -577,7 +577,7 @@ public class trainBooking extends Application {
         System.out.println("files loaded");
         waitOption();
     }
-    private void oderOption() {
+    private void   oderOption() {
         String sortTemp;
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
@@ -598,7 +598,7 @@ public class trainBooking extends Application {
         }
         waitOption();
     }
-    private void   waitOption(){
+    private void   waitOption() {
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
