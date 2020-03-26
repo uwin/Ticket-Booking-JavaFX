@@ -1,3 +1,5 @@
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -13,10 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.bson.Document;
-
 import java.time.LocalDate;
 import java.util.*;
-
 import static javax.xml.bind.DatatypeConverter.parseInt;
 public class trainbooking extends Application {
     static final int SEATING_CAPACITY = 42;
@@ -537,6 +537,9 @@ public class trainbooking extends Application {
         MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
         System.out.println("connected to BookingData");
         FindIterable<Document> bookingdocument = bookings.find();
+
+        if(bookings.countDocuments()>1) for(Document document: bookingdocument) bookings.deleteOne(document);
+
         for (ArrayList<String> data : booking)
         {
             Document userdocument = new Document();
@@ -570,10 +573,11 @@ public class trainbooking extends Application {
             temporaryList.set(2,document.getString("end"));
             temporaryList.set(3,document.getString("user"));
             temporaryList.set(4,document.getString("Seat"));
-            booking.add(temporaryList);
+            booking.add(new ArrayList<>(temporaryList));
         }
+        System.out.println(booking);
         dbclient.close();
-        System.out.println("saved files");
+        System.out.println("files loaded");
         waitOption();
     }
     private void oderOption() {
