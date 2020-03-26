@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.*;
+
+import static javax.xml.bind.DatatypeConverter.parseInt;
+
 public class trainbooking extends Application {
     static final int SEATING_CAPACITY = 42;
     static final ArrayList<ArrayList<String>> booking = new ArrayList<ArrayList<String>>();
@@ -110,7 +113,7 @@ public class trainbooking extends Application {
         headStart.setTextFill(Color.web("#0076a3")); //light blue
         gridFirst.add(headStart,3,16,9,4);
 
-        ComboBox<String> startComboBox = new ComboBox<String>();
+        ComboBox<String> startComboBox = new ComboBox<>();
         startComboBox.getItems().addAll(
 
                 "Colombo Fort","Polgahawela","Peradeniya Junction","Gampola","Nawalapitiya",
@@ -437,45 +440,90 @@ public class trainbooking extends Application {
         Scanner scanDName = new Scanner(System.in);
         System.out.println("enter your name:");
         String deleteName= scanDName.next().toLowerCase();
-        if (booking.contains(deleteName))
+        ArrayList <String>nameList = new ArrayList<>();
+        for (ArrayList<String> data : booking) nameList.add(data.get(3));
+        if (nameList.contains(deleteName))
         {
-            ArrayList <Integer>deleteDates = new ArrayList<Integer>();
-            int i=1;
-            for (ArrayList<String> data : booking) {
+            ArrayList <String>deleteDates = new ArrayList<>();
+            int i=0;
+            for (ArrayList<String> data : booking)
+            {
                 if (data.get(3).equals(deleteName))
                 {
                     if(!deleteDates.contains(data.get(0)))
                     {
                         System.out.println(i+" | "+data.get(0));
                         i++;
-                        deleteDates.add(booking.indexOf(data));
+                        deleteDates.add(data.get(0));
                     }
                 }
             }
-            while (true)
+            Scanner scanDDate = new Scanner(System.in);
+            System.out.println("select the date");
+            String selectDate= scanDDate.next();
+            if(selectDate.toLowerCase().equals("q"))
             {
-                Scanner scanDDate = new Scanner(System.in);
-                System.out.println("select the date");
-                int deleteDate= scanDDate.nextInt();
-                if (deleteDate<deleteDates.size())
+                waitOption();
+            }
+            try {
+                if (parseInt(selectDate) < i && parseInt(selectDate) >= 0)
                 {
-                    booking.remove(deleteDate);
+                    String date = deleteDates.get(parseInt(selectDate));
+                    System.out.println("Deleted data\n");
+                    ArrayList<Integer> indexDelete = new ArrayList<>();
+                    for (ArrayList<String> data : booking)
+                    {
+                        if (data.get(3).equals(deleteName) && data.get(0).equals(date))
+                        {
+                            System.out.println("From: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
+                            indexDelete.add(booking.indexOf(data));
+                        }
+                    }
+                    Collections.reverse(indexDelete);
+                    for (int index : indexDelete) booking.remove(index);
+                    waitOption();
                 }
                 else
-                    {
-                        System.out.println("input is not available");
-                    }
+                {
+                    System.out.println("input is not available");
+                    deleteOption();
+                }
             }
-
-        }
-        else
+            catch (Exception e)
             {
-                System.out.println("name is not in records");
+                System.out.println("input is invalied");
                 deleteOption();
             }
+        }
+        else if(deleteName.toLowerCase().equals("q"))
+        {
+            waitOption();
+        }else {
+                System.out.println("name is not in records");
+                deleteOption();
+        }
     }
 
     private void findOption() {
+        Scanner scanDName = new Scanner(System.in);
+        System.out.println("enter your name:");
+        String deleteName= scanDName.next().toLowerCase();
+        ArrayList <String>nameList = new ArrayList<>();
+        for (ArrayList<String> data : booking) nameList.add(data.get(3));
+        if (nameList.contains(deleteName))
+        {
+            for (ArrayList<String> data : booking)
+            {
+                if (data.get(3).equals(deleteName))
+                {
+                    System.out.println("From: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
+                }
+            }
+        }
+        else
+            {
+                System.out.println("name not in records");
+            }
     }
 
     private void saveOption() {
@@ -487,4 +535,11 @@ public class trainbooking extends Application {
     private void oderOption() {
     }
 
+    public void   waitOption(){
+//        to let the use consume the details of console functions before moving to the menu
+        Scanner scanContinue = new Scanner(System.in);
+        System.out.println("Press any key to continue");
+        String continueConsole=scanContinue.next();
+        if (!continueConsole.isEmpty()) listOption();
+    }
 }
