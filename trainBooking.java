@@ -26,7 +26,8 @@ public class trainBooking extends Application {
         welcome();
     }
     private void welcome() {
-        System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
+        System.out.println("\nwelcome to ticket booking system \n" +
+                "A/C compartment for Denuwara Menike");
         listOption();
     }
     private void   listOption() {
@@ -40,12 +41,13 @@ public class trainBooking extends Application {
                 "L Load details\n"+
                 "O List seats\n"+
                 "q quit\n");
-        //      calling methods depending on the users input for the previous method
         Scanner scanOption= new Scanner(System.in);
         System.out.println(">> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
-            case "A":            //gui related methods wil be further tested in this method for getting the route & date
+//        calling methods depending on the users input for the previous method
+//        gui methods will run though first gui
+            case "A":
             case "V":
             case "E":
                 firstGui(userOption);
@@ -74,7 +76,7 @@ public class trainBooking extends Application {
         }
     }
     private void  firstGui(String userOption){
-//      create the stage
+//        create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
         GridPane First = new GridPane();
@@ -85,22 +87,22 @@ public class trainBooking extends Application {
         window.setScene(addViewFirst);
         window.show();
 
-//      main head for first window
+//        main text for first window
         Label head = new Label("Denuwara Menike Ticket Booking System\n" +
                 "                   Colombo-Badulla");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         First.add(head,20,3,50,8);
 
-//      Secondary text
+//        Secondary text for first window
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
         headDate.setTextFill(Color.web("#0076a3")); //light blue
         First.add(headDate,3,12,9,4);
 
-//      creating Gui element to select date
+//        creating Gui element to select date
         DatePicker datePick = new DatePicker();
-        //disabling past days on the date picker
+//        disabling past days on the date picker
         datePick.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
@@ -110,12 +112,13 @@ public class trainBooking extends Application {
         datePick.setValue(LocalDate.now());
         First.add(datePick, 12, 12,18,4);
 
-        //      Secondary text
+//        text for start
         Label headStart = new Label("Start");
         headStart.setFont(new Font("Arial", 23));
         headStart.setTextFill(Color.web("#0076a3")); //light blue
         First.add(headStart,3,16,9,4);
 
+//        drop down menu for start
         ComboBox<String> startComboBox = new ComboBox<>();
         startComboBox.getItems().addAll(
 
@@ -126,12 +129,13 @@ public class trainBooking extends Application {
         startComboBox.setValue("Colombo Fort");
         First.add(startComboBox,12,16,9,4);
 
-        //      Secondary text
+//        text for End
         Label headEnd = new Label("End");
         headEnd.setFont(new Font("Arial", 23));
         headEnd.setTextFill(Color.web("#0076a3")); //light blue
         First.add(headEnd,3,20,9,4);
 
+//        drop down menu for End
         ComboBox<String> endComboBox = new ComboBox<>();
         endComboBox.getItems().addAll(
                 "Colombo Fort","Polgahawela","Peradeniya Junction",
@@ -142,25 +146,29 @@ public class trainBooking extends Application {
         First.add(endComboBox,12,20,9,4);
 
 
-//      gui element to progress to booking page
+//        gui element to progress to booking page
         Button continueBut = new Button("Continue");
         continueBut.setMaxSize(120, 60);
         continueBut.setOnAction(event -> {
-            ArrayList<String> temporaryList = new ArrayList<>(5);
+//        creating a temporarily array for seat numbers
             ArrayList <String>temporarySeat = new ArrayList<>();
-            /*[ date , start , end , name , seatNo ]*/
-            for (int i = 0; i < 5; i++) {
+//        creating a array to to temporarily store user data
+            ArrayList<String> temporaryList = new ArrayList<>(5);
+//        [ date , start , end , name , seatNo ]
+            for (int i = 0; i < 6; i++) {
                 temporaryList.add("0");
             }
+//        adding the date, start location & end location
             String temporaryDate  = datePick.getValue().toString();
-            String temporaryStart = startComboBox.getValue();
-            String temporaryEnd   = endComboBox.getValue();
             temporaryList.set(0,temporaryDate);
+            String temporaryStart = startComboBox.getValue();
             temporaryList.set(1,temporaryStart);
+            String temporaryEnd   = endComboBox.getValue();
             temporaryList.set(2,temporaryEnd);
-            System.out.println(temporaryList);
+
             window.close();
-            switch (userOption.toLowerCase()) {   //calling the Gui related functions
+//        calling the Gui related functions
+            switch (userOption.toLowerCase()) {
                 case "a":
                     addOption(temporaryList, temporarySeat);
                     break;
@@ -185,7 +193,7 @@ public class trainBooking extends Application {
         First.add(closeButFirst,80,30,10,12);
     }
     private void    addOption(ArrayList<String> temporaryList, ArrayList<String> temporarySeat) {
-        //      create the stage
+//        create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
 
@@ -201,7 +209,9 @@ public class trainBooking extends Application {
         Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
         Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
-        int number = 1; //used to set the seat number
+//        used to set the seat number
+        int number = 1;
+//        creating a array of booked seats temporarily for styling
         ArrayList <String>bookedSeat = new ArrayList<>();
         for (ArrayList<String> strings : booking)
         {
@@ -213,7 +223,7 @@ public class trainBooking extends Application {
             }
         }
 
-//      loop to create seat buttons & seat numbers
+//        loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
             for (int c = 2; c < 16; c++) {
                 if (number <=SEATING_CAPACITY)
@@ -225,18 +235,22 @@ public class trainBooking extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
-
+//        if the current seat id is already booked change to red
                     if (bookedSeat.contains(button.getId())) button.setImage(seatRed);
+//        if the current seat id is temporarily booked change to green
                     if (temporarySeat.contains(button.getId())) button.setImage(seatGreen);
 
                     button.setOnMouseClicked(event ->
                     {
+//        selected seat is already booked change to red
                         if (bookedSeat.contains(button.getId())) button.setImage(seatRed);
+//        selected seat is not temporarily booked change to green & append
                         else if (!temporarySeat.contains(button.getId()))
                         {
                             button.setImage(seatGreen);
                             temporarySeat.add(button.getId());
                         }
+//        selected seat is temporarily booked change to black & remove
                         else if (temporarySeat.contains(button.getId()))
                         {
                             button.setImage(seatBlack);
@@ -250,28 +264,34 @@ public class trainBooking extends Application {
             }
         }
 
-//      window headFirst
+//        main text
         Label head = new Label("Select Seat");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
-//      space for user name
+//        field for user name
         TextField username = new TextField();
-        username.setPromptText("enter name");
-        grid.add(username, 8, 5, 10, 6);
+        username.setPromptText("enter Name");
+        grid.add(username, 2, 5, 6, 6);
+
+//        field for user id
+        TextField userId = new TextField();
+        userId.setPromptText("enter NIC");
+        grid.add(userId, 2, 9, 6, 6);
 
 //        Confirm button
         Button bookBut = new Button("Book");
         bookBut.setMaxSize(120, 60);
         bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
-//            alert will be shown if either the name or a seat is not selected
-            if (username.getText().trim().isEmpty()||temporarySeat.isEmpty())
+//        alert will be shown if name,seat or Nic is not entered
+            if (username.getText().trim().isEmpty()||temporarySeat.isEmpty()||userId.getText().trim().isEmpty())
             {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
                 if (temporarySeat.isEmpty())a.setHeaderText("select seats");
+                if (userId.getText().trim().isEmpty())a.setHeaderText("enter Nic");
                 a.show();
                 a.setOnCloseRequest(event1 ->
                 {
@@ -280,7 +300,11 @@ public class trainBooking extends Application {
                 });
             }else
             {
+//        else username and Nic will be added to temporary list
                 temporaryList.set(3,username.getText());
+                temporaryList.set(5,userId.getText());
+//        each seat number will be added to the temporary list
+//        each temporary list will be added to booking list
                 for(String seat: temporarySeat)
                 {
                     temporaryList.set(4,seat);
@@ -439,18 +463,18 @@ public class trainBooking extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     private void deleteOption() {
-        Scanner scanDName = new Scanner(System.in);
+        Scanner scanDNic = new Scanner(System.in);
         System.out.println("enter your name:");
-        String deleteName= scanDName.next().toLowerCase();
-        ArrayList <String>nameList = new ArrayList<>();
-        for (ArrayList<String> data : booking) nameList.add(data.get(3));
-        if (nameList.contains(deleteName))
+        String deleteNic= scanDNic.next().toLowerCase();
+        ArrayList <String>nicList = new ArrayList<>();
+        for (ArrayList<String> data : booking) nicList.add(data.get(3));
+        if (nicList.contains(deleteNic))
         {
             ArrayList <String>deleteDates = new ArrayList<>();
             int i=0;
             for (ArrayList<String> data : booking)
             {
-                if (data.get(3).equals(deleteName))
+                if (data.get(5).equals(deleteNic))
                 {
                     if(!deleteDates.contains(data.get(0)))
                     {
@@ -475,7 +499,7 @@ public class trainBooking extends Application {
                     ArrayList<Integer> indexDelete = new ArrayList<>();
                     for (ArrayList<String> data : booking)
                     {
-                        if (data.get(3).equals(deleteName) && data.get(0).equals(date))
+                        if (data.get(5).equals(deleteNic) && data.get(0).equals(date))
                         {
                             System.out.println("From: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
                             indexDelete.add(booking.indexOf(data));
@@ -497,7 +521,7 @@ public class trainBooking extends Application {
                 deleteOption();
             }
         }
-        else if(deleteName.toLowerCase().equals("q"))
+        else if(deleteNic.toLowerCase().equals("q"))
         {
             waitOption();
         }else {
@@ -506,22 +530,23 @@ public class trainBooking extends Application {
         }
     }
     private void   findOption() {
-        Scanner scanFName = new Scanner(System.in);
-        System.out.println("enter your name:");
-        String findName= scanFName.next().toLowerCase();
-        ArrayList <String>nameList = new ArrayList<>();
-        for (ArrayList<String> data : booking) nameList.add(data.get(3));
-        if (nameList.contains(findName))
+        Scanner scanFNic = new Scanner(System.in);
+        System.out.println("enter your Nic: ");
+        String findNic= scanFNic.next().toLowerCase();
+        ArrayList <String>nicList = new ArrayList<>();
+        for (ArrayList<String> data : booking) nicList.add(data.get(5));
+        if (nicList.contains(findNic))
         {
             for (ArrayList<String> data : booking)
             {
-                if (data.get(3).equals(findName))
+                if (data.get(5).equals(findNic))
                 {
-                    System.out.println("From: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
+                    System.out.println(data.get(0)+"\nFrom: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
                 }
             }
+            waitOption();
         }
-        else if (findName.toLowerCase().equals("q"))
+        else if (findNic.toLowerCase().equals("q"))
         {
             waitOption();
         }
@@ -542,11 +567,12 @@ public class trainBooking extends Application {
         for (ArrayList<String> data : booking)
         {
             Document userDocument = new Document();
-            userDocument.append("date", data.get(0));
-            userDocument.append("start",data.get(1));
-            userDocument.append("end",  data.get(2));
-            userDocument.append("user", data.get(3));
+            userDocument.append("Date", data.get(0));
+            userDocument.append("Start",data.get(1));
+            userDocument.append("End",  data.get(2));
+            userDocument.append("User", data.get(3));
             userDocument.append("Seat", data.get(4));
+            userDocument.append("Nic",  data.get(5));
             bookings.insertOne(userDocument);
         }
         dbClient.close();
@@ -561,15 +587,16 @@ public class trainBooking extends Application {
         FindIterable<Document> bookingDocument = bookings.find();
 
         ArrayList<String> temporaryList = new ArrayList<>(5);
-        for (int i = 0; i < 5; i++) temporaryList.add("0");
+        for (int i = 0; i < 6; i++) temporaryList.add("0");
         booking.clear();
         for(Document document:bookingDocument)
         {
-            temporaryList.set(0,document.getString("date"));
-            temporaryList.set(1,document.getString("start"));
-            temporaryList.set(2,document.getString("end"));
-            temporaryList.set(3,document.getString("user"));
+            temporaryList.set(0,document.getString("Date"));
+            temporaryList.set(1,document.getString("Start"));
+            temporaryList.set(2,document.getString("End"));
+            temporaryList.set(3,document.getString("User"));
             temporaryList.set(4,document.getString("Seat"));
+            temporaryList.set(5,document.getString("Nic"));
             booking.add(new ArrayList<>(temporaryList));
         }
         System.out.println(booking);
@@ -581,10 +608,12 @@ public class trainBooking extends Application {
         String sortTemp;
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
+        List<String> nicList = new ArrayList<>();
         for (ArrayList<String> data : booking)
         {
             nameList.add(data.get(3));
             seatList.add(data.get(4));
+            nicList.add(data.get(5));
         }
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
@@ -594,7 +623,7 @@ public class trainBooking extends Application {
                     nameList.set(i, sortTemp);
                 }
             }
-            System.out.println(seatList.get(j)+": "+nameList.get(j));
+            System.out.println(seatList.get(j)+": "+nameList.get(j)+" ["+nicList.get(j)+"]");
         }
         waitOption();
     }
