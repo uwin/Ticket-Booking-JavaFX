@@ -212,6 +212,7 @@ public class trainBooking extends Application {
 //        used to set the seat number
         int number = 1;
 //        creating a array of booked seats temporarily for styling
+//        for bookings with same date,from,to as temporary booking
         ArrayList <String>bookedSeat = new ArrayList<>();
         for (ArrayList<String> strings : booking)
         {
@@ -286,6 +287,7 @@ public class trainBooking extends Application {
         bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
 //        alert will be shown if name,seat or Nic is not entered
+//        then addOption method will rerun
             if (username.getText().trim().isEmpty()||temporarySeat.isEmpty()||userId.getText().trim().isEmpty())
             {
                 Alert a = new Alert(Alert.AlertType.WARNING);
@@ -317,7 +319,7 @@ public class trainBooking extends Application {
         });
         grid.add(bookBut, 10, 9,10,9);
 
-//      Reset Button
+//        Reset Button
         Button resetBut = new Button("Clear");
         resetBut.setMaxSize(120, 60);
         resetBut.setStyle("-fx-background-color: orange; ");
@@ -328,7 +330,7 @@ public class trainBooking extends Application {
         });
         grid.add(resetBut, 12, 9,12,9);
 
-//      close button
+//        close button
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
@@ -337,11 +339,11 @@ public class trainBooking extends Application {
             window.close();
             listOption();
         });
-        grid.add(closeBut, 14, 9,14,9);//      close button
+        grid.add(closeBut, 14, 9,14,9);
 
     }
     private void   viewOption(ArrayList<String> temporaryList) {
-        //      create the stage
+//        create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 2, 5, 2));
@@ -352,10 +354,14 @@ public class trainBooking extends Application {
         window.setScene(viewSeat);
         window.show();
 
-//        impoting icons
+//      variables needed for seat icon loop
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
         Image seatGrey = new Image(getClass().getResourceAsStream("images/grey.png"));
-        int number = 1; //used to get value for seat number
+        //used to get value for seat number
+        int number = 1;
+
+//        creating a array of booked seats temporarily for styling
+//        for bookings with same date,from,to as temporary booking
         ArrayList <String>bookedSeat = new ArrayList<>();
         for (ArrayList<String> strings : booking)
         {
@@ -377,6 +383,7 @@ public class trainBooking extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 
+//        if the selected seat is already booked change to grey
                     if (bookedSeat.contains(num.getText())) button.setImage(seatGrey);
                     number++;
                     grid.add(button, c, r);
@@ -384,13 +391,13 @@ public class trainBooking extends Application {
                 }
             }
         }
-        //      window head
+//        main text
         Label head = new Label("Viewing Seats ");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
-        //      close button
+//        close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
@@ -400,8 +407,9 @@ public class trainBooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
+
     private void  emptyOption(ArrayList<String> temporaryList) {
-        //      create the stage
+//        create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 2, 5, 2));
@@ -412,9 +420,12 @@ public class trainBooking extends Application {
         window.setScene(viewEmpty);
         window.show();
 
-//      values needed for the loop
+//        values needed for the loop
         int number = 1;
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
+
+//        creating a array of booked seats temporarily for styling
+//        for bookings with same date,from,to as temporary booking
         ArrayList <String>bookedSeat = new ArrayList<>();
         for (ArrayList<String> strings : booking)
         {
@@ -437,6 +448,7 @@ public class trainBooking extends Application {
                     button.setFitHeight(60);
                     button.setFitWidth(60);
 
+//        if the selected seat is not booked the seat icon is shown
                     if (!bookedSeat.contains(num.getText())) {
                         button.setImage(seatBlack);
                         grid.add(button, c, r);
@@ -446,13 +458,13 @@ public class trainBooking extends Application {
                 }
             }
         }
-//      window head
+//        main text
         Label head = new Label("Empty Seats ");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
-//      close button
+//        close button
         Button closeBut = new Button("Close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
