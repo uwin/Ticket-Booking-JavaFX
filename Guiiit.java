@@ -5,9 +5,13 @@
 \ https://stackoverflow.com/questions/48238855/how-to-disable-past-dates-in-datepicker-of-javafx-scene-builder
 \ https://stackoverflow.com/questions/29679971/javafx-make-a-grid-of-buttons/29719308
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
-*//*
+*/
 
 //import com.mongodb.MongoClient;
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -18,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import org.bson.Document;
 //import org.bson.Document;
 //import com.mongodb.client.*;
 import java.time.LocalDate;
@@ -83,10 +88,10 @@ public class Guiiit extends Application {
                 findOption(temp, ColomboToBadulla, BadullaToColombo);
                 break;
             case "S":
-                //saveOption(temp, ColomboToBadulla, BadullaToColombo);
+                saveOption(temp, ColomboToBadulla, BadullaToColombo);
                 break;
             case "L":
-                //loadOption(temp, ColomboToBadulla, BadullaToColombo);
+                loadOption(temp, ColomboToBadulla, BadullaToColombo);
                 break;
             case "O":
                 oderOption(temp, ColomboToBadulla, BadullaToColombo);
@@ -880,4 +885,3 @@ public class Guiiit extends Application {
         return nameList;
     }
 }
-*/
