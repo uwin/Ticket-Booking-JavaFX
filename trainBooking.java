@@ -124,7 +124,7 @@ public class trainBooking extends Application {
                 "Hatton","Thalawakele","Nanuoya", "Haputale","Diyatalawa",
                 "Bandarawela","Ella", "Badulla" };
         ArrayList<String> stopsList = new ArrayList<>(Arrays.asList(stops));
-        System.out.println(stopsList);
+        //System.out.println(stopsList);
 
 //        drop down menu for start
         ComboBox<String> startComboBox = new ComboBox<>();
@@ -172,10 +172,10 @@ public class trainBooking extends Application {
                     addOption(temporaryList, temporarySeat, stopsList);
                     break;
                 case "v":
-                    viewOption(temporaryList);
+                    viewOption(temporaryList, stopsList);
                     break;
                 case "e":
-                    emptyOption(temporaryList);
+                    emptyOption(temporaryList, stopsList);
                     break;
             }
         });
@@ -191,7 +191,9 @@ public class trainBooking extends Application {
         });
         First.add(closeButFirst,80,30,10,12);
     }
-    private void    addOption(ArrayList<String> temporaryList, ArrayList<String> temporarySeat, ArrayList stopsList) {
+    private void    addOption(ArrayList<String> temporaryList,
+                              ArrayList<String> temporarySeat,
+                              ArrayList<String> stopsList) {
 //        create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -215,21 +217,18 @@ public class trainBooking extends Application {
         ArrayList <String>bookedSeat = new ArrayList<>();
 
         int startingStop= stopsList.indexOf(temporaryList.get(1));
-        System.out.println("index of start"+startingStop);
+        //System.out.println("index of start"+startingStop);
         int endingStop= stopsList.indexOf(temporaryList.get(2));
-        System.out.println("index of end"+endingStop);
-
-
-
+        //System.out.println("index of end"+endingStop);
         while (startingStop<endingStop)
         {
             int checkStop = startingStop+1;
             while (checkStop<=endingStop)
             {
                 String temporaryStart= (String) stopsList.get(startingStop);
-                System.out.println("temp start"+temporaryStart);
+                //System.out.println("temp start"+temporaryStart);
                 String temporaryEnd= (String) stopsList.get(checkStop);
-                System.out.println("temp end"+temporaryEnd);
+                //System.out.println("temp end"+temporaryEnd);
                 for (ArrayList<String> strings : booking)
                 {
                     if
@@ -243,28 +242,25 @@ public class trainBooking extends Application {
                         bookedSeat.add(strings.get(4));
                     }
                 }
-                System.out.println("booking"+bookedSeat);
+                //System.out.println("booking"+bookedSeat);
                 checkStop++;
             }
             startingStop++;
         }
-
-        System.out.println("///////////////");
-
+        //System.out.println("///////////////");
         int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
         int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
         int firstStop=0;
         int lastStop=12;
-
         while (firstStop<beforeStop)
         {
             int checkStop = afterStop +1;
             while (checkStop<=lastStop)
             {
                 String temporaryStart= (String) stopsList.get(firstStop);
-                System.out.println("pre start"+temporaryStart);
+                //System.out.println("pre start"+temporaryStart);
                 String temporaryEnd= (String) stopsList.get(checkStop);
-                System.out.println("pre end"+temporaryEnd);
+                //System.out.println("pre end"+temporaryEnd);
 
                 for (ArrayList<String> strings : booking)
                 {
@@ -279,7 +275,7 @@ public class trainBooking extends Application {
                         bookedSeat.add(strings.get(4));
                     }
                 }
-                System.out.println("booking"+bookedSeat);
+                //System.out.println("booking"+bookedSeat);
                 checkStop++;
             }
             firstStop++;
@@ -405,7 +401,8 @@ public class trainBooking extends Application {
         grid.add(closeBut, 14, 9,14,9);
 
     }
-    private void   viewOption(ArrayList<String> temporaryList) {
+    private void   viewOption(ArrayList<String> temporaryList,
+                              ArrayList<String> stopsList) {
 //        create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -426,15 +423,71 @@ public class trainBooking extends Application {
 //        creating a array of booked seats temporarily for styling
 //        for bookings with same date,from,to as temporary booking
         ArrayList <String>bookedSeat = new ArrayList<>();
-        for (ArrayList<String> strings : booking)
+        int startingStop= stopsList.indexOf(temporaryList.get(1));
+        //System.out.println("index of start"+startingStop);
+        int endingStop= stopsList.indexOf(temporaryList.get(2));
+        //System.out.println("index of end"+endingStop);
+        while (startingStop<endingStop)
         {
-            if (    strings.get(0).equals(temporaryList.get(0)) &&
-                    strings.get(1).equals(temporaryList.get(1)) &&
-                    strings.get(2).equals(temporaryList.get(2)))
+            int checkStop = startingStop+1;
+            while (checkStop<=endingStop)
             {
-                bookedSeat.add(strings.get(4));
+                String temporaryStart= (String) stopsList.get(startingStop);
+                //System.out.println("temp start"+temporaryStart);
+                String temporaryEnd= (String) stopsList.get(checkStop);
+                //System.out.println("temp end"+temporaryEnd);
+                for (ArrayList<String> strings : booking)
+                {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                                    strings.get(1).equals(temporaryStart) &&
+                                    strings.get(2).equals(temporaryEnd)
+                    )
+                    {
+
+                        bookedSeat.add(strings.get(4));
+                    }
+                }
+                //System.out.println("booking"+bookedSeat);
+                checkStop++;
             }
+            startingStop++;
         }
+        //System.out.println("///////////////");
+        int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
+        int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
+        int firstStop=0;
+        int lastStop=12;
+        while (firstStop<beforeStop)
+        {
+            int checkStop = afterStop +1;
+            while (checkStop<=lastStop)
+            {
+                String temporaryStart= (String) stopsList.get(firstStop);
+                //System.out.println("pre start"+temporaryStart);
+                String temporaryEnd= (String) stopsList.get(checkStop);
+                //System.out.println("pre end"+temporaryEnd);
+
+                for (ArrayList<String> strings : booking)
+                {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                                    strings.get(1).equals(temporaryStart) &&
+                                    strings.get(2).equals(temporaryEnd)
+                    )
+                    {
+
+                        bookedSeat.add(strings.get(4));
+                    }
+                }
+                //System.out.println("booking"+bookedSeat);
+                checkStop++;
+            }
+            firstStop++;
+        }
+
 //      loop to create seat buttons & seat numbers
         for (int r = 2; r < 5; r++) {
             for (int c = 2; c < 16; c++) {
@@ -470,7 +523,8 @@ public class trainBooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
-    private void  emptyOption(ArrayList<String> temporaryList) {
+    private void  emptyOption(ArrayList<String> temporaryList,
+                              ArrayList<String> stopsList) {
 //        create the stage
         Stage window= new Stage();
         GridPane grid = new GridPane();
@@ -489,14 +543,70 @@ public class trainBooking extends Application {
 //        creating a array of booked seats temporarily for styling
 //        for bookings with same date,from,to as temporary booking
         ArrayList <String>bookedSeat = new ArrayList<>();
-        for (ArrayList<String> strings : booking)
+
+        int startingStop= stopsList.indexOf(temporaryList.get(1));
+        //System.out.println("index of start"+startingStop);
+        int endingStop= stopsList.indexOf(temporaryList.get(2));
+        //System.out.println("index of end"+endingStop);
+        while (startingStop<endingStop)
         {
-            if (    strings.get(0).equals(temporaryList.get(0)) &&
-                    strings.get(1).equals(temporaryList.get(1)) &&
-                    strings.get(2).equals(temporaryList.get(2)))
+            int checkStop = startingStop+1;
+            while (checkStop<=endingStop)
             {
-                bookedSeat.add(strings.get(4));
+                String temporaryStart= (String) stopsList.get(startingStop);
+                //System.out.println("temp start"+temporaryStart);
+                String temporaryEnd= (String) stopsList.get(checkStop);
+                //System.out.println("temp end"+temporaryEnd);
+                for (ArrayList<String> strings : booking)
+                {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                                    strings.get(1).equals(temporaryStart) &&
+                                    strings.get(2).equals(temporaryEnd)
+                    )
+                    {
+
+                        bookedSeat.add(strings.get(4));
+                    }
+                }
+                //System.out.println("booking"+bookedSeat);
+                checkStop++;
             }
+            startingStop++;
+        }
+        //System.out.println("///////////////");
+        int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
+        int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
+        int firstStop=0;
+        int lastStop=12;
+        while (firstStop<beforeStop)
+        {
+            int checkStop = afterStop +1;
+            while (checkStop<=lastStop)
+            {
+                String temporaryStart= (String) stopsList.get(firstStop);
+                //System.out.println("pre start"+temporaryStart);
+                String temporaryEnd= (String) stopsList.get(checkStop);
+                //System.out.println("pre end"+temporaryEnd);
+
+                for (ArrayList<String> strings : booking)
+                {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                                    strings.get(1).equals(temporaryStart) &&
+                                    strings.get(2).equals(temporaryEnd)
+                    )
+                    {
+
+                        bookedSeat.add(strings.get(4));
+                    }
+                }
+                //System.out.println("booking"+bookedSeat);
+                checkStop++;
+            }
+            firstStop++;
         }
 
 //      loop to create seat buttons
