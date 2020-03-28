@@ -407,7 +407,6 @@ public class trainBooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
-
     private void  emptyOption(ArrayList<String> temporaryList) {
 //        create the stage
         Stage window= new Stage();
@@ -475,85 +474,68 @@ public class trainBooking extends Application {
         grid.add(closeBut,14,6,14,6);
     }
     private void deleteOption() {
+        Scanner scanDDate = new Scanner(System.in);
+        System.out.println("enter Date: [yyyy-mm-dd]");
+        String deleteDate= scanDDate.next().toLowerCase();
+        ArrayList <String>dateList = new ArrayList<>();
+        for (ArrayList<String> data : booking) dateList.add(data.get(0));
+
         Scanner scanDNic = new Scanner(System.in);
-        System.out.println("enter your name:");
+        System.out.println("enter your Nic: ");
         String deleteNic= scanDNic.next().toLowerCase();
         ArrayList <String>nicList = new ArrayList<>();
-        for (ArrayList<String> data : booking) nicList.add(data.get(3));
-        if (nicList.contains(deleteNic))
+        for (ArrayList<String> data : booking) nicList.add(data.get(5));
+
+        ArrayList <Integer>deleteIndex = new ArrayList<>();
+        if (nicList.contains(deleteNic) && dateList.contains(deleteDate))
         {
-            ArrayList <String>deleteDates = new ArrayList<>();
-            int i=0;
-            for (ArrayList<String> data : booking)
-            {
-                if (data.get(5).equals(deleteNic))
+            for(ArrayList<String> data : booking){
+                if(data.get(0).equals(deleteDate)&&data.get(5).equals(deleteNic))
                 {
-                    if(!deleteDates.contains(data.get(0)))
-                    {
-                        System.out.println(i+" | "+data.get(0));
-                        i++;
-                        deleteDates.add(data.get(0));
-                    }
+                    deleteIndex.add(booking.indexOf(data));
                 }
             }
-            Scanner scanDDate = new Scanner(System.in);
-            System.out.println("select the date");
-            String selectDate= scanDDate.next();
-            if(selectDate.toLowerCase().equals("q"))
+            Collections.reverse(deleteIndex);
+            System.out.println("removed data");
+            for(int i : deleteIndex)
             {
-                waitOption();
-            }
-            try {
-                if (parseInt(selectDate) < i && parseInt(selectDate) >= 0)
-                {
-                    String date = deleteDates.get(parseInt(selectDate));
-                    System.out.println("Deleted data\n");
-                    ArrayList<Integer> indexDelete = new ArrayList<>();
-                    for (ArrayList<String> data : booking)
-                    {
-                        if (data.get(5).equals(deleteNic) && data.get(0).equals(date))
-                        {
-                            System.out.println("From: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
-                            indexDelete.add(booking.indexOf(data));
-                        }
-                    }
-                    Collections.reverse(indexDelete);
-                    for (int index : indexDelete) booking.remove(index);
-                    waitOption();
-                }
-                else
-                {
-                    System.out.println("input is not available");
-                    deleteOption();
-                }
-            }
-            catch (Exception e)
-            {
-                System.out.println("input is invalied");
-                deleteOption();
+                System.out.println(booking.get(i));
+                booking.remove(i);
             }
         }
-        else if(deleteNic.toLowerCase().equals("q"))
+        else if(deleteNic.toLowerCase().equals("q")) waitOption();
+        else if(!nicList.contains(deleteNic))
         {
-            waitOption();
-        }else {
-                System.out.println("name is not in records");
-                deleteOption();
+            System.out.println("Nic is not in records");
+            deleteOption();
         }
+        else if(!dateList.contains(deleteDate))
+        {
+            System.out.println("Date is not in records");
+            deleteOption();
+        }
+        waitOption();
     }
     private void   findOption() {
         Scanner scanFNic = new Scanner(System.in);
         System.out.println("enter your Nic: ");
         String findNic= scanFNic.next().toLowerCase();
+
         ArrayList <String>nicList = new ArrayList<>();
         for (ArrayList<String> data : booking) nicList.add(data.get(5));
+
         if (nicList.contains(findNic))
         {
             for (ArrayList<String> data : booking)
             {
                 if (data.get(5).equals(findNic))
                 {
-                    System.out.println(data.get(0)+"\nFrom: " + data.get(1) + "\nTo: " + data.get(2) + "\nSeat :" + data.get(4) + "\n");
+                    System.out.println(
+                            "\nName: " + data.get(3) +
+                            "\nDate: " + data.get(0) +
+                            "\nFrom: " + data.get(1) +
+                            "\nTo: "   + data.get(2) +
+                            "\nSeat: " + data.get(4) );
                 }
             }
             waitOption();
@@ -564,7 +546,8 @@ public class trainBooking extends Application {
         }
         else
             {
-                System.out.println("name not in records");
+                System.out.println("Nic not in records");
+                findOption();
             }
     }
     private void   saveOption() {
