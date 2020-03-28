@@ -124,6 +124,7 @@ public class trainBooking extends Application {
                 "Hatton","Thalawakele","Nanuoya", "Haputale","Diyatalawa",
                 "Bandarawela","Ella", "Badulla" };
         ArrayList<String> stopsList = new ArrayList<>(Arrays.asList(stops));
+        System.out.println(stopsList);
 
 //        drop down menu for start
         ComboBox<String> startComboBox = new ComboBox<>();
@@ -214,26 +215,34 @@ public class trainBooking extends Application {
         ArrayList <String>bookedSeat = new ArrayList<>();
 
         int startingStop= stopsList.indexOf(temporaryList.get(1));
+        System.out.println("index of start"+startingStop);
         int endingStop= stopsList.indexOf(temporaryList.get(2));
+        System.out.println("index of end"+endingStop);
+        int checkStop = startingStop+1;
         while (startingStop<endingStop)
-        {
-            String temporaryStart= (String) stopsList.get(startingStop);
-            String temporaryEnd= (String) stopsList.get(startingStop+1);
-            for (ArrayList<String> strings : booking)
+            while (checkStop<=endingStop)
             {
-                if
-                (
-                        strings.get(0).equals(temporaryList.get(0))&&
-                        strings.get(1).equals(temporaryStart) &&
-                        strings.get(2).equals(temporaryEnd)
-                )
+                String temporaryStart= (String) stopsList.get(startingStop);
+                System.out.println("temp start"+temporaryStart);
+                String temporaryEnd= (String) stopsList.get(checkStop);
+                System.out.println("temp end"+temporaryEnd);
+                for (ArrayList<String> strings : booking)
                 {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                            strings.get(1).equals(temporaryStart) &&
+                            strings.get(2).equals(temporaryEnd)
+                    )
+                    {
 
-                    bookedSeat.add(strings.get(4));
+                        bookedSeat.add(strings.get(4));
+                    }
                 }
+                System.out.println("booking"+bookedSeat);
+                checkStop++;
             }
-            startingStop++;
-        }
+
 
 
 //        loop to create seat buttons & seat numbers
