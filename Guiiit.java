@@ -7,11 +7,7 @@
 \ https://beginnersbook.com/2019/04/java-program-to-perform-bubble-sort-on-strings/
 */
 
-//import com.mongodb.MongoClient;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -23,22 +19,30 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import org.bson.Document;
-//import org.bson.Document;
-//import com.mongodb.client.*;
+import com.mongodb.client.*;
 import java.time.LocalDate;
 import java.util.*;
+
 public class Guiiit extends Application {
     static final int SEATING_CAPACITY = 42;
+
     public static void main(String[] args) {
         launch();
     }
+
     static final List<LocalDate> dateColomboList = new ArrayList<>();
     static final List<LocalDate> dateBadullaList = new ArrayList<>();
     static final ArrayList<ArrayList<HashMap<String,String>>> dataColombo = new ArrayList<>();
     static final ArrayList<ArrayList<HashMap<String,String>>> dataBadulla = new ArrayList<>();
+
     public void start(Stage stage) {
         welcome();
     }
+
+    /**
+     * this method begins the ticket booking system with a welcome message
+     * is used to create the data structures
+     */
     public void welcome() {
         System.out.println("\nwelcome to ticket booking system \nA/C compartment for Denuwara Menike");
         List<String> temp = new ArrayList<>();
@@ -47,6 +51,14 @@ public class Guiiit extends Application {
         //opens the options menu
         listOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /**
+     * this method is used to show the user options to interact with the system
+     * users are given a list of options to choice from
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla  this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   listOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo) {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
@@ -60,6 +72,15 @@ public class Guiiit extends Application {
                 "q quit\n");
         testOptions(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /**
+     * this method is used to handle the options selected by the user & to call the
+     * respective method, if the option is view, add or empty, a gui will be shown for
+     * the user to select the  route & the date
+     *  @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   testOptions(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
         Stage window = new Stage();
@@ -184,7 +205,20 @@ public class Guiiit extends Application {
         });
         gridFirst.add(closeButFirst,80,30,10,12);
     }
-    private void buttonAtion(List<LocalDate> dateBadullaList, ArrayList<ArrayList<HashMap<String, String>>> dataBadulla, LocalDate date, int badullaColomboVerify, TextField username, List<String> temp) {
+
+    /**
+     * this method is used perform the actions for seat icons
+     * adding the seat number to temp list
+     *
+     * @param dateBadullaList passing date list to verify status of booking
+     * @param dataBadulla passing seat data list to verify status of booking
+     * @param date   date related for the booking
+     * @param badullaColomboVerify this parameter passes the route selected by the user
+     * @param username          this is the value from the text box
+     * @param temp              this parameter stores temporarily stored seats
+     */
+    private void buttonAtion(List<LocalDate> dateBadullaList, ArrayList<ArrayList<HashMap<String, String>>> dataBadulla,
+                             LocalDate date, int badullaColomboVerify, TextField username, List<String> temp) {
 
         if(!dateBadullaList.contains(date))
         {
@@ -204,20 +238,30 @@ public class Guiiit extends Application {
             dataBadulla.get(hashhashindex).add(0, TBadullaToColombo);
         }
         else
-            {
+        {
 //                creating a temp hashmap to get name  from the text & seat numbers from temp list
-                ArrayList<HashMap<String,String>> inti = dataBadulla.get(dateBadullaList.indexOf(date));
-                HashMap<String,String> TBadullaToColombo = inti.get(0);
-                for(String i: temp)
-                {
-                    int indexforHash = temp.indexOf(i);
-                    TBadullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
-                }
-//                replacing the exisiting hashmap at data structure index relavent to the date with the temprary hashmap
-                dataBadulla.get(dateBadullaList.indexOf(date)).clear();
-                dataBadulla.get(dateBadullaList.indexOf(date)).add(0,TBadullaToColombo);
+            ArrayList<HashMap<String,String>> inti = dataBadulla.get(dateBadullaList.indexOf(date));
+            HashMap<String,String> TBadullaToColombo = inti.get(0);
+            for(String i: temp)
+            {
+                int indexforHash = temp.indexOf(i);
+                TBadullaToColombo.put(temp.get(indexforHash),username.getText().toLowerCase());
             }
+//                replacing the exisiting hashmap at data structure index relavent to the date with the temprary hashmap
+            dataBadulla.get(dateBadullaList.indexOf(date)).clear();
+            dataBadulla.get(dateBadullaList.indexOf(date)).add(0,TBadullaToColombo);
+        }
     }
+
+    /**
+     * this method is used to colour changes for the add view
+     * @param dataColombo passing seat data list to verify status of booking
+     * @param dateColomboList passing date list to verify status of booking
+     * @param button passing the image which needs to be styled
+     * @param date   date related for the booking
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     */
     private void seatcolourloop(ArrayList<ArrayList<HashMap<String, String>>> dataColombo, List<LocalDate> dateColomboList, ImageView button, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla) {
 //        importing icons
         Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
@@ -257,6 +301,17 @@ public class Guiiit extends Application {
             }
         });
     }
+
+    /**
+     * in  this method  42 seat icons will be created & style with the use of parameters & data structures
+     * then give the user the ability to select & book seats on a preferred day
+     * @param colomboBadullaVerify this parameter passes a 0 01 depending on users choice of route
+     * @param badullaColomboVerify this parameter passes a 0 01 depending on users choice of route
+     * @param date                 this parameter passes the date selected by the user
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void    addOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
         Stage window = new Stage();
@@ -320,6 +375,10 @@ public class Guiiit extends Application {
         bookBut.setMaxSize(120, 60);
         bookBut.setStyle("-fx-background-color: green; ");
         bookBut.setOnAction(event -> {
+            System.out.println("[ c ]"+dataColombo);
+            System.out.println("[ c ]"+dateColomboList);
+            System.out.println("[ b ]"+dataBadulla);
+            System.out.println("[ b ]"+dateBadullaList);
 //            alert will be shown if either the name or a seat is not selected
             if (username.getText().trim().isEmpty()||temp.isEmpty())
             {
@@ -337,17 +396,19 @@ public class Guiiit extends Application {
             else if(badullaColomboVerify==1)
             {
                 buttonAtion(dateBadullaList,dataBadulla,date,badullaColomboVerify,username, temp);
-                temp.clear();
-                window.close();
-                listOption(temp, ColomboToBadulla, BadullaToColombo);
             }
             else if (colomboBadullaVerify==1)
             {
                 buttonAtion(dateColomboList, dataColombo, date, colomboBadullaVerify, username, temp);
-                temp.clear();
-                window.close();
-                listOption(temp, ColomboToBadulla, BadullaToColombo);
             }
+
+            System.out.println("[ c ]"+dataColombo);
+            System.out.println("[ c ]"+dateColomboList);
+            System.out.println("[ b ]"+dataBadulla);
+            System.out.println("[ b ]"+dateBadullaList);
+            temp.clear();
+            window.close();
+            listOption(temp, ColomboToBadulla, BadullaToColombo);
         });
         grid.add(bookBut, 10, 9,10,9);
 
@@ -376,6 +437,16 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut, 14, 9,14,9);//      close button
     }
+
+    /**
+     *this method is used to show seats, booked seats will be styled
+     * @param colomboBadullaVerify parameter is passed to show the selected route
+     * @param badullaColomboVerify parameter is passed to show the selected route
+     * @param date parameter is passed to show the bookings for the selected date
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   viewOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
         Stage window= new Stage();
@@ -457,6 +528,16 @@ public class Guiiit extends Application {
         grid.add(closeBut,14,6,14,6);
 
     }
+
+    /**
+     *this method is used to show empty seats, booked seats will not be shown
+     * @param colomboBadullaVerify parameter is passed to show the selected route
+     * @param badullaColomboVerify parameter is passed to show the selected route
+     * @param date parameter is passed to show the bookings for the selected date
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void  emptyOption(int colomboBadullaVerify, int badullaColomboVerify, LocalDate date, List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //      create the stage
         Stage window= new Stage();
@@ -543,6 +624,13 @@ public class Guiiit extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
+
+    /**
+     * this method is used to find & remove user seat  bookings from a given day
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void deleteOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //        getting user name
         Scanner scanDName = new Scanner(System.in);
@@ -650,6 +738,14 @@ public class Guiiit extends Application {
         }
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+
+    /**
+     * this method is used a allow the user to find all bookings using user name
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   findOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //        getting user name
         Scanner scanFind = new Scanner(System.in);
@@ -699,6 +795,13 @@ public class Guiiit extends Application {
         }else findOption(temp, ColomboToBadulla, BadullaToColombo); //if name is invaid method is looped
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /**
+     * this method is used to save user data to a data base
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   saveOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //        start mongo client
         com.mongodb.MongoClient dbclient = new MongoClient("localhost", 27017);
@@ -802,6 +905,13 @@ public class Guiiit extends Application {
         System.out.println("saved files");
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /**
+     * this method is used restore a saved user data set back to the arras
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   loadOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
         System.out.println("dateColomboList"+dateColomboList);
         dateColomboList.clear();
@@ -822,14 +932,26 @@ public class Guiiit extends Application {
             {
                 dateColomboList.add(LocalDate.parse(document.getString("date")));
                 temphashmap.put(document.getString("Seat number"),document.getString("user name"));
-                //dataColombo.add(new ArrayList<>());
-                //dataColombo.get(dateColomboList.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
+                dataColombo.add(new ArrayList<>());
+                dataColombo.get(dateColomboList.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
+            }
+            else{
+//                temphashmap.put(document.getString("Seat number"),document.getString("user name"));
+//                dataColombo.add(new ArrayList<>());
+//                dataColombo.get(dateColomboList.indexOf(LocalDate.parse(document.getString("date")))).add(0,temphashmap);
             }
         }
         System.out.println("dateColomboList"+dateColomboList);
         System.out.println("dataColombo"+dataColombo);
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /**
+     * this method used to alphabetically oder all booked seats using a bubble sort algorithm
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   oderOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
         String sortTemp;
 //        create temporary arrays
@@ -863,6 +985,14 @@ public class Guiiit extends Application {
         }
         waitOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /**
+     * this method is used to get user confirmation to proceed after
+     * a console command is run, without this the program will quickly show the menu items again.
+     * @param temp              this parameter stores temporarily stored seats
+     * @param ColomboToBadulla  this parameter used as a temporary data structure to reference for icon styling
+     * @param BadullaToColombo this parameter used as a temporary data structure to reference for icon styling
+     */
     public void   waitOption(List<String> temp, HashMap<String, String> ColomboToBadulla, HashMap<String, String> BadullaToColombo){
 //        to let the use consume the details of console functions before moving to the menu
         Scanner scanContinue = new Scanner(System.in);
@@ -870,6 +1000,11 @@ public class Guiiit extends Application {
         String continueConsole=scanContinue.next();
         if (!continueConsole.isEmpty()) listOption(temp, ColomboToBadulla, BadullaToColombo);
     }
+
+    /** this method is used to get a combined list of all customer names
+     *
+     * @return this retuns a array withh all customer names
+     */
     public List<String>   getCustomerNames(){
         List<String> nameList = new ArrayList<>();
         for(LocalDate i :dateColomboList){
