@@ -284,9 +284,9 @@ public class trainBooking extends Application {
 //        then addOption method will rerun
             if (
                     username.getText().trim().isEmpty()||
-                            temporarySeat.isEmpty()||
-                            userId.getText().trim().isEmpty()||
-                            surname.getText().trim().isEmpty()
+                    temporarySeat.isEmpty()||
+                    userId.getText().trim().isEmpty()||
+                    surname.getText().trim().isEmpty()
             )
             {
                 Alert a = new Alert(Alert.AlertType.WARNING);
@@ -490,8 +490,8 @@ public class trainBooking extends Application {
             {
                 System.out.println(
                         "\nFrom: " + booking.get(i).get(1) +
-                                "\nTo:   " + booking.get(i).get(2) +
-                                "\nSeat: " + booking.get(i).get(4));
+                        "\nTo:   " + booking.get(i).get(2) +
+                        "\nSeat: " + booking.get(i).get(4));
                 booking.remove(i);
             }
         }
@@ -524,10 +524,10 @@ public class trainBooking extends Application {
                     System.out.println(
                             "\nName: " + data.get(3) +
                                     " "+ data.get(6) +
-                                    "\nDate: " + data.get(0) +
-                                    "\nFrom: " + data.get(1) +
-                                    "\nTo: "   + data.get(2) +
-                                    "\nSeat: " + data.get(4) );
+                            "\nDate: " + data.get(0) +
+                            "\nFrom: " + data.get(1) +
+                            "\nTo: "   + data.get(2) +
+                            "\nSeat: " + data.get(4) );
                 }
             }
             waitOption();
@@ -537,10 +537,10 @@ public class trainBooking extends Application {
             waitOption();
         }
         else
-        {
-            System.out.println("Nic not in records");
-            findOption();
-        }
+            {
+                System.out.println("Nic not in records");
+                findOption();
+            }
     }
     private void   saveOption() {
         com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
@@ -613,8 +613,8 @@ public class trainBooking extends Application {
                 }
             }
             System.out.println(seatList.get(j)+": "+
-                    nameList.get(j)+ " ["+
-                    nicList.get(j)+"]");
+                               nameList.get(j)+ " ["+
+                               nicList.get(j)+"]");
         }
         waitOption();
     }
@@ -639,8 +639,8 @@ public class trainBooking extends Application {
                     if
                     (
                             strings.get(0).equals(temporaryList.get(0))&&
-                                    strings.get(1).equals(temporaryStart) &&
-                                    strings.get(2).equals(temporaryEnd)
+                            strings.get(1).equals(temporaryStart) &&
+                            strings.get(2).equals(temporaryEnd)
                     )
                     {
                         bookedSeat.add(strings.get(4));
@@ -671,8 +671,8 @@ public class trainBooking extends Application {
                     if
                     (
                             strings.get(0).equals(temporaryList.get(0))&&
-                                    strings.get(1).equals(temporaryStart) &&
-                                    strings.get(2).equals(temporaryEnd)
+                            strings.get(1).equals(temporaryStart) &&
+                            strings.get(2).equals(temporaryEnd)
                     )
                     {
                         bookedSeat.add(strings.get(4));
