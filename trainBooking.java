@@ -219,6 +219,8 @@ public class trainBooking extends Application {
         int endingStop= stopsList.indexOf(temporaryList.get(2));
         System.out.println("index of end"+endingStop);
 
+
+
         while (startingStop<endingStop)
         {
             int checkStop = startingStop+1;
@@ -245,6 +247,42 @@ public class trainBooking extends Application {
                 checkStop++;
             }
             startingStop++;
+        }
+
+        System.out.println("///////////////");
+
+        int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
+        int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
+        int firstStop=0;
+        int lastStop=12;
+
+        while (firstStop<beforeStop)
+        {
+            int checkStop = afterStop +1;
+            while (checkStop<=lastStop)
+            {
+                String temporaryStart= (String) stopsList.get(firstStop);
+                System.out.println("pre start"+temporaryStart);
+                String temporaryEnd= (String) stopsList.get(checkStop);
+                System.out.println("pre end"+temporaryEnd);
+
+                for (ArrayList<String> strings : booking)
+                {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                                    strings.get(1).equals(temporaryStart) &&
+                                    strings.get(2).equals(temporaryEnd)
+                    )
+                    {
+
+                        bookedSeat.add(strings.get(4));
+                    }
+                }
+                System.out.println("booking"+bookedSeat);
+                checkStop++;
+            }
+            firstStop++;
         }
 
 
