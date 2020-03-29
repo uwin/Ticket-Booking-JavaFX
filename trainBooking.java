@@ -136,11 +136,7 @@ public class trainBooking extends Application {
         datePick.setValue(LocalDate.now());
         First.add(datePick, 12, 12,18,4);
 
-//        text for start
-        Label headStart = new Label("Start");
-        headStart.setFont(new Font("Arial", 23));
-        headStart.setTextFill(Color.web("#0076a3")); //light blue
-        First.add(headStart,3,16,9,4);
+
 
         String[] stops = new String[]{ "Colombo Fort","Polgahawela",
                 "Peradeniya Junction", "Gampola","Nawalapitiya",
@@ -148,6 +144,11 @@ public class trainBooking extends Application {
                 "Bandarawela","Ella", "Badulla" };
         ArrayList<String> stopsList = new ArrayList<>(Arrays.asList(stops));
 
+        //        text for start
+        Label headStart = new Label("Start");
+        headStart.setFont(new Font("Arial", 23));
+        headStart.setTextFill(Color.web("#0076a3")); //light blue
+        First.add(headStart,3,16,9,4);
 
 //        drop down menu for start
         ComboBox<String> startDrop = new ComboBox<>();
@@ -167,6 +168,13 @@ public class trainBooking extends Application {
         endDrop.setValue("Badulla");
         First.add(endDrop,12,20,9,4);
 
+        Button switchB = new Button("switch");
+        switchB.setOnAction(event -> {
+            String temp = startDrop.getValue();
+            startDrop.setValue(endDrop.getValue());
+            endDrop.setValue(temp);
+        });
+        First.add(switchB,22,20,9,4);
 
 //        gui element to progress to booking page
         Button continueB = new Button("Continue");
@@ -856,7 +864,7 @@ public class trainBooking extends Application {
 //        creating a array for already booked seats
         ArrayList<String> bookedSeat = new ArrayList<>();
 
-
+//        changing the order od stops in stopList according to selected path
         if (stopsList.indexOf(temporaryList.get(2))<stopsList.indexOf(temporaryList.get(1)))
         {
             Collections.reverse(stopsList);
