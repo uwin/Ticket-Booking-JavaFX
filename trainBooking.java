@@ -733,6 +733,12 @@ public class trainBooking extends Application {
         }
         return bookedSeat ;
     }
+
+    /**
+     * this method is used as a way to give the user a way to manually move to
+     * this method will prevent the code from automatically moving to the menu
+     * and lets the user do it on on their own pace.
+     */
     private void   waitOption() {
 //        to let the use consume the details of console functions
         Scanner scanContinue = new Scanner(System.in);
@@ -740,6 +746,7 @@ public class trainBooking extends Application {
         String continueConsole=scanContinue.next();
         if (!continueConsole.isEmpty())
         {
+//        opening the menu
             listOption();
         }
     }
