@@ -233,7 +233,8 @@ public class trainBooking extends Application {
      * the gui has 3 text fields that are used to get the user name, surname and
      * the user Nic
      *
-     * when the user presses icons to book seat they will react depending on the status of the button
+     * when the user presses icons to book seat they will react depending on the
+     *
      * if the seat is booked it will not change
      * if the seat is temporary booked it'll changed to black & removed from the
      * temporary booked list
@@ -551,7 +552,8 @@ public class trainBooking extends Application {
 
 //        values needed for the loop
         int number = 1;
-        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream
+                ("images/black.png"));
 
 //        creating a array of booked seats temporarily for styling
 //        for bookings with same date,from,to as temporary booking
@@ -865,7 +867,8 @@ public class trainBooking extends Application {
         ArrayList<String> bookedSeat = new ArrayList<>();
 
 //        changing the order od stops in stopList according to selected path
-        if (stopsList.indexOf(temporaryList.get(2))<stopsList.indexOf(temporaryList.get(1)))
+        if (stopsList.indexOf(temporaryList.get(2))
+                <stopsList.indexOf(temporaryList.get(1)))
         {
             Collections.reverse(stopsList);
         }
