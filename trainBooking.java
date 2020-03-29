@@ -573,7 +573,16 @@ public class trainBooking extends Application {
             }
     }
 
-
+    /**
+     * this method is used to save data stored in the main data structure,this
+     * will use a mongodb (a NoSQL database system) to save the date, username,
+     * surname, from, to, Nic and seat number each sets of these values will
+     * have a document. everything  will be stored in a single collection.
+     *
+     * before data will be stored, the code will check if a record already
+     * exists if it dose the existing file will be deleted & a new collection
+     * will be made
+     */
     private void   saveOption() {
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -609,14 +618,18 @@ public class trainBooking extends Application {
         waitOption();
     }
 
+
     /**
      * this method is used to recover data that was previously saved, this will
      * use a mongodb (a NoSQL database system) to receive the date, username,
      * surname, from, to, Nic and seat number. each sets of these values will
-     * have a document. everything  will be stored in a single collection.
+     * be saved to a temporary array and that array will be added to the main
+     * data structure .
      *
-     * before recovered data will be stored in the main data structure,
-     * it will be reset
+     * before data will be restored, the code will check if a record exists. if
+     * so the main data structure will be reset and data will be restored. if
+     * the a record is not there a message will be shown and data structure
+     * won't be changed
      */
     private void   loadOption() {
 //        initiate MongoClient
@@ -667,6 +680,7 @@ public class trainBooking extends Application {
         waitOption();
     }
 
+
     /**
      * this method is used to sort all the booked seats in the main data
      * structure using a bubble sort by name of the user & the ths code will
@@ -705,6 +719,7 @@ public class trainBooking extends Application {
         }
         waitOption();
     }
+
 
     /**
      * this method is used to get a temporary list for booked seats relevant to
@@ -793,6 +808,7 @@ public class trainBooking extends Application {
         }
         return bookedSeat ;
     }
+
 
     /**
      * this method is used as a way to give the user a way to manually move to
