@@ -856,6 +856,11 @@ public class trainBooking extends Application {
 //        creating a array for already booked seats
         ArrayList<String> bookedSeat = new ArrayList<>();
 
+
+        if (stopsList.indexOf(temporaryList.get(2))<stopsList.indexOf(temporaryList.get(1)))
+        {
+            Collections.reverse(stopsList);
+        }
 //        getting index of first & last stop from a list of stops
         int startingStop= stopsList.indexOf(temporaryList.get(1));
         int endingStop= stopsList.indexOf(temporaryList.get(2));
@@ -889,8 +894,8 @@ public class trainBooking extends Application {
         }
 
 //        getting index of stops immediately & before after booked 2 stops
-        int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
-        int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
+        int beforeStop= stopsList.indexOf(temporaryList.get(1))/*-1*/;
+        int afterStop=  stopsList.indexOf(temporaryList.get(2))/*-1*/;
         int firstStop=0;
         int lastStop=12;
 
