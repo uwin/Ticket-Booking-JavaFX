@@ -505,7 +505,12 @@ public class trainBooking extends Application {
         grid.add(closeBut,14,6,14,6);
     }
 
-
+    /**
+     * this method is used to delete sets of user data from the main data
+     * structure
+     * for this user Nic and date will be taken n as input & the code will
+     * delete all records with the given Nic on the given date
+     */
     private void deleteOption() {
         Scanner scanDDate = new Scanner(System.in);
         System.out.println("enter Date: [yyyy-mm-dd]");
