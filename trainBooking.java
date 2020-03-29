@@ -21,16 +21,27 @@ public class trainBooking extends Application {
     static final ArrayList<ArrayList<String>> booking = new ArrayList<>();
 
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }
 
 
+    /**
+     *
+     * @param stage
+     */
     public void start(Stage stage) {
         welcome();
     }
 
 
+    /**
+     *
+     */
     private void welcome() {
         System.out.println("\nwelcome to ticket booking system \n" +
                 "A/C compartment for Denuwara Menike");
@@ -38,6 +49,9 @@ public class trainBooking extends Application {
     }
 
 
+    /**
+     *
+     */
     private void   listOption() {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
@@ -85,6 +99,10 @@ public class trainBooking extends Application {
     }
 
 
+    /**
+     *
+     * @param userOption
+     */
     private void  firstGui(String userOption){
 //        create the stage
         Stage window = new Stage();
@@ -202,6 +220,27 @@ public class trainBooking extends Application {
     }
 
 
+    /**
+     *
+     * @param temporaryList this array has 7 values
+     *                      (date,from,to,name.seat number, Nic, surname)
+     *                      when it's passed to this method it only contains the
+     *                      date, from and to, these are initially used to get
+     *                      already booked seats using the checkBSeats method
+     *                      then the values are used to style the seat icons
+     *
+     *                      then the entered user name, surname & Nic values
+     *                      will be assigned
+     *
+     * @param temporarySeat this is array list which contains  seat
+     *                      numbers, which is used to style selected seats and
+     *                      is used to add user data to the main data structure
+     *                      (booking list)
+     * @param stopsList     this array contains a list of all stops for this
+     *                      method the values are used to reference when
+     *                      checking for booked seats
+     *                      this is used to pass in to the checkBSeats method
+     */
     private void    addOption(ArrayList<String> temporaryList,
                               ArrayList<String> temporarySeat,
                               ArrayList<String> stopsList) {
@@ -380,6 +419,16 @@ public class trainBooking extends Application {
     }
 
 
+    /**
+     *
+     * @param temporaryList this array has 7 values & for this method just the
+     *                      starting stop (1st index) and ending stop(2nd index)
+     *                      and date(index 0)are used
+     * @param stopsList     this array contains a list of all stops for this
+     *                      method the values are used to reference when
+     *                      checking for booked seats
+     *                      this is used to pass in to the checkBSeats method
+     */
     private void   viewOption(ArrayList<String> temporaryList,
                               ArrayList<String> stopsList) {
 //        create the stage
@@ -445,6 +494,17 @@ public class trainBooking extends Application {
     }
 
 
+    /**
+     *
+     * @param temporaryList this array has 7 values & for this method just the
+     *                      starting stop (1st index) and ending stop(2nd index)
+     *                      and date(index 0) are used
+     *                      this is used to pass in to the checkBSeats method
+     * @param stopsList     this array contains a list of all stops for this
+     *                      method the values are used to reference when
+     *                      checking for booked seats
+     *                      this is used to pass in to the checkBSeats method
+     */
     private void  emptyOption(ArrayList<String> temporaryList,
                               ArrayList<String> stopsList) {
 //        create the stage
@@ -759,9 +819,9 @@ public class trainBooking extends Application {
      * starting stop & ending stop, then it'll will check for booked seats
      * between stops that include the selected route
      *
-     * @param temporaryList this array had 7 values & for this method just the
+     * @param temporaryList this array has 7 values & for this method just the
      *                      starting stop (1st index) and ending stop(2nd index)
-     *                      are used
+     *                      and date(index 0) are used
      * @param stopsList     this array contains a list of all stops for this
      *                      method the values are used to reference when
      *                      checking for booked seats
