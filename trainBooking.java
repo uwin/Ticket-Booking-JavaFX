@@ -19,17 +19,25 @@ import java.util.*;
 public class trainBooking extends Application {
     static final int SEATING_CAPACITY = 42;
     static final ArrayList<ArrayList<String>> booking = new ArrayList<>();
+
+
     public static void main(String[] args) {
         launch();
     }
+
+
     public void start(Stage stage) {
         welcome();
     }
+
+
     private void welcome() {
         System.out.println("\nwelcome to ticket booking system \n" +
                 "A/C compartment for Denuwara Menike");
         listOption();
     }
+
+
     private void   listOption() {
         System.out.println("\n\n"+
                 "A Add a seat\n"+
@@ -75,6 +83,8 @@ public class trainBooking extends Application {
                 break;
         }
     }
+
+
     private void  firstGui(String userOption){
 //        create the stage
         Stage window = new Stage();
@@ -190,6 +200,8 @@ public class trainBooking extends Application {
         });
         First.add(closeButFirst,80,30,10,12);
     }
+
+
     private void    addOption(ArrayList<String> temporaryList,
                               ArrayList<String> temporarySeat,
                               ArrayList<String> stopsList) {
@@ -366,6 +378,8 @@ public class trainBooking extends Application {
         grid.add(closeBut, 14, 9,14,9);
 
     }
+
+
     private void   viewOption(ArrayList<String> temporaryList,
                               ArrayList<String> stopsList) {
 //        create the stage
@@ -429,6 +443,8 @@ public class trainBooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
+
+
     private void  emptyOption(ArrayList<String> temporaryList,
                               ArrayList<String> stopsList) {
 //        create the stage
@@ -488,6 +504,8 @@ public class trainBooking extends Application {
         });
         grid.add(closeBut,14,6,14,6);
     }
+
+
     private void deleteOption() {
         Scanner scanDDate = new Scanner(System.in);
         System.out.println("enter Date: [yyyy-mm-dd]");
@@ -537,6 +555,14 @@ public class trainBooking extends Application {
         }
         waitOption();
     }
+
+
+    /**
+     * this method is used to get all data related for a given user
+     * for this user Nic will be taken as input & the code will loop thorough
+     * main data structure( booking array) & the code will print out sets of
+     * data related to the given Nic
+     */
     private void   findOption() {
         Scanner scanFNic = new Scanner(System.in);
         System.out.println("enter your Nic: ");
@@ -572,6 +598,7 @@ public class trainBooking extends Application {
                 findOption();
             }
     }
+
 
     /**
      * this method is used to save data stored in the main data structure,this
