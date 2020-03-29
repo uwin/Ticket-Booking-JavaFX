@@ -50,7 +50,15 @@ public class trainBooking extends Application {
 
 
     /**
+     * this method is used to print the menu options & to run the relevant
+     * methods according to user input
+     * the code will print a all options of the menu along with a
+     * corresponding letter in front of it.
      *
+     * after this the code will request a user input
+     * using the user if the methods are tobe run on the console the code will
+     * run the relevant methods directly using a switch case, if it's gui related the firstGui
+     * method will be run by passing the user input to it
      */
     private void   listOption() {
         System.out.println("\n\n"+
@@ -100,8 +108,14 @@ public class trainBooking extends Application {
 
 
     /**
+     * this method is used to create a gui window that lets the user pick a date
+     * using a datePicker & starting and ending stops using two drop down menus
      *
-     * @param userOption
+     * the picked values will be passed to the gui related methods addOption,
+     * viewOption or emptyOption depending on the user input passed by the using
+     * the userOption parameter
+     * @param userOption this parameter is used to pass the user inputs for Gui
+     *                   related function from the listOptions method
      */
     private void  firstGui(String userOption){
 //        create the stage
