@@ -94,7 +94,7 @@ public class trainBooking extends Application {
         head.setTextFill(Color.web("#0076a3")); //light blue
         First.add(head,20,3,50,8);
 
-//        Secondary text for first window
+//        text for date
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
         headDate.setTextFill(Color.web("#0076a3")); //light blue
@@ -123,7 +123,7 @@ public class trainBooking extends Application {
                 "Hatton","Thalawakele","Nanuoya", "Haputale","Diyatalawa",
                 "Bandarawela","Ella", "Badulla" };
         ArrayList<String> stopsList = new ArrayList<>(Arrays.asList(stops));
-        //System.out.println(stopsList);
+
 
 //        drop down menu for start
         ComboBox<String> startDrop = new ComboBox<>();
@@ -196,7 +196,6 @@ public class trainBooking extends Application {
 //        create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
-
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 2, 5, 2));
         grid.setHgap(10);
@@ -205,10 +204,13 @@ public class trainBooking extends Application {
         window.setScene(addView);
         window.show();
 
-//      variables needed for seat icon loop
-        Image seatRed = new Image(getClass().getResourceAsStream("images/red.png"));
-        Image seatGreen = new Image(getClass().getResourceAsStream("images/green.png"));
-        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
+//        variables needed for seat icon loop
+        Image seatRed = new Image(getClass().getResourceAsStream
+                ("images/red.png"));
+        Image seatGreen = new Image(getClass().getResourceAsStream
+                ("images/green.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream
+                ("images/black.png"));
 //        used to set the seat number
         int number = 1;
 //        creating a array of booked seats temporarily for styling
@@ -227,14 +229,23 @@ public class trainBooking extends Application {
                     button.setFitWidth(60);
                     button.setId(String.valueOf(number));
 //        if the current seat id is already booked change to red
-                    if (bookedSeat.contains(button.getId())) button.setImage(seatRed);
+                    if (bookedSeat.contains(button.getId()))
+                    {
+                        button.setImage(seatRed);
+                    }
 //        if the current seat id is temporarily booked change to green
-                    if (temporarySeat.contains(button.getId())) button.setImage(seatGreen);
+                    if (temporarySeat.contains(button.getId()))
+                    {
+                        button.setImage(seatGreen);
+                    }
 
                     button.setOnMouseClicked(event ->
                     {
 //        selected seat is already booked change to red
-                        if (bookedSeat.contains(button.getId())) button.setImage(seatRed);
+                        if (bookedSeat.contains(button.getId()))
+                        {
+                            button.setImage(seatRed);
+                        }
 //        selected seat is not temporarily booked change to green & append
                         else if (!temporarySeat.contains(button.getId()))
                         {
@@ -290,10 +301,22 @@ public class trainBooking extends Application {
             )
             {
                 Alert a = new Alert(Alert.AlertType.WARNING);
-                if (username.getText().trim().isEmpty())a.setHeaderText("enter a name");
-                if (surname.getText().trim().isEmpty())a.setHeaderText("enter a surname");
-                if (temporarySeat.isEmpty())a.setHeaderText("select seats");
-                if (userId.getText().trim().isEmpty())a.setHeaderText("enter Nic");
+                if (username.getText().trim().isEmpty())
+                {
+                    a.setHeaderText("enter a name");
+                }
+                if (surname.getText().trim().isEmpty())
+                {
+                    a.setHeaderText ("enter a surname");
+                }
+                if (temporarySeat.isEmpty())
+                {
+                    a.setHeaderText("select seats");
+                }
+                if (userId.getText().trim().isEmpty())
+                {
+                    a.setHeaderText("enter Nic");
+                }
                 a.show();
                 a.setOnCloseRequest(event1 ->
                 {
@@ -357,8 +380,10 @@ public class trainBooking extends Application {
         window.show();
 
 //      variables needed for seat icon loop
-        Image seatBlack = new Image(getClass().getResourceAsStream("images/black.png"));
-        Image seatGrey = new Image(getClass().getResourceAsStream("images/grey.png"));
+        Image seatBlack = new Image(getClass().getResourceAsStream
+                ("images/black.png"));
+        Image seatGrey = new Image(getClass().getResourceAsStream
+                ("images/grey.png"));
         //used to get value for seat number
         int number = 1;
 
@@ -378,7 +403,10 @@ public class trainBooking extends Application {
                     button.setFitWidth(60);
 
 //        if the selected seat is already booked change to grey
-                    if (bookedSeat.contains(num.getText())) button.setImage(seatGrey);
+                    if (bookedSeat.contains(num.getText()))
+                    {
+                        button.setImage(seatGrey);
+                    }
                     number++;
                     grid.add(button, c, r);
                     grid.add(num, c, r);
@@ -434,7 +462,8 @@ public class trainBooking extends Application {
                     button.setFitWidth(60);
 
 //        if the selected seat is not booked the seat icon is shown
-                    if (!bookedSeat.contains(num.getText())) {
+                    if (!bookedSeat.contains(num.getText()))
+                    {
                         button.setImage(seatBlack);
                         grid.add(button, c, r);
                         grid.add(num, c, r);
@@ -479,7 +508,8 @@ public class trainBooking extends Application {
         if (nicList.contains(deleteNic) && dateList.contains(deleteDate))
         {
             for(ArrayList<String> data : booking){
-                if(data.get(0).equals(deleteDate)&&data.get(5).equals(deleteNic))
+                if(data.get(0).equals(deleteDate)&&
+                        data.get(5).equals(deleteNic))
                 {
                     deleteIndex.add(booking.indexOf(data));
                 }
@@ -543,13 +573,22 @@ public class trainBooking extends Application {
             }
     }
     private void   saveOption() {
-        com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
-        MongoDatabase dbDatabase = dbClient.getDatabase("trainBookingSystem");
-        MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
+        com.mongodb.MongoClient dbClient = new MongoClient
+                ("localhost", 27017);
+        MongoDatabase dbDatabase = dbClient.getDatabase
+                ("trainBookingSystem");
+        MongoCollection<Document> bookings = dbDatabase.getCollection
+                ("BookingData");
         System.out.println("connected to BookingData");
         FindIterable<Document> bookingDocument = bookings.find();
 
-        if(bookings.countDocuments()>1) for(Document document: bookingDocument) bookings.deleteOne(document);
+        if(bookings.countDocuments()>1)
+        {
+            for(Document document: bookingDocument)
+            {
+                bookings.deleteOne(document);
+            }
+        }
 
         for (ArrayList<String> data : booking)
         {
@@ -568,9 +607,12 @@ public class trainBooking extends Application {
         waitOption();
     }
     private void   loadOption() {
-        com.mongodb.MongoClient dbClient = new MongoClient("localhost", 27017);
-        MongoDatabase dbDatabase = dbClient.getDatabase("trainBookingSystem");
-        MongoCollection<Document> bookings = dbDatabase.getCollection("BookingData");
+        com.mongodb.MongoClient dbClient = new MongoClient
+                ("localhost", 27017);
+        MongoDatabase dbDatabase = dbClient.getDatabase
+                ("trainBookingSystem");
+        MongoCollection<Document> bookings = dbDatabase.getCollection
+                ("BookingData");
         System.out.println("connected to BookingData");
         FindIterable<Document> bookingDocument = bookings.find();
 
@@ -588,7 +630,6 @@ public class trainBooking extends Application {
             temporaryList.set(6,document.getString("Surname"));
             booking.add(new ArrayList<>(temporaryList));
         }
-        System.out.println(booking);
         dbClient.close();
         System.out.println("files loaded");
         waitOption();
@@ -606,7 +647,9 @@ public class trainBooking extends Application {
         }
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
-                if (String.valueOf(nameList.get(i)).compareTo(String.valueOf(nameList.get(j))) < 0) {
+                if (String.valueOf(nameList.get(i))
+                        .compareTo(String.valueOf(nameList.get(j))) < 0)
+                {
                     sortTemp = String.valueOf(nameList.get(j));
                     nameList.set(j, nameList.get(i));
                     nameList.set(i, sortTemp);
@@ -620,20 +663,23 @@ public class trainBooking extends Application {
     }
     private ArrayList<String> checkBSeats(ArrayList<String> temporaryList,
                                           ArrayList<String> stopsList){
+//        creating a array for already booked seats
         ArrayList<String> bookedSeat = new ArrayList<>();
+
+//        getting index of first & last stop from a list of stops
         int startingStop= stopsList.indexOf(temporaryList.get(1));
-        //System.out.println("index of start"+startingStop);
         int endingStop= stopsList.indexOf(temporaryList.get(2));
-        //System.out.println("index of end"+endingStop);
+
+//        looping to check for booked seats in between the 2 stops
         while (startingStop<endingStop)
         {
             int checkStop = startingStop+1;
             while (checkStop<=endingStop)
             {
                 String temporaryStart= stopsList.get(startingStop);
-                //System.out.println("temp start"+temporaryStart);
                 String temporaryEnd= stopsList.get(checkStop);
-                //System.out.println("temp end"+temporaryEnd);
+
+//        getting  seat numbers using the main data structure
                 for (ArrayList<String> strings : booking)
                 {
                     if
@@ -643,29 +689,31 @@ public class trainBooking extends Application {
                             strings.get(2).equals(temporaryEnd)
                     )
                     {
+//        adding seat number to created array
                         bookedSeat.add(strings.get(4));
                     }
                 }
-                //System.out.println("booking"+bookedSeat);
                 checkStop++;
             }
             startingStop++;
         }
-        //System.out.println("///////////////");
+
+//        getting index of stops immediately & before after booked 2 stops
         int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
         int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
         int firstStop=0;
         int lastStop=12;
+
+//        looping to check for booked seats for routes containing the 2 stops
         while (firstStop<beforeStop)
         {
             int checkStop = afterStop +1;
             while (checkStop<=lastStop)
             {
                 String temporaryStart= stopsList.get(firstStop);
-                //System.out.println("pre start"+temporaryStart);
                 String temporaryEnd= stopsList.get(checkStop);
-                //System.out.println("pre end"+temporaryEnd);
 
+//        getting  seat numbers using the main data structure
                 for (ArrayList<String> strings : booking)
                 {
                     if
@@ -675,10 +723,10 @@ public class trainBooking extends Application {
                             strings.get(2).equals(temporaryEnd)
                     )
                     {
+//        adding seat number to created array
                         bookedSeat.add(strings.get(4));
                     }
                 }
-                //System.out.println("booking"+bookedSeat);
                 checkStop++;
             }
             firstStop++;
@@ -686,10 +734,13 @@ public class trainBooking extends Application {
         return bookedSeat ;
     }
     private void   waitOption() {
-//        to let the use consume the details of console functions before moving to the menu
+//        to let the use consume the details of console functions
         Scanner scanContinue = new Scanner(System.in);
         System.out.println("Press any key to continue");
         String continueConsole=scanContinue.next();
-        if (!continueConsole.isEmpty()) listOption();
+        if (!continueConsole.isEmpty())
+        {
+            listOption();
+        }
     }
 }
