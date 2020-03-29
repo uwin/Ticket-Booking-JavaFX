@@ -634,17 +634,28 @@ public class trainBooking extends Application {
         System.out.println("files loaded");
         waitOption();
     }
+
+    /**
+     * this method is used to sort all the booked seats in the main data
+     * structure using a bubble sort by name of the user & the ths code will
+     * print out the sorted date in the following format
+     *  seat + number + name + surname + Nic
+     */
     private void   oderOption() {
         String sortTemp;
+//        creating arrays for each value needed
         List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
         List<String> nicList = new ArrayList<>();
+
+//        looping through the main data structure to extract data
         for (ArrayList<String> data : booking)
         {
             nameList.add(data.get(3)+" "+data.get(6));
             seatList.add(data.get(4));
             nicList.add(data.get(5));
         }
+//        running the bubble sort algorithm
         for (int j = 0; j < nameList.size(); j++) {
             for (int i = j + 1; i < nameList.size(); i++) {
                 if (String.valueOf(nameList.get(i))
@@ -655,12 +666,29 @@ public class trainBooking extends Application {
                     nameList.set(i, sortTemp);
                 }
             }
+//         printing out needed values
             System.out.println(seatList.get(j)+": "+
                                nameList.get(j)+ " ["+
                                nicList.get(j)+"]");
         }
         waitOption();
     }
+
+    /**
+     * this method is used to get a temporary list for booked seats relevant to
+     * the selected route, this method will check for booked seats between the
+     * starting stop & ending stop, then it'll will check for booked seats
+     * between stops that include the selected route
+     *
+     * @param temporaryList this array had 7 values & for this method just the
+     *                      starting stop (1st index) and ending stop(2nd index)
+     *                      are used
+     * @param stopsList     this array contains a list of all stops for this
+     *                      method the values are used to reference when
+     *                      checking for booked seats
+     * @return              this method will return a array list containing a
+     *                      list of all booked seats for the given stops
+     */
     private ArrayList<String> checkBSeats(ArrayList<String> temporaryList,
                                           ArrayList<String> stopsList){
 //        creating a array for already booked seats
