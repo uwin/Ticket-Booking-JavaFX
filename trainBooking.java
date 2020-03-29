@@ -808,11 +808,12 @@ public class trainBooking extends Application {
 
     /**
      * this method is used to sort all the booked seats in the main data
-     * structure using a bubble sort by name of the user & the ths code will
+     * structure using a bubble sort by name of the user & the this code will
      * print out the sorted date in the following format
      *  seat + number + name + surname + Nic
      */
     private void   oderOption() {
+        if (booking.size()<1) System.out.println("no seats are booked");
         String sortTemp;
 //        creating arrays for each value needed
         List<String> seatList = new ArrayList<>();
