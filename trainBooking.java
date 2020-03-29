@@ -51,14 +51,13 @@ public class trainBooking extends Application {
 
     /**
      * this method is used to print the menu options & to run the relevant
-     * methods according to user input
-     * the code will print a all options of the menu along with a
-     * corresponding letter in front of it.
+     * methods according to user input the code will print a all options of the
+     * menu along with a corresponding letter in front of it.
      *
-     * after this the code will request a user input
-     * using the user if the methods are tobe run on the console the code will
-     * run the relevant methods directly using a switch case, if it's gui related the firstGui
-     * method will be run by passing the user input to it
+     * the code will request a user input using the user if the methods are
+     * to be run on the console the code will run the relevant methods directly
+     * using a switch case, if it's gui related the firstGui method will be run
+     * by passing the user input to it
      */
     private void   listOption() {
         System.out.println("\n\n"+
@@ -111,9 +110,9 @@ public class trainBooking extends Application {
      * this method is used to create a gui window that lets the user pick a date
      * using a datePicker & starting and ending stops using two drop down menus
      *
-     * the picked values will be passed to the gui related methods addOption,
-     * viewOption or emptyOption depending on the user input passed by the using
-     * the userOption parameter
+     * the date, starting stop & ending stop  values will be passed to the gui
+     * related methods addOption, viewOption and emptyOption. these methods will
+     * be run using a switch case which uses the user input
      * @param userOption this parameter is used to pass the user inputs for Gui
      *                   related function from the listOptions method
      */
@@ -243,7 +242,7 @@ public class trainBooking extends Application {
      *                      already booked seats using the checkBSeats method
      *                      then the values are used to style the seat icons
      *
-     *                      then the entered user name, surname & Nic values
+     *                      the entered user name, surname & Nic values
      *                      will be assigned to this array to the relevant index
      *
      * @param temporarySeat this is array list which contains  seat
@@ -434,7 +433,10 @@ public class trainBooking extends Application {
 
 
     /**
-     *
+     *this method is used to show the seats for the selected stops on the
+     * selected date
+     * if the seat is booked seats will be coloured red
+     * if the seat is not booked they coloured black
      * @param temporaryList this array has 7 values & for this method just the
      *                      starting stop (1st index) and ending stop(2nd index)
      *                      and date(index 0) these are initially used to get
@@ -512,7 +514,10 @@ public class trainBooking extends Application {
 
 
     /**
-     *
+     *this method is used to show the empty seat for the selected stops on the
+     * selected date
+     * if the seat is booked seats will not be shown
+     * if the seat is not booked they are shown & is kept black
      * @param temporaryList this array has 7 values & for this method just the
      *                      starting stop (1st index) and ending stop(2nd index)
      *                      and date(index 0) these are initially used to get
