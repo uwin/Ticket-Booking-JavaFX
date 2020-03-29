@@ -234,6 +234,20 @@ public class trainBooking extends Application {
 
 
     /**
+     * this method is used to book seats using grid of 42 icon
+     * checkBSeats method is used to find out the booked seats
+     * if the seat is booked seat it will be styled red
+     * if the seat is not booked it will be styled black
+     *
+     * the gui has 3 text fields that are used to get the user name, surname and
+     * the user Nic
+     *
+     * when the user presses icons to book seat they will react depending on the status of the button
+     * if the seat is booked it will not change
+     * if the seat is temporary booked it'll changed to black & removed from the
+     * temporary booked list
+     * if the seat is not booked it will be styled green and added to temporary
+     * booked list
      *
      * @param temporaryList this array has 7 values
      *                      (date,from,to,name.seat number, Nic, surname)
@@ -434,7 +448,8 @@ public class trainBooking extends Application {
 
     /**
      *this method is used to show the seats for the selected stops on the
-     * selected date
+     * selected date using grid of 42 icon
+     * checkBSeats method is used to find out the booked seats
      * if the seat is booked seats will be coloured red
      * if the seat is not booked they coloured black
      * @param temporaryList this array has 7 values & for this method just the
@@ -515,7 +530,8 @@ public class trainBooking extends Application {
 
     /**
      *this method is used to show the empty seat for the selected stops on the
-     * selected date
+     * selected date using grid of 42 icon
+     * checkBSeats method is used to find out the booked seats
      * if the seat is booked seats will not be shown
      * if the seat is not booked they are shown & is kept black
      * @param temporaryList this array has 7 values & for this method just the
