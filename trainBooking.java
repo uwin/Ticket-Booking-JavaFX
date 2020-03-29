@@ -19,29 +19,12 @@ import java.util.*;
 public class trainBooking extends Application {
     static final int SEATING_CAPACITY = 42;
     static final ArrayList<ArrayList<String>> booking = new ArrayList<>();
-
-
-    /**
-     *
-     * @param args
-     */
     public static void main(String[] args) {
         launch();
     }
-
-
-    /**
-     *
-     * @param stage
-     */
     public void start(Stage stage) {
         welcome();
     }
-
-
-    /**
-     *
-     */
     private void welcome() {
         System.out.println("\nwelcome to ticket booking system \n" +
                 "A/C compartment for Denuwara Menike");
