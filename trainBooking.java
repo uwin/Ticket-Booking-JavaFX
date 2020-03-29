@@ -230,7 +230,7 @@ public class trainBooking extends Application {
      *                      then the values are used to style the seat icons
      *
      *                      then the entered user name, surname & Nic values
-     *                      will be assigned
+     *                      will be assigned to this array to the relevant index
      *
      * @param temporarySeat this is array list which contains  seat
      *                      numbers, which is used to style selected seats and
@@ -423,7 +423,10 @@ public class trainBooking extends Application {
      *
      * @param temporaryList this array has 7 values & for this method just the
      *                      starting stop (1st index) and ending stop(2nd index)
-     *                      and date(index 0)are used
+     *                      and date(index 0) these are initially used to get
+     *                      already booked seats using the checkBSeats method
+     *                      then the values are used to style the seat icons
+     *
      * @param stopsList     this array contains a list of all stops for this
      *                      method the values are used to reference when
      *                      checking for booked seats
@@ -498,7 +501,9 @@ public class trainBooking extends Application {
      *
      * @param temporaryList this array has 7 values & for this method just the
      *                      starting stop (1st index) and ending stop(2nd index)
-     *                      and date(index 0) are used
+     *                      and date(index 0) these are initially used to get
+     *                      already booked seats using the checkBSeats method
+     *                      then the values are used to style the seat icons
      *                      this is used to pass in to the checkBSeats method
      * @param stopsList     this array contains a list of all stops for this
      *                      method the values are used to reference when
