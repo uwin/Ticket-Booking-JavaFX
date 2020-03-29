@@ -572,6 +572,8 @@ public class trainBooking extends Application {
                 findOption();
             }
     }
+
+
     private void   saveOption() {
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -606,32 +608,62 @@ public class trainBooking extends Application {
         System.out.println("saved files");
         waitOption();
     }
+
+    /**
+     * this method is used to recover data that was previously saved, this will
+     * use a mongodb (a NoSQL database system) to receive the date, username,
+     * surname, from, to, Nic and seat number. each sets of these values will
+     * have a document. everything  will be stored in a single collection.
+     *
+     * before recovered data will be stored in the main data structure,
+     * it will be reset
+     */
     private void   loadOption() {
+//        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
+//        creating a database
         MongoDatabase dbDatabase = dbClient.getDatabase
                 ("trainBookingSystem");
+//        creating a document
         MongoCollection<Document> bookings = dbDatabase.getCollection
                 ("BookingData");
         System.out.println("connected to BookingData");
         FindIterable<Document> bookingDocument = bookings.find();
 
+//        creating a new a new array to collect values
         ArrayList<String> temporaryList = new ArrayList<>(6);
         for (int i = 0; i < 7; i++) temporaryList.add("0");
-        booking.clear();
-        for(Document document:bookingDocument)
+
+//        if a document exists the it will be added to the array
+        if(bookings.countDocuments()>0)
         {
-            temporaryList.set(0,document.getString("Date"));
-            temporaryList.set(1,document.getString("Start"));
-            temporaryList.set(2,document.getString("End"));
-            temporaryList.set(3,document.getString("User"));
-            temporaryList.set(4,document.getString("Seat"));
-            temporaryList.set(5,document.getString("Nic"));
-            temporaryList.set(6,document.getString("Surname"));
-            booking.add(new ArrayList<>(temporaryList));
+//         resetting the existing main data structure
+            booking.clear();
+
+            for(Document document:bookingDocument)
+            {
+                temporaryList.set(0,document.getString("Date"));
+                temporaryList.set(1,document.getString("Start"));
+                temporaryList.set(2,document.getString("End"));
+                temporaryList.set(3,document.getString("User"));
+                temporaryList.set(4,document.getString("Seat"));
+                temporaryList.set(5,document.getString("Nic"));
+                temporaryList.set(6,document.getString("Surname"));
+
+//                adding collected sets of values to the main data structure
+                booking.add(new ArrayList<>(temporaryList));
+            }
+            System.out.println("files loaded");
         }
+//        if not a message will be printed
+        else
+            {
+                System.out.println("no files were added, no data is changed");
+            }
+
+//        close mongo client
         dbClient.close();
-        System.out.println("files loaded");
         waitOption();
     }
 
