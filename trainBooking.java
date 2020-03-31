@@ -885,6 +885,7 @@ public class trainBooking extends Application {
             {
                 String temporaryStart= stopsList.get(startingStop);
                 String temporaryEnd= stopsList.get(checkStop);
+                System.out.println("s- "+temporaryStart+" e- "+temporaryEnd);
 
 //        getting  seat numbers using the main data structure
                 for (ArrayList<String> strings : booking)
@@ -906,19 +907,20 @@ public class trainBooking extends Application {
         }
 
 //        getting index of stops immediately & before after booked 2 stops
-        int beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
-        int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
+        int beforeStop= stopsList.indexOf(temporaryList.get(1));
+        int afterStop=  stopsList.indexOf(temporaryList.get(2));
         int firstStop=0;
         int lastStop=12;
 
 //        looping to check for booked seats for routes containing the 2 stops
-        while (firstStop<beforeStop)
+        while (firstStop<afterStop)
         {
-            int checkStop = afterStop +1;
+            int checkStop = afterStop+1;
             while (checkStop<=lastStop)
             {
                 String temporaryStart= stopsList.get(firstStop);
                 String temporaryEnd= stopsList.get(checkStop);
+                System.out.println("ss- "+temporaryStart+" ee- "+temporaryEnd);
 
 //        getting  seat numbers using the main data structure
                 for (ArrayList<String> strings : booking)
@@ -938,6 +940,40 @@ public class trainBooking extends Application {
             }
             firstStop++;
         }
+
+        beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
+        afterStop=  stopsList.indexOf(temporaryList.get(2));
+        firstStop=0;
+        //int lastStop=12;
+
+        while (firstStop<beforeStop)
+        {
+            int checkStop = beforeStop+1;
+            while (checkStop<=afterStop)
+            {
+                String temporaryStart= stopsList.get(firstStop);
+                String temporaryEnd= stopsList.get(checkStop);
+                System.out.println("ss- "+temporaryStart+" ee- "+temporaryEnd);
+
+//        getting  seat numbers using the main data structure
+                for (ArrayList<String> strings : booking)
+                {
+                    if
+                    (
+                            strings.get(0).equals(temporaryList.get(0))&&
+                                    strings.get(1).equals(temporaryStart) &&
+                                    strings.get(2).equals(temporaryEnd)
+                    )
+                    {
+//        adding seat number to created array
+                        bookedSeat.add(strings.get(4));
+                    }
+                }
+                checkStop++;
+            }
+            firstStop++;
+        }
+
         return bookedSeat ;
     }
 
