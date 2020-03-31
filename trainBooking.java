@@ -889,7 +889,6 @@ public class trainBooking extends Application {
             {
                 String temporaryStart= stopsList.get(startingStop);
                 String temporaryEnd= stopsList.get(checkStop);
-                System.out.println("s- "+temporaryStart+" e- "+temporaryEnd);
 
 //        getting  seat numbers using the main data structure
                 for (ArrayList<String> strings : booking)
@@ -924,7 +923,6 @@ public class trainBooking extends Application {
             {
                 String temporaryStart= stopsList.get(firstStop);
                 String temporaryEnd= stopsList.get(checkStop);
-                System.out.println("ss- "+temporaryStart+" ee- "+temporaryEnd);
 
 //        getting  seat numbers using the main data structure
                 for (ArrayList<String> strings : booking)
