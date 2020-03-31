@@ -31,7 +31,6 @@ public class trainBooking extends Application {
         listOption();
     }
 
-
     /**
      * this method is used to print the menu options & to run the relevant
      * methods according to user input the code will print a all options of the
@@ -87,7 +86,6 @@ public class trainBooking extends Application {
                 break;
         }
     }
-
 
     /**
      * this method is used to create a gui window that lets the user pick a date
@@ -337,23 +335,26 @@ public class trainBooking extends Application {
         }
 
 //        main text
-        Label head = new Label("Select Seat");
+        Label head = new Label("Select Seat"+"  "+temporaryList.get(1)+"-"+temporaryList.get(2));
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
 
 //        field for user name
         TextField username = new TextField();
-        username.setPromptText("enter Name");
+        if(temporaryList.get(3).equals("0"))username.setPromptText("Name");
+        else username.setText(temporaryList.get(3));
         grid.add(username, 2, 5, 3, 6);
 
         TextField surname = new TextField();
-        surname.setPromptText("enter surname");
+        if(temporaryList.get(6).equals("0"))surname.setPromptText("surname");
+        else surname.setText(temporaryList.get(6));
         grid.add(surname, 5, 5, 3, 6);
 
 //        field for user id
         TextField userId = new TextField();
-        userId.setPromptText("enter NIC");
+        if(temporaryList.get(5).equals("0"))userId.setPromptText("enter NIC");
+        else userId.setText(temporaryList.get(5));
         grid.add(userId, 2, 9, 6, 6);
 
 //        Confirm button
@@ -390,6 +391,9 @@ public class trainBooking extends Application {
                 a.show();
                 a.setOnCloseRequest(event1 ->
                 {
+                    temporaryList.set(3,username.getText());
+                    temporaryList.set(5,userId.getText());
+                    temporaryList.set(6,surname.getText());
                     window.close();
                     addOption(temporaryList, temporarySeat, stopsList);
                 });
@@ -503,7 +507,7 @@ public class trainBooking extends Application {
             }
         }
 //        main text
-        Label head = new Label("Viewing Seats ");
+        Label head = new Label("Viewing Seats "+"  "+temporaryList.get(1)+"-"+temporaryList.get(2));
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
@@ -582,7 +586,7 @@ public class trainBooking extends Application {
             }
         }
 //        main text
-        Label head = new Label("Empty Seats ");
+        Label head = new Label("Empty Seats "+"  "+temporaryList.get(1)+"-"+temporaryList.get(2));
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
