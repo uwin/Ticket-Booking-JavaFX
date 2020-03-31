@@ -908,7 +908,7 @@ public class trainBooking extends Application {
 
 //        getting index of stops immediately & before after booked 2 stops
         int beforeStop= stopsList.indexOf(temporaryList.get(1));
-        int afterStop=  stopsList.indexOf(temporaryList.get(2));
+        int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
         int firstStop=0;
         int lastStop=12;
 
@@ -941,10 +941,10 @@ public class trainBooking extends Application {
             firstStop++;
         }
 
-        beforeStop= stopsList.indexOf(temporaryList.get(1))-1;
+        beforeStop= stopsList.indexOf(temporaryList.get(1))+1;
         afterStop=  stopsList.indexOf(temporaryList.get(2));
         firstStop=0;
-        //int lastStop=12;
+        lastStop=12;
 
         while (firstStop<beforeStop)
         {
