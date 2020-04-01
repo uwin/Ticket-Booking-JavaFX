@@ -16,7 +16,7 @@ import org.bson.Document;
 
 import java.time.LocalDate;
 import java.util.*;
-public class trainBooking extends Application {
+public class TrainBooking extends Application {
     static final int SEATING_CAPACITY = 42;
     static final ArrayList<ArrayList<String>> booking = new ArrayList<>();
     public static void main(String[] args) {
@@ -80,6 +80,7 @@ public class trainBooking extends Application {
                 break;
             case "Q":
                 System.exit(0);
+                break;
             default:
                 System.out.println("invalid input");
                 listOption();
@@ -101,11 +102,11 @@ public class trainBooking extends Application {
 //        create the stage
         Stage window = new Stage();
         window.setTitle("Train Booking System");
-        GridPane First = new GridPane();
-        First.setPadding(new Insets(2, 2, 2, 2));
-        First.setHgap(10);
-        First.setVgap(10);
-        Scene addViewFirst = new Scene(First, 1020, 400);
+        GridPane first = new GridPane();
+        first.setPadding(new Insets(2, 2, 2, 2));
+        first.setHgap(10);
+        first.setVgap(10);
+        Scene addViewFirst = new Scene(first, 1020, 400);
         window.setScene(addViewFirst);
         window.show();
 
@@ -114,13 +115,13 @@ public class trainBooking extends Application {
                 "                   Colombo-Badulla");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
-        First.add(head,20,3,50,8);
+        first.add(head,20,3,50,8);
 
 //        text for date
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
         headDate.setTextFill(Color.web("#0076a3")); //light blue
-        First.add(headDate,3,12,9,4);
+        first.add(headDate,3,12,9,4);
 
 //        creating Gui element to select date
         DatePicker datePick = new DatePicker();
@@ -132,7 +133,7 @@ public class trainBooking extends Application {
             }
         });
         datePick.setValue(LocalDate.now());
-        First.add(datePick, 12, 12,18,4);
+        first.add(datePick, 12, 12,18,4);
 
 
 
@@ -146,25 +147,25 @@ public class trainBooking extends Application {
         Label headStart = new Label("Start");
         headStart.setFont(new Font("Arial", 23));
         headStart.setTextFill(Color.web("#0076a3")); //light blue
-        First.add(headStart,3,16,9,4);
+        first.add(headStart,3,16,9,4);
 
 //        drop down menu for start
         ComboBox<String> startDrop = new ComboBox<>();
         startDrop.getItems().addAll(stops);
         startDrop.setValue("Colombo Fort");
-        First.add(startDrop,12,16,9,4);
+        first.add(startDrop,12,16,9,4);
 
 //        text for End
         Label headEnd = new Label("End");
         headEnd.setFont(new Font("Arial", 23));
         headEnd.setTextFill(Color.web("#0076a3")); //light blue
-        First.add(headEnd,3,20,9,4);
+        first.add(headEnd,3,20,9,4);
 
 //        drop down menu for End
         ComboBox<String> endDrop = new ComboBox<>();
         endDrop.getItems().addAll(stops);
         endDrop.setValue("Badulla");
-        First.add(endDrop,12,20,9,4);
+        first.add(endDrop,12,20,9,4);
 
         Button switchB = new Button("switch");
         switchB.setOnAction(event -> {
@@ -172,7 +173,7 @@ public class trainBooking extends Application {
             startDrop.setValue(endDrop.getValue());
             endDrop.setValue(temp);
         });
-        First.add(switchB,22,20,9,4);
+        first.add(switchB,22,20,9,4);
 
 //        gui element to progress to booking page
         Button continueB = new Button("Continue");
@@ -208,7 +209,7 @@ public class trainBooking extends Application {
                     break;
             }
         });
-        First.add(continueB,70, 30,10,12);
+        first.add(continueB,70, 30,10,12);
 
 //      close button
         Button closeButFirst = new Button("close");
@@ -218,7 +219,7 @@ public class trainBooking extends Application {
             window.close();
             listOption();
         });
-        First.add(closeButFirst,80,30,10,12);
+        first.add(closeButFirst,80,30,10,12);
     }
 
 
@@ -612,7 +613,7 @@ public class trainBooking extends Application {
         Scanner scanDDate = new Scanner(System.in);
         System.out.println("enter Date: [yyyy-mm-dd]");
         String deleteDate= scanDDate.next().toLowerCase();
-        if(deleteDate.toLowerCase().equals("q")) waitOption();
+        if(deleteDate.equalsIgnoreCase("q")) waitOption();
         ArrayList <String>dateList = new ArrayList<>();
         for (ArrayList<String> data : booking) dateList.add(data.get(0));
 
@@ -620,7 +621,7 @@ public class trainBooking extends Application {
         Scanner scanDNic = new Scanner(System.in);
         System.out.println("enter your Nic: ");
         String deleteNic= scanDNic.next().toLowerCase();
-        if(deleteNic.toLowerCase().equals("q")) waitOption();
+        if(deleteNic.equalsIgnoreCase("q")) waitOption();
         ArrayList <String>nicList = new ArrayList<>();
         for (ArrayList<String> data : booking) nicList.add(data.get(5));
 
@@ -690,7 +691,7 @@ public class trainBooking extends Application {
             }
             waitOption();
         }
-        else if (findNic.toLowerCase().equals("q"))
+        else if (findNic.equalsIgnoreCase("q"))
         {
             waitOption();
         }
@@ -817,7 +818,7 @@ public class trainBooking extends Application {
      *  seat + number + name + surname + Nic
      */
     private void   oderOption() {
-        if (booking.size()<1) System.out.println("no seats are booked");
+        if (booking.isEmpty()) System.out.println("no seats are booked");
         String sortTemp;
 //        creating arrays for each value needed
         List<String> seatList = new ArrayList<>();
@@ -871,7 +872,7 @@ public class trainBooking extends Application {
 //        creating a array for already booked seats
         ArrayList<String> bookedSeat = new ArrayList<>();
 
-//        changing the order od stops in stopList according to selected path
+//        changing the order of stops in stopList according to selected path
         if (stopsList.indexOf(temporaryList.get(2))
                 <stopsList.indexOf(temporaryList.get(1)))
         {
@@ -880,7 +881,6 @@ public class trainBooking extends Application {
 //        getting index of first & last stop from a list of stops
         int startingStop= stopsList.indexOf(temporaryList.get(1));
         int endingStop= stopsList.indexOf(temporaryList.get(2));
-
 //        looping to check for booked seats in between the 2 stops
         while (startingStop<endingStop)
         {
@@ -910,11 +910,10 @@ public class trainBooking extends Application {
         }
 
 //        getting index of stops immediately & before after booked 2 stops
-        int beforeStop= stopsList.indexOf(temporaryList.get(1));
+
         int afterStop=  stopsList.indexOf(temporaryList.get(2))-1;
         int firstStop=0;
         int lastStop=12;
-
 //        looping to check for booked seats for routes containing the 2 stops
         while (firstStop<afterStop)
         {
@@ -943,11 +942,10 @@ public class trainBooking extends Application {
             firstStop++;
         }
 
-        beforeStop= stopsList.indexOf(temporaryList.get(1))+1;
+        int beforeStop= stopsList.indexOf(temporaryList.get(1))+1;
         afterStop=  stopsList.indexOf(temporaryList.get(2));
         firstStop=0;
-        lastStop=12;
-
+//        looping to check for booked seats in between the 2 stops
         while (firstStop<beforeStop)
         {
             int checkStop = beforeStop+1;
@@ -982,6 +980,7 @@ public class trainBooking extends Application {
 
     /**
      * this method is used as a way to give the user a way to manually move to
+     * the menu
      * this method will prevent the code from automatically moving to the menu
      * and lets the user do it on on their own pace.
      */
