@@ -336,7 +336,8 @@ public class TrainBooking extends Application {
         }
 
 //        main text
-        Label head = new Label("Select Seat"+"  "+temporaryList.get(1)+"-"+temporaryList.get(2));
+        Label head = new Label("Select Seat"+"  "+temporaryList.get(1)+"-"+
+                temporaryList.get(2));
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
@@ -509,7 +510,8 @@ public class TrainBooking extends Application {
             }
         }
 //        main text
-        Label head = new Label("Viewing Seats "+"  "+temporaryList.get(1)+"-"+temporaryList.get(2));
+        Label head = new Label("Viewing Seats "+"  "+temporaryList.get(1)+
+                "-"+temporaryList.get(2));
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
@@ -588,7 +590,8 @@ public class TrainBooking extends Application {
             }
         }
 //        main text
-        Label head = new Label("Empty Seats "+"  "+temporaryList.get(1)+"-"+temporaryList.get(2));
+        Label head = new Label("Empty Seats "+"  "+temporaryList.get(1)+"-"
+                +temporaryList.get(2));
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
         grid.add(head,1,1,10,1);
