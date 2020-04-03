@@ -679,7 +679,7 @@ public class TrainBooking extends Application {
         Scanner scanFNic = new Scanner(System.in);
         System.out.println("enter your Nic: ");
         String findNic= scanFNic.next().toLowerCase();
-
+//        creating a list of all existing nic for verification
         ArrayList <String>nicList = new ArrayList<>();
         for (ArrayList<String> data : booking) nicList.add(data.get(5));
 
@@ -700,7 +700,7 @@ public class TrainBooking extends Application {
             }
             waitOption();
         }
-        else if (findNic.equalsIgnoreCase("q"))
+        else if (findNic.equals("q"))
         {
             waitOption();
         }
