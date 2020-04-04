@@ -126,13 +126,16 @@ public class TrainBooking extends Application {
 
 //        creating Gui element to select date
         DatePicker datePick = new DatePicker();
-//        disabling past days on the date picker
-        datePick.setDayCellFactory(picker -> new DateCell() {
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                setDisable(empty || date.compareTo(LocalDate.now()) < 0 );
-            }
-        });
+//        disabling past days on the date picker if user is booking seats
+        if (userOption.equalsIgnoreCase("a"))
+        {
+            datePick.setDayCellFactory(picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    setDisable(empty || date.compareTo(LocalDate.now()) < 0);
+                }
+            });
+        }
         datePick.setValue(LocalDate.now());
         first.add(datePick, 12, 12,18,4);
 
@@ -351,7 +354,7 @@ public class TrainBooking extends Application {
         TextField surname = new TextField();
         if(temporaryList.get(6).equals("0"))surname.setPromptText("surname");
         else surname.setText(temporaryList.get(6));
-        grid.add(surname, 5, 5, 3, 6);
+         grid.add(surname, 5, 5, 3, 6);
 
 //        field for user id
         TextField userId = new TextField();
