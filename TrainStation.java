@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class TrainStation extends Application {
-    private  ArrayList<ArrayList<String>> waitingRoom = new ArrayList<>();;
-    private  ArrayList<ArrayList<String>> trainQueue;
+public class TrainStation {
+    private static Passenger[] waitingRoom= new Passenger[42];
+    //private  trainQueue;
 
-    private void listOption() {
+    private static void listOption() {
         System.out.println("\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -30,17 +30,22 @@ public class TrainStation extends Application {
 //        calling methods depending on the users input form the previous method
 //        gui methods will run though first gui
             case "A":
+                add();
                 break;
             case "V":
+                view();
                 break;
             case "D":
+                delete();
                 break;
             case "S":
+                save();
                 break;
             case "L":
-                loadOption();
+                load();
                 break;
             case "R":
+                run();
                 break;
             default:
                 System.out.println("invalid input");
@@ -48,52 +53,9 @@ public class TrainStation extends Application {
         }
     }
 
-    private void saveOption() {
-        com.mongodb.MongoClient dbClient = new MongoClient
-                ("localhost", 27017);
-        MongoDatabase dbDatabase = dbClient.getDatabase
-                ("trainBookingSystem");
-        MongoCollection<Document> bookings = dbDatabase.getCollection
-                ("BookingData");
-        System.out.println("connected to BookingData");
-        FindIterable<Document> bookingDocument = bookings.find();
 
-        if(bookings.countDocuments()>1)
-        {
-            for(Document document: bookingDocument)
-            {
-                bookings.deleteOne(document);
-            }
-        }
-
-        for (ArrayList<String> data : waitingRoom)
-        {
-            Document userDocument = new Document();
-            userDocument.append("Date", data.get(0));
-            userDocument.append("Start",data.get(1));
-            userDocument.append("End",  data.get(2));
-            userDocument.append("User", data.get(3));
-            userDocument.append("Seat", data.get(4));
-            userDocument.append("Nic",  data.get(5));
-            userDocument.append("Surname",  data.get(6));
-            bookings.insertOne(userDocument);
-        }
-        dbClient.close();
-        System.out.println("saved files");
-    }
-
-    private  void loadOption() {
-//        getting user date in the format yyyy-mm-dd
-        Scanner scanDate = new Scanner(System.in);
-        System.out.println("enter Date: [yyyy-mm-dd]");
-        String date= scanDate.next().toLowerCase();
-
-//        getting user Nic
-        Scanner scanStation = new Scanner(System.in);
-        System.out.println("enter your station: ");
-        String station= scanStation.nextLine();
-
-//        initiate MongoClient
+    private static void importData() {
+        //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
 //        creating a database
@@ -104,49 +66,65 @@ public class TrainStation extends Application {
                 ("BookingData");
         System.out.println("connected to BookingData");
         FindIterable<Document> bookingDocument = bookings.find();
-//        creating a new a new array to collect values
-        ArrayList<String> temporaryList = new ArrayList<>(5);
-        for (int i = 0; i < 6; i++) temporaryList.add("0");
-//        if a document exists the it will be added to the array
+
+        ArrayList<String> stopsList = new ArrayList<>(Arrays.asList(
+                "Colombo Fort","Polgahawela", "Peradeniya Junction",
+                "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
+                "Haputale","Diyatalawa", "Bandarawela","Ella", "Badulla"));
+
         if(bookings.countDocuments()>0)
         {
-//         resetting the existing main data structure
-            waitingRoom.clear();
+            int i=0;
             for(Document document:bookingDocument)
             {
-                if(document.getString("Date").equals(date) & document.getString("Start").equalsIgnoreCase(station))
-                {
-                    temporaryList.set(0,document.getString("Date"));
-                    temporaryList.set(1,document.getString("User"));
-                    temporaryList.set(2,document.getString("Surname"));
-                    temporaryList.set(3,document.getString("Seat"));
-                    temporaryList.set(4,document.getString("Nic"));
-                    if (document.getString("Start").equalsIgnoreCase("Colombo Fort"))
-                    {
-                        temporaryList.set(5,"1");
-                    }else
-                        temporaryList.set(5,"2");
-                    waitingRoom.add(new ArrayList<>(temporaryList));
+                String date   = document.getString("Date");
+                String name   = document.getString("User");
+                String surname= document.getString("Surname");
+                String seat   = document.getString("Seat");
+                String start  = document.getString("Start");
+                String end    = document.getString("End");
+
+                String trainNo;
+                if(stopsList.indexOf(start)<stopsList.indexOf(end)){
+                    trainNo="fromColombo";
+                }else {trainNo="fromBadulla"; }
+
+                String selectedDate="2020-04-06";
+                String selectedStation= "Colombo Fort";
+                String selectedTrain="fromColombo"; //"fromBadulla"
+                Passenger passengerObj = new Passenger();
+
+                if (    selectedDate.equalsIgnoreCase(date) &&
+                        selectedStation.equalsIgnoreCase(start) &&
+                        selectedTrain.equals(trainNo)
+                ){
+                    passengerObj.setName(name,surname);
+                    passengerObj.setSeat(seat);
                 }
-//                adding collected sets of values to the main data structure
-                }
-            System.out.println(waitingRoom);
+                waitingRoom[i]=(passengerObj);
+                i++;
+            }
+            System.out.println(Arrays.toString(waitingRoom));
+            System.out.println("Passenger Data imported to Waiting Room");
         }
 //        if not a message will be printed
         else
         {
-            System.out.println("no files were added, no data is changed");
+            System.out.println("Passenger Data is Unavailable to be imported");
         }
 //        close mongo client
         dbClient.close();
     }
 
-    public static void main(String[]args) {
-        launch();
-    }
+    private static void add() { }
+    private static void view() {}
+    private static void delete() {}
+    private static void save() {}
+    private  static void load() {}
+    private  static void run() {}
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        listOption();
+    public static void main(String[]args) {
+        importData();
+        //listOption();
     }
 }
