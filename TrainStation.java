@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class TrainStation {
     private static Passenger[] waitingRoom= new Passenger[42];
-    //private  trainQueue;
+    private static PassengerQueue trainQueue = new PassengerQueue();
 
     private static void listOption() {
         System.out.println("\n"+
