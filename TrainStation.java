@@ -3,14 +3,22 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.bson.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class TrainStation {
+public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
     private static PassengerQueue trainQueue = new PassengerQueue();
 
@@ -27,8 +35,6 @@ public class TrainStation {
         System.out.println("> select a option");
         String userOption= scanOption.next().toUpperCase();
         switch (userOption) {
-//        calling methods depending on the users input form the previous method
-//        gui methods will run though first gui
             case "A":
                 add();
                 break;
@@ -53,8 +59,90 @@ public class TrainStation {
         }
     }
 
+    private static void importGui(){
+        Stage window = new Stage();
+        window.setTitle("Train Booking System");
+        GridPane first = new GridPane();
+        first.setPadding(new Insets(2, 2, 2, 2));
+        first.setHgap(10);
+        first.setVgap(10);
+        Scene addViewFirst = new Scene(first, 1020, 400);
+        window.setScene(addViewFirst);
+        window.show();
 
-    private static void importData() {
+        Label head = new Label("Denuwara Menike Ticket Booking System\n" +
+                "                   A/C compartment");
+        head.setFont(new Font("Arial", 30));
+        head.setTextFill(Color.web("#0076a3")); //light blue
+        first.add(head,20,3,50,8);
+
+        Label headDate = new Label("Date");
+        headDate.setFont(new Font("Arial", 23));
+        headDate.setTextFill(Color.web("#0076a3")); //light blue
+        first.add(headDate,3,12,9,4);
+
+        DatePicker datePick = new DatePicker();
+        datePick.setValue(LocalDate.now());
+        first.add(datePick, 12, 12,18,4);
+
+
+        String[] stops = new String[]{ "Colombo Fort","Polgahawela",
+                "Peradeniya Junction", "Gampola","Nawalapitiya",
+                "Hatton","Thalawakele","Nanuoya", "Haputale","Diyatalawa",
+                "Bandarawela","Ella", "Badulla" };
+
+        //        text for start
+        Label headStart = new Label("Select Station");
+        headStart.setFont(new Font("Arial", 23));
+        headStart.setTextFill(Color.web("#0076a3")); //light blue
+        first.add(headStart,3,16,9,4);
+
+//        drop down menu for start
+        ComboBox<String> stationDrop = new ComboBox<>();
+        stationDrop.getItems().addAll(stops);
+        stationDrop.setValue("Colombo Fort");
+        first.add(stationDrop,12,16,9,4);
+
+
+        Button colomboSButton = new Button("Colombo Station");
+        colomboSButton.setMaxSize(120, 60);
+        colomboSButton.setStyle("-fx-background-color: lightblue; ");
+        colomboSButton.setOnAction(event -> {
+            colomboSButton.setStyle("-fx-background-color: blue; ");
+            String selectedTrain ="1";
+            String selectedStation =stationDrop.getValue();
+            String selectedDate=datePick.getValue().toString();
+            window.close();
+            importData(selectedDate,selectedTrain,selectedStation);
+
+        });
+
+        first.add(colomboSButton,30,19,40,12);
+
+        Button badullaSButton = new Button("Badulla Station");
+        badullaSButton.setMaxSize(120, 60);
+        badullaSButton.setStyle("-fx-background-color: lightblue; ");
+        badullaSButton.setOnAction(event -> {
+            badullaSButton.setStyle("-fx-background-color: blue; ");
+            String selectedTrain ="2";
+            String selectedStation =stationDrop.getValue();
+            String selectedDate=datePick.getValue().toString();
+            window.close();
+            importData(selectedDate,selectedTrain,selectedStation);
+        });
+        first.add(badullaSButton,50,19,40,12);
+
+        Button closeButFirst = new Button("close");
+        closeButFirst.setMaxSize(120, 60);
+        closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        first.add(closeButFirst,80,30,10,12);
+
+    }
+    private static void importData(String selectedDate,String selectedTrain,String selectedStation) {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -86,26 +174,19 @@ public class TrainStation {
 
                 String trainNo;
                 if(stopsList.indexOf(start)<stopsList.indexOf(end)){
-                    trainNo="fromColombo";
-                }else {trainNo="fromBadulla"; }
-
-                String selectedDate="2020-04-06";
-                String selectedStation= "Colombo Fort";
-                String selectedTrain="fromColombo"; //"fromBadulla"
-                Passenger passengerObj = new Passenger();
+                    trainNo="1";
+                }else {
+                    trainNo="2"; }
 
                 if (    selectedDate.equalsIgnoreCase(date) &&
                         selectedStation.equalsIgnoreCase(start) &&
                         selectedTrain.equals(trainNo)
                 ){
-                    passengerObj.setName(name,surname);
-                    passengerObj.setSeat(seat);
+                    Passenger passengerObj = new Passenger(name,surname,seat);
+                    waitingRoom[i]=(passengerObj);
+                    i++;
                 }
-                waitingRoom[i]=(passengerObj);
-                i++;
             }
-            System.out.println(Arrays.toString(waitingRoom));
-            System.out.println("Passenger Data imported to Waiting Room");
         }
 //        if not a message will be printed
         else
@@ -114,9 +195,21 @@ public class TrainStation {
         }
 //        close mongo client
         dbClient.close();
+        listOption();
     }
 
-    private static void add() { }
+    private static void add() {
+        Stage window = new Stage();
+        window.setTitle("adding to passanger");
+        GridPane first = new GridPane();
+        first.setPadding(new Insets(2, 2, 2, 2));
+        first.setHgap(10);
+        first.setVgap(10);
+        Scene addViewFirst = new Scene(first, 1020, 300);
+        window.setScene(addViewFirst);
+        window.show();
+        System.out.println(Arrays.toString(waitingRoom));
+    }
     private static void view() {}
     private static void delete() {}
     private static void save() {}
@@ -124,7 +217,20 @@ public class TrainStation {
     private  static void run() {}
 
     public static void main(String[]args) {
-        importData();
-        //listOption();
+        launch();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        boolean validateImport =false;
+        for (Passenger i:waitingRoom){
+            if (i != null) {
+                validateImport = true;
+                break;
+            }
+        }
+        if (!validateImport) {
+            importGui();
+        }
     }
 }

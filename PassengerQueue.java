@@ -12,17 +12,31 @@ public class PassengerQueue {
         queueArray[last]=data;
         maxLength++;
     }
-    private void remove(){
-
+    public void addToQueue(Passenger data){
+        add(data);
     }
+
+    private Passenger remove(){
+        Passenger data= queueArray[first];
+        first++;
+        maxLength--;
+        return data;
+    }
+    public void removeFromQueue(){
+        remove();
+    }
+
     public boolean isEmpty(){
         return false;
     }
+
     public boolean isFull(){
         return false;
     }
     public void display(){
-        for(int i=0;)
+        for(int i=0;i<maxLength;i++){
+            System.out.println(queueArray[i]);
+        }
     }
 
     public int getLength() { return maxLength; }

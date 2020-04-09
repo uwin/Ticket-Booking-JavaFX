@@ -1,8 +1,30 @@
+import java.util.Random;
+
 public class Passenger {
+
+    public Passenger(String firstName, String secondName, String seatNumber) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.seatNumber = seatNumber;
+        this.ticketNumber=setTicketNumber();
+    }
+
+
+    public String setTicketNumber() {
+        Random rand = new Random();
+        int randNum = rand.nextInt(100) + 1;
+        String ticketNumber = "TK"+String.valueOf(randNum);
+        return ticketNumber;
+    }
+
+    public String getTicketNumber() {
+        return ticketNumber;
+    }
 
     private String firstName;
     private String secondName;
     private String seatNumber;
+    private String ticketNumber;
     private int secondsInQueue;
 
     public void setName(String firstName,String secondName) {
