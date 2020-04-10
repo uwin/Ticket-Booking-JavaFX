@@ -348,7 +348,7 @@ public class TrainStation extends Application{
     }
 
     private static void delete() {
-
+        trainQueue.remove();
     }
 
 
