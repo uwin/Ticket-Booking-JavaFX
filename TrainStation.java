@@ -3,6 +3,9 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,7 +25,7 @@ public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
     private static PassengerQueue trainQueue = new PassengerQueue();
 
-    private static void listOption() {
+    private  static void listOption() {
         System.out.println("\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -198,6 +201,8 @@ public class TrainStation extends Application{
         listOption();
     }
 
+
+
     private static void add() {
         Stage window = new Stage();
         window.setTitle("adding to passanger");
@@ -208,8 +213,35 @@ public class TrainStation extends Application{
         Scene addViewFirst = new Scene(first, 1020, 300);
         window.setScene(addViewFirst);
         window.show();
-        System.out.println(Arrays.toString(waitingRoom));
+
+        TableView<Passenger> waitingRoomTable;
+        TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
+        ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+
+        TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
+        name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
+
+        TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
+        seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seatNumber"));
+
+        waitingRoomTable = new TableView<>();
+        waitingRoomTable.setItems(getWaitRoomData());
+        waitingRoomTable.getColumns().add(ticket_col);
+        waitingRoomTable.getColumns().add(name_col);
+        waitingRoomTable.getColumns().add(seat_col);
+
+        first.add(waitingRoomTable,0,0);
+
     }
+    private static ObservableList<Passenger> getWaitRoomData(){
+        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
+        passengers.add(waitingRoom[0]);
+        passengers.add(waitingRoom[1]);
+        passengers.add(waitingRoom[2]);
+        return passengers;
+    }
+
+
     private static void view() {}
     private static void delete() {}
     private static void save() {}

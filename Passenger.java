@@ -5,10 +5,19 @@ public class Passenger {
     public Passenger(String firstName, String secondName, String seatNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.seatNumber = seatNumber;
+        setSeat(seatNumber);
+        this.seatNumber = getSeat();
+        setName(firstName,secondName);
+        this.name= getName();
         this.ticketNumber=setTicketNumber();
     }
 
+    private String firstName;
+    private String secondName;
+    private String name;
+    private String seatNumber;
+    private String ticketNumber;
+    private int secondsInQueue;
 
     public String setTicketNumber() {
         Random rand = new Random();
@@ -16,29 +25,25 @@ public class Passenger {
         String ticketNumber = "TK"+String.valueOf(randNum);
         return ticketNumber;
     }
-
     public String getTicketNumber() {
         return ticketNumber;
     }
 
-    private String firstName;
-    private String secondName;
-    private String seatNumber;
-    private String ticketNumber;
-    private int secondsInQueue;
-
-    public void setName(String firstName,String secondName) {
-        this.firstName = firstName;
-        this.secondName=secondName;
+    public String getSeat(){
+        return seatNumber;
     }
     public void setSeat(String seatNumber){
         this.seatNumber = seatNumber;
     }
-    public String getSeat(){
-        return seatNumber;
-    }
+
+
     public String getName() {
-        return firstName+" "+secondName;
+        return name;
+    }
+    public void setName(String firstName,String secondName) {
+        this.firstName = firstName;
+        this.secondName=secondName;
+        name= firstName+" "+secondName;
     }
 
     public int getSeconds() {
@@ -47,6 +52,7 @@ public class Passenger {
     public void setSeconds(int sec ) {
 //        secondsInQueue change
     }
+
     public void display() {
 
     }
