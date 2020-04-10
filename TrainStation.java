@@ -250,6 +250,8 @@ public class TrainStation extends Application{
             if (getWaitRoomData().size()<generateNo) generateNo=getWaitRoomData().size();
             int i=0;
             for(int j=0;j<=waitingRoom.length;j++){
+                if(trainQueue.isFull()) System.out.println("ss");
+                if (getWaitRoomData().size()==0) break;
                 if(waitingRoom[j]!=null){
                     trainQueue.add(waitingRoom[j]);
                     waitingRoom[j]=null;
