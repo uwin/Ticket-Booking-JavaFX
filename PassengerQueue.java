@@ -1,44 +1,29 @@
 import java.util.ArrayList;
 
 public class PassengerQueue {
-    Passenger [] queueArray = new Passenger[6];
+    static Passenger [] queueArray = new Passenger[];
     private int first;
     private int last;
-    private int maxLength;
+    private int length;
     private int maxStayInQueue;
 
-
-    private void add(Passenger data){
-        queueArray[last]=data;
-        maxLength++;
-    }
-    public void addToQueue(Passenger data){
-        add(data);
+    public PassengerQueue() {
+        this.first = 0;
+        this.last = 0;
+        this.length = 0;
+        this.maxStayInQueue = 0;
     }
 
-    private Passenger remove(){
-        Passenger data= queueArray[first];
-        first++;
-        maxLength--;
-        return data;
-    }
-    public void removeFromQueue(){
-        remove();
-    }
-
+    public void add(Passenger data){ }
+    public void remove(){ }
     public boolean isEmpty(){
         return false;
     }
-
     public boolean isFull(){
         return false;
     }
-    public void display(){
-        for(int i=0;i<maxLength;i++){
-            System.out.println(queueArray[i]);
-        }
-    }
+    public void display(){ }
 
-    public int getLength() { return maxLength; }
+    public int getLength() { return length; }
     public int getMaxStayInQueue() { return maxStayInQueue; }
 }

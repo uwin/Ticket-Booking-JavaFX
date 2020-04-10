@@ -19,6 +19,7 @@ import org.bson.Document;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TrainStation extends Application{
@@ -217,27 +218,44 @@ public class TrainStation extends Application{
         TableView<Passenger> waitingRoomTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
         ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
-
         TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
         name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
-
         TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
-        seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seatNumber"));
-
+        seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         waitingRoomTable = new TableView<>();
         waitingRoomTable.setItems(getWaitRoomData());
         waitingRoomTable.getColumns().add(ticket_col);
         waitingRoomTable.getColumns().add(name_col);
         waitingRoomTable.getColumns().add(seat_col);
-
         first.add(waitingRoomTable,0,0);
 
+        int generateNo=(int)(Math.random() * ((3 - 1) + 1)) + 1;
+        for (int i=0;i<=generateNo;i++){
+            trainQueue.add(waitingRoom[j]);
+        }
+
+        TableView<Passenger> trainQueueTable;
+        TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
+        ticket_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+        TableColumn<Passenger,String> name_col2 = new TableColumn<>("Name");
+        name_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
+        TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
+        seat_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
+        trainQueueTable = new TableView<>();
+        trainQueueTable.setItems(getWaitRoomData());
+        trainQueueTable.getColumns().add(ticket_col2);
+        trainQueueTable.getColumns().add(name_col2);
+        trainQueueTable.getColumns().add(seat_col2);
+        first.add(trainQueueTable,1,0);
     }
+
     private static ObservableList<Passenger> getWaitRoomData(){
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
-        passengers.add(waitingRoom[0]);
-        passengers.add(waitingRoom[1]);
-        passengers.add(waitingRoom[2]);
+        for (Passenger i: waitingRoom) {
+            if (i!=null){
+                passengers.add(i);
+            }
+        }
         return passengers;
     }
 

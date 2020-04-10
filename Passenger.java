@@ -5,17 +5,20 @@ public class Passenger {
     public Passenger(String firstName, String secondName, String seatNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
+
         setSeat(seatNumber);
-        this.seatNumber = getSeat();
+        this.seat = getSeat();
+
         setName(firstName,secondName);
         this.name= getName();
+
         this.ticketNumber=setTicketNumber();
     }
 
     private String firstName;
     private String secondName;
     private String name;
-    private String seatNumber;
+    private String seat;
     private String ticketNumber;
     private int secondsInQueue;
 
@@ -30,12 +33,11 @@ public class Passenger {
     }
 
     public String getSeat(){
-        return seatNumber;
+        return seat;
     }
-    public void setSeat(String seatNumber){
-        this.seatNumber = seatNumber;
+    public void setSeat(String seatNumber ){
+        seat = seatNumber;
     }
-
 
     public String getName() {
         return name;
