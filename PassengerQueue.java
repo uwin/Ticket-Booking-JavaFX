@@ -3,12 +3,15 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import java.util.ArrayList;
 
 public class PassengerQueue {
-    static Passenger [] queueArray = new Passenger[42];
+    private static Passenger [] queueArray = new Passenger[42];
     private int first=0;
     private int last=0;
     private int length=0;
     private int maxStayInQueue=0;
 
+    public static Passenger[] getQueueArray() {
+        return queueArray;
+    }
 
     public void add(Passenger data){
         queueArray[last]=data;

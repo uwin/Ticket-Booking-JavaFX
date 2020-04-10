@@ -10,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -207,41 +209,49 @@ public class TrainStation extends Application{
     private static void add() {
         Stage window = new Stage();
         window.setTitle("adding to passanger");
-        GridPane first = new GridPane();
-        first.setPadding(new Insets(2, 2, 2, 2));
-        first.setHgap(10);
-        first.setVgap(10);
-        Scene addViewFirst = new Scene(first, 1020, 500);
+        GridPane addView = new GridPane();
+        addView.setPadding(new Insets(2, 2, 2, 2));
+        addView.setHgap(10);
+        addView.setVgap(10);
+        Scene addViewFirst = new Scene(addView, 600, 500);
         window.setScene(addViewFirst);
         window.show();
 
         TableView<Passenger> waitingRoomTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
+        ticket_col.setMaxWidth(100);
         ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
         TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
+        name_col.setMaxWidth(100);
         name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
         TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
+        seat_col.setMaxWidth(100);
         seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         waitingRoomTable = new TableView<>();
+        waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         waitingRoomTable.setItems(getWaitRoomData());
         waitingRoomTable.getColumns().add(ticket_col);
         waitingRoomTable.getColumns().add(name_col);
         waitingRoomTable.getColumns().add(seat_col);
-        first.add(waitingRoomTable,0,0);
+        addView.add(waitingRoomTable,0,4,80,400);
 
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+        ticket_col2.setMaxWidth(100);
         TableColumn<Passenger,String> name_col2 = new TableColumn<>("Name");
+        name_col2.setMaxWidth(100);
         name_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
         TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
+        seat_col2.setMaxWidth(100);
         seat_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         trainQueueTable = new TableView<>();
+        trainQueueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         trainQueueTable.setItems(getTrainQueueData());
         trainQueueTable.getColumns().add(ticket_col2);
         trainQueueTable.getColumns().add(name_col2);
         trainQueueTable.getColumns().add(seat_col2);
-        first.add(trainQueueTable,2,0);
+        addView.add(trainQueueTable,30,4,80,400);
 
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: lightblue; ");
@@ -262,7 +272,7 @@ public class TrainStation extends Application{
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
-        first.add(addButFirst,2,2,50,2);
+        addView.add(addButFirst,2,2,50,2);
 
         Button closeButFirst = new Button("close");
         closeButFirst.setStyle("-fx-background-color: red; ");
@@ -270,9 +280,8 @@ public class TrainStation extends Application{
             window.close();
             listOption();
         });
-        first.add(closeButFirst,2,5,50,2);
+        addView.add(closeButFirst,2,5,50,2);
     }
-
     private static ObservableList<Passenger> getWaitRoomData(){
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
         for (Passenger i: waitingRoom) {
@@ -282,10 +291,10 @@ public class TrainStation extends Application{
         }
         return passengers;
     }
-
     private static ObservableList<Passenger> getTrainQueueData(){
         ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
-        for (Passenger i:PassengerQueue.queueArray)
+
+        for (Passenger i: trainQueue.getQueueArray())
             if (i!=null){
                 queuePassengers.add(i);
             }
@@ -293,8 +302,56 @@ public class TrainStation extends Application{
     }
 
 
-    private static void view() {}
-    private static void delete() {}
+    private static void view() {
+        Stage window = new Stage();
+        window.setTitle("adding to passanger");
+        GridPane first = new GridPane();
+        first.setPadding(new Insets(2, 2, 2, 2));
+        first.setHgap(10);
+        first.setVgap(10);
+        Scene addViewFirst = new Scene(first, 1020, 350);
+        window.setScene(addViewFirst);
+        window.show();
+
+        Image seatBlack = new Image(TrainStation.class.getResourceAsStream
+                ("images/black.png"));
+        Passenger[] array = trainQueue.getQueueArray();
+        int number=1;
+        for (int r = 2; r < 5; r++) {
+            for (int c = 2; c < 16; c++) {
+                if (number <=42)
+                {
+                    while (array[number-1]!=null){
+                        ImageView button = new ImageView(seatBlack);
+                        Label num = new Label();
+                        num.setFont(new Font("Arial", 15));
+                        num.setText(array[number-1].getName());
+                        button.setFitHeight(60);
+                        button.setFitWidth(60);
+                        button.setId(String.valueOf(number));
+                        number++;
+                        first.add(button, c, r);
+                        first.add(num, c, r);
+                        break;
+                    }
+                }
+            }
+        }
+        Button closeBut = new Button("close");
+        closeBut.setMaxSize(120, 60);
+        closeBut.setStyle("-fx-background-color: red; ");
+        closeBut.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        first.add(closeBut, 14, 9,14,9);
+    }
+
+    private static void delete() {
+
+    }
+
+
     private static void save() {}
     private  static void load() {}
     private  static void run() {}
