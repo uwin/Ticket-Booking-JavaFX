@@ -211,7 +211,7 @@ public class TrainStation extends Application{
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(first, 1020, 300);
+        Scene addViewFirst = new Scene(first, 1020, 500);
         window.setScene(addViewFirst);
         window.show();
 
@@ -229,11 +229,6 @@ public class TrainStation extends Application{
         waitingRoomTable.getColumns().add(seat_col);
         first.add(waitingRoomTable,0,0);
 
-        int generateNo=(int)(Math.random() * ((3 - 1) + 1)) + 1;
-        for (int i=0;i<=generateNo;i++){
-            trainQueue.add(waitingRoom[j]);
-        }
-
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
@@ -242,11 +237,37 @@ public class TrainStation extends Application{
         TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
         seat_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         trainQueueTable = new TableView<>();
-        trainQueueTable.setItems(getWaitRoomData());
+        trainQueueTable.setItems(getTrainQueueData());
         trainQueueTable.getColumns().add(ticket_col2);
         trainQueueTable.getColumns().add(name_col2);
         trainQueueTable.getColumns().add(seat_col2);
-        first.add(trainQueueTable,1,0);
+        first.add(trainQueueTable,2,0);
+
+        Button addButFirst = new Button("Add");
+        addButFirst.setStyle("-fx-background-color: lightblue; ");
+        addButFirst.setOnAction(event -> {
+            int generateNo=(int)(Math.random() * ((6 - 1) + 1)) + 1;
+            int i=0;
+            for(int j=0;j<=waitingRoom.length;j++){
+                if(waitingRoom[j]!=null){
+                    trainQueue.add(waitingRoom[j]);
+                    waitingRoom[j]=null;
+                    i++;
+                    if (i==generateNo) break;
+                }
+            }
+            trainQueueTable.setItems(getTrainQueueData());
+            waitingRoomTable.setItems(getWaitRoomData());
+        });
+        first.add(addButFirst,2,2,50,2);
+
+        Button closeButFirst = new Button("close");
+        closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        first.add(closeButFirst,2,5,50,2);
     }
 
     private static ObservableList<Passenger> getWaitRoomData(){
@@ -257,6 +278,15 @@ public class TrainStation extends Application{
             }
         }
         return passengers;
+    }
+
+    private static ObservableList<Passenger> getTrainQueueData(){
+        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
+        for (Passenger i:PassengerQueue.queueArray)
+            if (i!=null){
+                queuePassengers.add(i);
+            }
+        return queuePassengers;
     }
 
 

@@ -1,28 +1,39 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.util.ArrayList;
 
 public class PassengerQueue {
-    static Passenger [] queueArray = new Passenger[];
-    private int first;
-    private int last;
-    private int length;
-    private int maxStayInQueue;
+    static Passenger [] queueArray = new Passenger[42];
+    private int first=0;
+    private int last=0;
+    private int length=0;
+    private int maxStayInQueue=0;
 
-    public PassengerQueue() {
-        this.first = 0;
-        this.last = 0;
-        this.length = 0;
-        this.maxStayInQueue = 0;
+
+    public void add(Passenger data){
+        queueArray[last]=data;
+        last++;
+        length++;
     }
+    public Passenger  remove(){
+        Passenger data= queueArray[first];
+        first++;
+        length--;
+        return data;
 
-    public void add(Passenger data){ }
-    public void remove(){ }
+
+    }
     public boolean isEmpty(){
         return false;
     }
     public boolean isFull(){
         return false;
     }
-    public void display(){ }
+    public void display(){
+        for (Passenger x: queueArray){
+            System.out.println(x);
+        }
+    }
 
     public int getLength() { return length; }
     public int getMaxStayInQueue() { return maxStayInQueue; }
