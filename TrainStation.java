@@ -247,6 +247,7 @@ public class TrainStation extends Application{
         addButFirst.setStyle("-fx-background-color: lightblue; ");
         addButFirst.setOnAction(event -> {
             int generateNo=(int)(Math.random() * ((6 - 1) + 1)) + 1;
+            if (getWaitRoomData().size()<generateNo) generateNo=getWaitRoomData().size();
             int i=0;
             for(int j=0;j<=waitingRoom.length;j++){
                 if(waitingRoom[j]!=null){

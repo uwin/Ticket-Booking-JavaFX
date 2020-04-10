@@ -24,10 +24,10 @@ public class PassengerQueue {
 
     }
     public boolean isEmpty(){
-        return false;
+        return length==0;
     }
     public boolean isFull(){
-        return false;
+        return length==42;
     }
     public void display(){
         for (Passenger x: queueArray){
