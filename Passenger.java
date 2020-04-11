@@ -24,6 +24,11 @@ public class Passenger {
     private String Station;
     private String train;
 
+    public Passenger(String ticketNumber,String name) {
+        this.ticketNumber = ticketNumber;
+        this.name= name;
+    }
+
     public String getTrain() {
         return train;
     }

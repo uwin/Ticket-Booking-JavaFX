@@ -404,34 +404,43 @@ public class TrainStation extends Application{
         FindIterable<Document> queueDocument = trainqueue.find();
 
 //        creating a new a new array to collect values
-        ArrayList<String> temporaryList = new ArrayList<>(6);
-        for (int i = 0; i < 7; i++) temporaryList.add("0");
-
-        Passenger[] tempQueueArray =trainQueue.getQueueArray();
-        for (Passenger Data: tempQueueArray){
-            Data=null;
-        }
-        trainQueue.setQueueArray(tempQueueArray);
+//        ArrayList<String> temporaryList = new ArrayList<>(6);
+//        for (int i = 0; i < 7; i++) temporaryList.add("0");
+        trainQueue.display();
+        trainQueue.clearQueue();
 
 //        if a document exists the it will be added to the array
         if(trainqueue.countDocuments()>0)
         {
 //         resetting the existing main data structure
 //            booking.clear();
-
             for(Document document:queueDocument)
             {
-                temporaryList.set(0,document.getString("Date"));
-                temporaryList.set(1,document.getString("Start"));
-                temporaryList.set(2,document.getString("End"));
-                temporaryList.set(3,document.getString("User"));
-                temporaryList.set(4,document.getString("Seat"));
-                temporaryList.set(5,document.getString("Nic"));
-                temporaryList.set(6,document.getString("Surname"));
+//                temporaryList.set(0,document.getString("Date"));
+//                temporaryList.set(1,document.getString("Start"));
+//                temporaryList.set(2,document.getString("End"));
+//                temporaryList.set(3,document.getString("User"));
+//                temporaryList.set(4,document.getString("Seat"));
+//                temporaryList.set(5,document.getString("Nic"));
+//                temporaryList.set(6,document.getString("Surname"));
+                String name    = document.getString("Name");
+                String seat    = document.getString("Seat");
+                String ticketNo= document.getString("TicketNo");
+                String date    = document.getString("Date");
+                String station = document.getString("Station");
+                String train   = document.getString("Train");
 
+                Passenger passengerObj = new Passenger(ticketNo,name);
+                passengerObj.setDate(date);
+                passengerObj.setStation(station);
+                passengerObj.setTrain(train);
+                passengerObj.setSeat(seat);
+                passengerObj.setTrain(train);
+                trainQueue.add(passengerObj);
 //                adding collected sets of values to the main data structure
 //                booking.add(new ArrayList<>(temporaryList));
             }
+            trainQueue.display();
             System.out.println("files loaded");
         }
 //        if not a message will be printed
@@ -442,6 +451,7 @@ public class TrainStation extends Application{
 
 //        close mongo client
         dbClient.close();
+        listOption();
 //        waitOption();
     }
     private  static void run() {}
