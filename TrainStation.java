@@ -189,6 +189,9 @@ public class TrainStation extends Application{
                         selectedTrain.equals(trainNo)
                 ){
                     Passenger passengerObj = new Passenger(name,surname,seat);
+                    passengerObj.setDate(date);
+                    passengerObj.setStation(start);
+                    passengerObj.setTrain(trainNo);
                     waitingRoom[i]=(passengerObj);
                     i++;
                 }
@@ -352,8 +355,86 @@ public class TrainStation extends Application{
     }
 
 
-    private static void save() {}
-    private  static void load() {}
+    private static void save() {
+        com.mongodb.MongoClient dbClient = new MongoClient
+                ("localhost", 27017);
+        MongoDatabase dbDatabase = dbClient.getDatabase
+                ("trainBookingSystem");
+        MongoCollection<Document> trainqueue = dbDatabase.getCollection
+                ("QueueData");
+        System.out.println("connected to BookingData");
+        FindIterable<Document> queueDocument = trainqueue.find();
+        if(trainqueue.countDocuments()>1)
+        {
+            for(Document document: queueDocument)
+            {
+                trainqueue.deleteOne(document);
+            }
+        }
+        //System.out.println("j");
+        for (Passenger data : trainQueue.getQueueArray())
+        {
+            if(data!=null) break;
+            Document userDocument = new Document();
+            userDocument.append("Name", data.getName());
+            userDocument.append("Seat", data.getSeat());
+            userDocument.append("TicketNo", data.getTicketNumber());
+            userDocument.append("Date", data.getDate());
+            userDocument.append("Station", data.getStation());
+            userDocument.append("Train", data.getTrain());
+            trainqueue.insertOne(userDocument);
+        }
+        //dbClient.close();
+        //System.out.println("saved files");
+    }
+    private  static void load() {
+        //        initiate MongoClient
+        com.mongodb.MongoClient dbClient = new MongoClient
+                ("localhost", 27017);
+//        creating a database
+        MongoDatabase dbDatabase = dbClient.getDatabase
+                ("trainBookingSystem");
+//        creating a document
+        MongoCollection<Document> bookings = dbDatabase.getCollection
+                ("BookingData");
+        System.out.println("connected to BookingData");
+        FindIterable<Document> bookingDocument = bookings.find();
+
+//        creating a new a new array to collect values
+        ArrayList<String> temporaryList = new ArrayList<>(6);
+        for (int i = 0; i < 7; i++) temporaryList.add("0");
+
+//        if a document exists the it will be added to the array
+        if(bookings.countDocuments()>0)
+        {
+//         resetting the existing main data structure
+//            booking.clear();
+
+            for(Document document:bookingDocument)
+            {
+                temporaryList.set(0,document.getString("Date"));
+                temporaryList.set(1,document.getString("Start"));
+                temporaryList.set(2,document.getString("End"));
+                temporaryList.set(3,document.getString("User"));
+                temporaryList.set(4,document.getString("Seat"));
+                temporaryList.set(5,document.getString("Nic"));
+                temporaryList.set(6,document.getString("Surname"));
+
+//                adding collected sets of values to the main data structure
+//                booking.add(new ArrayList<>(temporaryList));
+            }
+            System.out.println("files loaded");
+        }
+//        if not a message will be printed
+        else
+        {
+            System.out.println("no files were added, no data is changed");
+        }
+
+//        close mongo client
+        dbClient.close();
+//        waitOption();
+    }
     private  static void run() {}
 
     public static void main(String[]args) {

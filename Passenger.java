@@ -20,7 +20,35 @@ public class Passenger {
     private String name;
     private String seat;
     private String ticketNumber;
+    private String date;
+    private String Station;
+    private String train;
+
+    public String getTrain() {
+        return train;
+    }
+
+    public void setTrain(String train) {
+        this.train = train;
+    }
+
+    public String getStation() {
+        return Station;
+    }
+
+    public void setStation(String station) {
+        Station = station;
+    }
+
     private int secondsInQueue;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String setTicketNumber() {
         Random rand = new Random();
