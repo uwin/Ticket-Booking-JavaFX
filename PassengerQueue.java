@@ -13,6 +13,10 @@ public class PassengerQueue {
         return queueArray;
     }
 
+    public static void setQueueArray(Passenger[] queueArray) {
+        PassengerQueue.queueArray = queueArray;
+    }
+
     public void add(Passenger data){
         queueArray[last]=data;
         last++;

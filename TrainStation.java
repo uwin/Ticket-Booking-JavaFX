@@ -388,6 +388,8 @@ public class TrainStation extends Application{
         System.out.println("saved files");
         listOption();
     }
+
+
     private  static void load() {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
@@ -396,22 +398,28 @@ public class TrainStation extends Application{
         MongoDatabase dbDatabase = dbClient.getDatabase
                 ("trainBookingSystem");
 //        creating a document
-        MongoCollection<Document> bookings = dbDatabase.getCollection
-                ("BookingData");
+        MongoCollection<Document> trainqueue = dbDatabase.getCollection
+                ("QueueData");
         System.out.println("connected to BookingData");
-        FindIterable<Document> bookingDocument = bookings.find();
+        FindIterable<Document> queueDocument = trainqueue.find();
 
 //        creating a new a new array to collect values
         ArrayList<String> temporaryList = new ArrayList<>(6);
         for (int i = 0; i < 7; i++) temporaryList.add("0");
 
+        Passenger[] tempQueueArray =trainQueue.getQueueArray();
+        for (Passenger Data: tempQueueArray){
+            Data=null;
+        }
+        trainQueue.setQueueArray(tempQueueArray);
+
 //        if a document exists the it will be added to the array
-        if(bookings.countDocuments()>0)
+        if(trainqueue.countDocuments()>0)
         {
 //         resetting the existing main data structure
 //            booking.clear();
 
-            for(Document document:bookingDocument)
+            for(Document document:queueDocument)
             {
                 temporaryList.set(0,document.getString("Date"));
                 temporaryList.set(1,document.getString("Start"));
