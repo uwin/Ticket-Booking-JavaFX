@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -61,6 +62,7 @@ public class TrainStation extends Application{
                 break;
             default:
                 System.out.println("invalid input");
+                listOption();
                 break;
         }
     }
@@ -307,34 +309,30 @@ public class TrainStation extends Application{
 
     private static void view() {
         Stage window = new Stage();
-        window.setTitle("adding to passanger");
+        window.setTitle("train queue");
         GridPane first = new GridPane();
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(first, 1020, 350);
+        Scene addViewFirst = new Scene(first, 720, 440);
         window.setScene(addViewFirst);
         window.show();
 
-        Image seatBlack = new Image(TrainStation.class.getResourceAsStream
-                ("images/black.png"));
         Passenger[] array = trainQueue.getQueueArray();
         int number=1;
-        for (int r = 2; r < 5; r++) {
-            for (int c = 2; c < 16; c++) {
+        for (int r = 2; r < 8; r++) {
+            for (int c = 2; c < 9; c++) {
                 if (number <=42)
                 {
                     while (array[number-1]!=null){
-                        ImageView button = new ImageView(seatBlack);
-                        Label num = new Label();
-                        num.setFont(new Font("Arial", 15));
-                        num.setText(array[number-1].getName());
-                        button.setFitHeight(60);
-                        button.setFitWidth(60);
+                        Button button = new Button();
+                        button.setFont(new Font("Arial", 15));
+                        button.setText(array[number-1].getTicketNumber());
+                        button.setMinHeight(60);
+                        button.setMinWidth(60);
                         button.setId(String.valueOf(number));
                         number++;
                         first.add(button, c, r);
-                        first.add(num, c, r);
                         break;
                     }
                 }
@@ -347,11 +345,10 @@ public class TrainStation extends Application{
             window.close();
             listOption();
         });
-        first.add(closeBut, 14, 9,14,9);
+        first.add(closeBut, 14, 6,14,9);
     }
 
     private static void delete() {
-        trainQueue.remove();
     }
 
 

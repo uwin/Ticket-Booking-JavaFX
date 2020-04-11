@@ -47,6 +47,19 @@ public class PassengerQueue {
         }
     }
 
+    public  <Passenger extends Comparable<Passenger>> Passenger[] bubbleSort(Passenger[] arr){
+        for (int i=0; i<arr.length-1;i++){
+            for(int j=0;j<arr.length-i-1;j++){
+                if(arr[j].compareTo(arr[j+1])>0){
+                    Passenger temp=arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                }
+            }
+        }
+        return arr;
+    }
+
     public int getLength() { return length; }
     public int getMaxStayInQueue() { return maxStayInQueue; }
 }
