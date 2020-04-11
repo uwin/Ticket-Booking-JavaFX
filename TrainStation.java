@@ -374,8 +374,8 @@ public class TrainStation extends Application{
         //System.out.println("j");
         for (Passenger data : trainQueue.getQueueArray())
         {
-            if(data!=null) break;
             Document userDocument = new Document();
+            if (data==null) continue;
             userDocument.append("Name", data.getName());
             userDocument.append("Seat", data.getSeat());
             userDocument.append("TicketNo", data.getTicketNumber());
@@ -384,8 +384,9 @@ public class TrainStation extends Application{
             userDocument.append("Train", data.getTrain());
             trainqueue.insertOne(userDocument);
         }
-        //dbClient.close();
-        //System.out.println("saved files");
+        dbClient.close();
+        System.out.println("saved files");
+        listOption();
     }
     private  static void load() {
         //        initiate MongoClient
