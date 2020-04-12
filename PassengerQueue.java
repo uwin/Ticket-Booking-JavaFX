@@ -2,6 +2,8 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PassengerQueue {
     private static Passenger [] queueArray = new Passenger[42];
@@ -35,9 +37,20 @@ public class PassengerQueue {
 
 
     }
+    public void delete(String num){
+        List<Passenger> deleteArray = new ArrayList<Passenger>(Arrays.asList(queueArray));
+        for (Passenger temp: queueArray){
+            if (temp.getSeat().equals(num)) {
+                deleteArray.remove(temp);
+                break;
+            }
+        }
+        queueArray= deleteArray.toArray(new Passenger[0]);
+        }
     public boolean isEmpty(){
         return length==0;
     }
+
     public boolean isFull(){
         return length==42;
     }
@@ -45,19 +58,6 @@ public class PassengerQueue {
         for (Passenger x: queueArray){
             System.out.println(x);
         }
-    }
-
-    public  <Passenger extends Comparable<Passenger>> Passenger[] bubbleSort(Passenger[] arr){
-        for (int i=0; i<arr.length-1;i++){
-            for(int j=0;j<arr.length-i-1;j++){
-                if(arr[j].compareTo(arr[j+1])>0){
-                    Passenger temp=arr[j];
-                    arr[j]=arr[j+1];
-                    arr[j+1]=temp;
-                }
-            }
-        }
-        return arr;
     }
 
     public int getLength() { return length; }

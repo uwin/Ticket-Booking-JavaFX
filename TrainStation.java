@@ -198,6 +198,7 @@ public class TrainStation extends Application{
                     i++;
                 }
             }
+            sortSeat();
         }
 //        if not a message will be printed
         else
@@ -218,45 +219,47 @@ public class TrainStation extends Application{
         addView.setPadding(new Insets(2, 2, 2, 2));
         addView.setHgap(10);
         addView.setVgap(10);
-        Scene addViewFirst = new Scene(addView, 600, 500);
+        Scene addViewFirst = new Scene(addView, 650, 500);
         window.setScene(addViewFirst);
         window.show();
 
         TableView<Passenger> waitingRoomTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
-        ticket_col.setMaxWidth(100);
+        ticket_col.setMinWidth(100);
         ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
         TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
-        name_col.setMaxWidth(100);
+        name_col.setMinWidth(100);
         name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
         TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
-        seat_col.setMaxWidth(100);
+        seat_col.setMinWidth(100);
         seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         waitingRoomTable = new TableView<>();
-        waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        waitingRoomTable.setMinWidth(300);
         waitingRoomTable.setItems(getWaitRoomData());
         waitingRoomTable.getColumns().add(ticket_col);
         waitingRoomTable.getColumns().add(name_col);
         waitingRoomTable.getColumns().add(seat_col);
-        addView.add(waitingRoomTable,0,4,80,400);
+        addView.add(waitingRoomTable,1,4);
 
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
-        ticket_col2.setMaxWidth(100);
+        ticket_col2.setMinWidth(100);
         TableColumn<Passenger,String> name_col2 = new TableColumn<>("Name");
-        name_col2.setMaxWidth(100);
+        name_col2.setMinWidth(100);
         name_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
         TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
-        seat_col2.setMaxWidth(100);
+        seat_col2.setMinWidth(100);
         seat_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         trainQueueTable = new TableView<>();
-        trainQueueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //trainQueueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        trainQueueTable.setMinWidth(300);
         trainQueueTable.setItems(getTrainQueueData());
         trainQueueTable.getColumns().add(ticket_col2);
         trainQueueTable.getColumns().add(name_col2);
         trainQueueTable.getColumns().add(seat_col2);
-        addView.add(trainQueueTable,30,4,80,400);
+        addView.add(trainQueueTable,3,4);
 
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: lightblue; ");
@@ -274,10 +277,11 @@ public class TrainStation extends Application{
                     if (i==generateNo) break;
                 }
             }
+            System.out.println(Arrays.toString(waitingRoom));
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
-        addView.add(addButFirst,2,2,50,2);
+        addView.add(addButFirst,3,5);
 
         Button closeButFirst = new Button("close");
         closeButFirst.setStyle("-fx-background-color: red; ");
@@ -285,7 +289,7 @@ public class TrainStation extends Application{
             window.close();
             listOption();
         });
-        addView.add(closeButFirst,2,5,50,2);
+        addView.add(closeButFirst,3,6);
     }
     private static ObservableList<Passenger> getWaitRoomData(){
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
@@ -326,8 +330,8 @@ public class TrainStation extends Application{
                 {
                     while (array[number-1]!=null){
                         Button button = new Button();
-                        button.setFont(new Font("Arial", 15));
-                        button.setText(array[number-1].getTicketNumber());
+                        button.setFont(new Font("Arial", 12));
+                        button.setText(array[number-1].getTicketNumber()+"\n"+array[number-1].getTicketNumber());
                         button.setMinHeight(60);
                         button.setMinWidth(60);
                         button.setId(String.valueOf(number));
@@ -349,6 +353,11 @@ public class TrainStation extends Application{
     }
 
     private static void delete() {
+        Scanner scanSeat= new Scanner(System.in);
+        System.out.println("> Enter Seat Number");
+        String deleteSeat = scanSeat.next();
+        trainQueue.delete(deleteSeat);
+        listOption();
     }
 
 
@@ -452,6 +461,21 @@ public class TrainStation extends Application{
 //        waitOption();
     }
     private  static void run() {}
+
+    public  static void sortSeat() {
+        for (int a = 1; a < waitingRoom.length; a++) {
+            for (int b = 0; b < waitingRoom.length - a-1; b++) {
+                if(waitingRoom[a]==null) break;
+                if(waitingRoom[b]==null) break;
+                if ((Integer.parseInt(waitingRoom[b].getSeat())>(Integer.parseInt(waitingRoom[b + 1].getSeat())))) {
+                    // swap movies[b] with movies[b+1]
+                    Passenger temp = waitingRoom[b];
+                    waitingRoom[b] = waitingRoom[b + 1];
+                    waitingRoom[b + 1] = temp;
+                }
+            }
+        }
+    }
 
     public static void main(String[]args) {
         launch();
