@@ -27,44 +27,6 @@ public class TrainStation extends Application{
 
     private static PassengerQueue trainQueue = new PassengerQueue();
 
-    private  static void listOption() {
-        System.out.println("\n"+
-                "A Add a seat\n"+
-                "V View all seats\n"+
-                "D Delete seat\n"+
-                "S Save details\n"+
-                "L Load details\n"+
-                "R Run simulation\n"+
-                "q quit\n");
-        Scanner scanOption= new Scanner(System.in);
-        System.out.println("> select a option");
-        String userOption= scanOption.next().toUpperCase();
-        switch (userOption) {
-            case "A":
-                add();
-                break;
-            case "V":
-                view();
-                break;
-            case "D":
-                delete();
-                break;
-            case "S":
-                save();
-                break;
-            case "L":
-                load();
-                break;
-            case "R":
-                run();
-                break;
-            default:
-                System.out.println("invalid input");
-                listOption();
-                break;
-        }
-    }
-
     private static void importGui(){
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -209,9 +171,67 @@ public class TrainStation extends Application{
         listOption();
     }
 
+    private static ObservableList<Passenger> getWaitRoomData(){
+        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
+        for (Passenger i: waitingRoom) {
+            if (i!=null){
+                passengers.add(i);
+            }
+        }
+        return passengers;
+    }
+
+    private static ObservableList<Passenger> getTrainQueueData(){
+        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
+
+        for (Passenger i: trainQueue.getQueueArray())
+            if (i!=null){
+                queuePassengers.add(i);
+            }
+        return queuePassengers;
+    }
+
+    private  static void listOption() {
+        System.out.println("\n"+
+                "A Add a seat\n"+
+                "V View all seats\n"+
+                "D Delete seat\n"+
+                "S Save details\n"+
+                "L Load details\n"+
+                "R Run simulation\n"+
+                "q quit\n");
+        Scanner scanOption= new Scanner(System.in);
+        System.out.println("> select a option");
+        String userOption= scanOption.next().toUpperCase();
+        switch (userOption) {
+            case "A":
+                add();
+                break;
+            case "V":
+                view();
+                break;
+            case "D":
+                delete();
+                break;
+            case "S":
+                save();
+                break;
+            case "L":
+                load();
+                break;
+            case "R":
+                run();
+                break;
+            default:
+                System.out.println("invalid input");
+                listOption();
+                break;
+        }
+    }
+
     private static void add() {
         Stage window = new Stage();
-        window.setTitle("adding to passanger");
+        window.setTitle("Add to Train Queue");
         GridPane addView = new GridPane();
         addView.setPadding(new Insets(2, 2, 2, 2));
         addView.setHgap(10);
@@ -269,9 +289,7 @@ public class TrainStation extends Application{
                     //if (trainQueue.isFull())
                     if (getWaitRoomData().size() == 0) break;
                     if (waitingRoom[j] != null) {
-                        System.out.println(trainQueue.getLength());
                         trainQueue.add(waitingRoom[j]);
-                        System.out.println(trainQueue.getLength());
                         waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
@@ -282,10 +300,7 @@ public class TrainStation extends Application{
                 a.setHeaderText("Train Queue is full");
                 a.show();
             }
-            System.out.println(Arrays.toString(waitingRoom));
-            System.out.println("//--"+Arrays.toString(trainQueue.getQueueArray()));
             trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength());
-            System.out.println("//--"+Arrays.toString(trainQueue.getQueueArray()));
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
@@ -298,26 +313,6 @@ public class TrainStation extends Application{
             listOption();
         });
         addView.add(closeButFirst,3,6);
-    }
-
-    private static ObservableList<Passenger> getWaitRoomData(){
-        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
-        for (Passenger i: waitingRoom) {
-            if (i!=null){
-                passengers.add(i);
-            }
-        }
-        return passengers;
-    }
-
-    private static ObservableList<Passenger> getTrainQueueData(){
-        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
-
-        for (Passenger i: trainQueue.getQueueArray())
-            if (i!=null){
-                queuePassengers.add(i);
-            }
-        return queuePassengers;
     }
 
     private static void view() {
@@ -337,17 +332,14 @@ public class TrainStation extends Application{
             for (int c = 2; c < 9; c++) {
                 if (number <=42)
                 {
-                    while (array[number-1]!=null){
-                        Button button = new Button();
-                        button.setFont(new Font("Arial", 12));
-                        button.setText(array[number-1].getTicketNumber()+"\n"+array[number-1].getTicketNumber());
-                        button.setMinHeight(60);
-                        button.setMinWidth(60);
-                        button.setId(String.valueOf(number));
-                        number++;
-                        first.add(button, c, r);
-                        break;
-                    }
+                    Button button = new Button();
+                    button.setFont(new Font("Arial", 12));
+                    button.setMinHeight(60);
+                    button.setMinWidth(60);
+                    button.setId(String.valueOf(number));
+                    if (array[number-1]!=null)button.setText(array[number-1].getName()+"\n"+array[number-1].getTicketNumber());
+                    number++;
+                    first.add(button, c, r);
                 }
             }
         }
@@ -376,10 +368,10 @@ public class TrainStation extends Application{
                 deleteArray.add(null);
                 break;
             }
-        }
         trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
         trainQueue.sortSeat(waitingRoom,waitingRoom.length);;
         listOption();
+    }
     }
 
     private static void save() {
@@ -387,20 +379,17 @@ public class TrainStation extends Application{
                 ("localhost", 27017);
         MongoDatabase dbDatabase = dbClient.getDatabase
                 ("trainBookingSystem");
-        MongoCollection<Document> trainqueue = dbDatabase.getCollection
-                ("QueueData");
-        System.out.println("connected to BookingData");
+
+
+        MongoCollection<Document> trainqueue = dbDatabase.getCollection("QueueData");
+        System.out.println("connected to QueueData");
         FindIterable<Document> queueDocument = trainqueue.find();
-        if(trainqueue.countDocuments()>1)
-        {
-            for(Document document: queueDocument)
-            {
+        if(trainqueue.countDocuments()>1) {
+            for(Document document: queueDocument) {
                 trainqueue.deleteOne(document);
             }
         }
-        //System.out.println("j");
-        for (Passenger data : trainQueue.getQueueArray())
-        {
+        for (Passenger data : trainQueue.getQueueArray()) {
             Document userDocument = new Document();
             if (data==null) continue;
             userDocument.append("Name", data.getName());
@@ -411,6 +400,27 @@ public class TrainStation extends Application{
             userDocument.append("Train", data.getTrain());
             trainqueue.insertOne(userDocument);
         }
+
+        MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
+        System.out.println("connected to WaitingRoomData");
+        FindIterable<Document> waitingRoomDocument = waitingroom.find();
+        if(waitingroom.countDocuments()>1){
+            for(Document document: waitingRoomDocument) {
+                waitingroom.deleteOne(document);
+            }
+        }
+        for (Passenger data : waitingRoom){
+            Document userDocument = new Document();
+            if (data==null) continue;
+            userDocument.append("Name", data.getName());
+            userDocument.append("Seat", data.getSeat());
+            userDocument.append("TicketNo", data.getTicketNumber());
+            userDocument.append("Date", data.getDate());
+            userDocument.append("Station", data.getStation());
+            userDocument.append("Train", data.getTrain());
+            waitingroom.insertOne(userDocument);
+        }
+
         dbClient.close();
         System.out.println("saved files");
         listOption();
@@ -424,31 +434,13 @@ public class TrainStation extends Application{
         MongoDatabase dbDatabase = dbClient.getDatabase
                 ("trainBookingSystem");
 //        creating a document
-        MongoCollection<Document> trainqueue = dbDatabase.getCollection
-                ("QueueData");
-        System.out.println("connected to BookingData");
+
+        MongoCollection<Document> trainqueue = dbDatabase.getCollection("QueueData");
+        System.out.println("connected to QueueData");
         FindIterable<Document> queueDocument = trainqueue.find();
-
-//        creating a new a new array to collect values
-//        ArrayList<String> temporaryList = new ArrayList<>(6);
-//        for (int i = 0; i < 7; i++) temporaryList.add("0");
-        trainQueue.display();
         trainQueue.clearQueue();
-
-//        if a document exists the it will be added to the array
-        if(trainqueue.countDocuments()>0)
-        {
-//         resetting the existing main data structure
-//            booking.clear();
-            for(Document document:queueDocument)
-            {
-//                temporaryList.set(0,document.getString("Date"));
-//                temporaryList.set(1,document.getString("Start"));
-//                temporaryList.set(2,document.getString("End"));
-//                temporaryList.set(3,document.getString("User"));
-//                temporaryList.set(4,document.getString("Seat"));
-//                temporaryList.set(5,document.getString("Nic"));
-//                temporaryList.set(6,document.getString("Surname"));
+        if(trainqueue.countDocuments()>0) {
+            for(Document document:queueDocument) {
                 String name    = document.getString("Name");
                 String seat    = document.getString("Seat");
                 String ticketNo= document.getString("TicketNo");
@@ -463,22 +455,44 @@ public class TrainStation extends Application{
                 passengerObj.setSeat(seat);
                 passengerObj.setTrain(train);
                 trainQueue.add(passengerObj);
-//                adding collected sets of values to the main data structure
-//                booking.add(new ArrayList<>(temporaryList));
             }
-            trainQueue.display();
-            System.out.println("files loaded");
+            System.out.println("Train Queue loaded");
         }
-//        if not a message will be printed
-        else
-        {
-            System.out.println("no files were added, no data is changed");
+        else { System.out.println("no files were added, no data is changed");
+        }
+
+        MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
+        System.out.println("connected to WaitingRoomData");
+        FindIterable<Document> waitingRoomDocument = waitingroom.find();
+        Arrays.fill(waitingRoom, null);
+        if(waitingroom.countDocuments()>0) {
+            int i=0;
+            for(Document document:waitingRoomDocument)
+            {
+                String name    = document.getString("Name");
+                String seat    = document.getString("Seat");
+                String ticketNo= document.getString("TicketNo");
+                String date    = document.getString("Date");
+                String station = document.getString("Station");
+                String train   = document.getString("Train");
+
+                Passenger passengerObj = new Passenger(ticketNo,name);
+                passengerObj.setDate(date);
+                passengerObj.setStation(station);
+                passengerObj.setTrain(train);
+                passengerObj.setSeat(seat);
+                passengerObj.setTrain(train);
+                waitingRoom[i]=(passengerObj);
+                i++;
+            }
+            System.out.println("Waiting Rooom loaded");
+        }
+        else { System.out.println("no files were added, no data is changed");
         }
 
 //        close mongo client
         dbClient.close();
         listOption();
-//        waitOption();
     }
 
     private  static void run() {}
