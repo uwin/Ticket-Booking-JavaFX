@@ -33,8 +33,8 @@ public class PassengerQueue {
     public void sortSeat(Passenger[] sortArray,int length) {
         for (int a = 1; a < length; a++) {
             for (int b = 0; b < length - a-1; b++) {
-//                if(waitingRoom[a]==null) break;
-//                if(waitingRoom[b]==null) break;
+                if(sortArray[a]==null) break;
+                if(sortArray[b]==null) break;
                 if ((Integer.parseInt(sortArray[b].getSeat())>(Integer.parseInt(sortArray[b + 1].getSeat())))) {
                     // swap movies[b] with movies[b+1]
                     Passenger temp = sortArray[b];
@@ -45,21 +45,19 @@ public class PassengerQueue {
         }
     }
 
-    public Passenger  remove(){
-        Passenger data= queueArray[first];
-        first++;
-        length--;
-        return data;
-
-
-    }
+//    public Passenger  remove(){
+//        Passenger data= queueArray[first];
+//        first++;
+//        length--;
+//        return data;
+//    }
     public boolean isEmpty(){
         return length==0;
     }
-
     public boolean isFull(){
         return length==42;
     }
+
     public void display(){
         for (Passenger x: queueArray){
             System.out.println(x);
@@ -67,6 +65,11 @@ public class PassengerQueue {
     }
 
     public int getLength() { return length; }
-    public void setLength() { length++;}
+
+    public void removeSeat() {
+        last--;
+        length--;
+    }
+
     public int getMaxStayInQueue() { return maxStayInQueue; }
 }

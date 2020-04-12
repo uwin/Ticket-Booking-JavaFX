@@ -266,10 +266,12 @@ public class TrainStation extends Application{
                 if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
                 int i = 0;
                 for (int j = 0; j <= waitingRoom.length; j++) {
-                    if (trainQueue.isFull())
-                        if (getWaitRoomData().size() == 0) break;
+                    //if (trainQueue.isFull())
+                    if (getWaitRoomData().size() == 0) break;
                     if (waitingRoom[j] != null) {
+                        System.out.println(trainQueue.getLength());
                         trainQueue.add(waitingRoom[j]);
+                        System.out.println(trainQueue.getLength());
                         waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
@@ -281,7 +283,9 @@ public class TrainStation extends Application{
                 a.show();
             }
             System.out.println(Arrays.toString(waitingRoom));
-            System.out.println(Arrays.toString(trainQueue.getQueueArray()));
+            System.out.println("//--"+Arrays.toString(trainQueue.getQueueArray()));
+            trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength());
+            System.out.println("//--"+Arrays.toString(trainQueue.getQueueArray()));
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
@@ -361,17 +365,19 @@ public class TrainStation extends Application{
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
 
-        List<Passenger> deleteArray = Arrays.asList(trainQueue.getQueueArray());
+        //List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
+        List<Passenger> deleteArray = new ArrayList<Passenger>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
             if (temp.getSeat().equals(deleteSeat)) {
-                int deleteIndex=deleteArray.indexOf(temp);
-                waitingRoom[0]=temp;
-                deleteArray.set(deleteIndex,null);
+                deleteArray.remove(temp);
+                trainQueue.removeSeat();
+                waitingRoom[trainQueue.getLength()]=temp;
+                deleteArray.add(null);
                 break;
             }
         }
-        trainQueue.setLength();
         trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
+        trainQueue.sortSeat(waitingRoom,waitingRoom.length);;
         listOption();
     }
 
