@@ -158,7 +158,7 @@ public class TrainStation extends Application{
                     i++;
                 }
             }
-            trainQueue.sortSeat(waitingRoom,i+1);
+            //trainQueue.sortSeat(waitingRoom,i+1);
         }
 //        if not a message will be printed
         else
@@ -299,7 +299,7 @@ public class TrainStation extends Application{
                 a.setHeaderText("Train Queue is full");
                 a.show();
             }
-            trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength());
+            trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength()+1);
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
