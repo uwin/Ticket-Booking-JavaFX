@@ -20,10 +20,7 @@ import javafx.stage.Stage;
 import org.bson.Document;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
@@ -198,7 +195,7 @@ public class TrainStation extends Application{
                     i++;
                 }
             }
-            sortSeat();
+            trainQueue.sortSeat(waitingRoom,waitingRoom.length);
         }
 //        if not a message will be printed
         else
@@ -264,20 +261,27 @@ public class TrainStation extends Application{
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: lightblue; ");
         addButFirst.setOnAction(event -> {
-            int generateNo=(int)(Math.random() * ((6 - 1) + 1)) + 1;
-            if (getWaitRoomData().size()<generateNo) generateNo=getWaitRoomData().size();
-            int i=0;
-            for(int j=0;j<=waitingRoom.length;j++){
-                if(trainQueue.isFull()) System.out.println("ss");
-                if (getWaitRoomData().size()==0) break;
-                if(waitingRoom[j]!=null){
-                    trainQueue.add(waitingRoom[j]);
-                    waitingRoom[j]=null;
-                    i++;
-                    if (i==generateNo) break;
+            if (!trainQueue.isFull()){
+                int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
+                if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
+                int i = 0;
+                for (int j = 0; j <= waitingRoom.length; j++) {
+                    if (trainQueue.isFull())
+                        if (getWaitRoomData().size() == 0) break;
+                    if (waitingRoom[j] != null) {
+                        trainQueue.add(waitingRoom[j]);
+                        waitingRoom[j] = null;
+                        i++;
+                        if (i == generateNo) break;
+                    }
                 }
+            }else {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setHeaderText("Train Queue is full");
+                a.show();
             }
             System.out.println(Arrays.toString(waitingRoom));
+            System.out.println(Arrays.toString(trainQueue.getQueueArray()));
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
@@ -356,7 +360,18 @@ public class TrainStation extends Application{
         Scanner scanSeat= new Scanner(System.in);
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
-        trainQueue.delete(deleteSeat);
+
+        List<Passenger> deleteArray = Arrays.asList(trainQueue.getQueueArray());
+        for (Passenger temp: trainQueue.getQueueArray()){
+            if (temp.getSeat().equals(deleteSeat)) {
+                int deleteIndex=deleteArray.indexOf(temp);
+                waitingRoom[0]=temp;
+                deleteArray.set(deleteIndex,null);
+                break;
+            }
+        }
+        trainQueue.setLength();
+        trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
         listOption();
     }
 
@@ -462,20 +477,20 @@ public class TrainStation extends Application{
     }
     private  static void run() {}
 
-    public  static void sortSeat() {
-        for (int a = 1; a < waitingRoom.length; a++) {
-            for (int b = 0; b < waitingRoom.length - a-1; b++) {
-                if(waitingRoom[a]==null) break;
-                if(waitingRoom[b]==null) break;
-                if ((Integer.parseInt(waitingRoom[b].getSeat())>(Integer.parseInt(waitingRoom[b + 1].getSeat())))) {
-                    // swap movies[b] with movies[b+1]
-                    Passenger temp = waitingRoom[b];
-                    waitingRoom[b] = waitingRoom[b + 1];
-                    waitingRoom[b + 1] = temp;
-                }
-            }
-        }
-    }
+//    public  static void sortSeat() {
+//        for (int a = 1; a < waitingRoom.length; a++) {
+//            for (int b = 0; b < waitingRoom.length - a-1; b++) {
+////                if(waitingRoom[a]==null) break;
+////                if(waitingRoom[b]==null) break;
+//                if ((Integer.parseInt(waitingRoom[b].getSeat())>(Integer.parseInt(waitingRoom[b + 1].getSeat())))) {
+//                    // swap movies[b] with movies[b+1]
+//                    Passenger temp = waitingRoom[b];
+//                    waitingRoom[b] = waitingRoom[b + 1];
+//                    waitingRoom[b + 1] = temp;
+//                }
+//            }
+//        }
+//    }
 
     public static void main(String[]args) {
         launch();

@@ -29,6 +29,22 @@ public class PassengerQueue {
         last++;
         length++;
     }
+
+    public void sortSeat(Passenger[] sortArray,int length) {
+        for (int a = 1; a < length; a++) {
+            for (int b = 0; b < length - a-1; b++) {
+//                if(waitingRoom[a]==null) break;
+//                if(waitingRoom[b]==null) break;
+                if ((Integer.parseInt(sortArray[b].getSeat())>(Integer.parseInt(sortArray[b + 1].getSeat())))) {
+                    // swap movies[b] with movies[b+1]
+                    Passenger temp = sortArray[b];
+                    sortArray[b] = sortArray[b + 1];
+                    sortArray[b + 1] = temp;
+                }
+            }
+        }
+    }
+
     public Passenger  remove(){
         Passenger data= queueArray[first];
         first++;
@@ -37,16 +53,6 @@ public class PassengerQueue {
 
 
     }
-    public void delete(String num){
-        List<Passenger> deleteArray = new ArrayList<Passenger>(Arrays.asList(queueArray));
-        for (Passenger temp: queueArray){
-            if (temp.getSeat().equals(num)) {
-                deleteArray.remove(temp);
-                break;
-            }
-        }
-        queueArray= deleteArray.toArray(new Passenger[0]);
-        }
     public boolean isEmpty(){
         return length==0;
     }
@@ -61,5 +67,6 @@ public class PassengerQueue {
     }
 
     public int getLength() { return length; }
+    public void setLength() { length++;}
     public int getMaxStayInQueue() { return maxStayInQueue; }
 }
