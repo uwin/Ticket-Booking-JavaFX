@@ -364,15 +364,18 @@ public class TrainStation extends Application{
         //List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
         List<Passenger> deleteArray = new ArrayList<Passenger>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
-            if (temp.getSeat().equals(deleteSeat)) {
+            if(temp==null){
+                System.out.println("invalid input");
+                break;
+            } else if (temp.getSeat().equals(deleteSeat)) {
                 deleteArray.remove(temp);
                 trainQueue.removeSeat();
                 waitingRoom[trainQueue.getLength()]=temp;
                 deleteArray.add(null);
+                trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
                 break;
             }
         }
-        trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
         listOption();
     }
 
