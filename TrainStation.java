@@ -24,6 +24,7 @@ import java.util.*;
 
 public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
+
     private static PassengerQueue trainQueue = new PassengerQueue();
 
     private  static void listOption() {
@@ -147,6 +148,7 @@ public class TrainStation extends Application{
         first.add(closeButFirst,80,30,10,12);
 
     }
+
     private static void importData(String selectedDate,String selectedTrain,String selectedStation) {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
@@ -206,8 +208,6 @@ public class TrainStation extends Application{
         dbClient.close();
         listOption();
     }
-
-
 
     private static void add() {
         Stage window = new Stage();
@@ -299,6 +299,7 @@ public class TrainStation extends Application{
         });
         addView.add(closeButFirst,3,6);
     }
+
     private static ObservableList<Passenger> getWaitRoomData(){
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
         for (Passenger i: waitingRoom) {
@@ -308,6 +309,7 @@ public class TrainStation extends Application{
         }
         return passengers;
     }
+
     private static ObservableList<Passenger> getTrainQueueData(){
         ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
 
@@ -317,7 +319,6 @@ public class TrainStation extends Application{
             }
         return queuePassengers;
     }
-
 
     private static void view() {
         Stage window = new Stage();
@@ -381,7 +382,6 @@ public class TrainStation extends Application{
         listOption();
     }
 
-
     private static void save() {
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -415,7 +415,6 @@ public class TrainStation extends Application{
         System.out.println("saved files");
         listOption();
     }
-
 
     private  static void load() {
         //        initiate MongoClient
@@ -481,22 +480,8 @@ public class TrainStation extends Application{
         listOption();
 //        waitOption();
     }
-    private  static void run() {}
 
-//    public  static void sortSeat() {
-//        for (int a = 1; a < waitingRoom.length; a++) {
-//            for (int b = 0; b < waitingRoom.length - a-1; b++) {
-////                if(waitingRoom[a]==null) break;
-////                if(waitingRoom[b]==null) break;
-//                if ((Integer.parseInt(waitingRoom[b].getSeat())>(Integer.parseInt(waitingRoom[b + 1].getSeat())))) {
-//                    // swap movies[b] with movies[b+1]
-//                    Passenger temp = waitingRoom[b];
-//                    waitingRoom[b] = waitingRoom[b + 1];
-//                    waitingRoom[b + 1] = temp;
-//                }
-//            }
-//        }
-//    }
+    private  static void run() {}
 
     public static void main(String[]args) {
         launch();
