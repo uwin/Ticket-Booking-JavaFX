@@ -33,8 +33,6 @@ public class PassengerQueue {
     public void sortSeat(Passenger[] sortArray,int length) {
         for (int a = 1; a < length; a++) {
             for (int b = 0; b < length - a-1; b++) {
-                if(sortArray[a]==null) break;
-                if(sortArray[b]==null) break;
                 if ((Integer.parseInt(sortArray[b].getSeat())>(Integer.parseInt(sortArray[b + 1].getSeat())))) {
                     // swap movies[b] with movies[b+1]
                     Passenger temp = sortArray[b];

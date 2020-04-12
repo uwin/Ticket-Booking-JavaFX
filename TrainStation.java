@@ -128,7 +128,7 @@ public class TrainStation extends Application{
                 "Colombo Fort","Polgahawela", "Peradeniya Junction",
                 "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
                 "Haputale","Diyatalawa", "Bandarawela","Ella", "Badulla"));
-
+        System.out.println(Arrays.toString(waitingRoom));
         if(bookings.countDocuments()>0)
         {
             int i=0;
@@ -140,7 +140,6 @@ public class TrainStation extends Application{
                 String seat   = document.getString("Seat");
                 String start  = document.getString("Start");
                 String end    = document.getString("End");
-
                 String trainNo;
                 if(stopsList.indexOf(start)<stopsList.indexOf(end)){
                     trainNo="1";
@@ -159,7 +158,7 @@ public class TrainStation extends Application{
                     i++;
                 }
             }
-            trainQueue.sortSeat(waitingRoom,waitingRoom.length);
+            trainQueue.sortSeat(waitingRoom,i+1);
         }
 //        if not a message will be printed
         else
@@ -368,10 +367,9 @@ public class TrainStation extends Application{
                 deleteArray.add(null);
                 break;
             }
+        }
         trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
-        trainQueue.sortSeat(waitingRoom,waitingRoom.length);;
         listOption();
-    }
     }
 
     private static void save() {
@@ -464,7 +462,9 @@ public class TrainStation extends Application{
         MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
         System.out.println("connected to WaitingRoomData");
         FindIterable<Document> waitingRoomDocument = waitingroom.find();
+        System.out.println(waitingRoom);
         Arrays.fill(waitingRoom, null);
+        System.out.println(waitingRoom);
         if(waitingroom.countDocuments()>0) {
             int i=0;
             for(Document document:waitingRoomDocument)
