@@ -280,7 +280,15 @@ public class TrainStation extends Application{
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: lightblue; ");
         addButFirst.setOnAction(event -> {
-            if (!trainQueue.isFull()){
+            if (getWaitRoomData().isEmpty()){
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setHeaderText("Waiting Room is Empty");
+                a.show();
+            } else if (trainQueue.isFull()){
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setHeaderText("Train Queue is full");
+                a.show();
+            }else {
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
                 if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
                 int i = 0;
@@ -294,10 +302,6 @@ public class TrainStation extends Application{
                         if (i == generateNo) break;
                     }
                 }
-            }else {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setHeaderText("Train Queue is full");
-                a.show();
             }
             trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength()+1);
             trainQueueTable.setItems(getTrainQueueData());
