@@ -19,7 +19,11 @@ public class PassengerQueue {
         PassengerQueue.queueArray = queueArray;
     }
     public  void clearQueue(){
+
         queueArray = new Passenger[42];
+        last=0;
+        first=0;
+        length=0;
     }
 
     public void add(Passenger data){
@@ -40,6 +44,7 @@ public class PassengerQueue {
     public boolean isFull(){
         return length==42;
     }
+
     public void display(){
         for (Passenger x: queueArray){
             System.out.println(x);

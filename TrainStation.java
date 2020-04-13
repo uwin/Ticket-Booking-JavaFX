@@ -112,6 +112,9 @@ public class TrainStation extends Application{
         skipButFirst.setMaxSize(120, 60);
         skipButFirst.setStyle("-fx-background-color: brown; ");
         skipButFirst.setOnAction(event -> {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setHeaderText("Programme Will Continue Without Loading Data");
+            a.showAndWait();
             window.close();
             listOption();
         });
@@ -214,6 +217,16 @@ public class TrainStation extends Application{
         return queuePassengers;
     }
 
+//    private static ObservableList<Passenger> getReportData(){
+//        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
+//
+//        for (Passenger i: )
+//            if (i!=null){
+//                recordPassengers.add(i);
+//            }
+//        return recordPassengers;
+//    }
+
     private  static void listOption() {
         System.out.println("\n"+
                 "A Add a seat\n"+
@@ -259,7 +272,7 @@ public class TrainStation extends Application{
         addView.setPadding(new Insets(2, 2, 2, 2));
         addView.setHgap(10);
         addView.setVgap(10);
-        Scene addViewFirst = new Scene(addView, 650, 500);
+        Scene addViewFirst = new Scene(addView, 760, 650);
         window.setScene(addViewFirst);
         window.show();
 
@@ -276,6 +289,7 @@ public class TrainStation extends Application{
         waitingRoomTable = new TableView<>();
         //waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         waitingRoomTable.setMinWidth(300);
+        waitingRoomTable.setMinHeight(450);
         waitingRoomTable.setItems(getWaitRoomData());
         waitingRoomTable.getColumns().add(ticket_col);
         waitingRoomTable.getColumns().add(name_col);
@@ -295,6 +309,7 @@ public class TrainStation extends Application{
         trainQueueTable = new TableView<>();
         //trainQueueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         trainQueueTable.setMinWidth(300);
+        trainQueueTable.setMinHeight(450);
         trainQueueTable.setItems(getTrainQueueData());
         trainQueueTable.getColumns().add(ticket_col2);
         trainQueueTable.getColumns().add(name_col2);
@@ -303,6 +318,7 @@ public class TrainStation extends Application{
 
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: lightblue; ");
+        addButFirst.setMinSize(120, 60);
         addButFirst.setOnAction(event -> {
             if (getWaitRoomData().isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
@@ -331,15 +347,16 @@ public class TrainStation extends Application{
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
-        addView.add(addButFirst,3,5);
+        addView.add(addButFirst,2,5);
 
         Button closeButFirst = new Button("close");
         closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setMinSize(120, 60);
         closeButFirst.setOnAction(event -> {
             window.close();
             listOption();
         });
-        addView.add(closeButFirst,3,6);
+        addView.add(closeButFirst,2,6);
     }
 
     private static void view() {
@@ -349,7 +366,7 @@ public class TrainStation extends Application{
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(first, 720, 440);
+        Scene addViewFirst = new Scene(first, 970, 440);
         window.setScene(addViewFirst);
         window.show();
 
@@ -362,9 +379,13 @@ public class TrainStation extends Application{
                     Button button = new Button();
                     button.setFont(new Font("Arial", 12));
                     button.setMinHeight(60);
-                    button.setMinWidth(60);
+                    button.setMinWidth(100);
                     button.setId(String.valueOf(number));
-                    if (array[number-1]!=null)button.setText(array[number-1].getName()+"\n"+array[number-1].getTicketNumber());
+                    button.setPadding(new Insets(0));
+                    if (array[number-1]!=null)button.setText(
+                            array[number-1].getName()+"\n"+
+                            array[number-1].getSeat()+"|"+
+                            array[number-1].getTicketNumber());
                     number++;
                     first.add(button, c, r);
                 }
@@ -529,15 +550,22 @@ public class TrainStation extends Application{
     private  static void run() {
         Passenger[] reportData = new Passenger[trainQueue.getLength()];
         Passenger[] reportArray = trainQueue.getQueueArray();
+
         float maximunWaitingTime=0;
         float minimumWaitingTime=0;
-        float averageSecondsInQueue;
         int maximunLengthQueue;
         if (trainQueue.isEmpty()){
             System.out.println("k");
         }else {
-            float queueDelay = 0;
+            int queueDelay = 0;
             int i=0;
+            for (Passenger pasangerObjest: reportArray){
+                if (pasangerObjest==null) continue;
+                int genDelay= 3 + (int) (Math.random() * ((18 - 3 + 1)));
+                pasangerObjest.setSeconds(genDelay);
+                reportData[i]=pasangerObjest;
+                i++;
+            }
             for (Passenger pasangerObjest: reportArray){
                 if (pasangerObjest==null) continue;
                 queueDelay+=pasangerObjest.getSeconds();
@@ -546,15 +574,53 @@ public class TrainStation extends Application{
                 if (queueDelay>maximunWaitingTime) maximunWaitingTime=queueDelay;
                 trainQueue.remove();
                 pasangerObjest.setSeconds(queueDelay);
-                reportData[i]=pasangerObjest;
-                i++;
             }
-            averageSecondsInQueue = queueDelay/i;
+            maximunLengthQueue=i;
+            float averageSecondsInQueue = (float)queueDelay/i;
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
             System.out.println("minimumWaitingTime >"+minimumWaitingTime);
             System.out.println("maximunWaitingTime >"+maximunWaitingTime);
             System.out.println("maximunLengthQueue >"+i);
         }
+        runGui();
+    }
+
+    public static void runGui(){
+        Stage window = new Stage();
+        window.setTitle("Add to Train Queue");
+        GridPane addView = new GridPane();
+        addView.setPadding(new Insets(2, 2, 2, 2));
+        addView.setHgap(10);
+        addView.setVgap(10);
+        Scene addViewFirst = new Scene(addView, 760, 650);
+        window.setScene(addViewFirst);
+        window.show();
+
+        TableView<Passenger> waitingRoomTable;
+        TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
+        ticket_col.setMinWidth(100);
+        ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+        TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
+        name_col.setMinWidth(100);
+        name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
+        TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
+        seat_col.setMinWidth(100);
+        seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
+        TableColumn<Passenger,String> seconds_col = new TableColumn<>("Seconds");
+        seconds_col.setMinWidth(100);
+        seconds_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("secondsInQueue"));
+
+
+        waitingRoomTable = new TableView<>();
+        //waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        waitingRoomTable.setMinWidth(300);
+        waitingRoomTable.setMinHeight(450);
+        waitingRoomTable.setItems(getWaitRoomData());
+        waitingRoomTable.getColumns().add(ticket_col);
+        waitingRoomTable.getColumns().add(name_col);
+        waitingRoomTable.getColumns().add(seat_col);
+        addView.add(waitingRoomTable,1,4);
+
     }
 
     public static void main(String[]args) {

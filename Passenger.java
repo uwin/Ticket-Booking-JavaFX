@@ -27,7 +27,7 @@ public class Passenger {
     private String date;
     private String Station;
     private String train;
-    private float secondsInQueue;
+    private int secondsInQueue;
 
     public String getTrain() {
         return train;
@@ -77,9 +77,9 @@ public class Passenger {
     }
 
     public int getSeconds() {
-        return 3 + (int) (Math.random() * ((18 - 3 + 1)));
+        return secondsInQueue;
     }
-    public void setSeconds(float sec ) {
+    public void setSeconds(int sec ) {
         secondsInQueue=sec;
     }
 
