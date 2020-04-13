@@ -29,6 +29,13 @@ public class PassengerQueue {
         last++;
         length++;
     }
+    public Passenger  remove(){
+        Passenger data= queueArray[first];
+        first++;
+        length--;
+        return data;
+    }
+
 
     public void sortSeat(Passenger[] sortArray,int length) {
         for (int a = 1; a < length; a++) {
@@ -43,12 +50,7 @@ public class PassengerQueue {
         }
     }
 
-//    public Passenger  remove(){
-//        Passenger data= queueArray[first];
-//        first++;
-//        length--;
-//        return data;
-//    }
+
     public boolean isEmpty(){
         return length==0;
     }

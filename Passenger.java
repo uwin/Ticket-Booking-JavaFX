@@ -81,10 +81,10 @@ public class Passenger {
     }
 
     public int getSeconds() {
-        return secondsInQueue;
+        return 3 + (int) (Math.random() * ((18 - 3 + 1)));
     }
     public void setSeconds(int sec ) {
-//        secondsInQueue change
+        secondsInQueue=sec;
     }
 
     public void display() {

@@ -502,7 +502,26 @@ public class TrainStation extends Application{
         listOption();
     }
 
-    private  static void run() {}
+    private  static void run() {
+        Passenger[] reportData = new Passenger[trainQueue.getLength()];
+        Passenger[] reportArray = trainQueue.getQueueArray();
+        if (trainQueue.isEmpty()){
+            System.out.println("k");
+        }else {
+            int queueDelay = 0;
+            int i=0;
+            for (Passenger pasangerObjest: reportArray){
+                if (pasangerObjest==null) continue;
+                queueDelay+=pasangerObjest.getSeconds();
+                trainQueue.remove();
+                pasangerObjest.setSeconds(queueDelay);
+                reportData[i]=pasangerObjest;
+                i++;
+            }
+            double averageSecondsInQueue = queueDelay/i;
+
+        }
+    }
 
     public static void main(String[]args) {
         launch();
