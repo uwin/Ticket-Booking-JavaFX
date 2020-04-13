@@ -128,7 +128,6 @@ public class TrainStation extends Application{
                 "Colombo Fort","Polgahawela", "Peradeniya Junction",
                 "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
                 "Haputale","Diyatalawa", "Bandarawela","Ella", "Badulla"));
-        System.out.println(Arrays.toString(waitingRoom));
         if(bookings.countDocuments()>0)
         {
             int i=0;
@@ -158,16 +157,33 @@ public class TrainStation extends Application{
                     i++;
                 }
             }
-            //trainQueue.sortSeat(waitingRoom,i+1);
+            boolean validateImport =false;
+            for (Passenger data:waitingRoom){
+                if (data != null) {
+                    validateImport = true;
+                    break;
+                }
+            }
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            if (!validateImport) {
+                a.setHeaderText("No Data Found for selected Parameters");
+                a.showAndWait();
+                importGui();
+            }else {
+                a.setHeaderText("Data Loaded from Train Booking");
+                a.showAndWait();
+                listOption();
+            }
         }
-//        if not a message will be printed
         else
         {
-            System.out.println("Passenger Data is Unavailable to be imported");
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setHeaderText("Saved Data is Unavailable\n programme will continue without loading data       ");
+            a.showAndWait();
+            listOption();
         }
 //        close mongo client
         dbClient.close();
-        listOption();
     }
 
     private static ObservableList<Passenger> getWaitRoomData(){
@@ -505,21 +521,31 @@ public class TrainStation extends Application{
     private  static void run() {
         Passenger[] reportData = new Passenger[trainQueue.getLength()];
         Passenger[] reportArray = trainQueue.getQueueArray();
+        float maximunWaitingTime=0;
+        float minimumWaitingTime=0;
+        float averageSecondsInQueue;
+        int maximunLengthQueue;
         if (trainQueue.isEmpty()){
             System.out.println("k");
         }else {
-            int queueDelay = 0;
+            float queueDelay = 0;
             int i=0;
             for (Passenger pasangerObjest: reportArray){
                 if (pasangerObjest==null) continue;
                 queueDelay+=pasangerObjest.getSeconds();
+                if (minimumWaitingTime==0) minimumWaitingTime=queueDelay;
+                if (queueDelay<minimumWaitingTime) minimumWaitingTime=queueDelay;
+                if (queueDelay>maximunWaitingTime) maximunWaitingTime=queueDelay;
                 trainQueue.remove();
                 pasangerObjest.setSeconds(queueDelay);
                 reportData[i]=pasangerObjest;
                 i++;
             }
-            double averageSecondsInQueue = queueDelay/i;
-
+            averageSecondsInQueue = queueDelay/i;
+            System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
+            System.out.println("minimumWaitingTime >"+minimumWaitingTime);
+            System.out.println("maximunWaitingTime >"+maximunWaitingTime);
+            System.out.println("maximunLengthQueue >"+i);
         }
     }
 
@@ -529,15 +555,6 @@ public class TrainStation extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        boolean validateImport =false;
-        for (Passenger i:waitingRoom){
-            if (i != null) {
-                validateImport = true;
-                break;
-            }
-        }
-        if (!validateImport) {
-            importGui();
-        }
+        importGui();
     }
 }

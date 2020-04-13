@@ -45,7 +45,7 @@ public class Passenger {
         Station = station;
     }
 
-    private int secondsInQueue;
+    private float secondsInQueue;
 
     public String getDate() {
         return date;
@@ -83,7 +83,7 @@ public class Passenger {
     public int getSeconds() {
         return 3 + (int) (Math.random() * ((18 - 3 + 1)));
     }
-    public void setSeconds(int sec ) {
+    public void setSeconds(float sec ) {
         secondsInQueue=sec;
     }
 
