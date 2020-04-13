@@ -18,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.bson.Document;
-
 import java.time.LocalDate;
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class TrainStation extends Application{
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(first, 1020, 400);
+        Scene addViewFirst = new Scene(first, 650, 400);
         window.setScene(addViewFirst);
         window.show();
 
@@ -42,7 +41,7 @@ public class TrainStation extends Application{
                 "                   A/C compartment");
         head.setFont(new Font("Arial", 30));
         head.setTextFill(Color.web("#0076a3")); //light blue
-        first.add(head,20,3,50,8);
+        first.add(head,5,3,60,8);
 
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
@@ -60,7 +59,7 @@ public class TrainStation extends Application{
                 "Bandarawela","Ella", "Badulla" };
 
         //        text for start
-        Label headStart = new Label("Select Station");
+        Label headStart = new Label("Station");
         headStart.setFont(new Font("Arial", 23));
         headStart.setTextFill(Color.web("#0076a3")); //light blue
         first.add(headStart,3,16,9,4);
@@ -69,7 +68,7 @@ public class TrainStation extends Application{
         ComboBox<String> stationDrop = new ComboBox<>();
         stationDrop.getItems().addAll(stops);
         stationDrop.setValue("Colombo Fort");
-        first.add(stationDrop,12,16,9,4);
+        first.add(stationDrop,12,16,18,4);
 
 
         Button colomboSButton = new Button("Colombo Station");
@@ -85,7 +84,7 @@ public class TrainStation extends Application{
 
         });
 
-        first.add(colomboSButton,30,19,40,12);
+        first.add(colomboSButton,15,20,40,12);
 
         Button badullaSButton = new Button("Badulla Station");
         badullaSButton.setMaxSize(120, 60);
@@ -98,7 +97,7 @@ public class TrainStation extends Application{
             window.close();
             importData(selectedDate,selectedTrain,selectedStation);
         });
-        first.add(badullaSButton,50,19,40,12);
+        first.add(badullaSButton,35,20,40,12);
 
         Button closeButFirst = new Button("close");
         closeButFirst.setMaxSize(120, 60);
@@ -107,7 +106,16 @@ public class TrainStation extends Application{
             window.close();
             listOption();
         });
-        first.add(closeButFirst,80,30,10,12);
+        first.add(closeButFirst,54,30,10,12);
+
+        Button skipButFirst = new Button("Skip");
+        skipButFirst.setMaxSize(120, 60);
+        skipButFirst.setStyle("-fx-background-color: brown; ");
+        skipButFirst.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        first.add(skipButFirst,44,30,10,12);
 
     }
 
@@ -178,7 +186,7 @@ public class TrainStation extends Application{
         else
         {
             Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setHeaderText("Saved Data is Unavailable\n programme will continue without loading data       ");
+            a.setHeaderText("No Saved Data is Unavailable\n programme will continue without loading Data");
             a.showAndWait();
             listOption();
         }

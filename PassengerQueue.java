@@ -12,16 +12,14 @@ public class PassengerQueue {
     private int length=0;
     private int maxStayInQueue=0;
 
-    public  void clearQueue(){
-        queueArray = new Passenger[42];
-    }
-
     public  Passenger[] getQueueArray() {
         return queueArray;
     }
-
     public  void setQueueArray(Passenger[] queueArray) {
         PassengerQueue.queueArray = queueArray;
+    }
+    public  void clearQueue(){
+        queueArray = new Passenger[42];
     }
 
     public void add(Passenger data){
@@ -29,13 +27,30 @@ public class PassengerQueue {
         last++;
         length++;
     }
-    public Passenger  remove(){
+    public Passenger remove(){
         Passenger data= queueArray[first];
         first++;
         length--;
         return data;
     }
 
+    public boolean isEmpty(){
+        return length==0;
+    }
+    public boolean isFull(){
+        return length==42;
+    }
+    public void display(){
+        for (Passenger x: queueArray){
+            System.out.println(x);
+        }
+    }
+    public int getLength() {
+
+        return length;
+
+    }
+    public int getMaxStayInQueue() { return maxStayInQueue; }
 
     public void sortSeat(Passenger[] sortArray,int length) {
         for (int a = 1; a < length; a++) {
@@ -49,27 +64,8 @@ public class PassengerQueue {
             }
         }
     }
-
-
-    public boolean isEmpty(){
-        return length==0;
-    }
-    public boolean isFull(){
-        return length==42;
-    }
-
-    public void display(){
-        for (Passenger x: queueArray){
-            System.out.println(x);
-        }
-    }
-
-    public int getLength() { return length; }
-
     public void removeSeat() {
         last--;
         length--;
     }
-
-    public int getMaxStayInQueue() { return maxStayInQueue; }
 }

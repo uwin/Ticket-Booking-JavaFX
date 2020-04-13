@@ -14,6 +14,10 @@ public class Passenger {
 
         this.ticketNumber=setTicketNumber();
     }
+    public Passenger(String ticketNumber,String name) {
+        this.ticketNumber = ticketNumber;
+        this.name= name;
+    }
 
     private String firstName;
     private String secondName;
@@ -23,16 +27,11 @@ public class Passenger {
     private String date;
     private String Station;
     private String train;
-
-    public Passenger(String ticketNumber,String name) {
-        this.ticketNumber = ticketNumber;
-        this.name= name;
-    }
+    private float secondsInQueue;
 
     public String getTrain() {
         return train;
     }
-
     public void setTrain(String train) {
         this.train = train;
     }
@@ -40,12 +39,9 @@ public class Passenger {
     public String getStation() {
         return Station;
     }
-
     public void setStation(String station) {
         Station = station;
     }
-
-    private float secondsInQueue;
 
     public String getDate() {
         return date;
