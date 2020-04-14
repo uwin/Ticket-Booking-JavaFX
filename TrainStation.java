@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -270,13 +271,20 @@ public class TrainStation extends Application{
     private static void add() {
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
-        GridPane addView = new GridPane();
-        addView.setPadding(new Insets(2, 2, 2, 2));
-        addView.setHgap(10);
-        addView.setVgap(10);
-        Scene addViewFirst = new Scene(addView, 760, 650);
+        AnchorPane addView = new AnchorPane();
+        //addView.setPadding(new Insets(2, 2, 2, 2));
+        //addView.setHgap(10);
+        //addView.setVgap(10);
+        Scene addViewFirst = new Scene(addView, 680, 580);
         window.setScene(addViewFirst);
         window.show();
+
+        Label waitingRoomHead = new Label("Waiting Room");
+        waitingRoomHead.setFont(new Font("Arial", 23));
+        //waitingRoomHead.setTextFill(Color.web("#black")); //light blue
+        addView.getChildren().add(waitingRoomHead);
+        AnchorPane.setLeftAnchor(waitingRoomHead,20d);
+        AnchorPane.setTopAnchor(waitingRoomHead,10d);
 
         TableView<Passenger> waitingRoomTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
@@ -296,7 +304,16 @@ public class TrainStation extends Application{
         waitingRoomTable.getColumns().add(ticket_col);
         waitingRoomTable.getColumns().add(name_col);
         waitingRoomTable.getColumns().add(seat_col);
-        addView.add(waitingRoomTable,1,4);
+        addView.getChildren().addAll(waitingRoomTable);
+        AnchorPane.setRightAnchor(waitingRoomTable,20d);
+        AnchorPane.setTopAnchor(waitingRoomTable,40d);
+
+        Label trainQueueHead = new Label("Train Queue");
+        trainQueueHead.setFont(new Font("Arial", 23));
+        //trainQueueHead.setTextFill(Color.web("#black")); //light blue
+        addView.getChildren().addAll(trainQueueHead);
+        AnchorPane.setRightAnchor(trainQueueHead,200d);
+        AnchorPane.setTopAnchor(trainQueueHead,10d);
 
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
@@ -316,7 +333,20 @@ public class TrainStation extends Application{
         trainQueueTable.getColumns().add(ticket_col2);
         trainQueueTable.getColumns().add(name_col2);
         trainQueueTable.getColumns().add(seat_col2);
-        addView.add(trainQueueTable,3,4);
+        addView.getChildren().addAll(trainQueueTable);
+        AnchorPane.setLeftAnchor(trainQueueTable,20d);
+        AnchorPane.setTopAnchor(trainQueueTable,40d);
+
+        Button closeButFirst = new Button("close");
+        closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setMinSize(120, 60);
+        closeButFirst.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        addView.getChildren().addAll(closeButFirst);
+        AnchorPane.setRightAnchor(closeButFirst,10d);
+        AnchorPane.setBottomAnchor(closeButFirst,10d);
 
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: lightblue; ");
@@ -334,12 +364,12 @@ public class TrainStation extends Application{
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
                 if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
                 int i = 0;
-                for (int j = 0; j <= waitingRoom.length; j++) {
+                for (int j = 0; j <= TrainStation.waitingRoom.length; j++) {
                     //if (trainQueue.isFull())
                     if (getWaitRoomData().size() == 0) break;
-                    if (waitingRoom[j] != null) {
-                        trainQueue.add(waitingRoom[j]);
-                        waitingRoom[j] = null;
+                    if (TrainStation.waitingRoom[j] != null) {
+                        trainQueue.add(TrainStation.waitingRoom[j]);
+                        TrainStation.waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
                     }
@@ -349,16 +379,9 @@ public class TrainStation extends Application{
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
-        addView.add(addButFirst,2,5);
-
-        Button closeButFirst = new Button("close");
-        closeButFirst.setStyle("-fx-background-color: red; ");
-        closeButFirst.setMinSize(120, 60);
-        closeButFirst.setOnAction(event -> {
-            window.close();
-            listOption();
-        });
-        addView.add(closeButFirst,2,6);
+        addView.getChildren().addAll(addButFirst);
+        AnchorPane.setRightAnchor(addButFirst,140d);
+        AnchorPane.setBottomAnchor(addButFirst,10d);
     }
 
     private static void view() {
@@ -550,7 +573,6 @@ public class TrainStation extends Application{
     }
 
     private  static void run() {
-        int maximunLengthQueue=0;
         if (trainQueue.isEmpty()){
             System.out.println("k");
         }else {
@@ -561,9 +583,9 @@ public class TrainStation extends Application{
                 int genDelay= 3 + (int) (Math.random() * ((18 - 3 + 1)));
                 pasangerObjest.setSecondsInQueue(genDelay);
                 reportData[i]=pasangerObjest;
+                if (i>trainQueue.getMaxlength()) trainQueue.setMaxlength(i);
                 i++;
             }
-            maximunLengthQueue=trainQueue.getLength();
             for (Passenger pasangerObjest: reportArray){
                 if (pasangerObjest==null) continue;
                 queueDelay+=pasangerObjest.getSecondsInQueue();
@@ -576,7 +598,7 @@ public class TrainStation extends Application{
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
             System.out.println("minimumWaitingTime >"+trainQueue.getMinStayInQueue());
             System.out.println("maximunWaitingTime >"+trainQueue.getMinStayInQueue());
-            System.out.println("maximunLengthQueue >"+trainQueue.getLength());
+            System.out.println("maximunLengthQueue >"+trainQueue.getMaxlength());
         }
         runGui();
     }

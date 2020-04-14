@@ -12,6 +12,15 @@ public class PassengerQueue {
     private int length=0;
     private static int maxStayInQueue=0;
     private static int minStayInQueue=0;
+    private int Maxlength=0;
+
+    public int getMaxlength() {
+        return Maxlength;
+    }
+
+    public void setMaxlength(int Maxlength) {
+        this.Maxlength = Maxlength;
+    }
 
     public  Passenger[] getQueueArray() {
         return queueArray;
