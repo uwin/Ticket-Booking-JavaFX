@@ -368,7 +368,9 @@ public class TrainStation extends Application{
                     //if (trainQueue.isFull())
                     if (getWaitRoomData().size() == 0) break;
                     if (TrainStation.waitingRoom[j] != null) {
+                        System.out.println(Arrays.toString(trainQueue.getQueueArray()));
                         trainQueue.add(TrainStation.waitingRoom[j]);
+                        System.out.println(Arrays.toString(trainQueue.getQueueArray()));
                         TrainStation.waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
@@ -550,9 +552,7 @@ public class TrainStation extends Application{
         MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
         System.out.println("connected to WaitingRoomData");
         FindIterable<Document> waitingRoomDocument = waitingroom.find();
-        System.out.println(waitingRoom);
         Arrays.fill(waitingRoom, null);
-        System.out.println(waitingRoom);
         if(waitingroom.countDocuments()>0) {
             int i=0;
             for(Document document:waitingRoomDocument)
@@ -584,9 +584,13 @@ public class TrainStation extends Application{
     }
 
     private  static void run() {
+        System.out.println(Arrays.toString(trainQueue.getQueueArray()));
         if (trainQueue.isEmpty()){
-            System.out.println("k");
-        }else {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setHeaderText("Train queue is Empty");
+            a.showAndWait();
+            listOption();
+        }else { ;
             int queueDelay = 0;
             int i=0;
             for (Passenger pasangerObjest: reportArray){
@@ -602,16 +606,17 @@ public class TrainStation extends Application{
                 queueDelay+=pasangerObjest.getSecondsInQueue();
                 if (queueDelay>trainQueue.getMaxStayInQueue(queueDelay)) trainQueue.setMaxStayInQueue(queueDelay);
                 if (queueDelay<trainQueue.getMinStayInQueue()) trainQueue.setMinStayInQueue(queueDelay);
-                trainQueue.remove();
                 pasangerObjest.setSecondsInQueue(queueDelay);
             }
+            trainQueue.clearQueue();
             float averageSecondsInQueue = (float)queueDelay/i;
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
             System.out.println("minimumWaitingTime >"+trainQueue.getMinStayInQueue());
-            System.out.println("maximunWaitingTime >"+trainQueue.getMinStayInQueue());
+            System.out.println("maximunWaitingTime >"+trainQueue.getMaxStayInQueue(queueDelay));
             System.out.println("maximunLengthQueue >"+trainQueue.getMaxlength());
+            System.out.println(Arrays.toString(trainQueue.getQueueArray()));
+            runGui();
         }
-        runGui();
     }
 
     public static void runGui(){
@@ -623,7 +628,6 @@ public class TrainStation extends Application{
         addView.setVgap(10);
         Scene addViewFirst = new Scene(addView, 760, 650);
         window.setScene(addViewFirst);
-        window.show();
 
         TableView<Passenger> ReportTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
@@ -638,6 +642,9 @@ public class TrainStation extends Application{
         TableColumn<Passenger,String> seconds_col = new TableColumn<>("Seconds");
         seconds_col.setMinWidth(100);
         seconds_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("secondsInQueue"));
+        TableColumn<Passenger,String> Station_col = new TableColumn<>("Station");
+        Station_col.setMinWidth(100);
+        Station_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("Station"));
 
 
         ReportTable = new TableView<>();
@@ -649,8 +656,10 @@ public class TrainStation extends Application{
         ReportTable.getColumns().add(name_col);
         ReportTable.getColumns().add(seat_col);
         ReportTable.getColumns().add(seconds_col);
+        ReportTable.getColumns().add(Station_col);
         addView.add(ReportTable,1,4);
-
+        window.showAndWait();
+        listOption();
     }
 
     public static void main(String[]args) {

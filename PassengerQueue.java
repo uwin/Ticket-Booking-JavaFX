@@ -29,8 +29,7 @@ public class PassengerQueue {
         PassengerQueue.queueArray = queueArray;
     }
     public  void clearQueue(){
-
-        queueArray = new Passenger[42];
+        Arrays.fill(queueArray, null);
         last=0;
         first=0;
         length=0;
@@ -38,13 +37,19 @@ public class PassengerQueue {
 
     public void add(Passenger data){
         queueArray[last]=data;
-        last++;
+        last=last+1%42;
         length++;
+        System.out.println("last"+last);
+        System.out.println("len"+length);
     }
     public Passenger remove(){
         Passenger data= queueArray[first];
-        first++;
-        length--;
+        if(!isEmpty()){
+            first=first+1%42;
+            length--;
+        }
+        System.out.println("first"+first);
+        System.out.println("len"+length);
         return data;
     }
 
