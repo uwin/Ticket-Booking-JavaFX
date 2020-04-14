@@ -25,12 +25,13 @@ import java.util.*;
 
 public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
-    private static PassengerQueue trainQueue = new PassengerQueue();
+    private  PassengerQueue trainQueue = new PassengerQueue();
 
     private static Passenger[] reportData = new Passenger[42];
-    private static Passenger[] reportArray = trainQueue.getQueueArray();
+    Passenger[] reportArray = trainQueue.getQueueArray();
 
-    private static void importGui(){
+
+    private  void importGui(){
         Stage window = new Stage();
         window.setTitle("Train Booking System");
         GridPane first = new GridPane();
@@ -126,7 +127,7 @@ public class TrainStation extends Application{
 
     }
 
-    private static void importData(String selectedDate,String selectedTrain,String selectedStation) {
+    private  void importData(String selectedDate,String selectedTrain,String selectedStation) {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -201,7 +202,7 @@ public class TrainStation extends Application{
         dbClient.close();
     }
 
-    private static ObservableList<Passenger> getWaitRoomData(){
+    private  ObservableList<Passenger> getWaitRoomData(){
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
         for (Passenger i: waitingRoom) {
             if (i!=null){
@@ -211,7 +212,7 @@ public class TrainStation extends Application{
         return passengers;
     }
 
-    private static ObservableList<Passenger> getTrainQueueData(){
+    private  ObservableList<Passenger> getTrainQueueData(){
         ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
 
         for (Passenger i: trainQueue.getQueueArray())
@@ -221,7 +222,7 @@ public class TrainStation extends Application{
         return queuePassengers;
     }
 
-    private static ObservableList<Passenger> getReportData(){
+    private  ObservableList<Passenger> getReportData(){
         ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
 
         for (Passenger i: reportData)
@@ -231,7 +232,7 @@ public class TrainStation extends Application{
         return recordPassengers;
     }
 
-    private  static void listOption() {
+    private   void listOption() {
         System.out.println("\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -269,7 +270,7 @@ public class TrainStation extends Application{
         }
     }
 
-    private static void add() {
+    private  void add() {
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         AnchorPane addView = new AnchorPane();
@@ -386,7 +387,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(addButFirst,10d);
     }
 
-    private static void view() {
+    private  void view() {
         Stage window = new Stage();
         window.setTitle("train queue");
         AnchorPane viewView = new AnchorPane();
@@ -439,7 +440,7 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(closeBut,10d);
     }
 
-    private static void delete() {
+    private  void delete() {
         Scanner scanSeat= new Scanner(System.in);
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
@@ -462,7 +463,7 @@ public class TrainStation extends Application{
         listOption();
     }
 
-    private static void save() {
+    private  void save() {
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
         MongoDatabase dbDatabase = dbClient.getDatabase
@@ -514,7 +515,7 @@ public class TrainStation extends Application{
         listOption();
     }
 
-    private  static void load() {
+    private   void load() {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -583,14 +584,15 @@ public class TrainStation extends Application{
         listOption();
     }
 
-    private  static void run() {
+    private   void run() {
         System.out.println(Arrays.toString(trainQueue.getQueueArray()));
+        //Arrays.fill(reportData,null);
         if (trainQueue.isEmpty()){
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Train queue is Empty");
             a.showAndWait();
             listOption();
-        }else { ;
+        }else {
             int queueDelay = 0;
             int i=0;
             for (Passenger pasangerObjest: reportArray){
@@ -619,7 +621,7 @@ public class TrainStation extends Application{
         }
     }
 
-    public static void runGui(){
+    public  void runGui(){
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         GridPane addView = new GridPane();

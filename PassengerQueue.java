@@ -1,15 +1,10 @@
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class PassengerQueue {
-    private static Passenger [] queueArray = new Passenger[42];
-    private int first=0;
-    private int last=0;
-    private int length=0;
+    private Passenger [] queueArray = new Passenger[42];
+    private int first;
+    private int last;
+    private int length;
     private static int maxStayInQueue=0;
     private static int minStayInQueue=0;
     private int Maxlength=0;
@@ -26,7 +21,7 @@ public class PassengerQueue {
         return queueArray;
     }
     public  void setQueueArray(Passenger[] queueArray) {
-        PassengerQueue.queueArray = queueArray;
+        this.queueArray = queueArray;
     }
     public  void clearQueue(){
         Arrays.fill(queueArray, null);
@@ -76,12 +71,12 @@ public class PassengerQueue {
         return maxStayInQueue;
     }
     public void setMaxStayInQueue(int maxStayInQueue) {
-        PassengerQueue.maxStayInQueue =maxStayInQueue;
+        this.maxStayInQueue =maxStayInQueue;
     }
 
     public int getMinStayInQueue() { return minStayInQueue; }
     public void setMinStayInQueue(int minStayInQueue) {
-        PassengerQueue.minStayInQueue =minStayInQueue;
+        this.minStayInQueue =minStayInQueue;
     }
 
     public void sortSeat(Passenger[] sortArray,int length) {
