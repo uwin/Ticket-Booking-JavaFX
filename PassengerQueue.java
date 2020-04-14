@@ -34,17 +34,11 @@ public class PassengerQueue {
         queueArray[last]=data;
         last=last+1%42;
         length++;
-        System.out.println("last"+last);
-        System.out.println("len"+length);
     }
     public Passenger remove(){
         Passenger data= queueArray[first];
-        if(!isEmpty()){
-            first=first+1%42;
-            length--;
-        }
-        System.out.println("first"+first);
-        System.out.println("len"+length);
+        first=first+1%42;
+        length--;
         return data;
     }
 
@@ -64,6 +58,7 @@ public class PassengerQueue {
         return length;
 
     }
+
     public int getMaxStayInQueue(int delay) {
         if(minStayInQueue==0){
             minStayInQueue=delay;
@@ -91,6 +86,13 @@ public class PassengerQueue {
             }
         }
     }
+
+    public void setrest() {
+        length=0;
+        first=0;
+        last=0;
+    }
+
     public void removeSeat() {
         last--;
         length--;

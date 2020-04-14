@@ -26,9 +26,8 @@ import java.util.*;
 public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
     private  PassengerQueue trainQueue = new PassengerQueue();
-
     private static Passenger[] reportData = new Passenger[42];
-    Passenger[] reportArray = trainQueue.getQueueArray();
+    //Passenger[] reportArray = trainQueue.getQueueArray();
 
 
     private  void importGui(){
@@ -379,6 +378,7 @@ public class TrainStation extends Application{
                 }
             }
             trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength()+1);
+            System.out.println("QWQA "+Arrays.toString(trainQueue.getQueueArray()));
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
@@ -585,8 +585,7 @@ public class TrainStation extends Application{
     }
 
     private   void run() {
-        System.out.println(Arrays.toString(trainQueue.getQueueArray()));
-        //Arrays.fill(reportData,null);
+        Arrays.fill(reportData,null);
         if (trainQueue.isEmpty()){
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Train queue is Empty");
@@ -595,28 +594,32 @@ public class TrainStation extends Application{
         }else {
             int queueDelay = 0;
             int i=0;
-            for (Passenger pasangerObjest: reportArray){
-                if (pasangerObjest==null) continue;
+            for (Passenger pasangerObjest: trainQueue.getQueueArray()){
+                if (pasangerObjest==null) {
+                    i++;
+                    continue;
+                }
                 int genDelay= 3 + (int) (Math.random() * ((18 - 3 + 1)));
                 pasangerObjest.setSecondsInQueue(genDelay);
                 reportData[i]=pasangerObjest;
                 if (i>trainQueue.getMaxlength()) trainQueue.setMaxlength(i);
+                trainQueue.remove();
+                trainQueue.getQueueArray()[i]=null;
                 i++;
             }
-            for (Passenger pasangerObjest: reportArray){
+            trainQueue.setrest();
+            for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 if (pasangerObjest==null) continue;
                 queueDelay+=pasangerObjest.getSecondsInQueue();
                 if (queueDelay>trainQueue.getMaxStayInQueue(queueDelay)) trainQueue.setMaxStayInQueue(queueDelay);
                 if (queueDelay<trainQueue.getMinStayInQueue()) trainQueue.setMinStayInQueue(queueDelay);
                 pasangerObjest.setSecondsInQueue(queueDelay);
             }
-            trainQueue.clearQueue();
             float averageSecondsInQueue = (float)queueDelay/i;
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
             System.out.println("minimumWaitingTime >"+trainQueue.getMinStayInQueue());
             System.out.println("maximunWaitingTime >"+trainQueue.getMaxStayInQueue(queueDelay));
             System.out.println("maximunLengthQueue >"+trainQueue.getMaxlength());
-            System.out.println(Arrays.toString(trainQueue.getQueueArray()));
             runGui();
         }
     }
