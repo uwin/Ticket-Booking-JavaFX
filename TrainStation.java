@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.bson.Document;
@@ -272,9 +273,7 @@ public class TrainStation extends Application{
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         AnchorPane addView = new AnchorPane();
-        //addView.setPadding(new Insets(2, 2, 2, 2));
-        //addView.setHgap(10);
-        //addView.setVgap(10);
+
         Scene addViewFirst = new Scene(addView, 680, 580);
         window.setScene(addViewFirst);
         window.show();
@@ -305,8 +304,10 @@ public class TrainStation extends Application{
         waitingRoomTable.getColumns().add(name_col);
         waitingRoomTable.getColumns().add(seat_col);
         addView.getChildren().addAll(waitingRoomTable);
-        AnchorPane.setRightAnchor(waitingRoomTable,20d);
+        AnchorPane.setLeftAnchor(waitingRoomTable,20d);
         AnchorPane.setTopAnchor(waitingRoomTable,40d);
+
+
 
         Label trainQueueHead = new Label("Train Queue");
         trainQueueHead.setFont(new Font("Arial", 23));
@@ -314,7 +315,6 @@ public class TrainStation extends Application{
         addView.getChildren().addAll(trainQueueHead);
         AnchorPane.setRightAnchor(trainQueueHead,200d);
         AnchorPane.setTopAnchor(trainQueueHead,10d);
-
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
@@ -334,7 +334,7 @@ public class TrainStation extends Application{
         trainQueueTable.getColumns().add(name_col2);
         trainQueueTable.getColumns().add(seat_col2);
         addView.getChildren().addAll(trainQueueTable);
-        AnchorPane.setLeftAnchor(trainQueueTable,20d);
+        AnchorPane.setRightAnchor(trainQueueTable,20d);
         AnchorPane.setTopAnchor(trainQueueTable,40d);
 
         Button closeButFirst = new Button("close");
@@ -387,35 +387,43 @@ public class TrainStation extends Application{
     private static void view() {
         Stage window = new Stage();
         window.setTitle("train queue");
+        AnchorPane viewView = new AnchorPane();
         GridPane first = new GridPane();
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(first, 970, 440);
+        Scene addViewFirst = new Scene(viewView, 970, 440);
         window.setScene(addViewFirst);
         window.show();
 
         Passenger[] array = trainQueue.getQueueArray();
         int number=1;
-        for (int r = 2; r < 8; r++) {
-            for (int c = 2; c < 9; c++) {
+        for (int r = 2; r < 9; r++) {
+            for (int c = 2; c < 8; c++) {
                 if (number <=42)
                 {
-                    Button button = new Button();
-                    button.setFont(new Font("Arial", 12));
-                    button.setMinHeight(60);
-                    button.setMinWidth(100);
-                    button.setId(String.valueOf(number));
-                    button.setPadding(new Insets(0));
-                    if (array[number-1]!=null)button.setText(
+                    Rectangle passengerData= new Rectangle();
+                    passengerData.setHeight(60);
+                    passengerData.setWidth(120);
+                    passengerData.setArcHeight(12);
+                    passengerData.setArcWidth(12);
+                    passengerData.setFill(Color.LIGHTGRAY);
+                    Label passengerDataText = new Label();
+                    passengerDataText.setFont(new Font("Arial", 15));
+                    if (array[number-1]!=null)passengerDataText.setText(
                             array[number-1].getName()+"\n"+
                             array[number-1].getSeat()+"|"+
                             array[number-1].getTicketNumber());
                     number++;
-                    first.add(button, c, r);
+                    first.add(passengerData, c, r);
+                    first.add(passengerDataText, c, r);
                 }
             }
         }
+        viewView.getChildren().add(first);
+        AnchorPane.setTopAnchor(first,10d);
+        AnchorPane.setLeftAnchor(first,10d);
+
         Button closeBut = new Button("close");
         closeBut.setMaxSize(120, 60);
         closeBut.setStyle("-fx-background-color: red; ");
@@ -423,7 +431,7 @@ public class TrainStation extends Application{
             window.close();
             listOption();
         });
-        first.add(closeBut, 14, 6,14,9);
+        //first.add(closeBut, 14, 6,14,9);
     }
 
     private static void delete() {
