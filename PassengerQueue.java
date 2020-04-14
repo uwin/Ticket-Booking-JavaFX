@@ -10,7 +10,8 @@ public class PassengerQueue {
     private int first=0;
     private int last=0;
     private int length=0;
-    private int maxStayInQueue=0;
+    private static int maxStayInQueue=0;
+    private static int minStayInQueue=0;
 
     public  Passenger[] getQueueArray() {
         return queueArray;
@@ -51,11 +52,23 @@ public class PassengerQueue {
         }
     }
     public int getLength() {
-
         return length;
 
     }
-    public int getMaxStayInQueue() { return maxStayInQueue; }
+    public int getMaxStayInQueue(int delay) {
+        if(minStayInQueue==0){
+            minStayInQueue=delay;
+        }
+        return maxStayInQueue;
+    }
+    public void setMaxStayInQueue(int maxStayInQueue) {
+        PassengerQueue.maxStayInQueue =maxStayInQueue;
+    }
+
+    public int getMinStayInQueue() { return minStayInQueue; }
+    public void setMinStayInQueue(int minStayInQueue) {
+        PassengerQueue.minStayInQueue =minStayInQueue;
+    }
 
     public void sortSeat(Passenger[] sortArray,int length) {
         for (int a = 1; a < length; a++) {

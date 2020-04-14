@@ -23,8 +23,10 @@ import java.util.*;
 
 public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
-
     private static PassengerQueue trainQueue = new PassengerQueue();
+
+    private static Passenger[] reportData = new Passenger[42];
+    private static Passenger[] reportArray = trainQueue.getQueueArray();
 
     private static void importGui(){
         Stage window = new Stage();
@@ -217,15 +219,15 @@ public class TrainStation extends Application{
         return queuePassengers;
     }
 
-//    private static ObservableList<Passenger> getReportData(){
-//        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
-//
-//        for (Passenger i: )
-//            if (i!=null){
-//                recordPassengers.add(i);
-//            }
-//        return recordPassengers;
-//    }
+    private static ObservableList<Passenger> getReportData(){
+        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
+
+        for (Passenger i: reportData)
+            if (i!=null){
+                recordPassengers.add(i);
+            }
+        return recordPassengers;
+    }
 
     private  static void listOption() {
         System.out.println("\n"+
@@ -548,12 +550,7 @@ public class TrainStation extends Application{
     }
 
     private  static void run() {
-        Passenger[] reportData = new Passenger[trainQueue.getLength()];
-        Passenger[] reportArray = trainQueue.getQueueArray();
-
-        float maximunWaitingTime=0;
-        float minimumWaitingTime=0;
-        int maximunLengthQueue;
+        int maximunLengthQueue=0;
         if (trainQueue.isEmpty()){
             System.out.println("k");
         }else {
@@ -562,25 +559,24 @@ public class TrainStation extends Application{
             for (Passenger pasangerObjest: reportArray){
                 if (pasangerObjest==null) continue;
                 int genDelay= 3 + (int) (Math.random() * ((18 - 3 + 1)));
-                pasangerObjest.setSeconds(genDelay);
+                pasangerObjest.setSecondsInQueue(genDelay);
                 reportData[i]=pasangerObjest;
                 i++;
             }
+            maximunLengthQueue=trainQueue.getLength();
             for (Passenger pasangerObjest: reportArray){
                 if (pasangerObjest==null) continue;
-                queueDelay+=pasangerObjest.getSeconds();
-                if (minimumWaitingTime==0) minimumWaitingTime=queueDelay;
-                if (queueDelay<minimumWaitingTime) minimumWaitingTime=queueDelay;
-                if (queueDelay>maximunWaitingTime) maximunWaitingTime=queueDelay;
+                queueDelay+=pasangerObjest.getSecondsInQueue();
+                if (queueDelay>trainQueue.getMaxStayInQueue(queueDelay)) trainQueue.setMaxStayInQueue(queueDelay);
+                if (queueDelay<trainQueue.getMinStayInQueue()) trainQueue.setMinStayInQueue(queueDelay);
                 trainQueue.remove();
-                pasangerObjest.setSeconds(queueDelay);
+                pasangerObjest.setSecondsInQueue(queueDelay);
             }
-            maximunLengthQueue=i;
             float averageSecondsInQueue = (float)queueDelay/i;
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
-            System.out.println("minimumWaitingTime >"+minimumWaitingTime);
-            System.out.println("maximunWaitingTime >"+maximunWaitingTime);
-            System.out.println("maximunLengthQueue >"+i);
+            System.out.println("minimumWaitingTime >"+trainQueue.getMinStayInQueue());
+            System.out.println("maximunWaitingTime >"+trainQueue.getMinStayInQueue());
+            System.out.println("maximunLengthQueue >"+trainQueue.getLength());
         }
         runGui();
     }
@@ -596,7 +592,7 @@ public class TrainStation extends Application{
         window.setScene(addViewFirst);
         window.show();
 
-        TableView<Passenger> waitingRoomTable;
+        TableView<Passenger> ReportTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
         ticket_col.setMinWidth(100);
         ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
@@ -611,15 +607,16 @@ public class TrainStation extends Application{
         seconds_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("secondsInQueue"));
 
 
-        waitingRoomTable = new TableView<>();
+        ReportTable = new TableView<>();
         //waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        waitingRoomTable.setMinWidth(300);
-        waitingRoomTable.setMinHeight(450);
-        waitingRoomTable.setItems(getWaitRoomData());
-        waitingRoomTable.getColumns().add(ticket_col);
-        waitingRoomTable.getColumns().add(name_col);
-        waitingRoomTable.getColumns().add(seat_col);
-        addView.add(waitingRoomTable,1,4);
+        ReportTable.setMinWidth(300);
+        ReportTable.setMinHeight(450);
+        ReportTable.setItems(getReportData());
+        ReportTable.getColumns().add(ticket_col);
+        ReportTable.getColumns().add(name_col);
+        ReportTable.getColumns().add(seat_col);
+        ReportTable.getColumns().add(seconds_col);
+        addView.add(ReportTable,1,4);
 
     }
 

@@ -13,6 +13,7 @@ public class Passenger {
         this.name= getName();
 
         this.ticketNumber=setTicketNumber();
+        this.secondsInQueue=0;
     }
     public Passenger(String ticketNumber,String name) {
         this.ticketNumber = ticketNumber;
@@ -76,10 +77,10 @@ public class Passenger {
         name= firstName+" "+secondName;
     }
 
-    public int getSeconds() {
+    public int getSecondsInQueue() {
         return secondsInQueue;
     }
-    public void setSeconds(int sec ) {
+    public void setSecondsInQueue(int sec ) {
         secondsInQueue=sec;
     }
 
