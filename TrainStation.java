@@ -392,7 +392,7 @@ public class TrainStation extends Application{
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(viewView, 970, 440);
+        Scene addViewFirst = new Scene(viewView, 924, 540);
         window.setScene(addViewFirst);
         window.show();
 
@@ -410,6 +410,7 @@ public class TrainStation extends Application{
                     passengerData.setFill(Color.LIGHTGRAY);
                     Label passengerDataText = new Label();
                     passengerDataText.setFont(new Font("Arial", 15));
+                    passengerDataText.setPadding(new Insets(0,0,0,8));
                     if (array[number-1]!=null)passengerDataText.setText(
                             array[number-1].getName()+"\n"+
                             array[number-1].getSeat()+"|"+
@@ -425,13 +426,15 @@ public class TrainStation extends Application{
         AnchorPane.setLeftAnchor(first,10d);
 
         Button closeBut = new Button("close");
-        closeBut.setMaxSize(120, 60);
+        closeBut.setMinSize(100, 60);
         closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
         });
-        //first.add(closeBut, 14, 6,14,9);
+        viewView.getChildren().add(closeBut);
+        AnchorPane.setBottomAnchor(closeBut,10d);
+        AnchorPane.setRightAnchor(closeBut,10d);
     }
 
     private static void delete() {
