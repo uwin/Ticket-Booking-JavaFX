@@ -253,7 +253,7 @@ public class TrainStation extends Application{
                 add();
                 break;
             case "V":
-                view(trainQueue.getQueueArray());
+                view(trainQueue.getQueueArray(),160d);
                 break;
             case "D":
                 delete();
@@ -392,7 +392,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(addButFirst,10d);
     }
 
-    private  void view(Passenger[] arrayToView) {
+    private  void view(Passenger[] arrayToView,double x) {
         Stage window = new Stage();
         window.setTitle("train queue");
         AnchorPane viewView = new AnchorPane();
@@ -418,10 +418,12 @@ public class TrainStation extends Application{
                     Label passengerDataText = new Label();
                     passengerDataText.setFont(new Font("Arial", 15));
                     passengerDataText.setPadding(new Insets(0,0,0,8));
-                    if (arrayToView[number-1]!=null)passengerDataText.setText(
+                    if (arrayToView[number-1]!=null){
+                            passengerDataText.setText(
                             arrayToView[number-1].getName()+"\n"+
                             arrayToView[number-1].getSeat()+"|"+
                             arrayToView[number-1].getTicketNumber());
+                    }
                     number++;
                     first.add(passengerData, c, r);
                     first.add(passengerDataText, c, r);
@@ -429,7 +431,17 @@ public class TrainStation extends Application{
             }
         }
 
-        Rectangle passengetHeadBox =
+        Rectangle passengetHeadBox = new Rectangle();
+        passengetHeadBox.setHeight(50);
+        passengetHeadBox.setWidth(160);
+        passengetHeadBox.setArcHeight(25);
+        passengetHeadBox.setArcWidth(25);
+        passengetHeadBox.setFill(Color.DIMGREY);
+        viewView.getChildren().add(passengetHeadBox);
+        AnchorPane.setTopAnchor(passengetHeadBox,1d);
+        AnchorPane.setLeftAnchor(passengetHeadBox,x);
+
+
 
         viewView.getChildren().add(first);
         AnchorPane.setTopAnchor(first,40d);
@@ -443,7 +455,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(passengerViewTextv,10d);
         passengerViewTextv.setOnMouseClicked(event -> {
             window.close();
-            view(waitingRoom);
+            view(waitingRoom,5d);
         });
 
         Label passengerViewTextt = new Label();
@@ -454,18 +466,18 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(passengerViewTextt,10d);
         passengerViewTextt.setOnMouseClicked(event -> {
             window.close();
-            view(trainQueue.getQueueArray());
+            view(trainQueue.getQueueArray(),160d);
         });
 
         Label passengerViewTextr = new Label();
-        passengerViewTextr.setText("Boarded Queue");
+        passengerViewTextr.setText("Boarded In");
         passengerViewTextr.setFont(new Font("Arial", 23));
         viewView.getChildren().add(passengerViewTextr);
         AnchorPane.setLeftAnchor(passengerViewTextr,320d);
         AnchorPane.setTopAnchor(passengerViewTextr,10d);
         passengerViewTextr.setOnMouseClicked(event -> {
             window.close();
-            view(reportData);
+            view(reportData,320d);
         });
 
 
@@ -554,12 +566,34 @@ public class TrainStation extends Application{
             waitingroom.insertOne(userDocument);
         }
 
+        MongoCollection<Document> reportdata = dbDatabase.getCollection("ReportData");
+        System.out.println("connected to ReportData");
+        FindIterable<Document> reportDocument = reportdata.find();
+        if(reportdata.countDocuments()>1){
+            for(Document document: reportDocument) {
+                reportdata.deleteOne(document);
+            }
+        }
+        for (Passenger data : reportData){
+            Document userDocument = new Document();
+            if (data==null) continue;
+            userDocument.append("Name", data.getName());
+            userDocument.append("Seat", data.getSeat());
+            userDocument.append("TicketNo", data.getTicketNumber());
+            userDocument.append("Date", data.getDate());
+            userDocument.append("Station", data.getStation());
+            userDocument.append("Train", data.getTrain());
+            reportdata.insertOne(userDocument);
+        }
+
+
         dbClient.close();
         System.out.println("saved files");
         listOption();
     }
 
     private  void load() {
+        Arrays.fill(reportData,null);
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -623,13 +657,42 @@ public class TrainStation extends Application{
         else { System.out.println("no files were added, no data is changed");
         }
 
+        MongoCollection<Document> reportdata = dbDatabase.getCollection("ReportData");
+        System.out.println("connected to ReportData");
+        FindIterable<Document> reportDocument = reportdata.find();
+        Arrays.fill(reportData, null);
+        if(reportdata.countDocuments()>0) {
+            int i=0;
+            for(Document document:reportDocument)
+            {
+                String name    = document.getString("Name");
+                String seat    = document.getString("Seat");
+                String ticketNo= document.getString("TicketNo");
+                String date    = document.getString("Date");
+                String station = document.getString("Station");
+                String train   = document.getString("Train");
+
+                Passenger passengerObj = new Passenger(ticketNo,name);
+                passengerObj.setDate(date);
+                passengerObj.setStation(station);
+                passengerObj.setTrain(train);
+                passengerObj.setSeat(seat);
+                passengerObj.setTrain(train);
+                reportData[i]=(passengerObj);
+                i++;
+            }
+            System.out.println("report data loaded");
+        }
+        else { System.out.println("no files were added, no data is changed");
+        }
+
 //        close mongo client
         dbClient.close();
         listOption();
     }
 
     private  void run() {
-        Arrays.fill(reportData,null);
+        //Arrays.fill(reportData,null);
         if (trainQueue.isEmpty()){
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Train queue is Empty");
@@ -638,6 +701,10 @@ public class TrainStation extends Application{
         }else {
             int queueDelay = 0;
             int i=0;
+            int lenNoNull =0;
+            for (Passenger index: reportData){
+                if (index!=null) lenNoNull++;
+            }
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 if (pasangerObjest==null) {
                     i++;
@@ -645,7 +712,7 @@ public class TrainStation extends Application{
                 }
                 int genDelay= 3 + (int) (Math.random() * ((18 - 3 + 1)));
                 pasangerObjest.setSecondsInQueue(genDelay);
-                reportData[i]=pasangerObjest;
+                reportData[lenNoNull+i]=pasangerObjest;
                 if (i>trainQueue.getMaxlength()) trainQueue.setMaxlength(i);
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
@@ -729,8 +796,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(closeBut,10d);
         AnchorPane.setRightAnchor(closeBut,10d);
 
-        window.showAndWait();
-        listOption();
+        window.show();
     }
 
     public static void main(String[]args) {
