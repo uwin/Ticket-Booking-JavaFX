@@ -27,8 +27,43 @@ public class TrainStation extends Application{
     private static Passenger[] waitingRoom= new Passenger[42];
     private  PassengerQueue trainQueue = new PassengerQueue();
     private static Passenger[] reportData = new Passenger[42];
-    //Passenger[] reportArray = trainQueue.getQueueArray();
 
+    /*private  ObservableList<Passenger> getDataToTable(Passenger[] namearray){
+        ObservableList<Passenger> table= FXCollections.observableArrayList();
+        for (Passenger i: namearray) {
+            if (i!=null){
+                table.add(i);
+            }
+        }
+        return table;
+    }*/
+    private  ObservableList<Passenger> getWaitRoomData(){
+        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
+        for (Passenger i: waitingRoom) {
+            if (i!=null){
+                passengers.add(i);
+            }
+        }
+        return passengers;
+    }
+    private  ObservableList<Passenger> getTrainQueueData(){
+        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
+
+        for (Passenger i: trainQueue.getQueueArray())
+            if (i!=null){
+                queuePassengers.add(i);
+            }
+        return queuePassengers;
+    }
+    private  ObservableList<Passenger> getReportData(){
+        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
+
+        for (Passenger i: reportData)
+            if (i!=null){
+                recordPassengers.add(i);
+            }
+        return recordPassengers;
+    }
 
     private  void importGui(){
         Stage window = new Stage();
@@ -201,37 +236,7 @@ public class TrainStation extends Application{
         dbClient.close();
     }
 
-    private  ObservableList<Passenger> getWaitRoomData(){
-        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
-        for (Passenger i: waitingRoom) {
-            if (i!=null){
-                passengers.add(i);
-            }
-        }
-        return passengers;
-    }
-
-    private  ObservableList<Passenger> getTrainQueueData(){
-        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
-
-        for (Passenger i: trainQueue.getQueueArray())
-            if (i!=null){
-                queuePassengers.add(i);
-            }
-        return queuePassengers;
-    }
-
-    private  ObservableList<Passenger> getReportData(){
-        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
-
-        for (Passenger i: reportData)
-            if (i!=null){
-                recordPassengers.add(i);
-            }
-        return recordPassengers;
-    }
-
-    private   void listOption() {
+    private  void listOption() {
         System.out.println("\n"+
                 "A Add a seat\n"+
                 "V View all seats\n"+
@@ -248,7 +253,7 @@ public class TrainStation extends Application{
                 add();
                 break;
             case "V":
-                view();
+                view(trainQueue.getQueueArray());
                 break;
             case "D":
                 delete();
@@ -261,6 +266,9 @@ public class TrainStation extends Application{
                 break;
             case "R":
                 run();
+                break;
+            case "Q":
+                System.exit(0);
                 break;
             default:
                 System.out.println("invalid input");
@@ -352,15 +360,15 @@ public class TrainStation extends Application{
         addButFirst.setStyle("-fx-background-color: lightblue; ");
         addButFirst.setMinSize(120, 60);
         addButFirst.setOnAction(event -> {
-            if (getWaitRoomData().isEmpty()){
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setHeaderText("Waiting Room is Empty");
-                a.show();
-            } else if (trainQueue.isFull()){
+            if (trainQueue.isFull()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Train Queue is full");
                 a.show();
-            }else {
+            }else if (getWaitRoomData().isEmpty()){
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setHeaderText("Waiting Room is Empty");
+                a.show();
+            } else {
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
                 if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
                 int i = 0;
@@ -368,9 +376,7 @@ public class TrainStation extends Application{
                     //if (trainQueue.isFull())
                     if (getWaitRoomData().size() == 0) break;
                     if (TrainStation.waitingRoom[j] != null) {
-                        System.out.println(Arrays.toString(trainQueue.getQueueArray()));
                         trainQueue.add(TrainStation.waitingRoom[j]);
-                        System.out.println(Arrays.toString(trainQueue.getQueueArray()));
                         TrainStation.waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
@@ -378,7 +384,6 @@ public class TrainStation extends Application{
                 }
             }
             trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength()+1);
-            System.out.println("QWQA "+Arrays.toString(trainQueue.getQueueArray()));
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
@@ -387,7 +392,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(addButFirst,10d);
     }
 
-    private  void view() {
+    private  void view(Passenger[] arrayToView) {
         Stage window = new Stage();
         window.setTitle("train queue");
         AnchorPane viewView = new AnchorPane();
@@ -399,7 +404,6 @@ public class TrainStation extends Application{
         window.setScene(addViewFirst);
         window.show();
 
-        Passenger[] array = trainQueue.getQueueArray();
         int number=1;
         for (int r = 2; r < 9; r++) {
             for (int c = 2; c < 8; c++) {
@@ -414,19 +418,56 @@ public class TrainStation extends Application{
                     Label passengerDataText = new Label();
                     passengerDataText.setFont(new Font("Arial", 15));
                     passengerDataText.setPadding(new Insets(0,0,0,8));
-                    if (array[number-1]!=null)passengerDataText.setText(
-                            array[number-1].getName()+"\n"+
-                            array[number-1].getSeat()+"|"+
-                            array[number-1].getTicketNumber());
+                    if (arrayToView[number-1]!=null)passengerDataText.setText(
+                            arrayToView[number-1].getName()+"\n"+
+                            arrayToView[number-1].getSeat()+"|"+
+                            arrayToView[number-1].getTicketNumber());
                     number++;
                     first.add(passengerData, c, r);
                     first.add(passengerDataText, c, r);
                 }
             }
         }
+
+        Rectangle passengetHeadBox =
+
         viewView.getChildren().add(first);
-        AnchorPane.setTopAnchor(first,10d);
+        AnchorPane.setTopAnchor(first,40d);
         AnchorPane.setLeftAnchor(first,10d);
+
+        Label passengerViewTextv = new Label();
+        passengerViewTextv.setText("Waiting Room");
+        passengerViewTextv.setFont(new Font("Arial", 23));
+        viewView.getChildren().add(passengerViewTextv);
+        AnchorPane.setLeftAnchor(passengerViewTextv,10d);
+        AnchorPane.setTopAnchor(passengerViewTextv,10d);
+        passengerViewTextv.setOnMouseClicked(event -> {
+            window.close();
+            view(waitingRoom);
+        });
+
+        Label passengerViewTextt = new Label();
+        passengerViewTextt.setText("Train Queue");
+        passengerViewTextt.setFont(new Font("Arial", 23));
+        viewView.getChildren().add(passengerViewTextt);
+        AnchorPane.setLeftAnchor(passengerViewTextt,170d);
+        AnchorPane.setTopAnchor(passengerViewTextt,10d);
+        passengerViewTextt.setOnMouseClicked(event -> {
+            window.close();
+            view(trainQueue.getQueueArray());
+        });
+
+        Label passengerViewTextr = new Label();
+        passengerViewTextr.setText("Boarded Queue");
+        passengerViewTextr.setFont(new Font("Arial", 23));
+        viewView.getChildren().add(passengerViewTextr);
+        AnchorPane.setLeftAnchor(passengerViewTextr,320d);
+        AnchorPane.setTopAnchor(passengerViewTextr,10d);
+        passengerViewTextr.setOnMouseClicked(event -> {
+            window.close();
+            view(reportData);
+        });
+
 
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
@@ -457,6 +498,9 @@ public class TrainStation extends Application{
                 waitingRoom[trainQueue.getLength()]=temp;
                 deleteArray.add(null);
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setHeaderText("Deleted\n"+"Name: "+temp.getName()+"\n"+"Seat No: "+temp.getSeat());
+                a.showAndWait();
                 break;
             }
         }
@@ -515,7 +559,7 @@ public class TrainStation extends Application{
         listOption();
     }
 
-    private   void load() {
+    private  void load() {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -584,7 +628,7 @@ public class TrainStation extends Application{
         listOption();
     }
 
-    private   void run() {
+    private  void run() {
         Arrays.fill(reportData,null);
         if (trainQueue.isEmpty()){
             Alert a = new Alert(Alert.AlertType.WARNING);
@@ -624,14 +668,15 @@ public class TrainStation extends Application{
         }
     }
 
-    public  void runGui(){
+    public   void runGui(){
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         GridPane addView = new GridPane();
+        AnchorPane runView = new AnchorPane();
         addView.setPadding(new Insets(2, 2, 2, 2));
         addView.setHgap(10);
         addView.setVgap(10);
-        Scene addViewFirst = new Scene(addView, 760, 650);
+        Scene addViewFirst = new Scene(runView, 760, 650);
         window.setScene(addViewFirst);
 
         TableView<Passenger> ReportTable;
@@ -662,7 +707,28 @@ public class TrainStation extends Application{
         ReportTable.getColumns().add(seat_col);
         ReportTable.getColumns().add(seconds_col);
         ReportTable.getColumns().add(Station_col);
-        addView.add(ReportTable,1,4);
+        runView.getChildren().add(ReportTable);
+        AnchorPane.setTopAnchor(ReportTable,40d);
+        AnchorPane.setLeftAnchor(ReportTable,10d);
+
+        Label passengerRunText = new Label();
+        passengerRunText.setText("Report ");
+        passengerRunText.setFont(new Font("Arial", 23));
+        runView.getChildren().add(passengerRunText);
+        AnchorPane.setLeftAnchor(passengerRunText,10d);
+        AnchorPane.setTopAnchor(passengerRunText,10d);
+
+        Button closeBut = new Button("close");
+        closeBut.setMinSize(100, 60);
+        closeBut.setStyle("-fx-background-color: red; ");
+        closeBut.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        runView.getChildren().add(closeBut);
+        AnchorPane.setBottomAnchor(closeBut,10d);
+        AnchorPane.setRightAnchor(closeBut,10d);
+
         window.showAndWait();
         listOption();
     }

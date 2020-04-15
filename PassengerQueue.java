@@ -12,7 +12,6 @@ public class PassengerQueue {
     public int getMaxlength() {
         return Maxlength;
     }
-
     public void setMaxlength(int Maxlength) {
         this.Maxlength = Maxlength;
     }
