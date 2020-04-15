@@ -836,16 +836,14 @@ public class TrainBooking extends Application {
         if (booking.isEmpty()) System.out.println("no seats are booked");
         String sortTemp;
 //        creating arrays for each value needed
-        List<String> seatList = new ArrayList<>();
+//        List<String> seatList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
-        List<String> nicList = new ArrayList<>();
+//        List<String> nicList = new ArrayList<>();
 
 //        looping through the main data structure to extract data
         for (ArrayList<String> data : booking)
         {
-            nameList.add(data.get(3)+" "+data.get(6));
-            seatList.add(data.get(4));
-            nicList.add(data.get(5));
+            nameList.add(data.get(3)+" "+data.get(6)+" "+data.get(4)+" "+data.get(5));
         }
 //        running the bubble sort algorithm
         for (int j = 0; j < nameList.size(); j++) {
@@ -859,9 +857,7 @@ public class TrainBooking extends Application {
                 }
             }
 //         printing out needed values
-            System.out.println(seatList.get(j)+": "+
-                               nameList.get(j)+ " ["+
-                               nicList.get(j)+"]");
+            System.out.println(nameList.get(j));
         }
         waitOption();
     }
