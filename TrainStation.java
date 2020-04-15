@@ -304,7 +304,6 @@ public class TrainStation extends Application{
         seat_col.setMinWidth(100);
         seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         waitingRoomTable = new TableView<>();
-        //waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         waitingRoomTable.setMinWidth(300);
         waitingRoomTable.setMinHeight(450);
         waitingRoomTable.setItems(getWaitRoomData());
@@ -334,7 +333,6 @@ public class TrainStation extends Application{
         seat_col2.setMinWidth(100);
         seat_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
         trainQueueTable = new TableView<>();
-        //trainQueueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         trainQueueTable.setMinWidth(300);
         trainQueueTable.setMinHeight(450);
         trainQueueTable.setItems(getTrainQueueData());
@@ -373,7 +371,6 @@ public class TrainStation extends Application{
                 if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
                 int i = 0;
                 for (int j = 0; j <= TrainStation.waitingRoom.length; j++) {
-                    //if (trainQueue.isFull())
                     if (getWaitRoomData().size() == 0) break;
                     if (TrainStation.waitingRoom[j] != null) {
                         trainQueue.add(TrainStation.waitingRoom[j]);
@@ -498,7 +495,6 @@ public class TrainStation extends Application{
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
 
-        //List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
         List<Passenger> deleteArray = new ArrayList<Passenger>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
             if(temp==null){
@@ -692,7 +688,6 @@ public class TrainStation extends Application{
     }
 
     private  void run() {
-        //Arrays.fill(reportData,null);
         if (trainQueue.isEmpty()){
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Train queue is Empty");
@@ -710,7 +705,7 @@ public class TrainStation extends Application{
                     i++;
                     continue;
                 }
-                int genDelay= 3 + (int) (Math.random() * ((18 - 3 + 1)));
+                int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
                 pasangerObjest.setSecondsInQueue(genDelay);
                 reportData[lenNoNull+i]=pasangerObjest;
                 if (i>trainQueue.getMaxlength()) trainQueue.setMaxlength(i);
@@ -765,7 +760,6 @@ public class TrainStation extends Application{
 
 
         ReportTable = new TableView<>();
-        //waitingRoomTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ReportTable.setMinWidth(300);
         ReportTable.setMinHeight(450);
         ReportTable.setItems(getReportData());

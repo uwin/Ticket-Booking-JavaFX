@@ -26,7 +26,7 @@ public class Passenger {
     private String seat;
     private String ticketNumber;
     private String date;
-    private String Station;
+    private String station;
     private String train;
     private int secondsInQueue;
 
@@ -38,10 +38,10 @@ public class Passenger {
     }
 
     public String getStation() {
-        return Station;
+        return station;
     }
     public void setStation(String station) {
-        Station = station;
+        this.station = station;
     }
 
     public String getDate() {
