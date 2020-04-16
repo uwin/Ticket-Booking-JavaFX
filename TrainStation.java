@@ -701,35 +701,44 @@ public class TrainStation extends Application{
             int queueDelay = 0;
             int i=0;
             int lenNoNull =0;
+            int minimumWaitTime = 0;
+            int maximumWaitTime = 0;
             for (Passenger index: reportData){
                 if (index!=null) lenNoNull++;
             }
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 if (pasangerObjest==null) {
-                    i++;
+//                    i++;
+//                    System.out.println("n"+i);
                     continue;
                 }
                 int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
-                pasangerObjest.setSecondsInQueue(genDelay);
                 reportData[lenNoNull+i]=pasangerObjest;
-                if (i>trainQueue.getMaxlength()) trainQueue.setMaxlength(i);
+                reportData[lenNoNull+i].setSecondsInQueue(genDelay);
+                trainQueue.setMaxStayInQueue(lenNoNull+i+1);
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
                 i++;
             }
             trainQueue.setrest();
-            for (Passenger pasangerObjest: trainQueue.getQueueArray()){
+            for (Passenger pasangerObjest: reportData){
                 if (pasangerObjest==null) continue;
-                queueDelay+=pasangerObjest.getSecondsInQueue();
-                if (queueDelay>trainQueue.getMaxStayInQueue(queueDelay)) trainQueue.setMaxStayInQueue(queueDelay);
-                if (queueDelay<trainQueue.getMinStayInQueue()) trainQueue.setMinStayInQueue(queueDelay);
-                pasangerObjest.setSecondsInQueue(queueDelay);
+                queueDelay=queueDelay+pasangerObjest.getSecondsInQueue();
+                if(minimumWaitTime== 0){
+                    minimumWaitTime=queueDelay;
+                }
+                if (queueDelay>maximumWaitTime) {
+                    maximumWaitTime=queueDelay;
+                }
+                if (queueDelay<minimumWaitTime) {
+                    minimumWaitTime=queueDelay;
+                }
             }
-            float averageSecondsInQueue = (float)queueDelay/i;
+            float averageSecondsInQueue = (float)queueDelay/trainQueue.getMaxStayInQueue();
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
-            System.out.println("minimumWaitingTime >"+trainQueue.getMinStayInQueue());
-            System.out.println("maximunWaitingTime >"+trainQueue.getMaxStayInQueue(queueDelay));
-            System.out.println("maximunLengthQueue >"+trainQueue.getMaxlength());
+            System.out.println("minimumWaitingTime >"+minimumWaitTime);
+            System.out.println("maximumWaitingTime >"+maximumWaitTime);
+            System.out.println("maximumLengthQueue >"+trainQueue.getMaxStayInQueue());
             runGui();
         }
     }

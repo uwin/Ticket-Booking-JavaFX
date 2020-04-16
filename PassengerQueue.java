@@ -9,20 +9,17 @@ public class PassengerQueue {
     private static int minStayInQueue=0;
     private int Maxlength=0;
 
-    public int getMaxlength() {
-        return Maxlength;
-    }
-    public void setMaxlength(int Maxlength) {
-        this.Maxlength = Maxlength;
-    }
 
     public  Passenger[] getQueueArray() {
+
         return queueArray;
     }
     public  void setQueueArray(Passenger[] queueArray) {
+
         this.queueArray = queueArray;
     }
     public  void clearQueue(){
+
         Arrays.fill(queueArray, null);
         last=0;
         first=0;
@@ -30,50 +27,66 @@ public class PassengerQueue {
     }
 
     public void add(Passenger data){
+
         queueArray[last]=data;
         last=last+1%42;
         length++;
     }
     public Passenger remove(){
+
         Passenger data= queueArray[first];
         first=first+1%42;
         length--;
         return data;
     }
-
     public boolean isEmpty(){
+
         return length==0;
     }
     public boolean isFull(){
+
         return length==42;
     }
-
     public void display(){
+
         for (Passenger x: queueArray){
             System.out.println(x);
         }
     }
     public int getLength() {
-        return length;
 
+        return length;
     }
 
-    public int getMaxStayInQueue(int delay) {
-        if(minStayInQueue==0){
-            minStayInQueue=delay;
-        }
+    public int getMaxlength() {
+
+        return Maxlength;
+    }
+    public void setMaxlength(int Maxlength) {
+
+        this.Maxlength = Maxlength;
+    }
+
+    public int getMaxStayInQueue() {
+
         return maxStayInQueue;
     }
     public void setMaxStayInQueue(int maxStayInQueuedata) {
+
         maxStayInQueue =maxStayInQueuedata;
     }
 
-    public int getMinStayInQueue() { return minStayInQueue; }
+    public int getMinStayInQueue() {
+
+        return minStayInQueue;
+    }
     public void setMinStayInQueue(int minStayInQueuedata) {
+
         minStayInQueue =minStayInQueuedata;
     }
 
     public void sortSeat(Passenger[] sortArray,int length) {
+
         for (int a = 1; a < length; a++) {
             for (int b = 0; b < length - a-1; b++) {
                 if ((Integer.parseInt(sortArray[b].getSeat())>(Integer.parseInt(sortArray[b + 1].getSeat())))) {
@@ -85,14 +98,14 @@ public class PassengerQueue {
             }
         }
     }
-
     public void setrest() {
+
         length=0;
         first=0;
         last=0;
     }
-
     public void removeSeat() {
+
         last--;
         length--;
     }
