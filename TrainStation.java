@@ -617,9 +617,9 @@ public class TrainStation extends Application{
                 passengerObj.setTrain(train);
                 trainQueue.add(passengerObj);
             }
-            System.out.println("Train Queue loaded");
+            System.out.println("|-Train Queue loaded");
         }
-        else { System.out.println("no files were added, no data is changed");
+        else { System.out.println("|-Train Queue not loaded");
         }
 
         MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
@@ -648,9 +648,9 @@ public class TrainStation extends Application{
                 waitingRoom[i]=(passengerObj);
                 i++;
             }
-            System.out.println("Waiting Rooom loaded");
+            System.out.println("|-Waiting Rooom loaded");
         }
-        else { System.out.println("no files were added, no data is changed");
+        else { System.out.println("|-Waiting Room not loaded");
         }
 
         MongoCollection<Document> reportdata = dbDatabase.getCollection("ReportData");
@@ -681,9 +681,9 @@ public class TrainStation extends Application{
                 reportData[i]=(passengerObj);
                 i++;
             }
-            System.out.println("report data loaded");
+            System.out.println("|-Report Data loaded");
         }
-        else { System.out.println("no files were added, no data is changed");
+        else { System.out.println("|-Report not loaded");
         }
 
 //        close mongo client
