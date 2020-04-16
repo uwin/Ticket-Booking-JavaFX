@@ -373,10 +373,14 @@ public class TrainBooking extends Application {
                     username.getText().trim().isEmpty()||
                     temporarySeat.isEmpty()||
                     userId.getText().trim().isEmpty()||
-                    surname.getText().trim().isEmpty()
+                    surname.getText().trim().isEmpty()||
+                    !(userId.getText().matches("^[0-9]{9}[vVxX]$"))
             )
             {
                 Alert a = new Alert(Alert.AlertType.WARNING);
+                if(!(userId.getText().matches("^[0-9]{9}[vVxX]$"))){
+                    a.setHeaderText("wrong Nic format");
+                }
                 if (username.getText().trim().isEmpty())
                 {
                     a.setHeaderText("enter a name");
