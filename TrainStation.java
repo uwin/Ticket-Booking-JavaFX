@@ -579,6 +579,7 @@ public class TrainStation extends Application{
             userDocument.append("Date", data.getDate());
             userDocument.append("Station", data.getStation());
             userDocument.append("Train", data.getTrain());
+            userDocument.append("Seconds",data.getSecondsInQueue());
             reportdata.insertOne(userDocument);
         }
 
@@ -667,6 +668,7 @@ public class TrainStation extends Application{
                 String date    = document.getString("Date");
                 String station = document.getString("Station");
                 String train   = document.getString("Train");
+                int seconds = document.getInteger("Seconds");
 
                 Passenger passengerObj = new Passenger(ticketNo,name);
                 passengerObj.setDate(date);
@@ -674,6 +676,7 @@ public class TrainStation extends Application{
                 passengerObj.setTrain(train);
                 passengerObj.setSeat(seat);
                 passengerObj.setTrain(train);
+                passengerObj.setSecondsInQueue(seconds);
                 reportData[i]=(passengerObj);
                 i++;
             }

@@ -64,13 +64,13 @@ public class PassengerQueue {
         }
         return maxStayInQueue;
     }
-    public void setMaxStayInQueue(int maxStayInQueue) {
-        this.maxStayInQueue =maxStayInQueue;
+    public void setMaxStayInQueue(int maxStayInQueuedata) {
+        maxStayInQueue =maxStayInQueuedata;
     }
 
     public int getMinStayInQueue() { return minStayInQueue; }
-    public void setMinStayInQueue(int minStayInQueue) {
-        this.minStayInQueue =minStayInQueue;
+    public void setMinStayInQueue(int minStayInQueuedata) {
+        minStayInQueue =minStayInQueuedata;
     }
 
     public void sortSeat(Passenger[] sortArray,int length) {
