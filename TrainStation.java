@@ -4,17 +4,13 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -28,15 +24,15 @@ public class TrainStation extends Application{
     private  PassengerQueue trainQueue = new PassengerQueue();
     private static Passenger[] reportData = new Passenger[42];
 
-    /*private  ObservableList<Passenger> getDataToTable(Passenger[] namearray){
+    private  ObservableList<Passenger> getDataToTable(Passenger[] nameArray){
         ObservableList<Passenger> table= FXCollections.observableArrayList();
-        for (Passenger i: namearray) {
+        for (Passenger i: nameArray) {
             if (i!=null){
                 table.add(i);
             }
         }
         return table;
-    }*/
+    }
     private  ObservableList<Passenger> getWaitRoomData(){
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
         for (Passenger i: waitingRoom) {
@@ -160,7 +156,6 @@ public class TrainStation extends Application{
         first.add(skipButFirst,44,30,10,12);
 
     }
-
     private  void importData(String selectedDate,String selectedTrain,String selectedStation) {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
@@ -296,13 +291,13 @@ public class TrainStation extends Application{
         TableView<Passenger> waitingRoomTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
         ticket_col.setMinWidth(100);
-        ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+        ticket_col.setCellValueFactory(new PropertyValueFactory<>("ticketNumber"));
         TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
         name_col.setMinWidth(100);
-        name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
+        name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
         seat_col.setMinWidth(100);
-        seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
+        seat_col.setCellValueFactory(new PropertyValueFactory<>("seat"));
         waitingRoomTable = new TableView<>();
         waitingRoomTable.setMinWidth(300);
         waitingRoomTable.setMinHeight(450);
@@ -324,14 +319,14 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(trainQueueHead,10d);
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
-        ticket_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+        ticket_col2.setCellValueFactory(new PropertyValueFactory<>("ticketNumber"));
         ticket_col2.setMinWidth(100);
         TableColumn<Passenger,String> name_col2 = new TableColumn<>("Name");
         name_col2.setMinWidth(100);
-        name_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
+        name_col2.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
         seat_col2.setMinWidth(100);
-        seat_col2.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
+        seat_col2.setCellValueFactory(new PropertyValueFactory<>("seat"));
         trainQueueTable = new TableView<>();
         trainQueueTable.setMinWidth(300);
         trainQueueTable.setMinHeight(450);
@@ -495,7 +490,7 @@ public class TrainStation extends Application{
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
 
-        List<Passenger> deleteArray = new ArrayList<Passenger>(Arrays.asList(trainQueue.getQueueArray()));
+        List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
             if(temp==null){
                 System.out.println("invalid input");
@@ -612,7 +607,9 @@ public class TrainStation extends Application{
                 String station = document.getString("Station");
                 String train   = document.getString("Train");
 
-                Passenger passengerObj = new Passenger(ticketNo,name);
+                Passenger passengerObj = new Passenger();
+                passengerObj.setTicketNumber(ticketNo);
+                passengerObj.setName(name);
                 passengerObj.setDate(date);
                 passengerObj.setStation(station);
                 passengerObj.setTrain(train);
@@ -640,7 +637,9 @@ public class TrainStation extends Application{
                 String station = document.getString("Station");
                 String train   = document.getString("Train");
 
-                Passenger passengerObj = new Passenger(ticketNo,name);
+                Passenger passengerObj = new Passenger();
+                passengerObj.setTicketNumber(ticketNo);
+                passengerObj.setName(name);
                 passengerObj.setDate(date);
                 passengerObj.setStation(station);
                 passengerObj.setTrain(train);
@@ -670,7 +669,9 @@ public class TrainStation extends Application{
                 String train   = document.getString("Train");
                 int seconds = document.getInteger("Seconds");
 
-                Passenger passengerObj = new Passenger(ticketNo,name);
+                Passenger passengerObj = new Passenger();
+                passengerObj.setTicketNumber(ticketNo);
+                passengerObj.setName(name);
                 passengerObj.setDate(date);
                 passengerObj.setStation(station);
                 passengerObj.setTrain(train);
@@ -747,19 +748,19 @@ public class TrainStation extends Application{
         TableView<Passenger> ReportTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
         ticket_col.setMinWidth(100);
-        ticket_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("ticketNumber"));
+        ticket_col.setCellValueFactory(new PropertyValueFactory<>("ticketNumber"));
         TableColumn<Passenger,String> name_col = new TableColumn<>("Name");
         name_col.setMinWidth(100);
-        name_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("name"));
+        name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
         seat_col.setMinWidth(100);
-        seat_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("seat"));
+        seat_col.setCellValueFactory(new PropertyValueFactory<>("seat"));
         TableColumn<Passenger,String> seconds_col = new TableColumn<>("Seconds");
         seconds_col.setMinWidth(100);
-        seconds_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("secondsInQueue"));
+        seconds_col.setCellValueFactory(new PropertyValueFactory<>("secondsInQueue"));
         TableColumn<Passenger,String> Station_col = new TableColumn<>("Station");
         Station_col.setMinWidth(100);
-        Station_col.setCellValueFactory(new PropertyValueFactory<Passenger,String>("Station"));
+        Station_col.setCellValueFactory(new PropertyValueFactory<>("Station"));
 
 
         ReportTable = new TableView<>();
@@ -801,7 +802,7 @@ public class TrainStation extends Application{
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         importGui();
     }
 }

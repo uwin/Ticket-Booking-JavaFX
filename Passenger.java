@@ -3,25 +3,17 @@ import java.util.Random;
 public class Passenger {
 
     public Passenger(String firstName, String secondName, String seatNumber) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-
-        setSeat(seatNumber);
-        this.seat = getSeat();
-
-        setName(firstName,secondName);
-        this.name= getName();
-
-        this.ticketNumber=setTicketNumber();
+        this.name= firstName+" "+secondName;
+        this.seat = seatNumber;
+        Random rand = new Random();
+        int randNum = rand.nextInt(100) + 1;
+        this.ticketNumber = "TK"+String.valueOf(randNum);
         this.secondsInQueue=0;
     }
-    public Passenger(String ticketNumber,String name) {
-        this.ticketNumber = ticketNumber;
-        this.name= name;
+    public Passenger() {
     }
-
-    private String firstName;
-    private String secondName;
+    //private String firstName;
+    //private String secondName;
     private String name;
     private String seat;
     private String ticketNumber;
@@ -51,12 +43,7 @@ public class Passenger {
         this.date = date;
     }
 
-    public String setTicketNumber() {
-        Random rand = new Random();
-        int randNum = rand.nextInt(100) + 1;
-        String ticketNumber = "TK"+String.valueOf(randNum);
-        return ticketNumber;
-    }
+    public void setTicketNumber(String ticketNumber) {this.ticketNumber=ticketNumber;}
     public String getTicketNumber() {
         return ticketNumber;
     }
@@ -71,10 +58,8 @@ public class Passenger {
     public String getName() {
         return name;
     }
-    public void setName(String firstName,String secondName) {
-        this.firstName = firstName;
-        this.secondName=secondName;
-        name= firstName+" "+secondName;
+    public void setName(String name) {
+        this.name= name;
     }
 
     public int getSecondsInQueue() {
