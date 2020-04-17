@@ -37,7 +37,7 @@ public class TrainStation extends Application{
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
         for (Passenger i: waitingRoom) {
             if (i!=null){
-                passengers.add(i);
+                if (i.getArrived()) passengers.add(i);
             }
         }
         return passengers;
@@ -368,10 +368,12 @@ public class TrainStation extends Application{
                 for (int j = 0; j <= TrainStation.waitingRoom.length; j++) {
                     if (getWaitRoomData().size() == 0) break;
                     if (TrainStation.waitingRoom[j] != null) {
-                        trainQueue.add(TrainStation.waitingRoom[j]);
-                        TrainStation.waitingRoom[j] = null;
-                        i++;
-                        if (i == generateNo) break;
+                        if (TrainStation.waitingRoom[j].getArrived()){
+                            trainQueue.add(TrainStation.waitingRoom[j]);
+                            TrainStation.waitingRoom[j] = null;
+                            i++;
+                            if (i == generateNo) break;
+                        }
                     }
                 }
             }
@@ -411,10 +413,14 @@ public class TrainStation extends Application{
                     passengerDataText.setFont(new Font("Arial", 15));
                     passengerDataText.setPadding(new Insets(0,0,0,8));
                     if (arrayToView[number-1]!=null){
+                        if (arrayToView[number-1].getArrived())
                             passengerDataText.setText(
                             arrayToView[number-1].getName()+"\n"+
                             arrayToView[number-1].getSeat()+"|"+
                             arrayToView[number-1].getTicketNumber());
+                        else {
+                            passengerDataText.setText("Not Arrived");
+                        }
                     }
                     number++;
                     first.add(passengerData, c, r);
@@ -534,8 +540,10 @@ public class TrainStation extends Application{
             userDocument.append("Date", data.getDate());
             userDocument.append("Station", data.getStation());
             userDocument.append("Train", data.getTrain());
+            userDocument.append("Arrived", data.getArrived());
             trainqueue.insertOne(userDocument);
         }
+        System.out.println("|-Train Queue Saved");
 
         MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
         System.out.println("connected to WaitingRoomData");
@@ -554,8 +562,10 @@ public class TrainStation extends Application{
             userDocument.append("Date", data.getDate());
             userDocument.append("Station", data.getStation());
             userDocument.append("Train", data.getTrain());
+            userDocument.append("Arrived", data.getArrived());
             waitingroom.insertOne(userDocument);
         }
+        System.out.println("|-Waiting Room Saved");
 
         MongoCollection<Document> reportdata = dbDatabase.getCollection("ReportData");
         System.out.println("connected to ReportData");
@@ -575,8 +585,10 @@ public class TrainStation extends Application{
             userDocument.append("Station", data.getStation());
             userDocument.append("Train", data.getTrain());
             userDocument.append("Seconds",data.getSecondsInQueue());
+            userDocument.append("Arrived", data.getArrived());
             reportdata.insertOne(userDocument);
         }
+        System.out.println("|-Report Data Saved");
 
 
         dbClient.close();
@@ -606,6 +618,7 @@ public class TrainStation extends Application{
                 String date    = document.getString("Date");
                 String station = document.getString("Station");
                 String train   = document.getString("Train");
+                boolean Arrived= document.getBoolean("Arrived");
 
                 Passenger passengerObj = new Passenger();
                 passengerObj.setTicketNumber(ticketNo);
@@ -614,7 +627,7 @@ public class TrainStation extends Application{
                 passengerObj.setStation(station);
                 passengerObj.setTrain(train);
                 passengerObj.setSeat(seat);
-                passengerObj.setTrain(train);
+                passengerObj.setArrived(Arrived);
                 trainQueue.add(passengerObj);
             }
             System.out.println("|-Train Queue loaded");
@@ -636,6 +649,7 @@ public class TrainStation extends Application{
                 String date    = document.getString("Date");
                 String station = document.getString("Station");
                 String train   = document.getString("Train");
+                boolean Arrived= document.getBoolean("Arrived");
 
                 Passenger passengerObj = new Passenger();
                 passengerObj.setTicketNumber(ticketNo);
@@ -644,7 +658,7 @@ public class TrainStation extends Application{
                 passengerObj.setStation(station);
                 passengerObj.setTrain(train);
                 passengerObj.setSeat(seat);
-                passengerObj.setTrain(train);
+                passengerObj.setArrived(Arrived);
                 waitingRoom[i]=(passengerObj);
                 i++;
             }
@@ -668,6 +682,7 @@ public class TrainStation extends Application{
                 String station = document.getString("Station");
                 String train   = document.getString("Train");
                 int seconds = document.getInteger("Seconds");
+                boolean Arrived= document.getBoolean("Arrived");
 
                 Passenger passengerObj = new Passenger();
                 passengerObj.setTicketNumber(ticketNo);
@@ -676,8 +691,8 @@ public class TrainStation extends Application{
                 passengerObj.setStation(station);
                 passengerObj.setTrain(train);
                 passengerObj.setSeat(seat);
-                passengerObj.setTrain(train);
                 passengerObj.setSecondsInQueue(seconds);
+                passengerObj.setArrived(Arrived);
                 reportData[i]=(passengerObj);
                 i++;
             }

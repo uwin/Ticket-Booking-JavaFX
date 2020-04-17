@@ -8,6 +8,8 @@ public class Passenger {
         Random rand = new Random();
         int randNum = rand.nextInt(100) + 1;
         this.ticketNumber = "TK"+String.valueOf(randNum);
+        double randomValue = Math.random()*100;  //0.0 to 99.9
+        this.arrived= randomValue >= 24.0;
         this.secondsInQueue=0;
     }
     public Passenger() {
@@ -20,7 +22,16 @@ public class Passenger {
     private String date;
     private String station;
     private String train;
+    private Boolean arrived;
     private int secondsInQueue;
+
+    public Boolean getArrived() {
+        return arrived;
+    }
+
+    public void setArrived(Boolean arrived) {
+        this.arrived = arrived;
+    }
 
     public String getTrain() {
         return train;
