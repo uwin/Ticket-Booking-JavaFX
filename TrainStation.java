@@ -37,7 +37,7 @@ public class TrainStation extends Application{
         ObservableList<Passenger> passengers= FXCollections.observableArrayList();
         for (Passenger i: waitingRoom) {
             if (i!=null){
-                if (i.getArrived()) passengers.add(i);
+                passengers.add(i);
             }
         }
         return passengers;
@@ -47,7 +47,7 @@ public class TrainStation extends Application{
 
         for (Passenger i: trainQueue.getQueueArray())
             if (i!=null){
-                queuePassengers.add(i);
+                if(i.getArrived()) queuePassengers.add(i);
             }
         return queuePassengers;
     }
@@ -198,7 +198,12 @@ public class TrainStation extends Application{
                     passengerObj.setDate(date);
                     passengerObj.setStation(start);
                     passengerObj.setTrain(trainNo);
-                    waitingRoom[i]=(passengerObj);
+                    if(passengerObj.getArrived()) {
+                        waitingRoom[i]=(passengerObj);
+                    }else {
+                        passengerObj.setSecondsInQueue(0);
+                        trainQueue.add(passengerObj);
+                    }
                     i++;
                 }
             }
@@ -368,12 +373,12 @@ public class TrainStation extends Application{
                 for (int j = 0; j <= TrainStation.waitingRoom.length; j++) {
                     if (getWaitRoomData().size() == 0) break;
                     if (TrainStation.waitingRoom[j] != null) {
-                        if (TrainStation.waitingRoom[j].getArrived()){
-                            trainQueue.add(TrainStation.waitingRoom[j]);
-                            TrainStation.waitingRoom[j] = null;
-                            i++;
-                            if (i == generateNo) break;
-                        }
+//                        if (TrainStation.waitingRoom[j].getArrived()){
+                        trainQueue.add(TrainStation.waitingRoom[j]);
+                        TrainStation.waitingRoom[j] = null;
+                        i++;
+                        if (i == generateNo) break;
+//                        }
                     }
                 }
             }
@@ -711,31 +716,39 @@ public class TrainStation extends Application{
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Train queue is Empty");
             a.showAndWait();
-            listOption();
+            runGui();
+            //listOption();
         }else {
             int queueDelay = 0;
             int i=0;
             int lenNoNull =0;
+            int lenNoArrive=0;
             int minimumWaitTime = 0;
             int maximumWaitTime = 0;
             for (Passenger index: reportData){
                 if (index!=null) lenNoNull++;
             }
+            for (Passenger index: trainQueue.getQueueArray()){
+                if (index!=null) {
+                    if (!index.getArrived()) lenNoArrive++;
+                }
+            }
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 if (pasangerObjest==null) {
-//                    i++;
-//                    System.out.println("n"+i);
                     continue;
                 }
                 int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
                 reportData[lenNoNull+i]=pasangerObjest;
                 reportData[lenNoNull+i].setSecondsInQueue(genDelay);
+                if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
                 trainQueue.setMaxStayInQueue(lenNoNull+i+1);
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
                 i++;
             }
             trainQueue.setrest();
+            trainQueue.setMaxStayInQueue(trainQueue.getMaxStayInQueue()-lenNoArrive);
+
             for (Passenger pasangerObjest: reportData){
                 if (pasangerObjest==null) continue;
                 queueDelay=queueDelay+pasangerObjest.getSecondsInQueue();
@@ -785,6 +798,9 @@ public class TrainStation extends Application{
         TableColumn<Passenger,String> Station_col = new TableColumn<>("Station");
         Station_col.setMinWidth(100);
         Station_col.setCellValueFactory(new PropertyValueFactory<>("Station"));
+        TableColumn<Passenger,String> Arrived_col = new TableColumn<>("Arrived");
+        Arrived_col.setMinWidth(100);
+        Arrived_col.setCellValueFactory(new PropertyValueFactory<>("Station"));
 
 
         ReportTable = new TableView<>();
