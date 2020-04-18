@@ -417,18 +417,6 @@ public class TrainStation extends Application{
         window.setScene(addViewFirst);
         window.show();
 
-//        int lenNo=0;
-//        for (Passenger index: waitingRoom){
-//            if (index==null) {
-//                lenNo++;
-//            }
-//            if (index!=null) break;
-//            if (getWaitRoomData().isEmpty()) {
-//                lenNo=getTrainQueueData().size();
-//                break;
-//            }
-//        }
-
         int number=0;
         for (int r = 2; r < 9; r++) {
             for (int c = 2; c < 8; c++) {
@@ -454,14 +442,7 @@ public class TrainStation extends Application{
                         }
                         first.add(passengerData, c, r);
                         first.add(passengerDataText, c, r);
-                        //System.out.println("lenNo = " + lenNo);
-                    }//else if (arrayToView==waitingRoom){
-//                        if (number<=lenNo){
-//                            passengerDataText.setText("in Queue");
-//                            first.add(passengerData, c, r);
-//                            first.add(passengerDataText, c, r);
-//                        }
-//                    }
+                    }
                     number++;
                 }
             }
@@ -476,8 +457,6 @@ public class TrainStation extends Application{
         viewView.getChildren().add(passengetHeadBox);
         AnchorPane.setTopAnchor(passengetHeadBox,1d);
         AnchorPane.setLeftAnchor(passengetHeadBox,x);
-
-
 
         viewView.getChildren().add(first);
         AnchorPane.setTopAnchor(first,40d);
@@ -515,7 +494,6 @@ public class TrainStation extends Application{
             window.close();
             view(reportData,320d);
         });
-
 
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
@@ -556,7 +534,6 @@ public class TrainStation extends Application{
             }
         }
     }
-
 
     private  void delete() {
         Scanner scanSeat= new Scanner(System.in);
