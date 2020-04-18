@@ -173,6 +173,8 @@ public class TrainStation extends Application{
                 "Colombo Fort","Polgahawela", "Peradeniya Junction",
                 "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
                 "Haputale","Diyatalawa", "Bandarawela","Ella", "Badulla"));
+
+        ArrayList<Passenger> arrivedarray = new ArrayList<>();
         if(bookings.countDocuments()>0)
         {
             int i=0;
@@ -199,13 +201,18 @@ public class TrainStation extends Application{
                     passengerObj.setStation(start);
                     passengerObj.setTrain(trainNo);
                     if(passengerObj.getArrived()) {
-                        waitingRoom[i]=(passengerObj);
+                        arrivedarray.add(passengerObj);
                     }else {
-                        passengerObj.setSecondsInQueue(0);
                         trainQueue.add(passengerObj);
                     }
                     i++;
                 }
+                int count=0;
+                for (Passenger data: arrivedarray) {
+                    waitingRoom[count]=data;
+                    count++;
+                }
+                System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
             }
             boolean validateImport =false;
             for (Passenger data:waitingRoom){
@@ -403,12 +410,12 @@ public class TrainStation extends Application{
         window.setScene(addViewFirst);
         window.show();
 
-        int number=1;
+        int number=0;
         for (int r = 2; r < 9; r++) {
             for (int c = 2; c < 8; c++) {
-                if (number <=42)
+                if (number <42)
                 {
-                    Rectangle passengerData= new Rectangle();
+                    Rectangle passengerData = new Rectangle();
                     passengerData.setHeight(60);
                     passengerData.setWidth(120);
                     passengerData.setArcHeight(12);
@@ -416,20 +423,20 @@ public class TrainStation extends Application{
                     passengerData.setFill(Color.LIGHTGRAY);
                     Label passengerDataText = new Label();
                     passengerDataText.setFont(new Font("Arial", 15));
-                    passengerDataText.setPadding(new Insets(0,0,0,8));
-                    if (arrayToView[number-1]!=null){
-                        if (arrayToView[number-1].getArrived())
+                    passengerDataText.setPadding(new Insets(0, 0, 0, 8));
+                    if (arrayToView[number]!=null){
+                        if (arrayToView[number].getArrived()) {
                             passengerDataText.setText(
-                            arrayToView[number-1].getName()+"\n"+
-                            arrayToView[number-1].getSeat()+"|"+
-                            arrayToView[number-1].getTicketNumber());
-                        else {
-                            passengerDataText.setText("Not Arrived");
+                                    arrayToView[number].getName() + "\n" +
+                                    arrayToView[number].getSeat() + "| " +
+                                    arrayToView[number].getTicketNumber());
+                        }else {
+                            passengerDataText.setText(arrayToView[number].getSeat() + "| " +"Not Arrived");
                         }
+                        first.add(passengerData, c, r);
+                        first.add(passengerDataText, c, r);
                     }
                     number++;
-                    first.add(passengerData, c, r);
-                    first.add(passengerDataText, c, r);
                 }
             }
         }
@@ -500,6 +507,11 @@ public class TrainStation extends Application{
         Scanner scanSeat= new Scanner(System.in);
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
+        int lenNo=0;
+        for (Passenger index: waitingRoom){
+            if (index!=null) lenNo++;
+            if (index==null) break;
+        }
 
         List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
@@ -509,7 +521,9 @@ public class TrainStation extends Application{
             } else if (temp.getSeat().equals(deleteSeat)) {
                 deleteArray.remove(temp);
                 trainQueue.removeSeat();
-                waitingRoom[trainQueue.getLength()]=temp;
+                System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
+                waitingRoom[lenNo]=temp;
+                System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                 deleteArray.add(null);
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
                 Alert a = new Alert(Alert.AlertType.WARNING);
