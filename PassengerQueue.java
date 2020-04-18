@@ -85,19 +85,6 @@ public class PassengerQueue {
         minStayInQueue =minStayInQueuedata;
     }
 
-    public void sortSeat(Passenger[] sortArray,int length) {
-
-        for (int a = 1; a < length; a++) {
-            for (int b = 0; b < length - a-1; b++) {
-                if ((Integer.parseInt(sortArray[b].getSeat())>(Integer.parseInt(sortArray[b + 1].getSeat())))) {
-                    // swap movies[b] with movies[b+1]
-                    Passenger temp = sortArray[b];
-                    sortArray[b] = sortArray[b + 1];
-                    sortArray[b + 1] = temp;
-                }
-            }
-        }
-    }
     public void setrest() {
 
         length=0;

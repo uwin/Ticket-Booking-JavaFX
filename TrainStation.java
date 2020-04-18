@@ -369,11 +369,15 @@ public class TrainStation extends Application{
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Train Queue is full");
                 a.show();
-            }else if (getWaitRoomData().isEmpty()){
+
+            }
+            else if (getWaitRoomData().isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Waiting Room is Empty");
                 a.show();
-            } else {
+
+            }
+            else {
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
                 if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
                 int i = 0;
@@ -391,7 +395,8 @@ public class TrainStation extends Application{
                     }
                 }
             }
-            trainQueue.sortSeat(trainQueue.getQueueArray(),trainQueue.getLength()+1);
+            sortWaitingRoom();
+            sortTrainQueue();
             trainQueueTable.setItems(getTrainQueueData());
             waitingRoomTable.setItems(getWaitRoomData());
         });
@@ -412,11 +417,17 @@ public class TrainStation extends Application{
         window.setScene(addViewFirst);
         window.show();
 
-        int lenNo=0;
-        for (Passenger index: waitingRoom){
-            if (index==null) lenNo++;
-            if (index!=null) break;
-        }
+//        int lenNo=0;
+//        for (Passenger index: waitingRoom){
+//            if (index==null) {
+//                lenNo++;
+//            }
+//            if (index!=null) break;
+//            if (getWaitRoomData().isEmpty()) {
+//                lenNo=getTrainQueueData().size();
+//                break;
+//            }
+//        }
 
         int number=0;
         for (int r = 2; r < 9; r++) {
@@ -443,13 +454,14 @@ public class TrainStation extends Application{
                         }
                         first.add(passengerData, c, r);
                         first.add(passengerDataText, c, r);
-                    }else if (arrayToView==waitingRoom){
-                        if (number<=lenNo){
-                            passengerDataText.setText(number-1 + "| in Queue");
-                            first.add(passengerData, c, r);
-                            first.add(passengerDataText, c, r);
-                        }
-                    }
+                        //System.out.println("lenNo = " + lenNo);
+                    }//else if (arrayToView==waitingRoom){
+//                        if (number<=lenNo){
+//                            passengerDataText.setText("in Queue");
+//                            first.add(passengerData, c, r);
+//                            first.add(passengerDataText, c, r);
+//                        }
+//                    }
                     number++;
                 }
             }
@@ -517,6 +529,35 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(closeBut,10d);
     }
 
+    private void sortWaitingRoom(){
+        System.out.println("Arrays.toString(waitingRoom) = " + Arrays.toString(waitingRoom));
+        int j = 0;
+        for (int i = 0; i < waitingRoom.length; i++) {
+            if (waitingRoom[i] != null) {
+                Passenger temp = waitingRoom[j];
+                waitingRoom[j] = waitingRoom[i];
+                waitingRoom[i] = temp;
+                j++;
+            }
+        }
+        System.out.println("Arrays.toString(waitingRoom) = " + Arrays.toString(waitingRoom));
+    }
+
+    public void sortTrainQueue() {
+
+        for (int a = 1; a < trainQueue.getLength()+1; a++) {
+            for (int b = 0; b < trainQueue.getLength()+1 - a-1; b++) {
+                if ((Integer.parseInt(trainQueue.getQueueArray()[b].getSeat())>(Integer.parseInt(trainQueue.getQueueArray()[b + 1].getSeat())))) {
+                    // swap movies[b] with movies[b+1]
+                    Passenger temp = trainQueue.getQueueArray()[b];
+                    trainQueue.getQueueArray()[b] = trainQueue.getQueueArray()[b + 1];
+                    trainQueue.getQueueArray()[b + 1] = temp;
+                }
+            }
+        }
+    }
+
+
     private  void delete() {
         Scanner scanSeat= new Scanner(System.in);
         System.out.println("> Enter Seat Number");
@@ -539,9 +580,6 @@ public class TrainStation extends Application{
                 }
                 deleteArray.remove(temp);
                 trainQueue.removeSeat();
-                System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
-                waitingRoom[lenNo-1]=temp;
-                System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                 deleteArray.add(null);
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
                 Alert a = new Alert(Alert.AlertType.WARNING);
