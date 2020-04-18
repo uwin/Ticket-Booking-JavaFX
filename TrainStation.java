@@ -382,7 +382,9 @@ public class TrainStation extends Application{
                     if (TrainStation.waitingRoom[j] != null) {
 //                        if (TrainStation.waitingRoom[j].getArrived()){
                         trainQueue.add(TrainStation.waitingRoom[j]);
+                        System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                         TrainStation.waitingRoom[j] = null;
+                        System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                         i++;
                         if (i == generateNo) break;
 //                        }
@@ -410,6 +412,12 @@ public class TrainStation extends Application{
         window.setScene(addViewFirst);
         window.show();
 
+        int lenNo=0;
+        for (Passenger index: waitingRoom){
+            if (index==null) lenNo++;
+            if (index!=null) break;
+        }
+
         int number=0;
         for (int r = 2; r < 9; r++) {
             for (int c = 2; c < 8; c++) {
@@ -435,6 +443,12 @@ public class TrainStation extends Application{
                         }
                         first.add(passengerData, c, r);
                         first.add(passengerDataText, c, r);
+                    }else if (arrayToView==waitingRoom){
+                        if (number<=lenNo){
+                            passengerDataText.setText(number-1 + "| in Queue");
+                            first.add(passengerData, c, r);
+                            first.add(passengerDataText, c, r);
+                        }
                     }
                     number++;
                 }
@@ -509,20 +523,24 @@ public class TrainStation extends Application{
         String deleteSeat = scanSeat.next();
         int lenNo=0;
         for (Passenger index: waitingRoom){
-            if (index!=null) lenNo++;
-            if (index==null) break;
+            if (index==null) lenNo++;
+            if (index!=null) break;
         }
 
         List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
             if(temp==null){
-                System.out.println("invalid input");
+                System.out.println("invalid seat number");
                 break;
             } else if (temp.getSeat().equals(deleteSeat)) {
+                if (!temp.getArrived()) {
+                    System.out.println("passenger has not arrived");
+                    break;
+                }
                 deleteArray.remove(temp);
                 trainQueue.removeSeat();
                 System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
-                waitingRoom[lenNo]=temp;
+                waitingRoom[lenNo-1]=temp;
                 System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                 deleteArray.add(null);
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
