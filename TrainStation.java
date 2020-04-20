@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -764,8 +765,8 @@ public class TrainStation extends Application{
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Train queue is Empty");
             a.showAndWait();
-            runGui();
-            //listOption();
+            //runGui(minimumWaitTime,maximumWaitTime,averageSecondsInQueue);
+            listOption();
         }else {
             int queueDelay = 0;
             int i=0;
@@ -819,11 +820,12 @@ public class TrainStation extends Application{
             System.out.println("minimumWaitingTime >"+minimumWaitTime);
             System.out.println("maximumWaitingTime >"+maximumWaitTime);
             System.out.println("maximumLengthQueue >"+trainQueue.getMaxStayInQueue());
-            runGui();
+            runGui(minimumWaitTime,maximumWaitTime,averageSecondsInQueue);
         }
     }
 
-    public   void runGui(){
+    public   void runGui(int minimumWaitTime,int maximumWaitTime,float averageSecondsInQueue){
+
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         GridPane addView = new GridPane();
@@ -875,18 +877,50 @@ public class TrainStation extends Application{
         AnchorPane.setLeftAnchor(passengerRunText,10d);
         AnchorPane.setTopAnchor(passengerRunText,10d);
 
-        Button closeBut = new Button("close");
-        closeBut.setMinSize(100, 60);
-        closeBut.setStyle("-fx-background-color: red; ");
-        closeBut.setOnAction(event -> {
-            window.close();
-            listOption();
-        });
-        runView.getChildren().add(closeBut);
-        AnchorPane.setBottomAnchor(closeBut,10d);
-        AnchorPane.setRightAnchor(closeBut,10d);
+//        Button closeBut = new Button("close");
+//        closeBut.setMinSize(100, 60);
+//        closeBut.setStyle("-fx-background-color: red; ");
+//        closeBut.setOnAction(event -> {
+//            window.close();
+//            listOption();
+//        });
+//        runView.getChildren().add(closeBut);
+//        AnchorPane.setBottomAnchor(closeBut,10d);
+//        AnchorPane.setRightAnchor(closeBut,10d);
 
-        window.show();
+        VBox reportArea = new VBox();
+        reportArea.setSpacing(10d);
+        for (int i=0;i<4;i++) {
+            Rectangle reportBox = new Rectangle();
+            reportBox.setHeight(100);
+            reportBox.setWidth(190);
+            reportBox.setArcHeight(12);
+            reportBox.setArcWidth(12);
+            reportBox.setFill(Color.LIGHTGRAY);
+            reportArea.getChildren().add(reportBox);
+        }
+        runView.getChildren().add(reportArea);
+        AnchorPane.setTopAnchor(reportArea,40d);
+        AnchorPane.setRightAnchor(reportArea,14d);
+
+        VBox reportDetails = new VBox();
+        reportDetails.setSpacing(76d);
+        Label reportMinTime = new Label();
+        reportMinTime.setText("Minumun WaitTime\n"+minimumWaitTime);
+        Label reportMaxTime = new Label();
+        reportMaxTime.setText("Maximum  WaitTime\n"+maximumWaitTime);
+        Label reportMaxInqueue = new Label();
+        reportMaxInqueue.setText("Maximum Lenght In Queue\n"+trainQueue.getMaxStayInQueue());
+        Label reportAverageTime = new Label();
+        reportAverageTime.setText("Average Time\n"+ averageSecondsInQueue);
+
+        reportDetails.getChildren().addAll(reportMinTime,reportMaxTime,reportMaxInqueue,reportAverageTime);
+        runView.getChildren().add(reportDetails);
+        AnchorPane.setTopAnchor(reportDetails,50d);
+        AnchorPane.setRightAnchor(reportDetails,110d);
+
+        window.showAndWait();
+        listOption();
     }
 
     public static void main(String[]args) {
