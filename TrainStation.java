@@ -177,7 +177,7 @@ public class TrainStation extends Application{
         ArrayList<Passenger> arrivedarray = new ArrayList<>();
         if(bookings.countDocuments()>0)
         {
-            int i=0;
+            int i=0; //TODO remove
             for(Document document:bookingDocument)
             {
                 String date   = document.getString("Date");
@@ -205,7 +205,7 @@ public class TrainStation extends Application{
                     }else {
                         trainQueue.add(passengerObj);
                     }
-                    i++;
+                    i++; //TODO remove
                 }
                 int count=0;
                 for (Passenger data: arrivedarray) {
@@ -213,6 +213,7 @@ public class TrainStation extends Application{
                     count++;
                 }
                 System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
+                System.out.println("trainQueue = " + Arrays.toString(trainQueue.getQueueArray()));
             }
             boolean validateImport =false;
             for (Passenger data:waitingRoom){
@@ -227,7 +228,7 @@ public class TrainStation extends Application{
                 a.showAndWait();
                 importGui();
             }else {
-                a.setHeaderText("Data Loaded from Train Booking");
+                a.setHeaderText("Data Loaded from Booking Data");
                 a.showAndWait();
                 listOption();
             }
@@ -768,35 +769,39 @@ public class TrainStation extends Application{
         }else {
             int queueDelay = 0;
             int i=0;
-            int lenNoNull =0;
+            int lenReport =0;
             int lenNoArrive=0;
             int minimumWaitTime = 0;
             int maximumWaitTime = 0;
             for (Passenger index: reportData){
-                if (index!=null) lenNoNull++;
+                if (index!=null) {
+                    lenReport++;
+                    if (!index.getArrived()) lenNoArrive++;
+                }
             }
+            System.out.println("lenNoArriveR = " + lenNoArrive);
             for (Passenger index: trainQueue.getQueueArray()){
                 if (index!=null) {
                     if (!index.getArrived()) lenNoArrive++;
                 }
             }
+            System.out.println("lenNoArriveT = " + lenNoArrive);
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
-                if (pasangerObjest==null) {
-                    continue;
-                }
+                //TODO change to break
+                if (pasangerObjest==null) continue;
                 int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
-                reportData[lenNoNull+i]=pasangerObjest;
-                reportData[lenNoNull+i].setSecondsInQueue(genDelay);
+                reportData[lenReport+i+1]=pasangerObjest;
+                reportData[lenReport+i+1].setSecondsInQueue(genDelay);
                 if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
-                trainQueue.setMaxStayInQueue(lenNoNull+i+1);
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
                 i++;
             }
+            trainQueue.setMaxStayInQueue(lenReport+i-lenNoArrive);
             trainQueue.setrest();
-            trainQueue.setMaxStayInQueue(trainQueue.getMaxStayInQueue()-lenNoArrive);
 
             for (Passenger pasangerObjest: reportData){
+                //TODO change to break
                 if (pasangerObjest==null) continue;
                 queueDelay=queueDelay+pasangerObjest.getSecondsInQueue();
                 if(minimumWaitTime== 0){
