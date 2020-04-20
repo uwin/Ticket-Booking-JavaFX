@@ -790,8 +790,8 @@ public class TrainStation extends Application{
                 //TODO change to break
                 if (pasangerObjest==null) continue;
                 int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
-                reportData[lenReport+i+1]=pasangerObjest;
-                reportData[lenReport+i+1].setSecondsInQueue(genDelay);
+                reportData[lenReport+i]=pasangerObjest;
+                reportData[lenReport+i].setSecondsInQueue(genDelay);
                 if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
