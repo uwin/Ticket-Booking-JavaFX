@@ -183,7 +183,7 @@ public class TrainStation extends Application{
         ArrayList<Passenger> arrivedarray = new ArrayList<>();
         if(bookings.countDocuments()>0)
         {
-            int i=0; //TODO remove
+            int i=0;
             for(Document document:bookingDocument)
             {
                 String date   = document.getString("Date");
@@ -209,9 +209,10 @@ public class TrainStation extends Application{
                     if(passengerObj.getArrived()) {
                         arrivedarray.add(passengerObj);
                     }else {
-                        trainQueue.add(passengerObj);
+                        reportData[i]=passengerObj;
+//                        trainQueue.add(passengerObj);
+                        i++;
                     }
-                    i++; //TODO remove
                 }
                 int count=0;
                 for (Passenger data: arrivedarray) {
@@ -315,7 +316,9 @@ public class TrainStation extends Application{
         TableColumn<Passenger,String> seat_col = new TableColumn<>("Seat");
         seat_col.setMinWidth(100);
         seat_col.setCellValueFactory(new PropertyValueFactory<>("seat"));
+
         waitingRoomTable = new TableView<>();
+        waitingRoomTable.setPlaceholder(new Label("Waiting Room Is Empty"));
         waitingRoomTable.setMinWidth(300);
         waitingRoomTable.setMinHeight(450);
         waitingRoomTable.setItems(getDataToTable(waitingRoom));
@@ -334,6 +337,7 @@ public class TrainStation extends Application{
         addView.getChildren().addAll(trainQueueHead);
         AnchorPane.setRightAnchor(trainQueueHead,200d);
         AnchorPane.setTopAnchor(trainQueueHead,10d);
+
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setCellValueFactory(new PropertyValueFactory<>("ticketNumber"));
@@ -344,7 +348,9 @@ public class TrainStation extends Application{
         TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
         seat_col2.setMinWidth(100);
         seat_col2.setCellValueFactory(new PropertyValueFactory<>("seat"));
+
         trainQueueTable = new TableView<>();
+        trainQueueTable.setPlaceholder(new Label("Train Queue Is Empty"));
         trainQueueTable.setMinWidth(300);
         trainQueueTable.setMinHeight(450);
         trainQueueTable.setItems(getDataToTable(trainQueue.getQueueArray()));
@@ -384,14 +390,16 @@ public class TrainStation extends Application{
             }
             else {
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
-                if (getDataToTable(waitingRoom).size() < generateNo) generateNo = getDataToTable(waitingRoom).size();
+                if (getDataToTable(waitingRoom).size() < generateNo) {
+                    generateNo = getDataToTable(waitingRoom).size();
+                }
                 int i = 0;
-                for (int j = 0; j <= TrainStation.waitingRoom.length; j++) {
+                for (int j = 0; j <= waitingRoom.length; j++) {
                     if (getDataToTable(waitingRoom).size() == 0) break;
-                    if (TrainStation.waitingRoom[j] != null) {
+                    if (waitingRoom[j] != null) {
 //                        if (TrainStation.waitingRoom[j].getArrived()){
-                        trainQueue.add(TrainStation.waitingRoom[j]);
-                        TrainStation.waitingRoom[j] = null;
+                        trainQueue.add(waitingRoom[j]);
+                        waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
 //                        }
@@ -416,7 +424,7 @@ public class TrainStation extends Application{
         first.setPadding(new Insets(2, 2, 2, 2));
         first.setHgap(10);
         first.setVgap(10);
-        Scene addViewFirst = new Scene(viewView, 924, 540);
+        Scene addViewFirst = new Scene(viewView, 924, 570);
         window.setScene(addViewFirst);
         window.show();
 
@@ -490,7 +498,7 @@ public class TrainStation extends Application{
         });
 
         Label passengerViewTextr = new Label();
-        passengerViewTextr.setText("Boarded In");
+        passengerViewTextr.setText("Boarded");
         passengerViewTextr.setFont(new Font("Arial", 23));
         viewView.getChildren().add(passengerViewTextr);
         AnchorPane.setLeftAnchor(passengerViewTextr,320d);
@@ -899,7 +907,6 @@ public class TrainStation extends Application{
                 }
             }
         }
-        System.out.println("notArrivedArray = " + Arrays.toString(notArrivedArray));
         ReportTable2 = new TableView<>();
         ReportTable2.setMinWidth(300);
         ReportTable2.setMaxHeight(250);
@@ -914,15 +921,15 @@ public class TrainStation extends Application{
         AnchorPane.setLeftAnchor(ReportTable2,10d);
 
         Label passengerRunText = new Label();
-        passengerRunText.setText("Report ");
-        passengerRunText.setFont(new Font("Arial", 23));
+        passengerRunText.setText("Boarded ");
+        passengerRunText.setFont(new Font("Arial", 18));
         runView.getChildren().add(passengerRunText);
         AnchorPane.setLeftAnchor(passengerRunText,10d);
         AnchorPane.setTopAnchor(passengerRunText,10d);
 
         Label passengerRunText2 = new Label();
         passengerRunText2.setText("Not Arrived ");
-        passengerRunText2.setFont(new Font("Arial", 16));
+        passengerRunText2.setFont(new Font("Arial", 18));
         runView.getChildren().add(passengerRunText2);
         AnchorPane.setLeftAnchor(passengerRunText2,10d);
         AnchorPane.setBottomAnchor(passengerRunText2,320d);
