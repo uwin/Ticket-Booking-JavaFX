@@ -771,12 +771,11 @@ public class TrainStation extends Application{
     }
 
     private  void run() {
-        if (trainQueue.isEmpty()){
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setHeaderText("Train queue is Empty");
-            a.showAndWait();
-            //runGui(minimumWaitTime,maximumWaitTime,averageSecondsInQueue);
-            listOption();
+        if (trainQueue.isEmpty() && getDataToTable(reportData).isEmpty()){
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setHeaderText("Data Insufficient for Simulation");
+                a.showAndWait();
+                listOption();
         }else {
             int queueDelay = 0;
             int i=0;
@@ -798,10 +797,7 @@ public class TrainStation extends Application{
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 //TODO change to break
                 if (pasangerObjest==null) continue;
-                int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
                 reportData[lenReport+i]=pasangerObjest;
-                reportData[lenReport+i].setSecondsInQueue(genDelay);
-                if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
                 i++;
@@ -812,10 +808,11 @@ public class TrainStation extends Application{
             for (Passenger pasangerObjest: reportData){
                 //TODO change to break
                 if (pasangerObjest==null) continue;
+                int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
+                pasangerObjest.setSecondsInQueue(genDelay);
+                if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
                 queueDelay=queueDelay+pasangerObjest.getSecondsInQueue();
                 pasangerObjest.setSecondsInQueue(queueDelay);
-                System.out.println("queueDelay = " + queueDelay);
-                System.out.println("getSecondsInQueue() = " + pasangerObjest.getSecondsInQueue());
                 if(minimumWaitTime== 0){
                     minimumWaitTime=queueDelay;
                 }
@@ -889,6 +886,7 @@ public class TrainStation extends Application{
 
 
         ReportTable = new TableView<>();
+        ReportTable.setPlaceholder(new Label("No Passenger has boarded"));
         ReportTable.setMinWidth(300);
         ReportTable.setMaxHeight(250);
         ReportTable.setItems(getDataToTable(reportData));
