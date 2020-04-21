@@ -39,33 +39,6 @@ public class TrainStation extends Application{
         }
         return table;
     }
-//    private  ObservableList<Passenger> getwa(){
-//        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
-//        for (Passenger i: waitingRoom) {
-//            if (i!=null){
-//                passengers.add(i);
-//            }
-//        }
-//        return passengers;
-//    }
-//    private  ObservableList<Passenger> getTrainQueueData(){
-//        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
-//
-//        for (Passenger i: trainQueue.getQueueArray())
-//            if (i!=null){
-//                if(i.getArrived()) queuePassengers.add(i);
-//            }
-//        return queuePassengers;
-//    }
-//    private  ObservableList<Passenger> getReportData(){
-//        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
-//
-//        for (Passenger i: reportData)
-//            if (i!=null){
-//                recordPassengers.add(i);
-//            }
-//        return recordPassengers;
-//    }
 
     private  void importGui(){
         Stage window = new Stage();
@@ -451,8 +424,6 @@ public class TrainStation extends Application{
                         }else {
                             passengerDataText.setText(arrayToView[number].getSeat() + "| " +"Not Arrived");
                         }
-//                        first.add(passengerData, c, r);
-//                        first.add(passengerDataText, c, r);
                     }
                     first.add(passengerData, c, r);
                     first.add(passengerDataText, c, r);
