@@ -202,7 +202,7 @@ public class TrainStation extends Application{
             }
             Alert a = new Alert(Alert.AlertType.WARNING);
             if (!validateImport) {
-                a.setHeaderText("No Data Found for selected Parameters");
+                a.setHeaderText("No Data Found for selection");
                 a.showAndWait();
                 importGui();
             }else {
