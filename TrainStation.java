@@ -27,40 +27,44 @@ public class TrainStation extends Application{
 
     private  ObservableList<Passenger> getDataToTable(Passenger[] nameArray){
         ObservableList<Passenger> table= FXCollections.observableArrayList();
-        for (Passenger i: nameArray) {
-            if (i!=null){
-                table.add(i);
+        for (Passenger i : nameArray) {
+            if (i != null) {
+                if (nameArray == trainQueue.getQueueArray()) {
+                    if (i.getArrived()) table.add(i);
+                } else if (nameArray == reportData) {
+                    if (i.getArrived()) table.add(i);
+                } else {table.add(i);}
             }
         }
         return table;
     }
-    private  ObservableList<Passenger> getWaitRoomData(){
-        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
-        for (Passenger i: waitingRoom) {
-            if (i!=null){
-                passengers.add(i);
-            }
-        }
-        return passengers;
-    }
-    private  ObservableList<Passenger> getTrainQueueData(){
-        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
-
-        for (Passenger i: trainQueue.getQueueArray())
-            if (i!=null){
-                if(i.getArrived()) queuePassengers.add(i);
-            }
-        return queuePassengers;
-    }
-    private  ObservableList<Passenger> getReportData(){
-        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
-
-        for (Passenger i: reportData)
-            if (i!=null){
-                recordPassengers.add(i);
-            }
-        return recordPassengers;
-    }
+//    private  ObservableList<Passenger> getwa(){
+//        ObservableList<Passenger> passengers= FXCollections.observableArrayList();
+//        for (Passenger i: waitingRoom) {
+//            if (i!=null){
+//                passengers.add(i);
+//            }
+//        }
+//        return passengers;
+//    }
+//    private  ObservableList<Passenger> getTrainQueueData(){
+//        ObservableList<Passenger>queuePassengers= FXCollections.observableArrayList();
+//
+//        for (Passenger i: trainQueue.getQueueArray())
+//            if (i!=null){
+//                if(i.getArrived()) queuePassengers.add(i);
+//            }
+//        return queuePassengers;
+//    }
+//    private  ObservableList<Passenger> getReportData(){
+//        ObservableList<Passenger>recordPassengers= FXCollections.observableArrayList();
+//
+//        for (Passenger i: reportData)
+//            if (i!=null){
+//                recordPassengers.add(i);
+//            }
+//        return recordPassengers;
+//    }
 
     private  void importGui(){
         Stage window = new Stage();
@@ -213,8 +217,6 @@ public class TrainStation extends Application{
                     waitingRoom[count]=data;
                     count++;
                 }
-                System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
-                System.out.println("trainQueue = " + Arrays.toString(trainQueue.getQueueArray()));
             }
             boolean validateImport =false;
             for (Passenger data:waitingRoom){
@@ -315,7 +317,7 @@ public class TrainStation extends Application{
         waitingRoomTable = new TableView<>();
         waitingRoomTable.setMinWidth(300);
         waitingRoomTable.setMinHeight(450);
-        waitingRoomTable.setItems(getWaitRoomData());
+        waitingRoomTable.setItems(getDataToTable(waitingRoom));
         waitingRoomTable.getColumns().add(ticket_col);
         waitingRoomTable.getColumns().add(name_col);
         waitingRoomTable.getColumns().add(seat_col);
@@ -344,7 +346,7 @@ public class TrainStation extends Application{
         trainQueueTable = new TableView<>();
         trainQueueTable.setMinWidth(300);
         trainQueueTable.setMinHeight(450);
-        trainQueueTable.setItems(getTrainQueueData());
+        trainQueueTable.setItems(getDataToTable(trainQueue.getQueueArray()));
         trainQueueTable.getColumns().add(ticket_col2);
         trainQueueTable.getColumns().add(name_col2);
         trainQueueTable.getColumns().add(seat_col2);
@@ -373,7 +375,7 @@ public class TrainStation extends Application{
                 a.show();
 
             }
-            else if (getWaitRoomData().isEmpty()){
+            else if (getDataToTable(waitingRoom).isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Waiting Room is Empty");
                 a.show();
@@ -381,16 +383,14 @@ public class TrainStation extends Application{
             }
             else {
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
-                if (getWaitRoomData().size() < generateNo) generateNo = getWaitRoomData().size();
+                if (getDataToTable(waitingRoom).size() < generateNo) generateNo = getDataToTable(waitingRoom).size();
                 int i = 0;
                 for (int j = 0; j <= TrainStation.waitingRoom.length; j++) {
-                    if (getWaitRoomData().size() == 0) break;
+                    if (getDataToTable(waitingRoom).size() == 0) break;
                     if (TrainStation.waitingRoom[j] != null) {
 //                        if (TrainStation.waitingRoom[j].getArrived()){
                         trainQueue.add(TrainStation.waitingRoom[j]);
-                        System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                         TrainStation.waitingRoom[j] = null;
-                        System.out.println("waitingRoom = " + Arrays.toString(waitingRoom));
                         i++;
                         if (i == generateNo) break;
 //                        }
@@ -399,8 +399,8 @@ public class TrainStation extends Application{
             }
             sortWaitingRoom();
             sortTrainQueue();
-            trainQueueTable.setItems(getTrainQueueData());
-            waitingRoomTable.setItems(getWaitRoomData());
+            trainQueueTable.setItems(getDataToTable(trainQueue.getQueueArray()));
+            waitingRoomTable.setItems(getDataToTable(waitingRoom));
         });
         addView.getChildren().addAll(addButFirst);
         AnchorPane.setRightAnchor(addButFirst,140d);
@@ -510,7 +510,6 @@ public class TrainStation extends Application{
     }
 
     private void sortWaitingRoom(){
-        System.out.println("Arrays.toString(waitingRoom) = " + Arrays.toString(waitingRoom));
         int j = 0;
         for (int i = 0; i < waitingRoom.length; i++) {
             if (waitingRoom[i] != null) {
@@ -520,7 +519,6 @@ public class TrainStation extends Application{
                 j++;
             }
         }
-        System.out.println("Arrays.toString(waitingRoom) = " + Arrays.toString(waitingRoom));
     }
 
     public void sortTrainQueue() {
@@ -780,13 +778,11 @@ public class TrainStation extends Application{
                     if (!index.getArrived()) lenNoArrive++;
                 }
             }
-            System.out.println("lenNoArriveR = " + lenNoArrive);
             for (Passenger index: trainQueue.getQueueArray()){
                 if (index!=null) {
                     if (!index.getArrived()) lenNoArrive++;
                 }
             }
-            System.out.println("lenNoArriveT = " + lenNoArrive);
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 //TODO change to break
                 if (pasangerObjest==null) continue;
@@ -860,7 +856,7 @@ public class TrainStation extends Application{
         ReportTable = new TableView<>();
         ReportTable.setMinWidth(300);
         ReportTable.setMinHeight(450);
-        ReportTable.setItems(getReportData());
+        ReportTable.setItems(getDataToTable(reportData));
         ReportTable.getColumns().add(ticket_col);
         ReportTable.getColumns().add(name_col);
         ReportTable.getColumns().add(seat_col);
