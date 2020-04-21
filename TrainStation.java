@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import org.bson.Document;
 import java.time.LocalDate;
@@ -397,7 +398,7 @@ public class TrainStation extends Application{
                     }
                 }
             }
-            sortWaitingRoom();
+            sortValuetoEnd(null,waitingRoom);
             sortTrainQueue();
             trainQueueTable.setItems(getDataToTable(trainQueue.getQueueArray()));
             waitingRoomTable.setItems(getDataToTable(waitingRoom));
@@ -442,9 +443,11 @@ public class TrainStation extends Application{
                         }else {
                             passengerDataText.setText(arrayToView[number].getSeat() + "| " +"Not Arrived");
                         }
-                        first.add(passengerData, c, r);
-                        first.add(passengerDataText, c, r);
+//                        first.add(passengerData, c, r);
+//                        first.add(passengerDataText, c, r);
                     }
+                    first.add(passengerData, c, r);
+                    first.add(passengerDataText, c, r);
                     number++;
                 }
             }
@@ -509,13 +512,13 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(closeBut,10d);
     }
 
-    private void sortWaitingRoom(){
+    private void sortValuetoEnd(Passenger value,Passenger[]  arrayName){
         int j = 0;
         for (int i = 0; i < waitingRoom.length; i++) {
-            if (waitingRoom[i] != null) {
-                Passenger temp = waitingRoom[j];
-                waitingRoom[j] = waitingRoom[i];
-                waitingRoom[i] = temp;
+            if (arrayName[i] != value) {
+                Passenger temp = arrayName[j];
+                arrayName[j] = arrayName[i];
+                arrayName[i] = temp;
                 j++;
             }
         }
@@ -526,7 +529,6 @@ public class TrainStation extends Application{
         for (int a = 1; a < trainQueue.getLength()+1; a++) {
             for (int b = 0; b < trainQueue.getLength()+1 - a-1; b++) {
                 if ((Integer.parseInt(trainQueue.getQueueArray()[b].getSeat())>(Integer.parseInt(trainQueue.getQueueArray()[b + 1].getSeat())))) {
-                    // swap movies[b] with movies[b+1]
                     Passenger temp = trainQueue.getQueueArray()[b];
                     trainQueue.getQueueArray()[b] = trainQueue.getQueueArray()[b + 1];
                     trainQueue.getQueueArray()[b + 1] = temp;
@@ -820,7 +822,7 @@ public class TrainStation extends Application{
         }
     }
 
-    public   void runGui(int minimumWaitTime,int maximumWaitTime,float averageSecondsInQueue){
+    public   void runGui(int minimumWaitTime,int maximumWaitTime,double averageSecondsInQueue){
 
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
@@ -852,10 +854,30 @@ public class TrainStation extends Application{
         Arrived_col.setMinWidth(100);
         Arrived_col.setCellValueFactory(new PropertyValueFactory<>("Station"));
 
+        TableView<Passenger> ReportTable2;
+        TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
+        ticket_col2.setMinWidth(100);
+        ticket_col2.setCellValueFactory(new PropertyValueFactory<>("ticketNumber"));
+        TableColumn<Passenger,String> name_col2 = new TableColumn<>("Name");
+        name_col2.setMinWidth(100);
+        name_col2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Passenger,String> seat_col2 = new TableColumn<>("Seat");
+        seat_col2.setMinWidth(100);
+        seat_col2.setCellValueFactory(new PropertyValueFactory<>("seat"));
+        TableColumn<Passenger,String> seconds_col2 = new TableColumn<>("Seconds");
+        seconds_col2.setMinWidth(100);
+        seconds_col2.setCellValueFactory(new PropertyValueFactory<>("secondsInQueue"));
+        TableColumn<Passenger,String> Station_col2 = new TableColumn<>("Station");
+        Station_col2.setMinWidth(100);
+        Station_col2.setCellValueFactory(new PropertyValueFactory<>("Station"));
+        TableColumn<Passenger,String> Arrived_col2 = new TableColumn<>("Arrived");
+        Arrived_col2.setMinWidth(100);
+        Arrived_col2.setCellValueFactory(new PropertyValueFactory<>("Station"));
+
 
         ReportTable = new TableView<>();
         ReportTable.setMinWidth(300);
-        ReportTable.setMinHeight(450);
+        ReportTable.setMaxHeight(250);
         ReportTable.setItems(getDataToTable(reportData));
         ReportTable.getColumns().add(ticket_col);
         ReportTable.getColumns().add(name_col);
@@ -866,12 +888,44 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(ReportTable,40d);
         AnchorPane.setLeftAnchor(ReportTable,10d);
 
+        Passenger[] notArrivedArray =new Passenger[42];
+        int j=0;
+        for (Passenger notArrived: reportData){
+
+            if (notArrived!=null) {
+                if (!notArrived.getArrived()){
+                    notArrivedArray[j]=notArrived;
+                    j++;
+                }
+            }
+        }
+        System.out.println("notArrivedArray = " + Arrays.toString(notArrivedArray));
+        ReportTable2 = new TableView<>();
+        ReportTable2.setMinWidth(300);
+        ReportTable2.setMaxHeight(250);
+        ReportTable2.setItems(getDataToTable(notArrivedArray));
+        ReportTable2.getColumns().add(ticket_col2);
+        ReportTable2.getColumns().add(name_col2);
+        ReportTable2.getColumns().add(seat_col2);
+        //ReportTable2.getColumns().add(seconds_col2);
+        ReportTable2.getColumns().add(Station_col2);
+        runView.getChildren().add(ReportTable2);
+        AnchorPane.setTopAnchor(ReportTable2,340d);
+        AnchorPane.setLeftAnchor(ReportTable2,10d);
+
         Label passengerRunText = new Label();
         passengerRunText.setText("Report ");
         passengerRunText.setFont(new Font("Arial", 23));
         runView.getChildren().add(passengerRunText);
         AnchorPane.setLeftAnchor(passengerRunText,10d);
         AnchorPane.setTopAnchor(passengerRunText,10d);
+
+        Label passengerRunText2 = new Label();
+        passengerRunText2.setText("Not Arrived ");
+        passengerRunText2.setFont(new Font("Arial", 16));
+        runView.getChildren().add(passengerRunText2);
+        AnchorPane.setLeftAnchor(passengerRunText2,10d);
+        AnchorPane.setBottomAnchor(passengerRunText2,320d);
 
 //        Button closeBut = new Button("close");
 //        closeBut.setMinSize(100, 60);
@@ -888,7 +942,7 @@ public class TrainStation extends Application{
         reportArea.setSpacing(10d);
         for (int i=0;i<4;i++) {
             Rectangle reportBox = new Rectangle();
-            reportBox.setHeight(100);
+            reportBox.setHeight(73);
             reportBox.setWidth(190);
             reportBox.setArcHeight(12);
             reportBox.setArcWidth(12);
@@ -899,21 +953,27 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(reportArea,40d);
         AnchorPane.setRightAnchor(reportArea,14d);
 
+        Font reportFont = Font.font("Arial", FontWeight.valueOf("BOLD"),17);
+
         VBox reportDetails = new VBox();
-        reportDetails.setSpacing(76d);
+        reportDetails.setSpacing(43d);
         Label reportMinTime = new Label();
-        reportMinTime.setText("Minumun WaitTime\n"+minimumWaitTime);
+        reportMinTime.setText("Minimum WaitTime\n"+minimumWaitTime);
+        reportMinTime.setFont(reportFont);
         Label reportMaxTime = new Label();
         reportMaxTime.setText("Maximum  WaitTime\n"+maximumWaitTime);
+        reportMaxTime.setFont(reportFont);
         Label reportMaxInqueue = new Label();
-        reportMaxInqueue.setText("Maximum Lenght In Queue\n"+trainQueue.getMaxStayInQueue());
+        reportMaxInqueue.setText("Length In Queue\n"+trainQueue.getMaxStayInQueue());
+        reportMaxInqueue.setFont(reportFont);
         Label reportAverageTime = new Label();
         reportAverageTime.setText("Average Time\n"+ averageSecondsInQueue);
+        reportAverageTime.setFont(reportFont);
 
         reportDetails.getChildren().addAll(reportMinTime,reportMaxTime,reportMaxInqueue,reportAverageTime);
         runView.getChildren().add(reportDetails);
         AnchorPane.setTopAnchor(reportDetails,50d);
-        AnchorPane.setRightAnchor(reportDetails,110d);
+        AnchorPane.setRightAnchor(reportDetails,36d);
 
         window.showAndWait();
         listOption();
