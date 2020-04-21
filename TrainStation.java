@@ -659,7 +659,9 @@ public class TrainStation extends Application{
     }
 
     private  void load() {
+        trainQueue.clearQueue();
         Arrays.fill(reportData,null);
+        Arrays.fill(waitingRoom, null);
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -671,7 +673,7 @@ public class TrainStation extends Application{
         MongoCollection<Document> trainqueue = dbDatabase.getCollection("QueueData");
         System.out.println("connected to QueueData");
         FindIterable<Document> queueDocument = trainqueue.find();
-        trainQueue.clearQueue();
+
         if(trainqueue.countDocuments()>0) {
             for(Document document:queueDocument) {
                 String name    = document.getString("Name");
@@ -700,7 +702,7 @@ public class TrainStation extends Application{
         MongoCollection<Document> waitingroom = dbDatabase.getCollection("WaitingRoomData");
         System.out.println("connected to WaitingRoomData");
         FindIterable<Document> waitingRoomDocument = waitingroom.find();
-        Arrays.fill(waitingRoom, null);
+
         if(waitingroom.countDocuments()>0) {
             int i=0;
             for(Document document:waitingRoomDocument)
@@ -811,6 +813,9 @@ public class TrainStation extends Application{
                 //TODO change to break
                 if (pasangerObjest==null) continue;
                 queueDelay=queueDelay+pasangerObjest.getSecondsInQueue();
+                pasangerObjest.setSecondsInQueue(queueDelay);
+                System.out.println("queueDelay = " + queueDelay);
+                System.out.println("getSecondsInQueue() = " + pasangerObjest.getSecondsInQueue());
                 if(minimumWaitTime== 0){
                     minimumWaitTime=queueDelay;
                 }
@@ -821,7 +826,7 @@ public class TrainStation extends Application{
                     minimumWaitTime=queueDelay;
                 }
             }
-            float averageSecondsInQueue = (float)queueDelay/trainQueue.getMaxStayInQueue();
+            float averageSecondsInQueue = Math.round(queueDelay/trainQueue.getMaxStayInQueue());
             System.out.println("averageSecondsInQueue >"+averageSecondsInQueue);
             System.out.println("minimumWaitingTime >"+minimumWaitTime);
             System.out.println("maximumWaitingTime >"+maximumWaitTime);
@@ -839,7 +844,7 @@ public class TrainStation extends Application{
         addView.setPadding(new Insets(2, 2, 2, 2));
         addView.setHgap(10);
         addView.setVgap(10);
-        Scene addViewFirst = new Scene(runView, 760, 650);
+        Scene addViewFirst = new Scene(runView, 760, 624);
         window.setScene(addViewFirst);
 
         TableView<Passenger> ReportTable;
@@ -908,6 +913,7 @@ public class TrainStation extends Application{
             }
         }
         ReportTable2 = new TableView<>();
+        ReportTable2.setPlaceholder(new Label("All Passengers have Arrrived"));
         ReportTable2.setMinWidth(300);
         ReportTable2.setMaxHeight(250);
         ReportTable2.setItems(getDataToTable(notArrivedArray));
@@ -932,25 +938,25 @@ public class TrainStation extends Application{
         passengerRunText2.setFont(new Font("Arial", 18));
         runView.getChildren().add(passengerRunText2);
         AnchorPane.setLeftAnchor(passengerRunText2,10d);
-        AnchorPane.setBottomAnchor(passengerRunText2,320d);
+        AnchorPane.setTopAnchor(passengerRunText2,310d);
 
-//        Button closeBut = new Button("close");
-//        closeBut.setMinSize(100, 60);
-//        closeBut.setStyle("-fx-background-color: red; ");
-//        closeBut.setOnAction(event -> {
-//            window.close();
-//            listOption();
-//        });
-//        runView.getChildren().add(closeBut);
-//        AnchorPane.setBottomAnchor(closeBut,10d);
-//        AnchorPane.setRightAnchor(closeBut,10d);
+        Button closeBut = new Button("close");
+        closeBut.setMinSize(100, 60);
+        closeBut.setStyle("-fx-background-color: red; ");
+        closeBut.setOnAction(event -> {
+            window.close();
+            listOption();
+        });
+        runView.getChildren().add(closeBut);
+        AnchorPane.setBottomAnchor(closeBut,10d);
+        AnchorPane.setRightAnchor(closeBut,10d);
 
         VBox reportArea = new VBox();
         reportArea.setSpacing(10d);
         for (int i=0;i<4;i++) {
             Rectangle reportBox = new Rectangle();
             reportBox.setHeight(73);
-            reportBox.setWidth(190);
+            reportBox.setWidth(210);
             reportBox.setArcHeight(12);
             reportBox.setArcWidth(12);
             reportBox.setFill(Color.LIGHTGRAY);
@@ -965,25 +971,24 @@ public class TrainStation extends Application{
         VBox reportDetails = new VBox();
         reportDetails.setSpacing(43d);
         Label reportMinTime = new Label();
-        reportMinTime.setText("Minimum WaitTime\n"+minimumWaitTime);
+        reportMinTime.setText("Minimum Waiting Time\n"+minimumWaitTime+"s");
         reportMinTime.setFont(reportFont);
         Label reportMaxTime = new Label();
-        reportMaxTime.setText("Maximum  WaitTime\n"+maximumWaitTime);
+        reportMaxTime.setText("Maximum Waiting Time\n"+maximumWaitTime+"s");
         reportMaxTime.setFont(reportFont);
         Label reportMaxInqueue = new Label();
-        reportMaxInqueue.setText("Length In Queue\n"+trainQueue.getMaxStayInQueue());
+        reportMaxInqueue.setText("Length In Queue\n"+trainQueue.getMaxStayInQueue()+" Passengers");
         reportMaxInqueue.setFont(reportFont);
         Label reportAverageTime = new Label();
-        reportAverageTime.setText("Average Time\n"+ averageSecondsInQueue);
+        reportAverageTime.setText("Average Time\n"+ averageSecondsInQueue+"s");
         reportAverageTime.setFont(reportFont);
 
         reportDetails.getChildren().addAll(reportMinTime,reportMaxTime,reportMaxInqueue,reportAverageTime);
         runView.getChildren().add(reportDetails);
         AnchorPane.setTopAnchor(reportDetails,50d);
-        AnchorPane.setRightAnchor(reportDetails,36d);
+        AnchorPane.setRightAnchor(reportDetails,28d);
 
-        window.showAndWait();
-        listOption();
+        window.show();
     }
 
     public static void main(String[]args) {
