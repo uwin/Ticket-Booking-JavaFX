@@ -119,6 +119,10 @@ public class TrainStation extends Application{
         closeButFirst.setMaxSize(120, 60);
         closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
         closeButFirst.setOnAction(event -> {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setHeaderText("Close loading from Train Booking");
+            a.setContentText("Programme Will Continue Without Loading Data from Saved bookings");
+            a.showAndWait();
             window.close();
             listOption();
         });
