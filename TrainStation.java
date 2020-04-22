@@ -87,7 +87,7 @@ public class TrainStation extends Application{
         first.add(stationDrop,12,16,18,4);
 
 
-        Button colomboSButton = new Button("Colombo Station");
+        Button colomboSButton = new Button("Badulla Train");
         colomboSButton.setMaxSize(120, 60);
         //colomboSButton.setStyle("-fx-background-color: lightblue; ");
         colomboSButton.setOnAction(event -> {
@@ -102,7 +102,7 @@ public class TrainStation extends Application{
 
         first.add(colomboSButton,15,20,40,12);
 
-        Button badullaSButton = new Button("Badulla Station");
+        Button badullaSButton = new Button("Colombo Train");
         badullaSButton.setMaxSize(120, 60);
         //badullaSButton.setStyle("-fx-background-color: lightblue; ");
         badullaSButton.setOnAction(event -> {
@@ -129,7 +129,8 @@ public class TrainStation extends Application{
         skipButFirst.setStyle("-fx-background-color: #871327; ");
         skipButFirst.setOnAction(event -> {
             Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setHeaderText("Programme Will Continue Without Loading Data");
+            a.setHeaderText("Skip loading from Train Booking");
+            a.setContentText("Programme Will Continue Without Loading Data from Saved bookings");
             a.showAndWait();
             window.close();
             listOption();
@@ -204,11 +205,15 @@ public class TrainStation extends Application{
             }
             Alert a = new Alert(Alert.AlertType.WARNING);
             if (!validateImport) {
-                a.setHeaderText("No Data Found for selection");
+                a.setHeaderText("No Data Found");
+                a.setContentText("Booking data contain no records " +
+                        "that suite the selected date and Station");
                 a.showAndWait();
                 importGui();
             }else {
                 a.setHeaderText("Data Loaded from Booking Data");
+                a.setContentText("Records of "+waitingRoom[0].getStation()+
+                        " station\nLoaded for" +selectedDate );
                 a.showAndWait();
                 listOption();
             }
@@ -216,7 +221,9 @@ public class TrainStation extends Application{
         else
         {
             Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setHeaderText("No Saved Data is Unavailable\n programme will continue without loading Data");
+            a.setHeaderText("No Saved Data is Unavailable");
+            a.setContentText("Booking data contains no saved records\n " +
+                    "Program will continue without loading from Booking data");
             a.showAndWait();
             listOption();
         }
@@ -545,7 +552,8 @@ public class TrainStation extends Application{
                 deleteArray.add(null);
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
                 Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setHeaderText("Deleted\n"+"Name: "+temp.getName()+"\n"+"Seat No: "+temp.getSeat());
+                a.setHeaderText("Deleted Passenger");
+                a.setContentText("Name: "+temp.getName()+"\n"+"Seat No: "+temp.getSeat());
                 a.showAndWait();
                 break;
             }
@@ -749,6 +757,7 @@ public class TrainStation extends Application{
         if (trainQueue.isEmpty() && getDataToTable(reportData).isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Data Insufficient for Simulation");
+                a.setContentText("Train Queue and Boarded contain no records");
                 a.showAndWait();
                 listOption();
         }else {

@@ -79,3 +79,11 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
+.myDialog.myDialog .header-panel{
+    -fx-background-color: #a59c31;
+}
+.myDialog.myDialog .header-panel *.label{
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: #b6b3b3;
+}
