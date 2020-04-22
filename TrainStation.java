@@ -1161,14 +1161,15 @@ public class TrainStation extends Application{
         printWriter.println();
         printWriter.printf("Boarded Passengers");
         printWriter.println();
+        printWriter.print(String.format(
+                "%-" + 20 + "s%-" + 8 + "s%-" + 8 + "s%-" + 8 + "s\n",
+                "Passenger Name", "Seat", "Ticket", "Seconds"));
         for (Passenger write: reportData){
             if (write!=null) {
                 if (!write.getArrived())continue;
-                printWriter.print(write.getName());
-                printWriter.print(write.getSeat());
-                printWriter.print(write.getTicketNumber());
-                printWriter.print(write.getSecondsInQueue());
-                printWriter.println();
+                printWriter.print(String.format(
+                        "%-" + 21 + "s%-" + 8 + "s%-" + 9 + "s%-" + 8 + "s\n",
+                        write.getName(), write.getSeat(), write.getTicketNumber(),write.getSecondsInQueue()));
             }
         }
 
@@ -1177,14 +1178,15 @@ public class TrainStation extends Application{
         printWriter.println();
         printWriter.printf("Not Arrived Passengers");
         printWriter.println();
+        printWriter.print(String.format(
+                "%-" + 20 + "s%-" + 8 + "s%-" + 8 + "s\n",
+                "Passenger Name", "Seat", "Ticket"));
         for (Passenger write: reportData){
             if (write!=null) {
                 if (write.getArrived())continue;
-                printWriter.print(write.getName());
-                printWriter.print(write.getSeat());
-                printWriter.print(write.getTicketNumber());
-                printWriter.print(write.getSecondsInQueue());
-                printWriter.println();
+                printWriter.print(String.format(
+                        "%-" + 21 + "s%-" + 8 + "s%-" + 8 + "s\n",
+                        write.getName(), write.getSeat(), write.getTicketNumber()));
             }
         }
         printWriter.close();
