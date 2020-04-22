@@ -654,7 +654,7 @@ public class TrainStation extends Application{
 //                print the deleted record
                 System.out.println("Deleted Passenger");
                 System.out.println("Name: "+temp.getName()+"\n"+"Seat No: "+
-                        temp.getSeat());
+                        temp.getSeat()+"\n"+temp.getTicketNumber());
                 break;
             }
         }
