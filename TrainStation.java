@@ -34,7 +34,6 @@ public class TrainStation extends Application{
     private static Passenger[] reportData = new Passenger[42];
 
     /**
-     *
      * this method is used to insert records within arrays of passenger objects
      * to a Observable list, which will be used to insert details in the table
      * view
@@ -58,7 +57,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      *this method is used to create a gui that allows the user to select the
      * date, station & the train from train booking system that will be imported
      * to the waiting room
@@ -273,7 +271,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to print the menu options & to run the relevant
      * methods according to user input, the code will print a all options of
      * the menu along with a corresponding letter in front of it.
@@ -321,7 +318,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to move passengers from the waiting room to the train
      * queue
      */
@@ -467,7 +463,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to view the passenger queues using a 42 slot grid
      * @param arrayToView this parameter will pass the name of the array being
      *                    displayed currently
@@ -612,7 +607,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to sort the train queue according to the seat number
      */
     public void sortTrainQueue() {
@@ -629,7 +623,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to remove passengers from the train queue using the
      * seat number which will be taken in as a user input
      */
@@ -753,7 +746,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to load records back to the waiting room,train queue & boarded seats
      * from the mongo database
      */
@@ -870,7 +862,6 @@ public class TrainStation extends Application{
     }
 
     /**
-     *
      * this method is used to move passengers from train queue to the boarded seats
      * automatically & to collect statistics
      */
@@ -1082,8 +1073,8 @@ public class TrainStation extends Application{
         closeBut.setOnMouseExited(event ->  closeBut.setStyle("-fx-background-color: #d21e3c; "));
         closeBut.setOnAction(event -> {
             window.close();
-            //listOption();
-            usingBufferedWritter(minimumWaitTime,maximumWaitTime,averageSecondsInQueue,trainQueue.getMaxStayInQueue());
+            writeReport(minimumWaitTime,maximumWaitTime,averageSecondsInQueue,trainQueue.getMaxStayInQueue());
+            listOption();
         });
         runView.getChildren().add(closeBut);
         AnchorPane.setBottomAnchor(closeBut,10d);
@@ -1131,7 +1122,7 @@ public class TrainStation extends Application{
         window.show();
     }
 
-    public static void usingBufferedWritter(int minTime,int maxTime,double aveTime,int maxLength)
+    public static void writeReport(int minTime,int maxTime,double aveTime,int maxLength)
     {
         String Title = "Report for Denuwara Menike Ticket Booking System A/C compartment";
         FileWriter fileWriter = null;

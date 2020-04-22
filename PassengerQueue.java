@@ -9,7 +9,6 @@ public class PassengerQueue {
     private static int minStayInQueue=0;
     private int Maxlength=0;
 
-
     public  Passenger[] getQueueArray() {
 
         return queueArray;
@@ -47,24 +46,9 @@ public class PassengerQueue {
 
         return length==42;
     }
-    public void display(){
-
-        for (Passenger x: queueArray){
-            System.out.println(x);
-        }
-    }
     public int getLength() {
 
         return length;
-    }
-
-    public int getMaxlength() {
-
-        return Maxlength;
-    }
-    public void setMaxlength(int Maxlength) {
-
-        this.Maxlength = Maxlength;
     }
 
     public int getMaxStayInQueue() {
@@ -74,15 +58,6 @@ public class PassengerQueue {
     public void setMaxStayInQueue(int maxStayInQueuedata) {
 
         maxStayInQueue =maxStayInQueuedata;
-    }
-
-    public int getMinStayInQueue() {
-
-        return minStayInQueue;
-    }
-    public void setMinStayInQueue(int minStayInQueuedata) {
-
-        minStayInQueue =minStayInQueuedata;
     }
 
     public void setrest() {
@@ -97,4 +72,26 @@ public class PassengerQueue {
         length--;
     }
 
+    public void display(){
+
+        for (Passenger x: queueArray){
+            System.out.println(x);
+        }
+    }
+    public int getMaxlength() {
+
+        return Maxlength;
+    }
+    public void setMaxlength(int Maxlength) {
+
+        this.Maxlength = Maxlength;
+    }
+    public int getMinStayInQueue() {
+
+        return minStayInQueue;
+    }
+    public void setMinStayInQueue(int minStayInQueuedata) {
+
+        minStayInQueue =minStayInQueuedata;
+    }
 }
