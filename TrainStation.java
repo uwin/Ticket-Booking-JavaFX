@@ -38,15 +38,8 @@ public class TrainStation extends Application{
         ObservableList<Passenger> table= FXCollections.observableArrayList();
         for (Passenger i : nameArray) {
 //            if the current object is null it will be not added to the list
-//            if the passenger arrived to the related queue they are add to the list
             if (i != null) {
-//                if (nameArray == trainQueue.getQueueArray()) {
-//                    if (i.getArrived()) table.add(i);
-//                } else if (nameArray == reportData) {
-//                    if (i.getArrived()) table.add(i);
-//                } else {
-//                    table.add(i);
-//                }
+//                for boarded only add to list if passenger arrived
                 if (nameArray == reportData) {
                     if (i.getArrived()) table.add(i);
                 } else {
@@ -64,6 +57,7 @@ public class TrainStation extends Application{
      * to the waiting room
      */
     private  void importGui(){
+//        creating the scene
         Stage window = new Stage();
         window.setTitle("Train Booking System");
         GridPane first = new GridPane();
@@ -71,35 +65,35 @@ public class TrainStation extends Application{
         first.setHgap(10);
         first.setVgap(10);
         Scene addViewFirst = new Scene(first, 650, 400);
-        addViewFirst.getStylesheets().add("style.css");
+        addViewFirst.getStylesheets().add("style.css"); //import css
         window.setScene(addViewFirst);
         window.show();
 
+//        main Label
         Label head = new Label("Denuwara Menike Ticket Booking System\n" +
                 "                   A/C compartment");
         head.setFont(new Font("Arial", 30));
-        //head.setTextFill(Color.web("#0076a3")); //light blue
         first.add(head,5,3,60,8);
 
+//        label for Date
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
-        //headDate.setTextFill(Color.web("#0076a3")); //light blue
         first.add(headDate,3,12,9,4);
 
+//        date picker
         DatePicker datePick = new DatePicker();
         datePick.setValue(LocalDate.now());
         first.add(datePick, 12, 12,18,4);
 
-
+//        list of all the stations
         String[] stops = new String[]{ "Colombo Fort","Polgahawela",
                 "Peradeniya Junction", "Gampola","Nawalapitiya",
                 "Hatton","Thalawakele","Nanuoya", "Haputale","Diyatalawa",
                 "Bandarawela","Ella", "Badulla" };
 
-        //        text for start
+//       Label for Station
         Label headStart = new Label("Station");
         headStart.setFont(new Font("Arial", 23));
-        //headStart.setTextFill(Color.web("#0076a3")); //light blue
         first.add(headStart,3,16,9,4);
 
 //        drop down menu for start
@@ -108,12 +102,10 @@ public class TrainStation extends Application{
         stationDrop.setValue("Colombo Fort");
         first.add(stationDrop,12,16,18,4);
 
-
+//        button for colombo > badulla train
         Button colomboSButton = new Button("Badulla Train");
         colomboSButton.setMaxSize(120, 60);
-        //colomboSButton.setStyle("-fx-background-color: lightblue; ");
         colomboSButton.setOnAction(event -> {
-            //colomboSButton.setStyle("-fx-background-color: blue; ");
             String selectedTrain ="1";
             String selectedStation =stationDrop.getValue();
             String selectedDate=datePick.getValue().toString();
@@ -124,11 +116,10 @@ public class TrainStation extends Application{
 
         first.add(colomboSButton,15,20,40,12);
 
+//        button for badulla > colombo train
         Button badullaSButton = new Button("Colombo Train");
         badullaSButton.setMaxSize(120, 60);
-        //badullaSButton.setStyle("-fx-background-color: lightblue; ");
         badullaSButton.setOnAction(event -> {
-            //badullaSButton.setStyle("-fx-background-color: blue; ");
             String selectedTrain ="2";
             String selectedStation =stationDrop.getValue();
             String selectedDate=datePick.getValue().toString();
@@ -137,6 +128,7 @@ public class TrainStation extends Application{
         });
         first.add(badullaSButton,35,20,40,12);
 
+//        close button
         Button closeButFirst = new Button("close");
         closeButFirst.setMaxSize(120, 60);
         closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
@@ -148,6 +140,7 @@ public class TrainStation extends Application{
         });
         first.add(closeButFirst,54,30,10,12);
 
+//        skip button
         Button skipButFirst = new Button("Skip");
         skipButFirst.setMaxSize(120, 60);
         skipButFirst.setStyle("-fx-background-color: #871327; ");
@@ -173,7 +166,7 @@ public class TrainStation extends Application{
      * @param selectedStation
      */
     private  void importData(String selectedDate,String selectedTrain,String selectedStation) {
-        //        initiate MongoClient
+//        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
 //        creating a database
@@ -183,6 +176,8 @@ public class TrainStation extends Application{
         MongoCollection<Document> bookings = dbDatabase.getCollection
                 ("BookingData");
         System.out.println("connected to BookingData");
+
+//        import data to the document
         FindIterable<Document> bookingDocument = bookings.find();
 
         ArrayList<String> stopsList = new ArrayList<>(Arrays.asList(
@@ -190,6 +185,7 @@ public class TrainStation extends Application{
                 "Gampola","Nawalapitiya", "Hatton","Thalawakele","Nanuoya",
                 "Haputale","Diyatalawa", "Bandarawela","Ella", "Badulla"));
 
+//        creating a array to temporarily store arrived passengers
         ArrayList<Passenger> arrivedarray = new ArrayList<>();
         if(bookings.countDocuments()>0)
         {
@@ -207,7 +203,7 @@ public class TrainStation extends Application{
                     trainNo="1";
                 }else {
                     trainNo="2"; }
-
+//                check if the data matches the user input
                 if (    selectedDate.equalsIgnoreCase(date) &&
                         selectedStation.equalsIgnoreCase(start) &&
                         selectedTrain.equals(trainNo)
@@ -216,6 +212,8 @@ public class TrainStation extends Application{
                     passengerObj.setDate(date);
                     passengerObj.setStation(start);
                     passengerObj.setTrain(trainNo);
+//                    add records to the temporary array if they arrived
+//                    if not add to report array ( boarded array)
                     if(passengerObj.getArrived()) {
                         arrivedarray.add(passengerObj);
                     }else {
@@ -225,11 +223,13 @@ public class TrainStation extends Application{
                     }
                 }
                 int count=0;
+//                move passenger records in temporary array to waiting room
                 for (Passenger data: arrivedarray) {
                     waitingRoom[count]=data;
                     count++;
                 }
             }
+//            check if the waiting room has been occupied
             boolean validateImport =false;
             for (Passenger data:waitingRoom){
                 if (data != null) {
@@ -283,6 +283,7 @@ public class TrainStation extends Application{
         Scanner scanOption= new Scanner(System.in);
         System.out.println("> select a option");
         String userOption= scanOption.next().toUpperCase();
+//        calling methods depending on user input
         switch (userOption) {
             case "A":
                 add();
@@ -318,22 +319,23 @@ public class TrainStation extends Application{
      * queue
      */
     private  void add() {
+//        create scene
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         AnchorPane addView = new AnchorPane();
-
         Scene addViewFirst = new Scene(addView, 680, 580);
-        addViewFirst.getStylesheets().add("style.css");
+        addViewFirst.getStylesheets().add("style.css"); //import css
         window.setScene(addViewFirst);
         window.show();
 
+//        label for waiting room table
         Label waitingRoomHead = new Label("Waiting Room");
         waitingRoomHead.setFont(new Font("Arial", 23));
-        //waitingRoomHead.setTextFill(Color.web("#black")); //light blue
         addView.getChildren().add(waitingRoomHead);
         AnchorPane.setLeftAnchor(waitingRoomHead,20d);
         AnchorPane.setTopAnchor(waitingRoomHead,10d);
 
+//        waiting room table view
         TableView<Passenger> waitingRoomTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
         ticket_col.setMinWidth(100);
@@ -345,6 +347,7 @@ public class TrainStation extends Application{
         seat_col.setMinWidth(100);
         seat_col.setCellValueFactory(new PropertyValueFactory<>("seat"));
 
+//        waiting room table details
         waitingRoomTable = new TableView<>();
         waitingRoomTable.setPlaceholder(new Label("Waiting Room Is Empty"));
         waitingRoomTable.setMinWidth(300);
@@ -358,14 +361,14 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(waitingRoomTable,40d);
 
 
-
+//        label for train queue table
         Label trainQueueHead = new Label("Train Queue");
         trainQueueHead.setFont(new Font("Arial", 23));
-        //trainQueueHead.setTextFill(Color.web("#black")); //light blue
         addView.getChildren().addAll(trainQueueHead);
         AnchorPane.setRightAnchor(trainQueueHead,200d);
         AnchorPane.setTopAnchor(trainQueueHead,10d);
 
+//        train queue table view
         TableView<Passenger> trainQueueTable;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setCellValueFactory(new PropertyValueFactory<>("ticketNumber"));
@@ -377,6 +380,7 @@ public class TrainStation extends Application{
         seat_col2.setMinWidth(100);
         seat_col2.setCellValueFactory(new PropertyValueFactory<>("seat"));
 
+//        train queue table details
         trainQueueTable = new TableView<>();
         trainQueueTable.setPlaceholder(new Label("Train Queue Is Empty"));
         trainQueueTable.setMinWidth(300);
@@ -389,6 +393,7 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(trainQueueTable,20d);
         AnchorPane.setTopAnchor(trainQueueTable,40d);
 
+//        close button
         Button closeButFirst = new Button("close");
         closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
         closeButFirst.setOnMouseEntered(event ->  closeButFirst.setStyle("-fx-background-color: #c64058; "));
@@ -402,18 +407,21 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(closeButFirst,10d);
         AnchorPane.setBottomAnchor(closeButFirst,10d);
 
+//        add button
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: #0e3c50; ");
         addButFirst.setMinSize(120, 60);
         addButFirst.setOnMouseEntered(event ->  addButFirst.setStyle("-fx-background-color: #1a5680; "));
         addButFirst.setOnMouseExited(event ->  addButFirst.setStyle("-fx-background-color: #0e3c50; "));
         addButFirst.setOnAction(event -> {
+//            alert if train queue is empty
             if (trainQueue.isFull()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Train Queue is full");
                 a.show();
 
             }
+//            alert if Waiting room is empty
             else if (getDataToTable(waitingRoom).isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Waiting Room is Empty");
@@ -421,25 +429,28 @@ public class TrainStation extends Application{
 
             }
             else {
+//                generate a random number from 1-6
                 int generateNo = (int) (Math.random() * ((6 - 1) + 1)) + 1;
                 if (getDataToTable(waitingRoom).size() < generateNo) {
                     generateNo = getDataToTable(waitingRoom).size();
                 }
                 int i = 0;
                 for (int j = 0; j <= waitingRoom.length; j++) {
+//                      if array length without null is zero
                     if (getDataToTable(waitingRoom).size() == 0) break;
                     if (waitingRoom[j] != null) {
-//                        if (TrainStation.waitingRoom[j].getArrived()){
+//                        add to train queue
                         trainQueue.add(waitingRoom[j]);
+//                        remove from waiting room
                         waitingRoom[j] = null;
                         i++;
                         if (i == generateNo) break;
-//                        }
                     }
                 }
             }
             sortValueToEnd(null,waitingRoom);
             sortTrainQueue();
+//            refresh values in both table views
             trainQueueTable.setItems(getDataToTable(trainQueue.getQueueArray()));
             waitingRoomTable.setItems(getDataToTable(waitingRoom));
         });
@@ -456,6 +467,7 @@ public class TrainStation extends Application{
      *
      */
     private  void view(Passenger[] arrayToView) {
+//        create scene
         Stage window = new Stage();
         window.setTitle("train queue");
         AnchorPane viewView = new AnchorPane();
@@ -467,11 +479,14 @@ public class TrainStation extends Application{
         addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
         window.show();
+
+//        create a variable to handle the position of the toggle
         double x=0;
         if (arrayToView.equals(waitingRoom)) x=5d;
         if (arrayToView.equals(reportData)) x=320d;
         if (arrayToView.equals(trainQueue.getQueueArray())) x=160d;
 
+//        looping through 42 to create a grid of slots
         int number=0;
         for (int r = 2; r < 9; r++) {
             for (int c = 2; c < 8; c++) {
@@ -487,12 +502,14 @@ public class TrainStation extends Application{
                     passengerDataText.setFont(new Font("Arial", 15));
                     passengerDataText.setPadding(new Insets(0, 0, 0, 8));
                     if (arrayToView[number]!=null){
+//                        if passenger arrived add the name & seat number
                         if (arrayToView[number].getArrived()) {
                             passengerDataText.setText(
                                     arrayToView[number].getName() + "\n" +
                                     arrayToView[number].getSeat() + "| " +
                                     arrayToView[number].getTicketNumber());
                         }else {
+//                            if not arrived add the seat number and Not arrived
                             passengerDataText.setText(arrayToView[number].getSeat() + "| " +"Not Arrived");
                         }
                     }
@@ -503,53 +520,58 @@ public class TrainStation extends Application{
             }
         }
 
-        Rectangle passengetHeadBox = new Rectangle();
-        passengetHeadBox.setHeight(50);
-        passengetHeadBox.setWidth(160);
-        passengetHeadBox.setArcHeight(25);
-        passengetHeadBox.setArcWidth(25);
-        passengetHeadBox.setFill(Paint.valueOf("#212121"));
-        viewView.getChildren().add(passengetHeadBox);
-        AnchorPane.setTopAnchor(passengetHeadBox,5d);
-        AnchorPane.setLeftAnchor(passengetHeadBox,x);
+//        toggle to indicate active page
+        Rectangle passengerHeadBox = new Rectangle();
+        passengerHeadBox.setHeight(50);
+        passengerHeadBox.setWidth(160);
+        passengerHeadBox.setArcHeight(25);
+        passengerHeadBox.setArcWidth(25);
+        passengerHeadBox.setFill(Paint.valueOf("#212121"));
+        viewView.getChildren().add(passengerHeadBox);
+        AnchorPane.setTopAnchor(passengerHeadBox,5d);
+        AnchorPane.setLeftAnchor(passengerHeadBox,x);
 
         viewView.getChildren().add(first);
         AnchorPane.setTopAnchor(first,45d);
         AnchorPane.setLeftAnchor(first,10d);
 
-        Label passengerViewTextv = new Label();
-        passengerViewTextv.setText("Waiting Room");
-        passengerViewTextv.setFont(new Font("Arial", 23));
-        viewView.getChildren().add(passengerViewTextv);
-        AnchorPane.setLeftAnchor(passengerViewTextv,10d);
-        AnchorPane.setTopAnchor(passengerViewTextv,15d);
-        passengerViewTextv.setOnMouseClicked(event -> {
+//        label for waiting room
+        Label passengerViewTextW = new Label();
+        passengerViewTextW.setText("Waiting Room");
+        passengerViewTextW.setFont(new Font("Arial", 23));
+        viewView.getChildren().add(passengerViewTextW);
+        AnchorPane.setLeftAnchor(passengerViewTextW,10d);
+        AnchorPane.setTopAnchor(passengerViewTextW,15d);
+        passengerViewTextW.setOnMouseClicked(event -> {
             window.close();
             view(waitingRoom);
         });
 
-        Label passengerViewTextt = new Label();
-        passengerViewTextt.setText("Train Queue");
-        passengerViewTextt.setFont(new Font("Arial", 23));
-        viewView.getChildren().add(passengerViewTextt);
-        AnchorPane.setLeftAnchor(passengerViewTextt,178d);
-        AnchorPane.setTopAnchor(passengerViewTextt,15d);
-        passengerViewTextt.setOnMouseClicked(event -> {
+//        label for train queue
+        Label passengerViewTextT = new Label();
+        passengerViewTextT.setText("Train Queue");
+        passengerViewTextT.setFont(new Font("Arial", 23));
+        viewView.getChildren().add(passengerViewTextT);
+        AnchorPane.setLeftAnchor(passengerViewTextT,178d);
+        AnchorPane.setTopAnchor(passengerViewTextT,15d);
+        passengerViewTextT.setOnMouseClicked(event -> {
             window.close();
             view(trainQueue.getQueueArray());
         });
 
-        Label passengerViewTextr = new Label();
-        passengerViewTextr.setText("Boarded In");
-        passengerViewTextr.setFont(new Font("Arial", 23));
-        viewView.getChildren().add(passengerViewTextr);
-        AnchorPane.setLeftAnchor(passengerViewTextr,345d);
-        AnchorPane.setTopAnchor(passengerViewTextr,15d);
-        passengerViewTextr.setOnMouseClicked(event -> {
+//        label for boarded in
+        Label passengerViewTextR = new Label();
+        passengerViewTextR.setText("Boarded In");
+        passengerViewTextR.setFont(new Font("Arial", 23));
+        viewView.getChildren().add(passengerViewTextR);
+        AnchorPane.setLeftAnchor(passengerViewTextR,345d);
+        AnchorPane.setTopAnchor(passengerViewTextR,15d);
+        passengerViewTextR.setOnMouseClicked(event -> {
             window.close();
             view(reportData);
         });
 
+//        close button
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
         closeBut.setStyle("-fx-background-color: #d21e3c; ");
