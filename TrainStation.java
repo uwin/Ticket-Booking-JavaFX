@@ -435,7 +435,7 @@ public class TrainStation extends Application{
      *
      * this method is used to view the passenger queues using a 42 slot grid
      * @param arrayToView this parameter will pass the name of the array being
-     *                    displayed
+     *                    displayed currently
      *
      */
     private  void view(Passenger[] arrayToView) {
@@ -545,6 +545,12 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(closeBut,10d);
     }
 
+    /**
+     * this parameter will be used to sort a given object to the end of the
+     * given array without changing the order of the array
+     * @param value
+     * @param arrayName
+     */
     private void sortValueToEnd(Passenger value,Passenger[]  arrayName){
         int j = 0;
         for (int i = 0; i < waitingRoom.length; i++) {
@@ -557,6 +563,10 @@ public class TrainStation extends Application{
         }
     }
 
+    /**
+     *
+     * this method is used to sort the train queue according to the seat number
+     */
     public void sortTrainQueue() {
 
         for (int a = 1; a < trainQueue.getLength()+1; a++) {
@@ -570,6 +580,11 @@ public class TrainStation extends Application{
         }
     }
 
+    /**
+     *
+     * this method is used to remove passengers from the train queue using the
+     * seat number which will be taken in as a user input
+     */
     private  void delete() {
         Scanner scanSeat= new Scanner(System.in);
         System.out.println("> Enter Seat Number");
@@ -602,6 +617,10 @@ public class TrainStation extends Application{
         listOption();
     }
 
+    /**
+     * this method is used to save the records in waiting room, train queue & the boarded seats
+     * to a mongo database
+     */
     private  void save() {
         com.mongodb.MongoClient dbClient = new MongoClient
                 ("localhost", 27017);
@@ -682,6 +701,11 @@ public class TrainStation extends Application{
         listOption();
     }
 
+    /**
+     *
+     * this method is used to load records back to the waiting room,train queue & boarded seats
+     * from the mongo database
+     */
     private  void load() {
         trainQueue.clearQueue();
         Arrays.fill(reportData,null);
@@ -794,6 +818,11 @@ public class TrainStation extends Application{
         listOption();
     }
 
+    /**
+     *
+     * this method is used to move passsengers from train queue to the boarded seats
+     * automacticly & to collect staticstics
+     */
     private  void run() {
         if (trainQueue.isEmpty() && getDataToTable(reportData).isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
@@ -857,6 +886,13 @@ public class TrainStation extends Application{
         }
     }
 
+    /**
+     * this method is used to display a report generated using the statistics
+     * collected in the run method
+     * @param minimumWaitTime this passes the lowest wait time for a passenger
+     * @param maximumWaitTime this passes the highest wait time for a passenger
+     * @param averageSecondsInQueue passes the average wait time for all
+     */
     public   void runGui(int minimumWaitTime,int maximumWaitTime,double averageSecondsInQueue){
 
         Stage window = new Stage();
