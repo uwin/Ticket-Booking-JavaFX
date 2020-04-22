@@ -37,12 +37,21 @@ public class TrainStation extends Application{
     private  ObservableList<Passenger> getDataToTable(Passenger[] nameArray){
         ObservableList<Passenger> table= FXCollections.observableArrayList();
         for (Passenger i : nameArray) {
+//            if the current object is null it will be not added to the list
+//            if the passenger arrived to the related queue they are add to the list
             if (i != null) {
-                if (nameArray == trainQueue.getQueueArray()) {
+//                if (nameArray == trainQueue.getQueueArray()) {
+//                    if (i.getArrived()) table.add(i);
+//                } else if (nameArray == reportData) {
+//                    if (i.getArrived()) table.add(i);
+//                } else {
+//                    table.add(i);
+//                }
+                if (nameArray == reportData) {
                     if (i.getArrived()) table.add(i);
-                } else if (nameArray == reportData) {
-                    if (i.getArrived()) table.add(i);
-                } else {table.add(i);}
+                } else {
+                    table.add(i);
+                }
             }
         }
         return table;
@@ -131,6 +140,8 @@ public class TrainStation extends Application{
         Button closeButFirst = new Button("close");
         closeButFirst.setMaxSize(120, 60);
         closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
+        closeButFirst.setOnMouseEntered(event ->  closeButFirst.setStyle("-fx-background-color: #c64058; "));
+        closeButFirst.setOnMouseExited(event ->  closeButFirst.setStyle("-fx-background-color: #d21e3c; "));
         closeButFirst.setOnAction(event -> {
             window.close();
             System.exit(0);
@@ -140,6 +151,8 @@ public class TrainStation extends Application{
         Button skipButFirst = new Button("Skip");
         skipButFirst.setMaxSize(120, 60);
         skipButFirst.setStyle("-fx-background-color: #871327; ");
+        skipButFirst.setOnMouseEntered(event ->  skipButFirst.setStyle("-fx-background-color: #743c42; "));
+        skipButFirst.setOnMouseExited(event ->  skipButFirst.setStyle("-fx-background-color: #871327; "));
         skipButFirst.setOnAction(event -> {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Skip loading from Train Booking");
@@ -378,6 +391,8 @@ public class TrainStation extends Application{
 
         Button closeButFirst = new Button("close");
         closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
+        closeButFirst.setOnMouseEntered(event ->  closeButFirst.setStyle("-fx-background-color: #c64058; "));
+        closeButFirst.setOnMouseExited(event ->  closeButFirst.setStyle("-fx-background-color: #d21e3c; "));
         closeButFirst.setMinSize(120, 60);
         closeButFirst.setOnAction(event -> {
             window.close();
@@ -390,6 +405,8 @@ public class TrainStation extends Application{
         Button addButFirst = new Button("Add");
         addButFirst.setStyle("-fx-background-color: #0e3c50; ");
         addButFirst.setMinSize(120, 60);
+        addButFirst.setOnMouseEntered(event ->  addButFirst.setStyle("-fx-background-color: #1a5680; "));
+        addButFirst.setOnMouseExited(event ->  addButFirst.setStyle("-fx-background-color: #0e3c50; "));
         addButFirst.setOnAction(event -> {
             if (trainQueue.isFull()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
@@ -536,6 +553,8 @@ public class TrainStation extends Application{
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
         closeBut.setStyle("-fx-background-color: #d21e3c; ");
+        closeBut.setOnMouseEntered(event ->  closeBut.setStyle("-fx-background-color: #c64058; "));
+        closeBut.setOnMouseExited(event ->  closeBut.setStyle("-fx-background-color: #d21e3c; "));
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
@@ -1003,6 +1022,8 @@ public class TrainStation extends Application{
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
         closeBut.setStyle("-fx-background-color: #d21e3c; ");
+        closeBut.setOnMouseEntered(event ->  closeBut.setStyle("-fx-background-color: #c64058; "));
+        closeBut.setOnMouseExited(event ->  closeBut.setStyle("-fx-background-color: #d21e3c; "));
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
