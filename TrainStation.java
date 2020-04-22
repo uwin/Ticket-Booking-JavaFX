@@ -56,12 +56,12 @@ public class TrainStation extends Application{
         Label head = new Label("Denuwara Menike Ticket Booking System\n" +
                 "                   A/C compartment");
         head.setFont(new Font("Arial", 30));
-        head.setTextFill(Color.web("#0076a3")); //light blue
+        //head.setTextFill(Color.web("#0076a3")); //light blue
         first.add(head,5,3,60,8);
 
         Label headDate = new Label("Date");
         headDate.setFont(new Font("Arial", 23));
-        headDate.setTextFill(Color.web("#0076a3")); //light blue
+        //headDate.setTextFill(Color.web("#0076a3")); //light blue
         first.add(headDate,3,12,9,4);
 
         DatePicker datePick = new DatePicker();
@@ -77,7 +77,7 @@ public class TrainStation extends Application{
         //        text for start
         Label headStart = new Label("Station");
         headStart.setFont(new Font("Arial", 23));
-        headStart.setTextFill(Color.web("#0076a3")); //light blue
+        //headStart.setTextFill(Color.web("#0076a3")); //light blue
         first.add(headStart,3,16,9,4);
 
 //        drop down menu for start
@@ -117,7 +117,7 @@ public class TrainStation extends Application{
 
         Button closeButFirst = new Button("close");
         closeButFirst.setMaxSize(120, 60);
-        //closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
         closeButFirst.setOnAction(event -> {
             window.close();
             listOption();
@@ -126,7 +126,7 @@ public class TrainStation extends Application{
 
         Button skipButFirst = new Button("Skip");
         skipButFirst.setMaxSize(120, 60);
-        //skipButFirst.setStyle("-fx-background-color: brown; ");
+        skipButFirst.setStyle("-fx-background-color: #871327; ");
         skipButFirst.setOnAction(event -> {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Programme Will Continue Without Loading Data");
@@ -338,7 +338,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(trainQueueTable,40d);
 
         Button closeButFirst = new Button("close");
-        //closeButFirst.setStyle("-fx-background-color: red; ");
+        closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
         closeButFirst.setMinSize(120, 60);
         closeButFirst.setOnAction(event -> {
             window.close();
@@ -349,7 +349,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(closeButFirst,10d);
 
         Button addButFirst = new Button("Add");
-        //addButFirst.setStyle("-fx-background-color: lightblue; ");
+        addButFirst.setStyle("-fx-background-color: #0e3c50; ");
         addButFirst.setMinSize(120, 60);
         addButFirst.setOnAction(event -> {
             if (trainQueue.isFull()){
@@ -485,7 +485,7 @@ public class TrainStation extends Application{
 
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
-        //closeBut.setStyle("-fx-background-color: red; ");
+        closeBut.setStyle("-fx-background-color: #d21e3c; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
@@ -916,7 +916,7 @@ public class TrainStation extends Application{
 
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
-        //closeBut.setStyle("-fx-background-color: red; ");
+        closeBut.setStyle("-fx-background-color: #d21e3c; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
