@@ -12,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -27,6 +26,14 @@ public class TrainStation extends Application{
     private  PassengerQueue trainQueue = new PassengerQueue();
     private static Passenger[] reportData = new Passenger[42];
 
+    /**
+     *
+     * this method is used to insert records within arrays of passenger objects
+     * to a Observable list, which will be used to insert details in the table
+     * view
+     * @param nameArray
+     * @return
+     */
     private  ObservableList<Passenger> getDataToTable(Passenger[] nameArray){
         ObservableList<Passenger> table= FXCollections.observableArrayList();
         for (Passenger i : nameArray) {
@@ -41,6 +48,12 @@ public class TrainStation extends Application{
         return table;
     }
 
+    /**
+     *
+     *this method is used to create a gui that allows the user to select the
+     * date, station & the train from train booking system that will be imported
+     * to the waiting room
+     */
     private  void importGui(){
         Stage window = new Stage();
         window.setTitle("Train Booking System");
@@ -119,12 +132,8 @@ public class TrainStation extends Application{
         closeButFirst.setMaxSize(120, 60);
         closeButFirst.setStyle("-fx-background-color: #d21e3c; ");
         closeButFirst.setOnAction(event -> {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setHeaderText("Close loading from Train Booking");
-            a.setContentText("Programme Will Continue Without Loading Data from Saved bookings");
-            a.showAndWait();
             window.close();
-            listOption();
+            System.exit(0);
         });
         first.add(closeButFirst,54,30,10,12);
 
@@ -142,6 +151,14 @@ public class TrainStation extends Application{
         first.add(skipButFirst,44,30,10,12);
 
     }
+
+    /**
+     * this method is used to import the recods from the train booking system to
+     * the waiting room with the use of users selections
+     * @param selectedDate
+     * @param selectedTrain
+     * @param selectedStation
+     */
     private  void importData(String selectedDate,String selectedTrain,String selectedStation) {
         //        initiate MongoClient
         com.mongodb.MongoClient dbClient = new MongoClient
@@ -217,7 +234,7 @@ public class TrainStation extends Application{
             }else {
                 a.setHeaderText("Data Loaded from Booking Data");
                 a.setContentText("Records of "+waitingRoom[0].getStation()+
-                        " station\nLoaded for" +selectedDate );
+                        " station\nLoaded for " +selectedDate );
                 a.showAndWait();
                 listOption();
             }
@@ -235,6 +252,12 @@ public class TrainStation extends Application{
         dbClient.close();
     }
 
+    /**
+     *
+     * this method is used to print the menu options & to run the relevant
+     * methods according to user input, the code will print a all options of
+     * the menu along with a corresponding letter in front of it.
+     */
     private  void listOption() {
         System.out.println("\n"+
                 "A Add a seat\n"+
@@ -252,7 +275,7 @@ public class TrainStation extends Application{
                 add();
                 break;
             case "V":
-                view(trainQueue.getQueueArray(),160d);
+                view(trainQueue.getQueueArray());
                 break;
             case "D":
                 delete();
@@ -276,6 +299,11 @@ public class TrainStation extends Application{
         }
     }
 
+    /**
+     *
+     * this method is used to move passengers from the waiting room to the train
+     * queue
+     */
     private  void add() {
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
@@ -393,7 +421,7 @@ public class TrainStation extends Application{
                     }
                 }
             }
-            sortValuetoEnd(null,waitingRoom);
+            sortValueToEnd(null,waitingRoom);
             sortTrainQueue();
             trainQueueTable.setItems(getDataToTable(trainQueue.getQueueArray()));
             waitingRoomTable.setItems(getDataToTable(waitingRoom));
@@ -403,7 +431,14 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(addButFirst,10d);
     }
 
-    private  void view(Passenger[] arrayToView,double x) {
+    /**
+     *
+     * this method is used to view the passenger queues using a 42 slot grid
+     * @param arrayToView this parameter will pass the name of the array being
+     *                    displayed
+     *
+     */
+    private  void view(Passenger[] arrayToView) {
         Stage window = new Stage();
         window.setTitle("train queue");
         AnchorPane viewView = new AnchorPane();
@@ -415,6 +450,10 @@ public class TrainStation extends Application{
         addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
         window.show();
+        double x=0;
+        if (arrayToView.equals(waitingRoom)) x=5d;
+        if (arrayToView.equals(reportData)) x=320d;
+        if (arrayToView.equals(trainQueue.getQueueArray())) x=160d;
 
         int number=0;
         for (int r = 2; r < 9; r++) {
@@ -469,7 +508,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(passengerViewTextv,15d);
         passengerViewTextv.setOnMouseClicked(event -> {
             window.close();
-            view(waitingRoom,5d);
+            view(waitingRoom);
         });
 
         Label passengerViewTextt = new Label();
@@ -480,7 +519,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(passengerViewTextt,15d);
         passengerViewTextt.setOnMouseClicked(event -> {
             window.close();
-            view(trainQueue.getQueueArray(),160d);
+            view(trainQueue.getQueueArray());
         });
 
         Label passengerViewTextr = new Label();
@@ -491,7 +530,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(passengerViewTextr,15d);
         passengerViewTextr.setOnMouseClicked(event -> {
             window.close();
-            view(reportData,320d);
+            view(reportData);
         });
 
         Button closeBut = new Button("close");
@@ -506,7 +545,7 @@ public class TrainStation extends Application{
         AnchorPane.setRightAnchor(closeBut,10d);
     }
 
-    private void sortValuetoEnd(Passenger value,Passenger[]  arrayName){
+    private void sortValueToEnd(Passenger value,Passenger[]  arrayName){
         int j = 0;
         for (int i = 0; i < waitingRoom.length; i++) {
             if (arrayName[i] != value) {
@@ -555,10 +594,8 @@ public class TrainStation extends Application{
                 trainQueue.removeSeat();
                 deleteArray.add(null);
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setHeaderText("Deleted Passenger");
-                a.setContentText("Name: "+temp.getName()+"\n"+"Seat No: "+temp.getSeat());
-                a.showAndWait();
+                System.out.println("Deleted Passenger");
+                System.out.println("Name: "+temp.getName()+"\n"+"Seat No: "+temp.getSeat());
                 break;
             }
         }
