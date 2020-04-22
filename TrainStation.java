@@ -443,11 +443,11 @@ public class TrainStation extends Application{
         passengetHeadBox.setArcWidth(25);
         passengetHeadBox.setFill(Paint.valueOf("#212121"));
         viewView.getChildren().add(passengetHeadBox);
-        AnchorPane.setTopAnchor(passengetHeadBox,1d);
+        AnchorPane.setTopAnchor(passengetHeadBox,5d);
         AnchorPane.setLeftAnchor(passengetHeadBox,x);
 
         viewView.getChildren().add(first);
-        AnchorPane.setTopAnchor(first,40d);
+        AnchorPane.setTopAnchor(first,45d);
         AnchorPane.setLeftAnchor(first,10d);
 
         Label passengerViewTextv = new Label();
@@ -455,7 +455,7 @@ public class TrainStation extends Application{
         passengerViewTextv.setFont(new Font("Arial", 23));
         viewView.getChildren().add(passengerViewTextv);
         AnchorPane.setLeftAnchor(passengerViewTextv,10d);
-        AnchorPane.setTopAnchor(passengerViewTextv,10d);
+        AnchorPane.setTopAnchor(passengerViewTextv,15d);
         passengerViewTextv.setOnMouseClicked(event -> {
             window.close();
             view(waitingRoom,5d);
@@ -465,19 +465,19 @@ public class TrainStation extends Application{
         passengerViewTextt.setText("Train Queue");
         passengerViewTextt.setFont(new Font("Arial", 23));
         viewView.getChildren().add(passengerViewTextt);
-        AnchorPane.setLeftAnchor(passengerViewTextt,170d);
-        AnchorPane.setTopAnchor(passengerViewTextt,10d);
+        AnchorPane.setLeftAnchor(passengerViewTextt,178d);
+        AnchorPane.setTopAnchor(passengerViewTextt,15d);
         passengerViewTextt.setOnMouseClicked(event -> {
             window.close();
             view(trainQueue.getQueueArray(),160d);
         });
 
         Label passengerViewTextr = new Label();
-        passengerViewTextr.setText("Boarded");
+        passengerViewTextr.setText("Boarded In");
         passengerViewTextr.setFont(new Font("Arial", 23));
         viewView.getChildren().add(passengerViewTextr);
-        AnchorPane.setLeftAnchor(passengerViewTextr,320d);
-        AnchorPane.setTopAnchor(passengerViewTextr,10d);
+        AnchorPane.setLeftAnchor(passengerViewTextr,345d);
+        AnchorPane.setTopAnchor(passengerViewTextr,15d);
         passengerViewTextr.setOnMouseClicked(event -> {
             window.close();
             view(reportData,320d);
