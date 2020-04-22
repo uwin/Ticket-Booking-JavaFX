@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -48,6 +49,7 @@ public class TrainStation extends Application{
         first.setHgap(10);
         first.setVgap(10);
         Scene addViewFirst = new Scene(first, 650, 400);
+        addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
         window.show();
 
@@ -87,9 +89,9 @@ public class TrainStation extends Application{
 
         Button colomboSButton = new Button("Colombo Station");
         colomboSButton.setMaxSize(120, 60);
-        colomboSButton.setStyle("-fx-background-color: lightblue; ");
+        //colomboSButton.setStyle("-fx-background-color: lightblue; ");
         colomboSButton.setOnAction(event -> {
-            colomboSButton.setStyle("-fx-background-color: blue; ");
+            //colomboSButton.setStyle("-fx-background-color: blue; ");
             String selectedTrain ="1";
             String selectedStation =stationDrop.getValue();
             String selectedDate=datePick.getValue().toString();
@@ -102,9 +104,9 @@ public class TrainStation extends Application{
 
         Button badullaSButton = new Button("Badulla Station");
         badullaSButton.setMaxSize(120, 60);
-        badullaSButton.setStyle("-fx-background-color: lightblue; ");
+        //badullaSButton.setStyle("-fx-background-color: lightblue; ");
         badullaSButton.setOnAction(event -> {
-            badullaSButton.setStyle("-fx-background-color: blue; ");
+            //badullaSButton.setStyle("-fx-background-color: blue; ");
             String selectedTrain ="2";
             String selectedStation =stationDrop.getValue();
             String selectedDate=datePick.getValue().toString();
@@ -115,7 +117,7 @@ public class TrainStation extends Application{
 
         Button closeButFirst = new Button("close");
         closeButFirst.setMaxSize(120, 60);
-        closeButFirst.setStyle("-fx-background-color: red; ");
+        //closeButFirst.setStyle("-fx-background-color: red; ");
         closeButFirst.setOnAction(event -> {
             window.close();
             listOption();
@@ -124,7 +126,7 @@ public class TrainStation extends Application{
 
         Button skipButFirst = new Button("Skip");
         skipButFirst.setMaxSize(120, 60);
-        skipButFirst.setStyle("-fx-background-color: brown; ");
+        //skipButFirst.setStyle("-fx-background-color: brown; ");
         skipButFirst.setOnAction(event -> {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setHeaderText("Programme Will Continue Without Loading Data");
@@ -269,6 +271,7 @@ public class TrainStation extends Application{
         AnchorPane addView = new AnchorPane();
 
         Scene addViewFirst = new Scene(addView, 680, 580);
+        addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
         window.show();
 
@@ -335,7 +338,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(trainQueueTable,40d);
 
         Button closeButFirst = new Button("close");
-        closeButFirst.setStyle("-fx-background-color: red; ");
+        //closeButFirst.setStyle("-fx-background-color: red; ");
         closeButFirst.setMinSize(120, 60);
         closeButFirst.setOnAction(event -> {
             window.close();
@@ -346,7 +349,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(closeButFirst,10d);
 
         Button addButFirst = new Button("Add");
-        addButFirst.setStyle("-fx-background-color: lightblue; ");
+        //addButFirst.setStyle("-fx-background-color: lightblue; ");
         addButFirst.setMinSize(120, 60);
         addButFirst.setOnAction(event -> {
             if (trainQueue.isFull()){
@@ -398,6 +401,7 @@ public class TrainStation extends Application{
         first.setHgap(10);
         first.setVgap(10);
         Scene addViewFirst = new Scene(viewView, 924, 570);
+        addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
         window.show();
 
@@ -411,7 +415,7 @@ public class TrainStation extends Application{
                     passengerData.setWidth(120);
                     passengerData.setArcHeight(12);
                     passengerData.setArcWidth(12);
-                    passengerData.setFill(Color.LIGHTGRAY);
+                    passengerData.setFill(Paint.valueOf("#0E3C50"));
                     Label passengerDataText = new Label();
                     passengerDataText.setFont(new Font("Arial", 15));
                     passengerDataText.setPadding(new Insets(0, 0, 0, 8));
@@ -437,7 +441,7 @@ public class TrainStation extends Application{
         passengetHeadBox.setWidth(160);
         passengetHeadBox.setArcHeight(25);
         passengetHeadBox.setArcWidth(25);
-        passengetHeadBox.setFill(Color.DIMGREY);
+        passengetHeadBox.setFill(Paint.valueOf("#212121"));
         viewView.getChildren().add(passengetHeadBox);
         AnchorPane.setTopAnchor(passengetHeadBox,1d);
         AnchorPane.setLeftAnchor(passengetHeadBox,x);
@@ -481,7 +485,7 @@ public class TrainStation extends Application{
 
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
-        closeBut.setStyle("-fx-background-color: red; ");
+        //closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
@@ -813,6 +817,7 @@ public class TrainStation extends Application{
         addView.setHgap(10);
         addView.setVgap(10);
         Scene addViewFirst = new Scene(runView, 760, 624);
+        addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
 
         TableView<Passenger> ReportTable;
@@ -911,7 +916,7 @@ public class TrainStation extends Application{
 
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
-        closeBut.setStyle("-fx-background-color: red; ");
+        //closeBut.setStyle("-fx-background-color: red; ");
         closeBut.setOnAction(event -> {
             window.close();
             listOption();
@@ -928,7 +933,7 @@ public class TrainStation extends Application{
             reportBox.setWidth(210);
             reportBox.setArcHeight(12);
             reportBox.setArcWidth(12);
-            reportBox.setFill(Color.LIGHTGRAY);
+            reportBox.setFill(Paint.valueOf("#0E3C50"));
             reportArea.getChildren().add(reportBox);
         }
         runView.getChildren().add(reportArea);
