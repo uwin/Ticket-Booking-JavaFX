@@ -18,6 +18,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import org.bson.Document;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.Writer;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -942,6 +949,8 @@ public class TrainStation extends Application{
             System.out.println("maximumWaitingTime >"+maximumWaitTime);
             System.out.println("maximumLengthQueue >"+trainQueue.getMaxStayInQueue());
             runGui(minimumWaitTime,maximumWaitTime,averageSecondsInQueue);
+
+
         }
     }
 
@@ -1073,7 +1082,8 @@ public class TrainStation extends Application{
         closeBut.setOnMouseExited(event ->  closeBut.setStyle("-fx-background-color: #d21e3c; "));
         closeBut.setOnAction(event -> {
             window.close();
-            listOption();
+            //listOption();
+            usingBufferedWritter(minimumWaitTime,maximumWaitTime,averageSecondsInQueue,trainQueue.getMaxStayInQueue());
         });
         runView.getChildren().add(closeBut);
         AnchorPane.setBottomAnchor(closeBut,10d);
@@ -1121,7 +1131,65 @@ public class TrainStation extends Application{
         window.show();
     }
 
-    public static void main(String[]args) {
+    public static void usingBufferedWritter(int minTime,int maxTime,double aveTime,int maxLength)
+    {
+        String Title = "Report for Denuwara Menike Ticket Booking System A/C compartment";
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("report.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(Title);
+
+
+        printWriter.println();
+        printWriter.println("Date    :" +reportData[0].getDate());
+        printWriter.println("Station :" +reportData[0].getStation());
+
+
+        printWriter.println();
+        printWriter.println();
+        printWriter.println("Minimum Seconds in queue: "+minTime);
+        printWriter.println("Maximum Seconds in queue: "+maxTime);
+        printWriter.println("average Seconds in queue: "+aveTime);
+        printWriter.println("Maximum length  in queue: "+maxLength);
+
+
+        printWriter.println();
+        printWriter.println();
+        printWriter.printf("Boarded Passengers");
+        printWriter.println();
+        for (Passenger write: reportData){
+            if (write!=null) {
+                if (!write.getArrived())continue;
+                printWriter.print(write.getName());
+                printWriter.print(write.getSeat());
+                printWriter.print(write.getTicketNumber());
+                printWriter.print(write.getSecondsInQueue());
+                printWriter.println();
+            }
+        }
+
+
+        printWriter.println();
+        printWriter.println();
+        printWriter.printf("Not Arrived Passengers");
+        printWriter.println();
+        for (Passenger write: reportData){
+            if (write!=null) {
+                if (write.getArrived())continue;
+                printWriter.print(write.getName());
+                printWriter.print(write.getSeat());
+                printWriter.print(write.getTicketNumber());
+                printWriter.print(write.getSecondsInQueue());
+                printWriter.println();
+            }
+        }
+        printWriter.close();
+    }
+    public static void main(String[]args) throws IOException {
         launch();
     }
 
