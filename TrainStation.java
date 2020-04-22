@@ -627,15 +627,12 @@ public class TrainStation extends Application{
      * seat number which will be taken in as a user input
      */
     private  void delete() {
+//        get seat number as input
         Scanner scanSeat= new Scanner(System.in);
         System.out.println("> Enter Seat Number");
         String deleteSeat = scanSeat.next();
-        int lenNo=0;
-        for (Passenger index: waitingRoom){
-            if (index==null) lenNo++;
-            if (index!=null) break;
-        }
 
+//        convert train queue array to array list
         List<Passenger> deleteArray = new ArrayList<>(Arrays.asList(trainQueue.getQueueArray()));
         for (Passenger temp: trainQueue.getQueueArray()){
             if(temp==null){
@@ -646,12 +643,18 @@ public class TrainStation extends Application{
                     System.out.println("passenger has not arrived");
                     break;
                 }
+//                remove passenger from train queue array list
                 deleteArray.remove(temp);
+//                resore the FIFO circular array
                 trainQueue.removeSeat();
+//                add a null to keep the size of array list the same
                 deleteArray.add(null);
+//                convert arraylist back to array
                 trainQueue.setQueueArray(deleteArray.toArray(new Passenger[0]));
+//                print the deleted record
                 System.out.println("Deleted Passenger");
-                System.out.println("Name: "+temp.getName()+"\n"+"Seat No: "+temp.getSeat());
+                System.out.println("Name: "+temp.getName()+"\n"+"Seat No: "+
+                        temp.getSeat());
                 break;
             }
         }
@@ -659,8 +662,8 @@ public class TrainStation extends Application{
     }
 
     /**
-     * this method is used to save the records in waiting room, train queue & the boarded seats
-     * to a mongo database
+     * this method is used to save the records in waiting room, train queue &
+     * the boarded seats to a mongo database
      */
     private  void save() {
         com.mongodb.MongoClient dbClient = new MongoClient
@@ -861,10 +864,11 @@ public class TrainStation extends Application{
 
     /**
      *
-     * this method is used to move passsengers from train queue to the boarded seats
-     * automacticly & to collect staticstics
+     * this method is used to move passengers from train queue to the boarded seats
+     * automatically & to collect statistics
      */
     private  void run() {
+        //if both train queue & boarded are empty show alert
         if (trainQueue.isEmpty() && getDataToTable(reportData).isEmpty()){
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setHeaderText("Data Insufficient for Simulation");
@@ -878,12 +882,15 @@ public class TrainStation extends Application{
             int lenNoArrive=0;
             int minimumWaitTime = 0;
             int maximumWaitTime = 0;
+
+//            check for length of reportData & get count of not arrived
             for (Passenger index: reportData){
                 if (index!=null) {
                     lenReport++;
                     if (!index.getArrived()) lenNoArrive++;
                 }
             }
+//            check and add to not arrived count
             for (Passenger index: trainQueue.getQueueArray()){
                 if (index!=null) {
                     if (!index.getArrived()) lenNoArrive++;
@@ -892,22 +899,33 @@ public class TrainStation extends Application{
             for (Passenger pasangerObjest: trainQueue.getQueueArray()){
                 //TODO change to break
                 if (pasangerObjest==null) continue;
+//                add passengers to boarded
                 reportData[lenReport+i]=pasangerObjest;
+//                remove passenger from  trainQueue
                 trainQueue.remove();
                 trainQueue.getQueueArray()[i]=null;
                 i++;
             }
             trainQueue.setMaxStayInQueue(lenReport+i-lenNoArrive);
+//            reset length,first,last of FIFO array
             trainQueue.setrest();
 
             for (Passenger pasangerObjest: reportData){
                 //TODO change to break
                 if (pasangerObjest==null) continue;
+//                add a processing delay
                 int genDelay= 3 + (int) (Math.random() * (18 - 3 + 1));
+//                set the passenger time
                 pasangerObjest.setSecondsInQueue(genDelay);
+//                set time as zero if not arrived
                 if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
+
                 queueDelay=queueDelay+pasangerObjest.getSecondsInQueue();
                 pasangerObjest.setSecondsInQueue(queueDelay);
+//                there's no need for the bellow line, since the report array
+//                will have all not arrived at the beginning & it will be viable
+//                to not have it
+                if (!pasangerObjest.getArrived())pasangerObjest.setSecondsInQueue(0);
                 if(minimumWaitTime== 0){
                     minimumWaitTime=queueDelay;
                 }
@@ -935,7 +953,7 @@ public class TrainStation extends Application{
      * @param averageSecondsInQueue passes the average wait time for all
      */
     public   void runGui(int minimumWaitTime,int maximumWaitTime,double averageSecondsInQueue){
-
+//        set scene
         Stage window = new Stage();
         window.setTitle("Add to Train Queue");
         GridPane addView = new GridPane();
@@ -947,6 +965,7 @@ public class TrainStation extends Application{
         addViewFirst.getStylesheets().add("style.css");
         window.setScene(addViewFirst);
 
+//        boarded table view
         TableView<Passenger> ReportTable;
         TableColumn<Passenger,String> ticket_col = new TableColumn<>("Ticket");
         ticket_col.setMinWidth(100);
@@ -967,6 +986,7 @@ public class TrainStation extends Application{
         Arrived_col.setMinWidth(100);
         Arrived_col.setCellValueFactory(new PropertyValueFactory<>("Station"));
 
+//        not arrived table view
         TableView<Passenger> ReportTable2;
         TableColumn<Passenger,String> ticket_col2 = new TableColumn<>("Ticket");
         ticket_col2.setMinWidth(100);
@@ -987,7 +1007,7 @@ public class TrainStation extends Application{
         Arrived_col2.setMinWidth(100);
         Arrived_col2.setCellValueFactory(new PropertyValueFactory<>("Station"));
 
-
+//        boarded table details
         ReportTable = new TableView<>();
         ReportTable.setPlaceholder(new Label("No Passenger has boarded"));
         ReportTable.setMinWidth(300);
@@ -1013,6 +1033,8 @@ public class TrainStation extends Application{
                 }
             }
         }
+
+//        not arrived table details
         ReportTable2 = new TableView<>();
         ReportTable2.setPlaceholder(new Label("All Passengers have Arrrived"));
         ReportTable2.setMinWidth(300);
@@ -1027,6 +1049,7 @@ public class TrainStation extends Application{
         AnchorPane.setTopAnchor(ReportTable2,340d);
         AnchorPane.setLeftAnchor(ReportTable2,10d);
 
+//        boarded table label
         Label passengerRunText = new Label();
         passengerRunText.setText("Boarded ");
         passengerRunText.setFont(new Font("Arial", 18));
@@ -1034,6 +1057,7 @@ public class TrainStation extends Application{
         AnchorPane.setLeftAnchor(passengerRunText,10d);
         AnchorPane.setTopAnchor(passengerRunText,10d);
 
+//        not arrived table label
         Label passengerRunText2 = new Label();
         passengerRunText2.setText("Not Arrived ");
         passengerRunText2.setFont(new Font("Arial", 18));
@@ -1041,6 +1065,7 @@ public class TrainStation extends Application{
         AnchorPane.setLeftAnchor(passengerRunText2,10d);
         AnchorPane.setTopAnchor(passengerRunText2,310d);
 
+//        close button
         Button closeBut = new Button("close");
         closeBut.setMinSize(100, 60);
         closeBut.setStyle("-fx-background-color: #d21e3c; ");
@@ -1054,6 +1079,7 @@ public class TrainStation extends Application{
         AnchorPane.setBottomAnchor(closeBut,10d);
         AnchorPane.setRightAnchor(closeBut,10d);
 
+//        report data box
         VBox reportArea = new VBox();
         reportArea.setSpacing(10d);
         for (int i=0;i<4;i++) {
@@ -1071,6 +1097,7 @@ public class TrainStation extends Application{
 
         Font reportFont = Font.font("Arial", FontWeight.valueOf("BOLD"),17);
 
+//        report data labels
         VBox reportDetails = new VBox();
         reportDetails.setSpacing(43d);
         Label reportMinTime = new Label();
